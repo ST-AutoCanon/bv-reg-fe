@@ -85,7 +85,7 @@ async function fetchAndProcessImage(footerData) {
     
     const fileName = dataOfFooterr.Upload_Seal.file_name;
     // const imageUrl = `https://bv-reg.com/api/files/downloads/${fileName}`; 
-    const imageUrl = `http://bv-reg.com/api/files/downloads/${fileName}`; 
+    const imageUrl = `https://bv-reg.com/api/files/downloads/${fileName}`; 
 
     try {
         const response = await fetch(imageUrl);
