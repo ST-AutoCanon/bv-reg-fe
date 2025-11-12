@@ -1,4 +1,4 @@
-import { FC} from 'react';
+import { FC } from 'react';
 import React, { useEffect } from "react"
 
 import '../../assets/css/home.css';
@@ -24,22 +24,22 @@ const About: FC = () => {
     useEffect(() => {
         const hash = location.hash;
         if (hash) {
-          const targetElement = document.querySelector(hash);
-          if (targetElement) {
-            targetElement.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start',
-            });
-          }
+            const targetElement = document.querySelector(hash);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start',
+                });
+            }
         } else {
-          // Scroll to the top of the page if no hash is present
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-          });
-        }         
+            // Scroll to the top of the page if no hash is present
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+            });
+        }
     }, [location])
-    
+
 
     return (
         <>
@@ -116,26 +116,26 @@ const About: FC = () => {
                     >
 
                         <Heading as='h4' color={'color.100'} mt={'10px'} mb={'20px'}>
-                        CMVR Update
+                            CMVR Update
                         </Heading>
                         <Text as={'div'} fontSize='13px' mt={'10px'} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
-                        We bring the CMVR updates from MoRTH (ministry of Road Transport & Highways of India) as and when any notification, rules & regulations are released.
+                            We bring the CMVR updates from MoRTH (ministry of Road Transport & Highways of India) as and when any notification, rules & regulations are released.
                         </Text>
-                       
+
 
                     </Box>
 
                     <Box pb={["10px"]}
                         pt={["10px"]}
-                    id="what-is-homo">
+                        id="what-is-homo">
 
                         <Heading as='h4' color={'color.100'} mt={'10px'} mb={'20px'}>
-                        What is Homologation?
+                            What is Homologation?
                         </Heading>
                         <Text as={'div'} fontSize='13px' mt={'10px'} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
-                        Homologation is the process of getting Government Approval by means of a Certificate which allows the Product to enter targeted Market. Process starts with the initial assessment followed by the list of tests according to standards and directives until the compilation of validated technical reports that finally results in the approval.
+                            Homologation is the process of getting Government Approval by means of a Certificate which allows the Product to enter targeted Market. Process starts with the initial assessment followed by the list of tests according to standards and directives until the compilation of validated technical reports that finally results in the approval.
                         </Text>
-                       
+
 
                     </Box>
 
@@ -145,12 +145,12 @@ const About: FC = () => {
                     >
 
                         <Heading as='h4' color={'color.100'} mt={'10px'} mb={'20px'}>
-                        Pre-Homologation Process
+                            Pre-Homologation Process
                         </Heading>
                         <Text as={'div'} fontSize='13px' mt={'10px'} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
                             Pre Homologation is nothing but the performance of all or critical tests as per the applicable regulations similar to actual tests that are being performed by the testing agency during the approval process.
                         </Text>
-                       
+
 
                     </Box>
 
@@ -160,54 +160,54 @@ const About: FC = () => {
                     >
 
                         <Heading as='h4' color={'color.100'} mt={'10px'} mb={'20px'}>
-                        Type Approval Process
+                            Type Approval Process
                         </Heading>
                         <Text fontSize='18' mt={6} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
-                                Expert Advice:
+                            Expert Advice:
+                        </Text>
+                        <UnorderedList mb={'47px'}>
+                            <ListItem>Documentation Process</ListItem>
+                            <ListItem>Product Data Table Preparation</ListItem>
+                            <ListItem>Certification Initiation</ListItem>
+                            <ListItem>Execution of Approval Proces</ListItem>
+                            <ListItem>Certification Grant</ListItem>
+                        </UnorderedList>
+
+
+                    </Box>
+
+
+
+                    <Flex
+                        direction={
+                            {
+                                sm: 'column',
+                                md: 'row',
+                                lg: 'row',
+                                xl: 'row'
+                            }
+                        }
+                        alignItems='center'
+                        justifyContent={'space-around'}
+                        flexWrap={['wrap', 'wrap', 'nowrap']}
+                        gap={'40px'}
+                    >
+                        <Box
+                            id="bus-body"
+                        >
+                            <Heading as='h4' color={'color.100'} mt={'30px'} mb={'20px'}>
+                                Bus Body Builder Accreditation
+                            </Heading>
+                            <Text as={'div'} fontSize='13px' mt={'10px'} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
+                                Accreditation is a mandatory requirement for Bus Body Builders as per CMV Order, 2007. All the Bus Body Builders shall be accredited by the National Accreditation Board & Zonal Accreditation Boards as notified under the said order. The accredited Bus Body builders shall meet the type approval requirements specified in the relevant provisions of the Bus Body Code for the relevant type of vehicle in accordance with AIS:052:2001 as amended from time to time till the corresponding BIS specifications are notified under the BIS Act, 1986(63 of 1986).
                             </Text>
-                            <UnorderedList mb={'47px'}>
-                                <ListItem>Documentation Process</ListItem>
-                                <ListItem>Product Data Table Preparation</ListItem>
-                                <ListItem>Certification Initiation</ListItem>
-                                <ListItem>Execution of Approval Proces</ListItem>
-                                <ListItem>Certification Grant</ListItem>
-                            </UnorderedList>
-                       
+                        </Box>
 
-                    </Box>
-                    
-                 
-                    
-                    <Flex
-                        direction={
-                            {
-                                sm: 'column',
-                                md: 'row',
-                                lg: 'row',
-                                xl: 'row'
-                            }
-                        }
-                        alignItems='center'
-                        justifyContent={'space-around'}
-                        flexWrap={['wrap', 'wrap', 'nowrap']}
-                        gap={'40px'}
-                    >
-                    <Box
-                        id="bus-body"
-                    >
-                         <Heading as='h4' color={'color.100'} mt={'30px'} mb={'20px'}>
-                            Bus Body Builder Accreditation
-                        </Heading>
-                          <Text as={'div'} fontSize='13px' mt={'10px'} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
-                          Accreditation is a mandatory requirement for Bus Body Builders as per CMV Order, 2007. All the Bus Body Builders shall be accredited by the National Accreditation Board & Zonal Accreditation Boards as notified under the said order. The accredited Bus Body builders shall meet the type approval requirements specified in the relevant provisions of the Bus Body Code for the relevant type of vehicle in accordance with AIS:052:2001 as amended from time to time till the corresponding BIS specifications are notified under the BIS Act, 1986(63 of 1986).
-                        </Text>
-                    </Box>
-
-                    <Box pb={["10px"]}
-                        pt={["10px"]}
-                    >
-                         <Image src={BusBodyBuilderAccreditation} alt='car' />
-                    </Box>
+                        <Box pb={["10px"]}
+                            pt={["10px"]}
+                        >
+                            <Image src={BusBodyBuilderAccreditation} alt='car' />
+                        </Box>
 
                     </Flex>
 
@@ -225,20 +225,30 @@ const About: FC = () => {
                         flexWrap={['wrap', 'wrap', 'nowrap']}
                         gap={'40px'}
                     >
-                    <Box id="fame-body">
-                         <Heading as='h4' color={'color.100'} mt={'30px'}  mb={'20px'}>
-                         FAME Subsidy
-                        </Heading>
-                          <Text as={'div'} fontSize='13px' mt={'10px'} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
-                          The government has approved Phase-II of the FAME Scheme with an outlay of Rs. 10,000 Crore for a period of 3 years commencing from 1st April 2019. This phase aims to generate demand by way of supporting 7000 Electric Buses, 5 lakh Electric 3-wheelers, 55000 Electric 4-wheeler Passenger Cars (including Strong Hybrid) & 10 lakh Electric 2-wheelers. To get FAME-II Certification for subsidy to be availed, the vehicle manufacturer must satisfy the eligibility as defined in the scheme.
-                        </Text>
-                    </Box>
+                        <Box id="fame-body">
+                            <Heading as='h4' color={'color.100'} mt={'30px'} mb={'20px'}>
+                                FAME Subsidy
+                            </Heading>
+                            <Text as={'div'} fontSize='13px' mt={'10px'} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
+                                PM E‑DRIVE (Scheme)
+                                The Government of India has launched the “PM Electric Drive Revolution in Innovative Vehicle Enhancement (PM E-DRIVE)” scheme with an outlay of ₹10,900 crore over the period from 1 October 2024 to 31 March 2026 (with certain segments extended to March 2028).
 
-                    <Box pb={["10px"]}
-                        pt={["10px"]}
-                    >
-                         <Image src={fameSubsidy} alt='car' />
-                    </Box>
+
+                                Key features include:
+
+                                1) Demand-side incentives for electric 2-wheelers, 3-wheelers, ambulances, trucks, and buses.
+
+                                2) A dedicated allocation of ₹2,000 crore for public EV charging infrastructure installation (approx 72,000 charging stations) under the scheme.
+                                Press Information Bureau
+
+                                3) Emphasis on localisation of EV manufacturing and testing agency upgradation within India’s EV ecosystem.                 </Text>
+                        </Box>
+
+                        <Box pb={["10px"]}
+                            pt={["10px"]}
+                        >
+                            <Image src={fameSubsidy} alt='car' />
+                        </Box>
 
                     </Flex>
 
@@ -256,23 +266,23 @@ const About: FC = () => {
                         flexWrap={['wrap', 'wrap', 'nowrap']}
                         gap={'40px'}
                     >
-                    <Box id="wmi">
-                         <Heading as='h4' color={'color.100'} mt={'30px'}  mb={'20px'}>
-                         WMI Registration
-                        </Heading>
-                        <Text as={'div'} fontSize='13px' mt={'10px'} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
-                          Globally, the Vehicle Identification Number (VIN) system is used to uniquely identify a vehicle. The VIN comprises 17 characters that uniquely identify the vehicle as provided in ISO 3779 & ISO 4030. The first 3 characters of VIN that uniquely identify the manufacturer of the vehicle is called the World Manufacturer Identifier (WMI).
-                        </Text>
-                        <Text as={'div'} fontSize='13px' mt={'10px'} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
-                        BIS being the National Standards Body of India & a member of the ISO, acts as the WMI coordinator in India & issues the WMI code to vehicle manufacturers in India after these are assigned by the Society of Automotive Engineers Inc., USA, the international agency responsible for the maintenance of the WMI codes.
-                        </Text>
-                    </Box>
+                        <Box id="wmi">
+                            <Heading as='h4' color={'color.100'} mt={'30px'} mb={'20px'}>
+                                WMI Registration
+                            </Heading>
+                            <Text as={'div'} fontSize='13px' mt={'10px'} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
+                                Globally, the Vehicle Identification Number (VIN) system is used to uniquely identify a vehicle. The VIN comprises 17 characters that uniquely identify the vehicle as provided in ISO 3779 & ISO 4030. The first 3 characters of VIN that uniquely identify the manufacturer of the vehicle is called the World Manufacturer Identifier (WMI).
+                            </Text>
+                            <Text as={'div'} fontSize='13px' mt={'10px'} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
+                                BIS being the National Standards Body of India & a member of the ISO, acts as the WMI coordinator in India & issues the WMI code to vehicle manufacturers in India after these are assigned by the Society of Automotive Engineers Inc., USA, the international agency responsible for the maintenance of the WMI codes.
+                            </Text>
+                        </Box>
 
-                    <Box pb={["10px"]}
-                        pt={["10px"]}
-                    >
-                         <Image src={wmiRegistration} alt='car' />
-                    </Box>
+                        <Box pb={["10px"]}
+                            pt={["10px"]}
+                        >
+                            <Image src={wmiRegistration} alt='car' />
+                        </Box>
 
                     </Flex>
 

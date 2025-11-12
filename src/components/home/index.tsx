@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import Slider from "react-slick"
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Banner from '../../assets/images/autocar.png';
 import autoBanner from '../../assets/images/auto-banner.png';
 import autoluggage from '../../assets/images/autoluggage.png';
@@ -166,7 +166,7 @@ const Home: FC = () => {
                         <Box className="banner-text" pt={["25px", "0px"]}>
                             <Heading as='h2' color={'color.100'} fontSize={["18px", "24px", "28px", "32px", "42px"]}>
                                 Welcome
-                                <Text as="span" ml={2}  color={'color.200'}>
+                                <Text as="span" ml={2} color={'color.200'}>
                                     !
                                 </Text>
                             </Heading>
@@ -180,7 +180,7 @@ const Home: FC = () => {
                             </Text>
                             <Text>
                                 Bv-Reg Member,
-                                please continue with  <Text as="span"  color={'color.200'}>Getin (Login)&nbsp;</Text>
+                                please continue with  <Text as="span" color={'color.200'}>Getin (Login)&nbsp;</Text>
                                 using your register email and password. </Text> <Text>
                                 New to Bv-Reg, please continue with <Text as="span" color={'color.200'}>GetStarted to sign-up new user</Text>.
                             </Text>
@@ -293,7 +293,7 @@ const Home: FC = () => {
                                 Pre Homologation is nothing but the performance of all or critical tests as per the applicable regulations similar to actual tests that are being performed by the testing agency during the approval process.
                             </Text>
                             <Button mt={6} bg='color.200' color='color.500' _hover={{ bg: 'color.200', borderColor: 'color.300' }}>
-                               
+
                                 <Link to='/About#Pre-Homologation'>Learn more</Link>
                             </Button>
                         </Box>
@@ -348,10 +348,10 @@ const Home: FC = () => {
                                 Bus Body Builder Accreditation
                             </Heading>
                             <Text mt={6} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
-                            Accreditation is a mandatory requirement for Bus Body Builders as per CMV Order, 2007. All the Bus Body Builders shall be accredited by the National Accreditation Board & Zonal Accreditation Boards as notified under the said order. The accredited Bus Body builders shall meet the type approval...
+                                Accreditation is a mandatory requirement for Bus Body Builders as per CMV Order, 2007. All the Bus Body Builders shall be accredited by the National Accreditation Board & Zonal Accreditation Boards as notified under the said order. The accredited Bus Body builders shall meet the type approval...
                             </Text>
                             <Button mt={6} bg='color.200' color='color.500' _hover={{ bg: 'color.200', borderColor: 'color.300' }}>
-                            <Link to='/About#bus-body'>Learn more</Link>
+                                <Link to='/About#bus-body'>Learn more</Link>
                             </Button>
                         </Box>
 
@@ -364,10 +364,20 @@ const Home: FC = () => {
                                 FAME Subsidy
                             </Heading>
                             <Text mt={6} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
-                                The government has approved Phase-II of the FAME Scheme with an outlay of Rs. 10,000 Crore for a period of 3 years commencing from 1st April 2019. This phase aims to generate demand by way of supporting 7000 Electric Buses, 5 lakh Electric 3-wheelers, 55000 Electric 4-wheeler Passenger Cars (including Strong Hybrid)
-                            </Text>
+                                PM E‑DRIVE (Scheme)
+                                The Government of India has launched the “PM Electric Drive Revolution in Innovative Vehicle Enhancement (PM E-DRIVE)” scheme with an outlay of ₹10,900 crore over the period from 1 October 2024 to 31 March 2026 (with certain segments extended to March 2028).
+
+
+                                Key features include:
+
+                                1) Demand-side incentives for electric 2-wheelers, 3-wheelers, ambulances, trucks, and buses.
+
+                                2) A dedicated allocation of ₹2,000 crore for public EV charging infrastructure installation (approx 72,000 charging stations) under the scheme.
+                                Press Information Bureau
+
+                                3) Emphasis on localisation of EV manufacturing and testing agency upgradation within India’s EV ecosystem.                           </Text>
                             <Button mt={6} bg='color.200' color='color.500' _hover={{ bg: 'color.200', borderColor: 'color.300' }}>
-                            <Link to='/About#fame-body'>Learn more</Link>
+                                <Link to='/About#fame-body'>Learn more</Link>
                             </Button>
                         </Box>
 
@@ -380,10 +390,10 @@ const Home: FC = () => {
                                 WMI Registration
                             </Heading>
                             <Text mt={6} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
-                            Globally, the Vehicle Identification Number (VIN) system is used to uniquely identify a vehicle. The VIN comprises 17 characters that uniquely identify the vehicle as provided in ISO 3779 & ISO 4030. The first 3 characters of VIN that uniquely identify the manufacturer of the vehicle is called (WMI)
+                                Globally, the Vehicle Identification Number (VIN) system is used to uniquely identify a vehicle. The VIN comprises 17 characters that uniquely identify the vehicle as provided in ISO 3779 & ISO 4030. The first 3 characters of VIN that uniquely identify the manufacturer of the vehicle is called (WMI)
                             </Text>
                             <Button mt={6} bg='color.200' color='color.500' _hover={{ bg: 'color.200', borderColor: 'color.300' }}>
-                              
+
                                 <Link to='/About#wmi'>Learn more</Link>
                             </Button>
 

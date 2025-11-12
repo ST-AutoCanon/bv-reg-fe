@@ -58,7 +58,7 @@ const mainData = function () {
 async function fetchAndProcessImage(footerData) {
   const dataOfFooterr = footerData.footerData.SealSign.properties;
   const fileName = dataOfFooterr.Upload_Seal.file_name;
-  const imageUrl = `https://bv-reg.com/api/files/downloads/${fileName}`; 
+  const imageUrl = `http://bv-reg.com/api/files/downloads/${fileName}`; 
 // const imageUrl = `http://localhost:3007/api/files/downloads/${fileName}`;
   //   const imageUrl = `http://localhost:3007/api/files/downloads/${fileName}`;
   try {
@@ -27292,9 +27292,7 @@ new TableCell({
                         children: [
                           new TextRun({
                             size: "12pt",
-                            text: rearViewMirrorsDataList.suppNameList.join(
-                              "\n\r"
-                            ),
+                            text: "",
                           }),
                         ],
                       }),
@@ -27333,7 +27331,7 @@ new TableCell({
                                 new TextRun({
                                   size: "12pt",
                                   bold: true,
-                                  text: getTACorBISHeader(rearViewMirrorsDataList.tacNumberList),
+                                  text: "",
                                 }),
                               ],
                             }),
@@ -27353,12 +27351,8 @@ new TableCell({
                         children: [
                           new TextRun({
                             size: "12pt",
-                            text: (() => {
-                              const isBIS = getTACorBISHeader(rearViewMirrorsDataList.tacNumberList).startsWith("BIS");
-                              return rearViewMirrorsDataList.tacNumberList
-                                .map(tac => `${isBIS ? "CM/L-" : ""}${tac}`)
-                                .join(", ");
-                            })(),
+                            text: "",
+                           
                           }),
                         ],
                       }),
@@ -27400,7 +27394,7 @@ new TableCell({
                                 new TextRun({
                                   size: "12pt",
                                   bold: true,
-                                  text: getPossibleDateHeader(rearViewMirrorsDataList.possibleDateList),
+                                  text: "",
                                 }),
                               ],
                             }),
@@ -27411,7 +27405,7 @@ new TableCell({
                         children: [
                           new TextRun({
                             size: "12pt",
-                            text: rearViewMirrorsDataList.possibleDateList.join(","),
+                            text: "",
                           }),
                         ],
                       }),
@@ -27461,7 +27455,7 @@ new TableCell({
                         children: [
                           new TextRun({
                             size: "12pt",
-                            text: rearViewMirrorsDataList.copCertList.join(","),
+                            text: "",
                           }),
                         ],
                       }),
@@ -28113,8 +28107,10 @@ new TableCell({
                       new Paragraph({
                         children: [
                           new TextRun({
-                            text: "",
                             size: "12pt",
+                            text:rearViewMirrorsDataList.suppNameList.join(
+                              "\n\r"
+                            ),
                           }),
                         ],
                       }),
@@ -28129,8 +28125,9 @@ new TableCell({
                       new Paragraph({
                         children: [
                           new TextRun({
-                            text: "",
-                            size: "12pt",
+                            size: "12pt",  
+                            text: rearViewMirrorsDataList.tacNumberList.join(
+                              "\n\r"),
                           }),
                         ],
                       }),
@@ -28145,8 +28142,9 @@ new TableCell({
                       new Paragraph({
                         children: [
                           new TextRun({
-                            text: "",
-                            size: "12pt",
+                           size: "12pt", 
+                           text: rearViewMirrorsDataList.possibleDateList.join(
+                            ","),
                           }),
                         ],
                       }),
@@ -28161,8 +28159,10 @@ new TableCell({
                       new Paragraph({
                         children: [
                           new TextRun({
-                            text: "",
                             size: "12pt",
+                            text: rearViewMirrorsDataList.copCertList.join(
+                              ","),
+
                           }),
                         ],
                       }),

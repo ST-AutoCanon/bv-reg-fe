@@ -144,7 +144,7 @@ function normalizeWithTwoUnits(value, unit1, unit2) {
   const KM = 'Km';
   const KM_H = 'Km/h';
   const AH = 'AH';
-  const KWH = 'kWh';
+  const KWH = 'KWh';
   const HERTZ = 'Hz';
   const VOLTS_AMPS = 'Volts & Amps';
   const MINUTES_HOURS = 'Minutes/Hours';
@@ -179,7 +179,7 @@ async function fetchAndProcessImage(footerData) {
     const dataOfFooterr = footerData.footerData.SealSign.properties;
 
     const fileName = dataOfFooterr.Upload_Seal.file_name;
-    const imageUrl = `https://bv-reg.com/api/files/downloads/${fileName}`; // Use the correct backend port
+    const imageUrl = `http://bv-reg.com/api/files/downloads/${fileName}`; // Use the correct backend port
   
     try {
       const response = await fetch(imageUrl);
@@ -517,9 +517,9 @@ if (typeof manufacturer_Name === 'string' && manufacturer_Name.trim().length > 0
     let nominalVolCellLevelRows = normalizeWithUnit(nominalVolCellLevelRows1, V);
     const noOfCellsRows = generateTableData(noOfCellsList);
     const batteryEnergyRows1 = generateTableData(batteryEnergyList);
-    let batteryEnergyRows = normalizeWithUnit(batteryEnergyRows1, AH);
+    let batteryEnergyRows = normalizeWithUnit(batteryEnergyRows1,KWH);
     const batteryCapacityRows1 = generateTableData(batteryCapacityList);
-    let batteryCapacityRows = normalizeWithUnit(batteryCapacityRows1, KWH);
+    let batteryCapacityRows = normalizeWithUnit(batteryCapacityRows1,AH);
     const endOfDischargeRows1 = generateTableData(endOfDischargeList);
     let endOfDischargeRows = normalizeWithUnit(endOfDischargeRows1, V);
     const provOfVentRows = generateTableData(provOfVentList);
@@ -2145,7 +2145,7 @@ const formattedDate = today.toLocaleDateString("en-GB");
                                                 style: "TableRowContent",
                                                 children: [
                                                     new TextRun({
-                                                        text: "Battery Energy (kWh)"
+                                                        text: "Battery Energy (KWh)"
                                                     })
                                                 ]
                                             })

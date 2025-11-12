@@ -1558,10 +1558,10 @@ console.log('fwBISLicNumberRows:',fwBISLicNumberRows);
         rowKey: "List2_4311",
         value: updatedfwMakeRows
     });
-    allTablesData.push({
-        rowKey: "List2_432",
-        value: fwBISLicNumberRows
-    });
+    // allTablesData.push({
+    //     rowKey: "List2_432",
+    //     value: fwBISLicNumberRows
+    // });
     allTablesData.push({
         rowKey: "List2_4312",
         value: fwPartNumberRows
