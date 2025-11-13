@@ -58,7 +58,7 @@ const mainData = function () {
 async function fetchAndProcessImage(footerData) {
   const dataOfFooterr = footerData.footerData.SealSign.properties;
   const fileName = dataOfFooterr.Upload_Seal.file_name;
-  const imageUrl = `https://bv-reg.com/api/files/downloads/${fileName}`; 
+  const imageUrl = `http://bv-reg.com/api/files/downloads/${fileName}`; 
 // const imageUrl = `http://localhost:3007/api/files/downloads/${fileName}`;
   //   const imageUrl = `http://localhost:3007/api/files/downloads/${fileName}`;
   try {
@@ -308,6 +308,8 @@ function getTACorBISLabel(s) {
   }
   // BIS No (only digits, length 7–10)
   if (digitCount >= 7 && digitCount <= 10 && digitCount === alphaNumCount) {
+    
+    
     return hasDate ? "BIS No and Validity" : "BIS No";
   }
 
@@ -27323,8 +27325,7 @@ new TableCell({
                       type: WidthType.DXA,
                     },
                     children: [
-                      ...(getTACorBISHeader(rearViewMirrorsDataList.tacNumberList)
-                        ? [
+                    
                             new Paragraph({
                               style: "table1Header",
                               children: [
@@ -27335,8 +27336,6 @@ new TableCell({
                                 }),
                               ],
                             }),
-                          ]
-                        : []),
                       // new Paragraph({
                       //   style: "table1Header",
                       //   children: [
@@ -27386,8 +27385,7 @@ new TableCell({
                       type: WidthType.DXA,
                     },
                     children: [
-                      ...(getPossibleDateHeader(rearViewMirrorsDataList.possibleDateList)
-                        ? [
+                      
                             new Paragraph({
                               style: "table1Header",
                               children: [
@@ -27398,8 +27396,6 @@ new TableCell({
                                 }),
                               ],
                             }),
-                          ]
-                        : []),
                       new Paragraph({
                         style: "table1Header",
                         children: [
@@ -27436,20 +27432,16 @@ new TableCell({
                       type: WidthType.DXA,
                     },
                     children: [
-                      ...(getCOPHeader(rearViewMirrorsDataList.copCertList)
-                        ? [
                             new Paragraph({
                               style: "table1Header",
                               children: [
                                 new TextRun({
                                   size: "12pt",
                                   bold: true,
-                                  text: getCOPHeader(rearViewMirrorsDataList.copCertList),
+                                  text: "",
                                 }),
                               ],
                             }),
-                          ]
-                        : []),
                       new Paragraph({
                         style: "table1Header",
                         children: [
@@ -28105,10 +28097,11 @@ new TableCell({
                     },
                     children: [
                       new Paragraph({
+                        style: "paragrapgBold",
                         children: [
                           new TextRun({
                             size: "12pt",
-                            text:rearViewMirrorsDataList.suppNameList.join(
+                            text: rearViewMirrorsDataList.suppNameList.join(
                               "\n\r"
                             ),
                           }),
@@ -28122,52 +28115,101 @@ new TableCell({
                       type: WidthType.DXA,
                     },
                     children: [
-                      new Paragraph({
-                        children: [
-                          new TextRun({
-                            size: "12pt",  
-                            text: rearViewMirrorsDataList.tacNumberList.join(
-                              "\n\r"),
-                          }),
-                        ],
-                      }),
-                    ],
-                  }),
-                  new TableCell({
-                    width: {
-                      size: 3000,
-                      type: WidthType.DXA,
-                    },
-                    children: [
-                      new Paragraph({
-                        children: [
-                          new TextRun({
-                           size: "12pt", 
-                           text: rearViewMirrorsDataList.possibleDateList.join(
-                            ","),
-                          }),
-                        ],
-                      }),
-                    ],
-                  }),
-                  new TableCell({
-                    width: {
-                      size: 3000,
-                      type: WidthType.DXA,
-                    },
-                    children: [
-                      new Paragraph({
+                      ...(getTACorBISHeader(rearViewMirrorsDataList.tacNumberList)
+                        ? [
+                            new Paragraph({
+                               style: "table1Header",
+                              children: [
+                                new TextRun({
+                                  size: "12pt",
+                                  bold: true,
+                                  text: getTACorBISHeader(rearViewMirrorsDataList.tacNumberList),
+                                }),
+                              ],
+                            }),
+                          ]
+                        : []),
+                   new Paragraph({
+                    style: "table1Header",
                         children: [
                           new TextRun({
                             size: "12pt",
-                            text: rearViewMirrorsDataList.copCertList.join(
-                              ","),
-
+                            text: (() => {
+                              const isBIS = getTACorBISHeader(rearViewMirrorsDataList.tacNumberList).startsWith("BIS");
+                              return rearViewMirrorsDataList.tacNumberList
+                                .map(tac => `${isBIS ? "CM/L-" : ""}${tac}`)
+                                .join(", ");
+                            })(),
+                          }),
+                        ],
+                      }),
+                      
+                    ],
+                  }),
+                  new TableCell({
+                    width: {
+                      size: 3000,
+                      type: WidthType.DXA,
+                    },
+                    children: [
+                       ...(getPossibleDateHeader(rearViewMirrorsDataList.possibleDateList)
+                        ? [
+                      new Paragraph({
+                        style: "table1Header",
+                        children: [
+                          new TextRun({
+                           size: "12pt", 
+                           bold:true,
+                           text: getPossibleDateHeader(rearViewMirrorsDataList.possibleDateList),
+                            
+                          }),
+                        ],
+                      }),
+                    ]
+                  :[]),
+                  new Paragraph({
+                        style: "table1Header",
+                        children: [
+                          new TextRun({
+                            size: "12pt",
+                            text: rearViewMirrorsDataList.possibleDateList.join(","),
                           }),
                         ],
                       }),
                     ],
                   }),
+                 new TableCell({
+                    width: {
+                      size: 3000,
+                      type: WidthType.DXA,
+                    },
+                    children: [
+                      ...(getCOPHeader(rearViewMirrorsDataList.copCertList)
+                        ? [
+                            new Paragraph({
+                              style: "table1Header",
+                              children: [
+                                new TextRun({
+                                  size: "12pt",
+                                  bold: true,
+                                  text: getCOPHeader(rearViewMirrorsDataList.copCertList),
+                                }),
+                              ],
+                            }),
+                          ]
+                        : []),
+                      new Paragraph({
+                        style: "table1Header",
+                        children: [
+                          new TextRun({
+                            size: "12pt",
+                            text: rearViewMirrorsDataList.copCertList.join(","),
+                          }),
+                        ],
+                      }),
+                    ],
+                  }),
+                  
                 ],
               }),
               new TableRow({

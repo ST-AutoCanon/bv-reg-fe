@@ -361,10 +361,10 @@ const Home: FC = () => {
                         >
 
                             <Heading as='h4' color={'color.100'}>
-                                FAME Subsidy
+                                PM E‑DRIVE (Scheme)
                             </Heading>
                             <Text mt={6} color={'color.400'} maxW={'1142'} pr={["5px", "25px", "25px", "25px"]}>
-                                PM E‑DRIVE (Scheme)
+                                
                                 The Government of India has launched the “PM Electric Drive Revolution in Innovative Vehicle Enhancement (PM E-DRIVE)” scheme with an outlay of ₹10,900 crore over the period from 1 October 2024 to 31 March 2026 (with certain segments extended to March 2028).
 
 
