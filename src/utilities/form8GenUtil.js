@@ -194,64 +194,117 @@ async function fetchAndProcessImage(footerData) {
 
 
 
-function parseAndCheckTACValidity(validityDateStr) {
-    if (!validityDateStr || typeof validityDateStr !== "string") {
-      return { expired: true, hasDate: false };
-    }
+// function parseAndCheckTACValidity(validityDateStr) {
+//     if (!validityDateStr || typeof validityDateStr !== "string") {
+//       return { expired: true, hasDate: false };
+//     }
   
-    // Try parsing directly as ISO date (YYYY-MM-DD)
-    const isoDate = new Date(validityDateStr);
-    if (!isNaN(isoDate.getTime())) {
-      return {
-        expired: isoDate < new Date(),
-        hasDate: true,
-      };
-    }
+//     // Try parsing directly as ISO date (YYYY-MM-DD)
+//     const isoDate = new Date(validityDateStr);
+//     if (!isNaN(isoDate.getTime())) {
+//       return {
+//         expired: isoDate < new Date(),
+//         hasDate: true,
+//       };
+//     }
   
-    // Regex for DD/MM/YYYY or DD-MM-YYYY
-    const ddmmyyyyRegex = /(\d{1,2})[-/](\d{1,2})[-/](\d{4})/g;
-    let matches = [...validityDateStr.matchAll(ddmmyyyyRegex)];
+//     // Regex for DD/MM/YYYY or DD-MM-YYYY
+//     const ddmmyyyyRegex = /(\d{1,2})[-/](\d{1,2})[-/](\d{4})/g;
+//     let matches = [...validityDateStr.matchAll(ddmmyyyyRegex)];
   
-    if (matches.length > 0) {
-      const lastMatch = matches[matches.length - 1];
-      const day = lastMatch[1];
-      const month = lastMatch[2];
-      const year = lastMatch[3];
+//     if (matches.length > 0) {
+//       const lastMatch = matches[matches.length - 1];
+//       const day = lastMatch[1];
+//       const month = lastMatch[2];
+//       const year = lastMatch[3];
   
-      const parsedDate = new Date(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
-      if (!isNaN(parsedDate.getTime())) {
-        return {
-          expired: parsedDate < new Date(),
-          hasDate: true,
-        };
-      }
-    }
+//       const parsedDate = new Date(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
+//       if (!isNaN(parsedDate.getTime())) {
+//         return {
+//           expired: parsedDate < new Date(),
+//           hasDate: true,
+//         };
+//       }
+//     }
   
-    // Regex for MM/DD/YY (2-digit year)
-    const mmddyyRegex = /(\d{1,2})[-/](\d{1,2})[-/](\d{2})/g;
-    matches = [...validityDateStr.matchAll(mmddyyRegex)];
+//     // Regex for MM/DD/YY (2-digit year)
+//     const mmddyyRegex = /(\d{1,2})[-/](\d{1,2})[-/](\d{2})/g;
+//     matches = [...validityDateStr.matchAll(mmddyyRegex)];
   
-    if (matches.length > 0) {
-      const lastMatch = matches[matches.length - 1];
-      const month = lastMatch[1];
-      const day = lastMatch[2];
-      let year = parseInt(lastMatch[3], 10);
+//     if (matches.length > 0) {
+//       const lastMatch = matches[matches.length - 1];
+//       const month = lastMatch[1];
+//       const day = lastMatch[2];
+//       let year = parseInt(lastMatch[3], 10);
   
-      // Convert 2-digit year to 4-digit (assume 2000–2099)
-      year += year < 50 ? 2000 : 1900;
+//       // Convert 2-digit year to 4-digit (assume 2000–2099)
+//       year += year < 50 ? 2000 : 1900;
   
-      const parsedDate = new Date(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
-      if (!isNaN(parsedDate.getTime())) {
-        return {
-          expired: parsedDate < new Date(),
-          hasDate: true,
-        };
-      }
-    }
+//       const parsedDate = new Date(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
+//       if (!isNaN(parsedDate.getTime())) {
+//         return {
+//           expired: parsedDate < new Date(),
+//           hasDate: true,
+//         };
+//       }
+//     }
   
-    // No valid date found
+//     // No valid date found
+//     return { expired: true, hasDate: false };
+//   }
+
+function parseAndCheckTACValidity(inputStr) {
+  if (!inputStr || typeof inputStr !== "string") {
     return { expired: true, hasDate: false };
   }
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // Find ANY valid date pattern inside the string
+  const dateMatches = inputStr.match(/\b(\d{1,2}[-/\.]\d{1,2}[-/\.]\d{2,4}|\d{4}[-/\.]\d{1,2}[-/\.]\d{1,2})\b/g);
+
+  if (!dateMatches) return { expired: true, hasDate: false };
+
+  // Use last found date (if multiple)
+  let dateStr = dateMatches[dateMatches.length - 1].trim().replace(/[-\.]/g, "/");
+
+  let day, month, year;
+
+  // Case: YYYY/MM/DD
+  if (/^\d{4}\/\d{1,2}\/\d{1,2}$/.test(dateStr)) {
+    [year, month, day] = dateStr.split("/");
+  }
+  // Case: DD/MM/YYYY or DD/MM/YY
+  else if (/^\d{1,2}\/\d{1,2}\/\d{2,4}$/.test(dateStr)) {
+    [day, month, year] = dateStr.split("/");
+
+    // Convert 2-digit year → full year
+    if (year.length === 2) {
+      year = Number(year) < 50 ? Number(year) + 2000 : Number(year) + 1900;
+    }
+  } else {
+    return { expired: true, hasDate: false };
+  }
+
+  const parsedDate = new Date(year, month - 1, day);
+
+  // Final invalid date check
+  if (
+    parsedDate.getFullYear() != year ||
+    parsedDate.getMonth() != month - 1 ||
+    parsedDate.getDate() != Number(day)
+  ) {
+    return { expired: true, hasDate: false };
+  }
+
+  return {
+    expired: parsedDate < today,
+    hasDate: true,
+    parsedDate: parsedDate.toDateString()
+  };
+}
+
   
 
 // // ✅ Helper regexes & utility functions

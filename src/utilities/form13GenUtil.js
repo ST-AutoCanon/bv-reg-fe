@@ -171,6 +171,7 @@ function normalizeWithTwoUnits(value, unit1, unit2) {
 //         } else {
 //             return values[0] || ""; // Return the single value if there's only one
 //         }
+
 //     } else {
 //         return ""; // Return an empty string if no data is available
 //     }

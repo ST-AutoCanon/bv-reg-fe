@@ -81,7 +81,7 @@ function extractTACNumbers(input) {
     let inputList = [];
   
     // Normalize input to an array
-    if (typeof input === 'string') {
+    if (typeof input === 'string') {    
       inputList = [input];
     } else if (Array.isArray(input)) {
       inputList = input;
@@ -106,7 +106,7 @@ function extractTACNumbers(input) {
       const trimmed = value.trim();
   
       // Match something like "abc123 12/12/2026"
-      const datePattern = /^(.+?)\s+\d{1,2}\/\d{1,2}\/\d{4}$/;
+      const datePattern = /^(.+?)\s+\d{1,2}\/\d{1,2}\/\d{4}$/;  
       const match = trimmed.match(datePattern);
   
       return match ? match[1] : trimmed;  // Return as string
@@ -5754,6 +5754,7 @@ function generateTableData(dataList) {
         } else {
             return values[0] || ""; // Return the single value if there's only one
         }
+   
     } else {
         return ""; // Return an empty string if no data is available
     }
@@ -5765,6 +5766,7 @@ function generateTableData(dataList) {
    This allows for the processing of multiple supplier data and tyre-related information.
 */
 export { populateMultiSupData, tyresList, dStrapRows, handholdStrap3wheeler_Rows };
+
 
 
 

@@ -82,7 +82,7 @@ const initialState: loginCredentialState = {
   firstTimeLogin: false,
   passwordChanged :false,
   checkResetPassword: false,
-  vehicleType: '',
+  vehicleType: '',//It keeps all login-related data in a central place
 }
 
 export const loginSlice = createSlice({
