@@ -95,6 +95,7 @@ if (isTwoWheeler && isThreeWheeler) {
     const fileName = dataOfFooterr.Upload_Seal.file_name;
  imageUrl = `https://bv-reg.com/api/files/downloads/${fileName}`; 
     // console.log("Image loaded successfully:", fileName);
+    
 ////
 
     // Fetch the image as a Blob
