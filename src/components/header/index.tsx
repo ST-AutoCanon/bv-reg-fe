@@ -563,7 +563,7 @@ const Header: FC = () => {
 
 
   const showLogoutAlert = () => {
-    console.log("Showing logout alert");
+    // console.log("Showing logout alert");
     setIsOpen(true);
   };
 
@@ -594,7 +594,7 @@ const Header: FC = () => {
       autoLogoutTimerRef.current = null;
     }
     // logoutTimerRef.current = setTimeout(() => {
-    console.log("User confirmed logout. Logging out.");
+    // console.log("User confirmed logout. Logging out.");
     userLogout();
     // }, 10 * 1000);
     setIsOpen(false);
@@ -610,7 +610,7 @@ const Header: FC = () => {
         inactivityTimerRef.current = null;
       }
       inactivityTimerRef.current = setTimeout(() => {
-        console.log("User inactive for 5 Minutes. Showing logout alert.");
+        // console.log("User inactive for 5 Minutes. Showing logout alert.");
         showLogoutAlert();
       }, 5 * 60 * 1000);
     }
@@ -747,13 +747,13 @@ const Header: FC = () => {
   useEffect(() => {
     if (!isOpen) return;
     autoLogoutTimerRef.current = setTimeout(() => {
-      console.log("User did not respond in time. Logging out.");
+      // console.log("User did not respond in time. Logging out.");
       userLogout();
     }, 20 * 1000);
 
     const autoCloseTimer = setTimeout(() => {
       if (isOpen) {
-        console.log("User did not respond to the alert. Closing dialog.");
+        // console.log("User did not respond to the alert. Closing dialog.");
         onClose();
       }
     }, 20 * 1000);

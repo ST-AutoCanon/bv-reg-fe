@@ -69,7 +69,7 @@ const SearchUser: FC = () => {
                 }
             })
             .catch((error) => {
-                console.log('error');
+                // console.log('error');
             });
     };
 
@@ -88,7 +88,7 @@ const SearchUser: FC = () => {
                 setApproved(true);
             })
             .catch((error) => {
-                console.log(error)
+                // console.log(error)
             })
     }
 

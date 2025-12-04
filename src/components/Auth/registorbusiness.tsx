@@ -56,7 +56,7 @@ const Register: FC = () => {
                 }
             })
             .catch((error) => {
-                console.log('error');
+                // console.log('error');
             });
     };
 

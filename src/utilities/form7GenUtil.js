@@ -20,21 +20,7 @@ import {
 } from "docx";
 // import docSeal from '../assets/images/docSeal.png';
 
-///
-// function getWheelRimsTableData(wheelRimData) {
-//     if (Array.isArray(wheelRimData) && wheelRimData.length > 0) {
-//         // Extract 'Wheel_rim_size' or 'value' from each wheelRim and join them into a single string
-//         return wheelRimData.map(wheelRim =>
-//             wheelRim?.Wheel_Rim_Size?.properties?.Wheel_rim_size?.value ||
-//             wheelRim?.value ||
-//             ""
-//         ).join(" ");
-//     } else {
-//         return ""; // Return an empty string if no data is available
-//     }
-// }
-/////
-// let docSealImage;
+
 let twoWheeler = false;
 let firstValue;
 const prefixPattern = /^(M\/s\.?|m\/s\.?)\s*/i;
@@ -120,7 +106,7 @@ async function fetchAndProcessImage(footerData) {
       },
     });
 
-    console.log("ImageRun instance created:", docSealImage);
+    // console.log("ImageRun instance created:", docSealImage);
 
     return docSealImage; // Return the docSealImage after it's ready
   } catch (error) {
@@ -148,61 +134,7 @@ function getWheelRimsTableData(dataList) {
   }
 }
 
-// Converts data into row format for table generation and Removed the Supplier Name
-// function getWheelRimsTableData(wheelRimData) {
-//     let rimRows = [];
-//     if (wheelRimData && wheelRimData.length > 0) {
-//         wheelRimData.map(wheelRim => {
-//             const supplierName = wheelRim?.supplier?.nameOfSupplier || "Unknown Supplier";
-//             const rimSize = wheelRim?.Wheel_Rim_Size?.properties?.Wheel_rim_size?.value || wheelRim?.value;
-//             const rimRow = new TableRow({
-//                 children: [
-//                     new TableCell({
-//                         width: {
-//                             size: 2500,
-//                             type: WidthType.DXA
-//                         },
-//                         children: [
-//                             new Paragraph({
-//                                 style: "TableRowContent",
-//                                 children: [
-//                                     new TextRun({
-//                                         text: rimSize || ""
-//                                     })
-//                                 ]
-//                             })
-//                         ]
-//                     })
-//                 ]
-//             });
-//             rimRows.push(rimRow);
-//         });
-//     }
-//     if (rimRows.length === 0) {
-//         const emptyRow = new TableRow({
-//             children: [
-//                 new TableCell({
-//                     width: {
-//                         size: 2500,
-//                         type: WidthType.DXA
-//                     },
-//                     children: [
-//                         new Paragraph({
-//                             style: "TableRowContent",
-//                             children: [
-//                                 new TextRun({
-//                                     text: ""
-//                                 })
-//                             ]
-//                         })
-//                     ]
-//                 })
-//             ]
-//         });
-//         rimRows.push(emptyRow);
-//     }
-//     return rimRows;
-// }
+
 
 /*
 docSealImage: Image used as a seal or watermark for document authenticity.
@@ -243,7 +175,7 @@ async function generateForm7(form7Data, footerData) {
     )}`;
   }
 
-  console.log("data of form7:", form7Data);
+  // console.log("data of form7:", form7Data);
   //     // const drawing=footerData.form7Data.Body_Overhang.properties.Upload_drawing_showing_the_seating_layout_of_the_vehicle.file_name;
   //     // let drawing1=[];
 
@@ -275,43 +207,8 @@ async function generateForm7(form7Data, footerData) {
   drawing1 = [{ value: extractFileName(drawing) }];
   const drawing_Rows = getWheelRimsTableData(drawing1);
 
-  // let imageUrl;
-  // const fileName = dataOfFooterr.Upload_Seal.file_name;
-  // imageUrl = `https://bv-reg.com/api/files/downloads/${fileName}`;  // Use the correct backend port
-
-  // // Fetch the image as a Blob
-  // fetch(imageUrl)
-  //   .then(response => response.blob())
-  //   .then(blob => {
-  //     // Create a FileReader to convert the blob into Base64
-  //     const reader = new FileReader();
-
-  //     // Define the onload event handler for FileReader
-  //     reader.onloadend = () => {
-  //       const base64Data = reader.result; // This will be the Base64 encoded string
-
-  //       // Log the Base64 encoded data
-  //       console.log("Base64 Image Data:", base64Data);
-
-  //       // Optionally, create an ImageRun object with the Base64 data
-  //       docSealImage = new ImageRun({
-  //         data: base64Data, // Use the Base64 data here
-  //         transformation: {
-  //           width: 90,
-  //           height: 50,
-  //         }
-  //       });
-
-  //       console.log("ImageRun instance created:", docSealImage);
-  //     };
-
-  //     // Read the blob as a data URL (Base64)
-  //     reader.readAsDataURL(blob);
-  //   })
-  //   .catch(error => {
-  //     console.error("Error loading image:", error);
-  //   });
-  // console.log('docSealImage:',docSealImage);
+  
+  
   const vehicleGeneralInformationList =
     form7Data.Vehicle_General_Information.VehicleGeneralInformation;
   const vehicleDimensionsList = form7Data.Vehicle_Dimensions.VehicleDimensions;
@@ -370,56 +267,8 @@ async function generateForm7(form7Data, footerData) {
     Rear_Wheel_Rim_Size_List
   );
 
-  // let Tyre_size_designation_including_ply_rating_list = [];
-  // let Speed_index_list = [];
-  // let Load_index_Load_rating_list = [];
-  // let Tyre_Type_list = [];
-  // let Laden_list = [];
-  // let veh_Type_List = [];
-  // tyresList.map(vehDesc => {
-  //     if (vehDesc.supplier.active === true) {
-
-  //         const supplierName = vehDesc.supplier.nameOfSupplier;
-  //         const Tyre_size_designation_including_ply_rating = {
-  //             supplier: supplierName,
-  //             value: vehDesc?.Tyre_Description?.properties?.Tyre_size_designation_including_ply_rating?.value
-  //         }
-  //         Tyre_size_designation_including_ply_rating_list.push(Tyre_size_designation_including_ply_rating);
-  //         const Speed_index = {
-  //             supplier: supplierName,
-  //             value: vehDesc?.Tyre_Description?.properties?.Speed_index?.value
-  //         }
-  //         Speed_index_list.push(Speed_index);
-  //         const Load_index_Load_rating = {
-  //             supplier: supplierName,
-  //             value: vehDesc?.Tyre_Description?.properties?.Load_index_Load_rating?.value
-  //         }
-  //         Load_index_Load_rating_list.push(Load_index_Load_rating);
-  //         const Tyre_Type = {
-  //             supplier: supplierName,
-  //             value: vehDesc?.Tyre_Description?.properties?.Tyre_Type?.value
-  //         }
-  //         Tyre_Type_list.push(Tyre_Type);
-  //         const Laden = {
-  //             supplier: supplierName,
-  //             value: vehDesc?.Tyre_Description?.properties?.Laden?.value
-  //         }
-  //         Laden_list.push(Laden);
-  //         const vehType = {
-  //             supplier: supplierName,
-  //             value: vehDesc?.Tyre_Description?.properties?.tyre_vehicle_type?.value
-  //         }
-  //         veh_Type_List.push(vehType);
-  //     }
-  // });
-
-  // const Tyre_size_designation_including_ply_rating_Rows = getWheelRimsTableData(Tyre_size_designation_including_ply_rating_list);
-  // const Speed_index_Rows = getWheelRimsTableData(Speed_index_list);
-  // const Load_index_Load_rating_Rows = getWheelRimsTableData(Load_index_Load_rating_list);
-  // const Tyre_Type_Rows = getWheelRimsTableData(Tyre_Type_list);
-  // const Laden_Rows = getWheelRimsTableData(Laden_list);
-  // const veh_Type_Rows = getWheelRimsTableData(veh_Type_List);
-
+  
+ 
   // Front-specific lists
   let Front_Tyre_Size_Designation_Including_Ply_Rating_List = [];
   let Front_Speed_Index_List = [];
@@ -533,7 +382,7 @@ async function generateForm7(form7Data, footerData) {
   const Rear_Tyre_Type_Rows = getWheelRimsTableData(Rear_Tyre_Type_List);
   const Rear_Laden_Rows = getWheelRimsTableData(Rear_Laden_List);
 
-  console.log("veh_Type_Rows:", Front_veh_Type_Rows);
+  // console.log("veh_Type_Rows:", Front_veh_Type_Rows);
   // firstValue = Front_veh_Type_Rows;
   // if (firstValue === "2-Wheeler") {
   //   twoWheeler = true;
@@ -759,7 +608,7 @@ async function generateForm7(form7Data, footerData) {
   );
   const Wheel_base_Rows1 = getWheelRimsTableData(Wheel_base_list);
   let Wheel_base_Rows = normalizeWithUnit(Wheel_base_Rows1, MM);
-  console.log("Wheel_base:", Wheel_base_list);
+  // console.log("Wheel_base:", Wheel_base_list);
   const Overall_width_Rows1 = getWheelRimsTableData(Overall_width_list);
   let Overall_width_Rows = normalizeWithUnit(Overall_width_Rows1, MM);
   const Overall_length_Rows1 = getWheelRimsTableData(Overall_length_list);
@@ -857,10 +706,10 @@ async function generateForm7(form7Data, footerData) {
           vehDesc?.Front_Suspension?.properties?.Front_Type_Description?.value,
       };
       Front_Type_Desc_List.push(Front_Type_Desc);
-      console.log(
-        "Type_of_Shock_absorbers_front_list:",
-        Type_of_Shock_absorbers_front_list
-      );
+      // console.log(
+      //   "Type_of_Shock_absorbers_front_list:",
+      //   Type_of_Shock_absorbers_front_list
+      // );
       const Rear_Type_Desc = {
         supplier: supplierName,
         value:
@@ -875,10 +724,10 @@ async function generateForm7(form7Data, footerData) {
             ?.Type_of_Shock_absorbers_provided_at_the_front_and_Rear?.value,
       };
       Type_of_Shock_absorbers_front_list.push(Type_of_Shock_absorbers_front);
-      console.log(
-        "Type_of_Shock_absorbers_front_list:",
-        Type_of_Shock_absorbers_front_list
-      );
+      // console.log(
+      //   "Type_of_Shock_absorbers_front_list:",
+      //   Type_of_Shock_absorbers_front_list
+      // );
       const Type_of_Shock_absorbers_rear = {
         supplier: supplierName,
         value:
@@ -1088,65 +937,8 @@ async function generateForm7(form7Data, footerData) {
     type_of_friction_rear_wheel_brakes_List
   );
 
-  // let Tyre_size_designation_including_ply_rating_list = [];
-  // let Speed_index_list = [];
-  // let Load_index_Load_rating_list = [];
-  // let Tyre_Type_list = [];
-  // let Laden_list = [];
-  // let veh_Type_List = [];
-  // tyresList.map(vehDesc => {
-  //     if (vehDesc.supplier.active === true) {
-
-  //         const supplierName = vehDesc.supplier.nameOfSupplier;
-  //         const Tyre_size_designation_including_ply_rating = {
-  //             supplier: supplierName,
-  //             value: vehDesc?.Tyre_Description?.properties?.Tyre_size_designation_including_ply_rating?.value
-  //         }
-  //         Tyre_size_designation_including_ply_rating_list.push(Tyre_size_designation_including_ply_rating);
-  //         const Speed_index = {
-  //             supplier: supplierName,
-  //             value: vehDesc?.Tyre_Description?.properties?.Speed_index?.value
-  //         }
-  //         Speed_index_list.push(Speed_index);
-  //         const Load_index_Load_rating = {
-  //             supplier: supplierName,
-  //             value: vehDesc?.Tyre_Description?.properties?.Load_index_Load_rating?.value
-  //         }
-  //         Load_index_Load_rating_list.push(Load_index_Load_rating);
-  //         const Tyre_Type = {
-  //             supplier: supplierName,
-  //             value: vehDesc?.Tyre_Description?.properties?.Tyre_Type?.value
-  //         }
-  //         Tyre_Type_list.push(Tyre_Type);
-  //         const Laden = {
-  //             supplier: supplierName,
-  //             value: vehDesc?.Tyre_Description?.properties?.Laden?.value
-  //         }
-  //         Laden_list.push(Laden);
-  //         const vehType = {
-  //             supplier: supplierName,
-  //             value: vehDesc?.Tyre_Description?.properties?.tyre_vehicle_type?.value
-  //         }
-  //         veh_Type_List.push(vehType);
-  //     }
-  // });
-
-  // const Tyre_size_designation_including_ply_rating_Rows = getWheelRimsTableData(Tyre_size_designation_including_ply_rating_list);
-  // const Speed_index_Rows = getWheelRimsTableData(Speed_index_list);
-  // const Load_index_Load_rating_Rows = getWheelRimsTableData(Load_index_Load_rating_list);
-  // const Tyre_Type_Rows = getWheelRimsTableData(Tyre_Type_list);
-  // const Laden_Rows = getWheelRimsTableData(Laden_list);
-  // const veh_Type_Rows = getWheelRimsTableData(veh_Type_List);
-
-  // console.log('veh_Type_Rows:', veh_Type_Rows);
-  // firstValue = veh_Type_Rows;
-  // if (firstValue === "2-Wheeler") {
-  //     twoWheeler = true;
-  //     console.log('true');
-  //     console.log('inside firstValue :', firstValue);
-  //     console.log('inside firstValue twoWheeler:', twoWheeler);
-  // }
-  // // Updated code: Mapping Kerb Weight data and pushing to table
+  
+  
   let Vehicle_kerb_weight_list = [];
   let Kerb_weight_front_axle_list=[];
   let Kerb_weight_rear_axle_list=[];
@@ -3093,197 +2885,9 @@ const formattedDate = today.toLocaleDateString("en-GB");
                   }),
                 ],
               }),
-              // new TableRow({
-              //     children: [
-              //         new TableCell({
-              //             columnSpan: 5,
-              //             width: {
-              //                 size: 7000,
-              //                 type: WidthType.DXA
-              //             },
-              //             children: [
-              //                 new Paragraph({
-              //                     style: "TableBoldTitle",
-              //                     children: [
-              //                         new TextRun({
-              //                             text: "Suspension"
-              //                         })
-              //                     ]
-              //                 })
-              //             ]
-              //         }),
-              //         new TableCell({
-              //             // columnSpan: 5,
-              //             width: {
-              //                 size: 3000,
-              //                 type: WidthType.DXA
-              //             },
-              //             children: [
-              //                 new Paragraph({
-              //                     style: "TableRowContent",
-              //                     children: [
-              //                         new TextRun({
-              //                             text: ""
-              //                         })
-              //                     ]
-              //                 })
-              //             ]
-              //         })
-              //     ]
-              // }),
-              // new TableRow({
-              //     children: [
-              //         new TableCell({
-              //             columnSpan: 5,
-              //             width: {
-              //                 size: 7000,
-              //                 type: WidthType.DXA
-              //             },
-              //             children: [
-              //                 new Paragraph({
-              //                     style: "TableRowContent",
-              //                     children: [
-              //                         new TextRun({
-              //                             text: "Type / Description"
-              //                         })
-              //                     ]
-              //                 })
-              //             ]
-              //         }),
-              //         new TableCell({
-              //             // // columnSpan: 5,
-              //             width: {
-              //                 size: 5000,
-              //                 type: WidthType.DXA
-              //             },
-              //             children: [
-              //                 new Paragraph({
-              //                     style: "TableRowContent",
-              //                     children: [
-              //                         new TextRun({
-              //                             // text: Type_of_Shock_absorbers_provided_at_the_front_and_Rear_Rows
-              //                             text: ""
-              //                         })
-              //                     ]
-              //                 })
-              //             ]
-              //         }),
-              //     ]
-              // }),
-              // new TableRow({
-              //     children: [
-              //         new TableCell({
-              //             columnSpan: 5,
-              //             width: {
-              //                 size: 7000,
-              //                 type: WidthType.DXA
-              //             },
-              //             children: [
-              //                 new Paragraph({
-              //                     style: "TableRowContent",
-              //                     children: [
-              //                         new TextRun({
-              //                             text: "Spring"
-              //                         })
-              //                     ]
-              //                 })
-              //             ]
-              //         }),
-              //         new TableCell({
-              //             // // columnSpan: 5,
-              //             width: {
-              //                 size: 5000,
-              //                 type: WidthType.DXA
-              //             },
-              //             children: [
-              //                 new Paragraph({
-              //                     style: "TableRowContent",
-              //                     children: [
-              //                         new TextRun({
-              //                             text: Type_of_springs_provided_at_front_and_Rear_Rows
-              //                         })
-              //                     ]
-              //                 })
-              //             ]
-              //         }),
-              //     ]
-              // }),
-              // new TableRow({
-              //     children: [
-              //         new TableCell({
-              //             columnSpan: 5,
-              //             width: {
-              //                 size: 7000,
-              //                 type: WidthType.DXA
-              //             },
-              //             children: [
-              //                 new Paragraph({
-              //                     style: "TableRowContent",
-              //                     children: [
-              //                         new TextRun({
-              //                             text: "Anti-roll bar / Suspension- Stabilizer"
-              //                         })
-              //                     ]
-              //                 })
-              //             ]
-              //         }),
-              //         new TableCell({
-              //             // // columnSpan: 5,
-              //             width: {
-              //                 size: 5000,
-              //                 type: WidthType.DXA
-              //             },
-              //             children: [
-              //                 new Paragraph({
-              //                     style: "TableRowContent",
-              //                     children: [
-              //                         new TextRun({
-              //                             text: Antiroll_bar_if_provided_Rows
-              //                         })
-              //                     ]
-              //                 })
-              //             ]
-              //         }),
-              //     ]
-              // }),
-              // new TableRow({
-              //     children: [
-              //         new TableCell({
-              //             columnSpan: 5,
-              //             width: {
-              //                 size: 7000,
-              //                 type: WidthType.DXA
-              //             },
-              //             children: [
-              //                 new Paragraph({
-              //                     style: "TableRowContent",
-              //                     children: [
-              //                         new TextRun({
-              //                             text: "Shock absorbers"
-              //                         })
-              //                     ]
-              //                 })
-              //             ]
-              //         }),
-              //         new TableCell({
-              //             // // columnSpan: 5,
-              //             width: {
-              //                 size: 5000,
-              //                 type: WidthType.DXA
-              //             },
-              //             children: [
-              //                 new Paragraph({
-              //                     style: "TableRowContent",
-              //                     children: [
-              //                         new TextRun({
-              //                             text: Type_of_Shock_absorbers_provided_at_the_front_and_Rear_Rows
-              //                         })
-              //                     ]
-              //                 })
-              //             ]
-              //         }),
-              //     ]
-              // }),
+              
+              
+  
 
               new TableRow({
                 children: [
@@ -5529,107 +5133,9 @@ const formattedDate = today.toLocaleDateString("en-GB");
                   }),
                 ],
               }),
-              // new TableRow({
-              //   children: [
-              //     new TableCell({
-              //       width: {
-              //         size: 7000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableBoldTitle",
-              //           children: [
-              //             new TextRun({
-              //               text: "Maximum gradeability in 1st gear",
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //     new TableCell({
-              //       // // columnSpan: 5,
-              //       width: {
-              //         size: 5000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableRowContent",
-              //           children: [
-              //             new TextRun({
-              //               text: Maximum_gradeability_Rows,
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //     new TableCell({
-              //       width: {
-              //         size: 3000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableRowContent",
-              //           children: [
-              //             new TextRun({
-              //               text: "",
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //     new TableCell({
-              //       width: {
-              //         size: 3000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableRowContent",
-              //           children: [
-              //             new TextRun({
-              //               text: "",
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //     new TableCell({
-              //       width: {
-              //         size: 3000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableRowContent",
-              //           children: [
-              //             new TextRun({
-              //               text: "",
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //     new TableCell({
-              //       width: {
-              //         size: 3000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableRowContent",
-              //           children: [
-              //             new TextRun({
-              //               text: "",
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //   ],
-              // }),
+              
+              
+              
               new TableRow({
                 children: [
                   new TableCell({
@@ -6010,44 +5516,8 @@ const formattedDate = today.toLocaleDateString("en-GB");
                   }),
                 ],
               }),
-              // new TableRow({
-              //   children: [
-              //     new TableCell({
-              //       columnSpan: 5,
-              //       width: {
-              //         size: 7000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableRowContent",
-              //           children: [
-              //             new TextRun({
-              //               text: "Load body platform area",
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //     new TableCell({
-              //       // // columnSpan: 5,
-              //       width: {
-              //         size: 5000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableRowContent",
-              //           children: [
-              //             new TextRun({
-              //               text: Load_body_platform_area_Rows,
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //   ],
-              // }),
+              
+            
               new TableRow({
                 children: [
                   new TableCell({
@@ -7462,107 +6932,8 @@ const formattedDate = today.toLocaleDateString("en-GB");
                 ],
               }),
 
-              // new TableRow({
-              //   children: [
-              //     new TableCell({
-              //       width: {
-              //         size: 7000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableBoldTitle",
-              //           children: [
-              //             new TextRun({
-              //               text: "Maximum gradeability in 1st gear",
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //     new TableCell({
-              //       // // columnSpan: 5,
-              //       width: {
-              //         size: 5000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableRowContent",
-              //           children: [
-              //             new TextRun({
-              //               text: Maximum_gradeability_Rows,
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //     new TableCell({
-              //       width: {
-              //         size: 3000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableRowContent",
-              //           children: [
-              //             new TextRun({
-              //               text: "",
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //     new TableCell({
-              //       width: {
-              //         size: 3000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableRowContent",
-              //           children: [
-              //             new TextRun({
-              //               text: "",
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //     new TableCell({
-              //       width: {
-              //         size: 3000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableRowContent",
-              //           children: [
-              //             new TextRun({
-              //               text: "",
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //     new TableCell({
-              //       width: {
-              //         size: 3000,
-              //         type: WidthType.DXA,
-              //       },
-              //       children: [
-              //         new Paragraph({
-              //           style: "TableRowContent",
-              //           children: [
-              //             new TextRun({
-              //               text: "",
-              //             }),
-              //           ],
-              //         }),
-              //       ],
-              //     }),
-              //   ],
-              // }),
+    
+            
               new TableRow({
                 children: [
                   new TableCell({
@@ -7912,192 +7283,9 @@ const formattedDate = today.toLocaleDateString("en-GB");
             ],
           }),
         ],
-        // footers: {
-        //     default: new Footer({
-        //         children: [
-        //             new Table({
-        //                 width: {
-        //                     size: 10000,
-        //                     type: WidthType.DXA
-        //                 },
-        //                 rows: [
-        //                     new TableRow({
-        //                         children: [
-        //                             new TableCell({
-        //                                 width: {
-        //                                     size: 3300,
-        //                                     WidthType: WidthType.DXA
-        //                                 },
-        //                                 children: [
-        //                                     new Paragraph({
-        //                                         style: "redColorText",
-        //                                         children: [
-        //                                             new TextRun({
-        //                                                 text: "Manufacturer :" + dataOfFooter.Manufacture_Name.value
-        //                                             })
-        //                                         ]
-        //                                     })
-        //                                 ]
-        //                             }),
-        //                             new TableCell({
-        //                                 width: {
-        //                                     size: 3300,
-        //                                     WidthType: WidthType.DXA
-        //                                 },
-        //                                 children: [
-        //                                     new Paragraph({
-        //                                         style: "redColorText",
-        //                                         children: [
-        //                                             new TextRun({
-        //                                                 text: "Sheet No : "
-        //                                             })
-        //                                         ]
-        //                                     })
-        //                                 ]
-        //                             }),
-        //                             new TableCell({
-        //                                 width: {
-        //                                     size: 3300,
-        //                                     WidthType: WidthType.DXA
-        //                                 },
-        //                                 children: [
-        //                                     new Paragraph({
-        //                                         style: "redColorText",
-        //                                         children: [
-        //                                             new TextRun({
-        //                                                 text: "Test Agency : "
-        //                                             })
-        //                                         ]
-        //                                     })
-        //                                 ]
-        //                             })
-        //                         ]
-        //                     }),
-        //                     new TableRow({
-        //                         children: [
-        //                             new TableCell({
-        //                                 width: {
-        //                                     size: 3300,
-        //                                     WidthType: WidthType.DXA
-        //                                 },
-        //                                 children: [
-        //                                     new Paragraph({
-        //                                         style: "redColorText",
-        //                                         children: [
-        //                                             new TextRun({
-        //                                                 text: ""
-        //                                             })
-        //                                         ]
-        //                                     })
-        //                                 ]
-        //                             }),
-        //                             new TableCell({
-        //                                 width: {
-        //                                     size: 3300,
-        //                                     WidthType: WidthType.DXA
-        //                                 },
-        //                                 children: [
-        //                                     new Paragraph({
-        //                                         style: "redColorText",
-        //                                         children: [
-        //                                             new TextRun({
-        //                                                 text: "Document No: " + dataOfFooter.Document_No.value
-        //                                             }),
-        //                                         ]
-        //                                     })
-        //                                 ]
-        //                             }),
-        //                             new TableCell({
-        //                                 width: {
-        //                                     size: 3300,
-        //                                     WidthType: WidthType.DXA
-        //                                 },
-        //                                 children: [
-        //                                     new Paragraph({
-        //                                         style: "redColorText",
-        //                                         children: [
-        //                                             new TextRun({
-        //                                                 text: ""
-        //                                             })
-        //                                         ]
-        //                                     })
-        //                                 ]
-        //                             })
-        //                         ]
-        //                     }),
-        //                     new TableRow({
-        //                         children: [
-        //                             new TableCell({
-        //                                 width: {
-        //                                     size: 3300,
-        //                                     WidthType: WidthType.DXA
-        //                                 },
-        //                                 children: [
-        //                                     new Paragraph({
-        //                                         style: "redColorText",
-        //                                         children: [
-        //                                             new TextRun({
-        //                                                 text: "Name: " + dataOfFooter.Homologation_Engineer_Name.value
-        //                                             }),
-        //                                             new TextRun({
-        //                                                 text: "Designation:" + dataOfFooter.Engineer_Designation.value,
-        //                                                 break: 1
-        //                                             })
-        //                                         ]
-        //                                     })
-        //                                 ]
-        //                             }),
-        //                             new TableCell({
-        //                                 width: {
-        //                                     size: 3300,
-        //                                     WidthType: WidthType.DXA
-        //                                 },
-        //                                 children: [
-        //                                     new Paragraph({
-        //                                         style: "redColorText",
-        //                                         children: [
-        //                                             new TextRun({
-        //                                                 text: "Date : "
-        //                                             })
-        //                                         ]
-        //                                     })
-        //                                 ]
-        //                             }),
-        //                             new TableCell({
-        //                                 width: {
-        //                                     size: 3300,
-        //                                     WidthType: WidthType.DXA
-        //                                 },
-        //                                 children: [
-        //                                     new Paragraph({
-        //                                         style: "redColorText",
-        //                                         children: [
-        //                                             new TextRun({
-        //                                                 text: "Name: "
-        //                                             }),
-        //                                             new TextRun({
-        //                                                 text: "Designation: ",
-        //                                                 break: 1
-        //                                             })
-        //                                         ]
-        //                                     })
-        //                                 ]
-        //                             })
-        //                         ]
-        //                     })
-        //                 ]
-        //             }),
-        //             new Paragraph({
-        //                 children: [
-        //                     new TextRun({
-        //                         children: ["Page | ", PageNumber.CURRENT]
-        //                     })
-        //                 ],
-        //                 alignment: AlignmentType.RIGHT
-        //             })
-        //         ]
-        //     })
-        // }
+        size: 3300,
+       
+  
         footers: {
           default: new Footer({
             children: [

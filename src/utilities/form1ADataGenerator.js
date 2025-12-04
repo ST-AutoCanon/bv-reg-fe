@@ -7,7 +7,6 @@ let dStrapRows;
 // let twoWheeler;
 let twoWheeler = false;
 let firstValue;
-console.log('initially firstValue is let twoWheeler :', firstValue)
 
 const prefixPattern = /^(M\/s\.?|m\/s\.?)\s*/i;
 function normalizeMsPrefix(rowString) {
@@ -25,55 +24,14 @@ function normalizeMsPrefix(rowString) {
       })
       .join(" | ");
   }
-//   function extractTACNumbers(inputList) {
-//     return inputList.map(entry => {
-//       // Match TAC pattern strictly at the beginning: x/x/x (1–3 digits, slashes)
-//       const match = entry.match(/^\d{1,3}\/\d{1,2}\/\d{1,2}/);
-//       return match ? match[0] : ""; // Return only the TAC number or "" if not found
-//     });
-//   }
 
 
 
 
 
-// function extractTACNumbers(input) {
-//     let inputList = [];
-  
-//     // If input is a string, wrap it in an array
-//     if (typeof input === 'string') {
-//       inputList = [input];
-//     } else if (Array.isArray(input)) {
-//       inputList = input;
-//     } else {
-//       console.warn("extractTACNumbers: Unsupported input type", input);
-//       return '';
-//     }
-  
-//     for (const entry of inputList) {
-//       let value = entry;
-  
-//       // Handle object with 'value' key
-//       if (typeof value === 'object' && value !== null && 'value' in value) {
-//         value = value.value;
-//       }
-  
-//       if (typeof value !== 'string') {
-//         console.warn("Non-string entry in extractTACNumbers:", value);
-//         continue;
-//       }
-  
-//       const trimmed = value.trim();
-  
-//       // Match something like "abc123 12/12/2026"
-//       const datePattern = /^(.+?)\s+\d{1,2}\/\d{1,2}\/\d{4}$/;
-//       const match = trimmed.match(datePattern);
-//       return match ? match[1] : trimmed;
-//     }
-  
-//     return '';
-//   }
-  
+
+
+
   
   
 
@@ -99,7 +57,7 @@ function extractTACNumbers(input) {
   
       // If still not a string, skip
       if (typeof value !== 'string') {
-        console.warn("Non-string entry in extractTACNumbers:", value);
+        // console.warn("Non-string entry in extractTACNumbers:", value);
         continue;
       }
   
@@ -178,7 +136,7 @@ function extractTACNumbers(input) {
 
   
 function populateMultiSupData(form1AData) {
-    console.log('form1AData:', form1AData);
+    // console.log('form1AData:', form1AData);
     let footerData = foot;
     // General_arrangement_vehicle
     const drawing1 = footerData.form1AData.General_arrangement_vehicle.properties.Upload_Drawing_Vehicle.file_name;
@@ -549,7 +507,7 @@ function populateMultiSupData(form1AData) {
     let tyreMAxWisthRows1 = generateTableData(tyreMAxWisthList);
     let tyreMAxWisthRows = normalizeWithUnit(tyreMAxWisthRows1, MM);
     let vehTypeRows = generateTableData(vehTypeList);
-    console.log('vehTypeRows:', vehTypeRows);
+    // console.log('vehTypeRows:', vehTypeRows);
     // firstValue = vehTypeRows;
     // if (firstValue === "2-Wheeler") {
     //     twoWheeler = true;
@@ -769,146 +727,6 @@ function populateMultiSupData(form1AData) {
         rowKey: "List1_116",
         value: weightRearAxleRows
     });
-
-    
-    // const transmissionList = form1AData?.Drive_Train_System?.DriveTrainSystemData;
-    // let transmDiagramList = [];
-    // let transmTypeList = [];
-    // let transmGearBoxList = [];
-    // let transmPrimRatioList = [];
-    // let transmReverseGearList = [];
-    // let transmECUList = [];
-    // let transmMaxSpeedList = [];
-    // transmissionList && transmissionList.map(vehTransm => {
-    //     if (vehTransm.supplier.active === true) {
-    //         const supplierName = vehTransm?.supplier?.nameOfSupplier;
-    //         transmDiagramList.push({
-    //             supplier: supplierName,
-    //             value: vehTransm?.Transmission?.properties?.Drawing_transmission_arrangement?.value
-    //         });
-    //         transmTypeList.push({
-    //             supplier: supplierName,
-    //             value: vehTransm?.Transmission?.properties?.type_Transmission_arrangement?.value
-    //         });
-    //         transmGearBoxList.push({
-    //             supplier: supplierName,
-    //             value: vehTransm?.Transmission?.properties?.Type_Gear_box_vehicle?.value
-    //         });
-    //         transmPrimRatioList.push({
-    //             supplier: supplierName,
-    //             value: vehTransm?.Transmission?.properties?.Primary_ratio_transmission_system?.value
-    //         });
-    //         transmReverseGearList.push({
-    //             supplier: supplierName,
-    //             value: vehTransm?.Transmission?.properties?.Reverse_gear_max_speed?.value
-    //         });
-    //         transmECUList.push({
-    //             supplier: supplierName,
-    //             value: vehTransm?.Transmission?.properties?.ECUs_in_transmission?.value
-    //         });
-    //         transmMaxSpeedList.push({
-    //             supplier: supplierName,
-    //             value: vehTransm?.Transmission?.properties?.Max_Design_speed_of_vehicle?.value
-    //         });
-    //     }
-    // });
-    // // let transmDiagramRows = generateTableData(transmDiagramList);
-    // let transmTypeRows = generateTableData(transmTypeList);
-    // let transmGearBoxRows = generateTableData(transmGearBoxList);
-    // let transmPrimRatioRows = generateTableData(transmPrimRatioList);
-    // let transmReverseGearRows = generateTableData(transmReverseGearList);
-    // let transmECURows = generateTableData(transmECUList);
-    // let transmMaxSpeedRows1 = generateTableData(transmMaxSpeedList);
-    // let transmMaxSpeedRows = normalizeWithUnit(transmMaxSpeedRows1, KM_H);
-    // allTablesData.push({
-    //     rowKey: "List1_31",
-    //     value: transmDiagramRows
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_32",
-    //     value: transmTypeRows
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_341",
-    //     value: transmGearBoxRows
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_3431",
-    //     value: transmPrimRatioRows
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_3436",
-    //     value: transmReverseGearRows
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_35",
-    //     value: transmECURows
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_36",
-    //     value: transmMaxSpeedRows
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_33",
-    //     value: "NA"
-    // });
-    // // allTablesData.push({
-    // //     rowKey: "List1_34",
-    // //     value: "NA"
-    // // });
-    // allTablesData.push({
-    //     rowKey: "List1_342",
-    //     value: "NA"
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_3421",
-    //     value: "NA"
-    // });
-    // // allTablesData.push({
-    // //     rowKey: "List1_343",
-    // //     value: "NA"
-    // // });
-    // allTablesData.push({
-    //     rowKey: "List1_3432",
-    //     value: "NA"
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_3433",
-    //     value: "NA"
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_34331",
-    //     value: "NA"
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_34332",
-    //     value: "NA"
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_34333",
-    //     value: "NA"
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_34334",
-    //     value: "NA"
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_34335",
-    //     value: "NA"
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_34336",
-    //     value: "NA"
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_3434",
-    //     value: "NA"
-    // });
-    // allTablesData.push({
-    //     rowKey: "List1_3435",
-    //     value: "NA"
-    // });
-
 
     const transmissionList = form1AData?.Drive_Train_System?.DriveTrainSystemData;
     let transmDiagramList = [];
@@ -1133,16 +951,16 @@ let sixthGearRatioRows = generateTableData(sixthGearRatioList);
     //     : form1AData?.SteeringSuspensionAntiTheft?.SteeringSuspensionAntiTheftData;
     const handleLockData = form1AData?.Suspension?.SuspensionData;
     const steeringData = form1AData?.SteeringSuspensionAntiTheft?.SteeringSuspensionAntiTheftData;
-    console.log('handleLockData:', handleLockData);
-    console.log('steeringData:', steeringData);
+    // console.log('handleLockData:', handleLockData);
+    // console.log('steeringData:', steeringData);
     const suspensionList = (
         handleLockData && Object.keys(handleLockData).length > 0
     ) ? handleLockData
         : (steeringData && Object.keys(steeringData).length > 0 ? steeringData : {});
 
     const handleLockDataa = form1AData.Handle_Lock_Anti_Theft_Device.HandleLock;
-    console.log('handleLockDataa:', handleLockDataa);
-    console.log("suspensionList:", suspensionList);
+    // console.log('handleLockDataa:', handleLockDataa);
+    // console.log("suspensionList:", suspensionList);
     let suspDrawingList = [];
     let suspBriefDescOfECUsList = [];
     let suspSpringsFrontRearList = [];
@@ -1287,10 +1105,10 @@ let sixthGearRatioRows = generateTableData(sixthGearRatioList);
         rowKey: "List2_5133",
         value: sMaxWheelRows
     });
-    console.log('thLockListt:', thLockListt);
-    console.log('MatDeviceListt:', MatDeviceListt);
-    console.log('thLockList length:', thLockList.length);
-    console.log('thLockListt length:', thLockListt.length);
+    // console.log('thLockListt:', thLockListt);
+    // console.log('MatDeviceListt:', MatDeviceListt);
+    // console.log('thLockList length:', thLockList.length);
+    // console.log('thLockListt length:', thLockListt.length);
     const isValidList = (arr) =>
         Array.isArray(arr) &&
         arr.some(item =>
@@ -1298,38 +1116,18 @@ let sixthGearRatioRows = generateTableData(sixthGearRatioList);
             Object.values(item).some(v => v !== undefined && v !== null && v !== '')
         );
     const finalThLockList = isValidList(thLockList) ? thLockList : (isValidList(thLockListt) ? thLockListt : []);
-    console.log('finalThLockList used for generateTableData:', finalThLockList);
+    // console.log('finalThLockList used for generateTableData:', finalThLockList);
     let thLockRows = generateTableData(finalThLockList);
     // For MatDeviceList
     const finalMatDeviceList = isValidList(MatDeviceList)
         ? MatDeviceList
         : (isValidList(MatDeviceListt) ? MatDeviceListt : []);
 
-    console.log('finalMatDeviceList used for generateTableData:', finalMatDeviceList);
+    // console.log('finalMatDeviceList used for generateTableData:', finalMatDeviceList);
 
     let MatDeviceRows = generateTableData(finalMatDeviceList);
     const updatedMatDeviceRows = normalizeMsPrefix(MatDeviceRows);
-    // let MatDeviceRows = generateTableData(finalMatDeviceList);
-    // let MatDeviceRows = generateTableData(MatDeviceList || MatDeviceListt);
-    console.log('MatDeviceList:', MatDeviceList);
-    console.log('thlockRows:', thLockRows);
-    // let MatDeviceRows = generateTableData(MatDeviceList.length ? MatDeviceList : MatDeviceListt);
-    console.log('MatDeviceList length:', MatDeviceList.length);
-    console.log('MatDeviceListt length:', MatDeviceListt.length);
-    console.log('suspBriefDescOfECUsRows:', suspBriefDescOfECUsRows);
-    console.log('suspSpringsFrontRearRows:', suspSpringsFrontRearRows);
-    console.log('suspAntiRollBarRows:', suspAntiRollBarRows);
-    console.log('suspSockAbsorbersRows:', suspSockAbsorbersRows);
-    console.log('sControlProvidedRows:', sControlProvidedRows);
-    console.log('sLocationRows:', sLocationRows);
-    console.log('smechanismRows:', smechanismRows);
-    console.log('sMakeRows:', sMakeRows);
-    console.log('sGearRatioRows:', sGearRatioRows);
-    console.log('sMaxWheelRows:', sMaxWheelRows);
-    console.log('sBreifRows:', sBreifRows);
-    console.log('thLockRows:', thLockRows);
-    console.log('MatDeviceRows:', finalMatDeviceList);
-    console.log('first value in steering Rows:', firstValue);
+    
 
     allTablesData.push({
         rowKey: "List1_41",
@@ -1393,91 +1191,6 @@ let sixthGearRatioRows = generateTableData(sixthGearRatioList);
         value: DeviceUnauthorizedUseRows
     });
 
-
-    // Updated code: Mapping Tyre Description data and pushing to table
-    // tyresList = form1AData.Tyres.TyresData;
-    // let tyreLadenList = [];
-    // let tyreUnladenDriverList = [];
-    // let tyreWheelCombSizeList = [];
-    // let tyreMinSpeedCategoryList = [];
-    // let tyreMinLoadCapIndexList = [];
-    // let tyreCategCompatibleList = [];
-    // let vehTypeList=[];
-    // tyresList && tyresList.map(vehTyre => {
-    //     if (vehTyre?.supplier?.active === true) {
-    //         const supplierName = vehTyre.supplier.nameOfSupplier;
-    //         tyreLadenList.push({
-    //             supplier: supplierName,
-    //             value: vehTyre?.Tyre_Description?.properties?.Laden?.value
-    //         });
-    //         tyreUnladenDriverList.push({
-    //             supplier: supplierName,
-    //             value: vehTyre?.Tyre_Description?.properties?.Unladen_Driver?.value
-    //         });
-    //         tyreWheelCombSizeList.push({
-    //             supplier: supplierName,
-    //             value: vehTyre?.Tyre_Description?.properties?.Tyre_wheel_combinations_Sizes?.value
-    //         });
-    //         tyreMinSpeedCategoryList.push({
-    //             supplier: supplierName,
-    //             value: vehTyre?.Tyre_Description?.properties?.Minimum_speed_category_symbol?.value
-    //         });
-    //         tyreMinLoadCapIndexList.push({
-    //             supplier: supplierName,
-    //             value: vehTyre?.Tyre_Description?.properties?.Minimum_load_capacity_index?.value
-    //         });
-    //         tyreCategCompatibleList.push({
-    //             supplier: supplierName,
-    //             value: vehTyre?.Tyre_Description?.properties?.Categories_compatible_for_vehicle?.value
-    //         });
-    //         vehTypeList.push({
-    //             supplier: supplierName,
-    //             value: vehTyre?.Front_Tyre?.properties?.tyre_vehicle_type?.value
-    //         });
-
-
-    //     }
-    // });
-    // let tyreLadenRows = generateTableData(tyreLadenList);
-    // let tyreUnladenDriverRows = generateTableData(tyreUnladenDriverList);
-    // let tyreWheelCombSizeRows = generateTableData(tyreWheelCombSizeList);
-    // let tyreMinSpeedCategoryRows = generateTableData(tyreMinSpeedCategoryList);
-    // let tyreMinLoadCapIndexRows = generateTableData(tyreMinLoadCapIndexList);
-    // let tyreCategCompatibleRows = generateTableData(tyreCategCompatibleList);
-    // let vehTypeRows = generateTableData(vehTypeList);
-    // console.log('vehTypeRows:',vehTypeRows);
-    //  firstValue=vehTypeRows;
-    // if (firstValue === "2-Wheeler") {
-    //     twoWheeler = true;
-    //     console.log('true');
-    //     console.log('inside firstValue :',firstValue);
-    //     console.log('inside firstValue twoWheeler:',twoWheeler);
-    // }
-    // allTablesData.push({
-    //     rowKey: "List2_4211",
-    //     value: tyreLadenRows
-    // });
-    // allTablesData.push({
-    //     rowKey: "List2_4212",
-    //     value: tyreUnladenDriverRows
-    // });
-    // allTablesData.push({
-    //     rowKey: "List2_422",
-    //     value: tyreWheelCombSizeRows
-    // });
-    // allTablesData.push({
-    //     rowKey: "List2_423",
-    //     value: tyreMinSpeedCategoryRows
-    // });
-    // allTablesData.push({
-    //     rowKey: "List2_424",
-    //     value: tyreMinLoadCapIndexRows
-    // });
-    // allTablesData.push({
-    //     rowKey: "List2_425",
-    //     value: tyreCategCompatibleRows
-    // });
-
     const wheelRimList = form1AData.Wheel_Rim.WheelRim;
     let fwMakeList = [];
     let fwBISLicNumberList = [];
@@ -1540,7 +1253,7 @@ let sixthGearRatioRows = generateTableData(sixthGearRatioList);
     // let fwBISLicNumberRows = generateTableData(fwBISLicNumberListt);
     let fwBISLicNumberRows1 = generateTableData(fwBISLicNumberList);
 const fwBISLicNumberRows = extractTACNumbers(fwBISLicNumberRows1);
-console.log('fwBISLicNumberRows:',fwBISLicNumberRows);
+// console.log('fwBISLicNumberRows:',fwBISLicNumberRows);
     let fwPartNumberRows = generateTableData(fwPartNumberList);
     let fwSizeRows = generateTableData(fwSizeList);
     // let fwSizeRows = normalizeWithUnit(fwSizeRows1, INCH_MM);
@@ -1549,7 +1262,7 @@ console.log('fwBISLicNumberRows:',fwBISLicNumberRows);
     const updatedrwMakeRows= normalizeMsPrefix(rwMakeRows);
     let rwBISLicNumberRows1 = generateTableData(rwBISLicNumberList);
     const rwBISLicNumberRows = extractTACNumbers(rwBISLicNumberRows1);
-    console.log('rwBISLicNumberRows:',rwBISLicNumberRows);
+    // console.log('rwBISLicNumberRows:',rwBISLicNumberRows);
     let rwPartNumberRows = generateTableData(rwPartNumberList);
     let rwSizeRows = generateTableData(rwSizeList);
     // let rwSizeRows = normalizeWithUnit(rwSizeRows1, INCH_MM);
@@ -1841,7 +1554,7 @@ console.log('fwBISLicNumberRows:',fwBISLicNumberRows);
     let brkSystemNumberRearRows = generateTableData(brkSystemNumberRearList);
 
     let brkSystemNumberCombined = `${brkSystemNumberFrontRows},${brkSystemNumberRearRows}`;
-console.log("Combined:", brkSystemNumberCombined);
+// console.log("Combined:", brkSystemNumberCombined);
     let brkShoesDiscsMakeRows = generateTableData(brkShoesDiscsMakeList);
     const updatedbrkShoesDiscsMakeRows= normalizeMsPrefix(brkShoesDiscsMakeRows);
     let brkLiningPadsRows = generateTableData(brkLiningPadsList);
@@ -2097,7 +1810,7 @@ console.log("Combined:", brkSystemNumberCombined);
 
 
     const DaytimeRunningList = form1AData?.Daytime_Running_Lamp?.DaytimeRunningLamp;
-console.log('DaytimeRunningList:',DaytimeRunningList);
+// console.log('DaytimeRunningList:',DaytimeRunningList);
     // Arrays for Daytime Running Lamp (regular)
     let drlMakeList = [];
     let drlTACNumberList = [];
@@ -2154,17 +1867,17 @@ console.log('DaytimeRunningList:',DaytimeRunningList);
     // Generate table data
     let drlMakeRows = generateTableData(drlMakeList);
     let normalizedDrlMakeRows = normalizeMsPrefix(drlMakeRows);
-    console.log('normalizedDrlMakeRows:',normalizedDrlMakeRows)
+    // console.log('normalizedDrlMakeRows:',normalizedDrlMakeRows)
     let drlTACNumberRows = generateTableData(drlTACNumberList);
-    console.log('drlTACNumberRows:',drlTACNumberRows)
+    // console.log('drlTACNumberRows:',drlTACNumberRows)
     let drlNumberColourRows = generateTableData(drlNumberColourList);
-    console.log('drlNumberColourRows:',drlNumberColourRows)
+    // console.log('drlNumberColourRows:',drlNumberColourRows)
     let drlLedMakeRows = generateTableData(drlLedMakeList);
     let normalizedDrlLedMakeRows = normalizeMsPrefix(drlLedMakeRows);
     
     let drlLedTACNumberRows = generateTableData(drlLedTACNumberList);
     let drlLedNumberColourRows = generateTableData(drlLedNumberColourList);
-    console.log('drlLedNumberColourRows:',drlLedNumberColourRows)
+    // console.log('drlLedNumberColourRows:',drlLedNumberColourRows)
 
     allTablesData.push({
         rowKey: "List2_71111",
@@ -2599,7 +2312,7 @@ console.log('DaytimeRunningList:',DaytimeRunningList);
     let alldevicesRows = generateTableData(alldevicesList);
     let hlMakeRows = generateTableData(hlMakeList);
     const updatedhlMakeRows = normalizeMsPrefix(hlMakeRows);
-    console.log('updatedhlMakeRows 71111:',updatedhlMakeRows);
+    // console.log('updatedhlMakeRows 71111:',updatedhlMakeRows);
     let hlTypeOfLensRows = generateTableData(hlTypeOfLensList);
     let hlTACNumberRows = generateTableData(hlTACNumberList);
     let hlNumberColorOfLightRows = generateTableData(hlNumberColorOfLightList);
@@ -4086,36 +3799,10 @@ console.log('DaytimeRunningList:',DaytimeRunningList);
         rowKey: "List3_2941",
         value: iiDrivingSeatRows
     });
-    // Updated code: Mapping R Point data and pushing to table
-    // const RPointList = form1AData?.RPoint?.RPointData;
-    // let coDrawingList = [];
-    // let iiDrivingSeatList = [];
-    // RPointList && RPointList.map(RPoint => {
-    //     if (RPoint.supplier.active === true) {
-    //         const supplierName = RPoint?.supplier?.nameOfSupplier;
-    //         coDrawingList.push({
-    //             supplier: supplierName,
-    //             value: RPoint?.R_Point?.properties?.Coordinates_of_drawing?.value
-    //         });
-    //         iiDrivingSeatList.push({
-    //             supplier: supplierName,
-    //             value: RPoint?.R_Point?.properties?.Intended_seat_back_inclination_Driving_seat?.value
-    //         });
-    //     }
-    // });
-    // let coDrawingRows = generateTableData(coDrawingList);
-    // let iiDrivingSeatRows = generateTableData(iiDrivingSeatList);
-    // allTablesData.push({
-    //     rowKey: "List3_2331",
-    //     value: coDrawingRows
-    // });
-    // allTablesData.push({
-    //     rowKey: "List3_2341",
-    //     value: iiDrivingSeatRows
-    // });
-    // Updated code: Mapping Seating Arrangement data and pushing to table
+    
+    
     const sArrangementList = form1AData?.Seating_Arrangement?.SeatingArrangementData;
-    console.log('sArrangementList:',sArrangementList)
+    // console.log('sArrangementList:',sArrangementList)
     let noSeatsList = [];
     let loSeatsList = [];
     sArrangementList && sArrangementList.map(sArrangement => {
@@ -4144,7 +3831,7 @@ console.log('DaytimeRunningList:',DaytimeRunningList);
 
     // Updated code: Mapping Windscreen and Wiping System data and pushing to table
     const wswSystemList = form1AData?.Windscreen_and_Wiping_System?.WindscreenAndWipingSystem;
-    console.log('wswSystemList:',wswSystemList);
+    // console.log('wswSystemList:',wswSystemList);
     let moWindScreemList = [];
     let biswList = [];
     let mMaterialList = [];
@@ -4182,7 +3869,7 @@ console.log('DaytimeRunningList:',DaytimeRunningList);
     let wtmWasher_Pump_MakeList =[];
     let wtmNumber_Of_NozzlesList =[];
 
-    console.log('wswSystemList:',wswSystemList);
+    // console.log('wswSystemList:',wswSystemList);
     wswSystemList && wswSystemList.map(wswSystem => {
         if (wswSystem.supplier.active === true) {
             const supplierName = wswSystem?.supplier?.nameOfSupplier;
@@ -4546,40 +4233,6 @@ let typeDescriptionRows = twoWheeler ? 'NA' : generateTableData(typeDescriptionL
         rowKey: "List3_272",
         value: wtmNumber_Of_NozzlesRows
     });
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     allTablesData.push({
         rowKey: "List3_28",
         value: uDrawingRows
@@ -5691,53 +5344,6 @@ let typeDescriptionRows = twoWheeler ? 'NA' : generateTableData(typeDescriptionL
     });
     return allTablesData;
 }
-
-// function generateTableData(dataList) {
-//     let dataRows = [];
-//     if (dataList && dataList.length > 0) {
-//         dataList.map(currentData => {
-//             const rimRow = new TableRow({
-//                 children: [
-
-//                     new TableCell({
-//                         width: {
-//                             size: 3000,
-//                             WidthType: WidthType.DXA
-//                         },
-//                         children: [
-//                             new Paragraph({
-//                                 style: "TableRowContent",
-//                                 children: [
-//                                     new TextRun({
-//                                         text: currentData?.value
-//                                     })
-//                                 ]
-//                             })
-//                         ]
-//                     })
-//                 ]
-//             });
-//             dataRows.push(rimRow);
-//         });
-//     }
-//     return dataRows;
-// }
-
-
-
-// function generateTableData(dataList) {
-//     if (Array.isArray(dataList) && dataList.length > 0) {
-//         // Extract 'Wheel_rim_size' or 'value' from each wheelRim and join them into a single string
-//         return dataList.map(wheelRim => 
-//             wheelRim?.Wheel_Rim_Size?.properties?.Wheel_rim_size?.value || 
-//             wheelRim?.value || 
-//             ""
-//         ).join(" ");
-//     } else {
-//         return ""; // Return an empty string if no data is available
-//     }
-// }
-
 
 function generateTableData(dataList) {
     if (Array.isArray(dataList) && dataList.length > 0) {

@@ -583,7 +583,7 @@ const Newhomologation: FC<ChildProps> = ({ onClose }) => {
         await Post(searchApiURL, homologationData, config)
             .then((resp) => {
                 if (resp.data.status === 'success') {
-                    console.log('vehicleType1: inside homologaion request success', vehicleType1);
+                    // console.log('vehicleType1: inside homologaion request success', vehicleType1);
                     let requestType = { 'fuel_type': homologationData.fuel_type, 'vehicle_type': homologationData.vehicle_type }
                     dispatch(setHomologationDatas(requestType));
                     dispatch(setCategory(homologationData.vehicle_category));
@@ -595,7 +595,7 @@ const Newhomologation: FC<ChildProps> = ({ onClose }) => {
                 }
             })
             .catch((error) => {
-                console.log('error');
+                // console.log('error');
             });
     };
 

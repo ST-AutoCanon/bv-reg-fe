@@ -59,7 +59,7 @@ const SearchHomologation: FC = () => {
                 if (resp.data.status === 'failure') { }
             })
             .catch((error) => {
-                console.log('error');
+                // console.log('error');
             });
     };
 

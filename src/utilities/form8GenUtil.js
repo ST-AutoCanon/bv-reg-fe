@@ -87,7 +87,7 @@ async function fetchAndProcessImage(footerData) {
       },
     });
 
-    console.log("ImageRun instance created:", docSealImage);
+    // console.log("ImageRun instance created:", docSealImage);
 
     return docSealImage; // Return the docSealImage after it's ready
   } catch (error) {
@@ -96,162 +96,8 @@ async function fetchAndProcessImage(footerData) {
   }
 }
 
-// // Universal function inside the same file
-// function parseAndCheckTACValidity(tacValueRaw) {
-//     const result = {
-//         raw: tacValueRaw || "",
-//         dateStr: "NA",
-//         hasDate: false,
-//         expired: false
-//     };
-
-//     if (!tacValueRaw) return result;
-
-//     const tacParts = tacValueRaw.split(/and|&/i);
-//     if (tacParts.length < 2) return result;
-
-//     const datePart = tacParts[1].trim();
-//     result.dateStr = datePart;
-
-//     const [day, month, year] = datePart.split("/").map(Number);
-//     if (!day || !month || !year) return result;
-
-//     const tacDate = new Date(year, month - 1, day);
-//     const today = new Date();
-
-//     result.hasDate = true;
-//     result.expired = tacDate < today;
-
-//     return result;
-// }
-
-// function parseAndCheckTACValidity(validityDateStr) {
-//     if (!validityDateStr || typeof validityDateStr !== 'string') {
-//         return { expired: true, hasDate: false };
-//     }
-
-//     let parsedDate = new Date(validityDateStr);
-
-//     if (isNaN(parsedDate.getTime())) {
-//         // Try to extract using regex (handles formats like DD-MM-YYYY or DD/MM/YYYY)
-//         const parts = validityDateStr.match(/^(\d{1,2})[-/](\d{1,2})[-/](\d{4})$/);
-//         if (parts) {
-//             const [ , day, month, year ] = parts;
-//             parsedDate = new Date(`${year}-${month}-${day}`);
-//         }
-//     }
-
-//     if (isNaN(parsedDate.getTime())) {
-//         return { expired: true, hasDate: false }; // Still invalid
-//     }
-
-//     return {
-//         expired: parsedDate < new Date(),
-//         hasDate: true
-//     };
-// }
-
-// function parseAndCheckTACValidity(validityDateStr) {
-//   if (!validityDateStr || typeof validityDateStr !== "string") {
-//     return { expired: true, hasDate: false };
-//   }
-
-//   // Try parsing directly as ISO date (YYYY-MM-DD)
-//   const isoDate = new Date(validityDateStr);
-//   if (!isNaN(isoDate.getTime())) {
-//     return {
-//       expired: isoDate < new Date(),
-//       hasDate: true,
-//     };
-//   }
-
-//   // If not a valid ISO date, try regex for DD/MM/YYYY or DD-MM-YYYY
-//   const dateRegex = /(\d{1,2})[-/](\d{1,2})[-/](\d{4})/g;
-//   let matches = [...validityDateStr.matchAll(dateRegex)];
-
-//   if (matches.length === 0) {
-//     return { expired: true, hasDate: false }; // No valid date found
-//   }
-
-//   // Take the last matched date
-//   const lastMatch = matches[matches.length - 1];
-//   const day = lastMatch[1];
-//   const month = lastMatch[2];
-//   const year = lastMatch[3];
-
-//   const parsedDate = new Date(
-//     `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`
-//   );
-//   if (isNaN(parsedDate.getTime())) {
-//     return { expired: true, hasDate: false };
-//   }
-
-//   return {
-//     expired: parsedDate < new Date(),
-//     hasDate: true,
-//   };
-// }
 
 
-
-// function parseAndCheckTACValidity(validityDateStr) {
-//     if (!validityDateStr || typeof validityDateStr !== "string") {
-//       return { expired: true, hasDate: false };
-//     }
-  
-//     // Try parsing directly as ISO date (YYYY-MM-DD)
-//     const isoDate = new Date(validityDateStr);
-//     if (!isNaN(isoDate.getTime())) {
-//       return {
-//         expired: isoDate < new Date(),
-//         hasDate: true,
-//       };
-//     }
-  
-//     // Regex for DD/MM/YYYY or DD-MM-YYYY
-//     const ddmmyyyyRegex = /(\d{1,2})[-/](\d{1,2})[-/](\d{4})/g;
-//     let matches = [...validityDateStr.matchAll(ddmmyyyyRegex)];
-  
-//     if (matches.length > 0) {
-//       const lastMatch = matches[matches.length - 1];
-//       const day = lastMatch[1];
-//       const month = lastMatch[2];
-//       const year = lastMatch[3];
-  
-//       const parsedDate = new Date(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
-//       if (!isNaN(parsedDate.getTime())) {
-//         return {
-//           expired: parsedDate < new Date(),
-//           hasDate: true,
-//         };
-//       }
-//     }
-  
-//     // Regex for MM/DD/YY (2-digit year)
-//     const mmddyyRegex = /(\d{1,2})[-/](\d{1,2})[-/](\d{2})/g;
-//     matches = [...validityDateStr.matchAll(mmddyyRegex)];
-  
-//     if (matches.length > 0) {
-//       const lastMatch = matches[matches.length - 1];
-//       const month = lastMatch[1];
-//       const day = lastMatch[2];
-//       let year = parseInt(lastMatch[3], 10);
-  
-//       // Convert 2-digit year to 4-digit (assume 2000–2099)
-//       year += year < 50 ? 2000 : 1900;
-  
-//       const parsedDate = new Date(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
-//       if (!isNaN(parsedDate.getTime())) {
-//         return {
-//           expired: parsedDate < new Date(),
-//           hasDate: true,
-//         };
-//       }
-//     }
-  
-//     // No valid date found
-//     return { expired: true, hasDate: false };
-//   }
 
 function parseAndCheckTACValidity(inputStr) {
   if (!inputStr || typeof inputStr !== "string") {
@@ -307,23 +153,7 @@ function parseAndCheckTACValidity(inputStr) {
 
   
 
-// // ✅ Helper regexes & utility functions
-// const validDateRegex =
-//   /\b(\d{4}[-/.]\d{1,2}[-/.]\d{1,2}|\d{1,2}[-/.]\d{1,2}[-/.]\d{4})\b/;
-// const isNonEmpty = (s) =>
-//   typeof s === "string" && s.trim() !== "" && s.trim().toUpperCase() !== "NA";
-// const containsValidDate = (s) => isNonEmpty(s) && validDateRegex.test(s);
-// const isTACorBISNumber = (s) => isNonEmpty(s) && /^[A-Z0-9]{2}\d{4,5}/i.test(s); // First 2 alphanum chars + 4-5 digits
-// const isCOPNumber = (s) => isNonEmpty(s) && /^[A-Z0-9\-\/]+$/i.test(s);
 
-// function getTACorBISHeader(list) {
-//   if (!Array.isArray(list)) return "";
-//   const validItems = list.filter(isTACorBISNumber);
-//   if (validItems.length === 0) return "";
-//   return list.some(containsValidDate)
-//     ? "TAC/BIS No and Validity"
-//     : "TAC/BIS No";
-// }
 const validDateRegex =
   /\b(\d{4}[-/.]\d{1,2}[-/.]\d{1,2}|\d{1,2}[-/.]\d{1,2}[-/.]\d{4})\b/;
 
@@ -397,26 +227,7 @@ const makePrefix = (make) => {
   };
   
 
-// function getCOPHeader(list) {
-//   if (!Array.isArray(list)) return "";
-//   const validItems = list.filter(isCOPNumber);
-//   if (validItems.length === 0) return "";
-//   return list.some(containsValidDate) ? "COP No and Validity" : "COP No";
-// }
 
-// function getCOPHeader(list) {
-//     if (!Array.isArray(list)) return "";
-  
-//     // Filter valid COP numbers
-//     const validItems = list.filter(isCOPNumber);
-//     if (validItems.length === 0) return "";
-  
-//     // Check if any item contains a valid date
-//     const hasValidDate = list.some(containsValidDate);
-  
-//     return hasValidDate ? "COP No and Validity Date" : "COP No";
-//   }
-  
 
 function getCOPHeader(list) {
     if (!Array.isArray(list)) return "";
@@ -444,62 +255,8 @@ function getPossibleDateHeader(list) {
   return validDates.length === 1 ? "Possible Date" : "Possible Dates";
 }
 
-// function TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw) {
-//   const tacCheck = parseAndCheckTACValidity(tacValueRaw);
-//   const result = { cop: "", possible: "" };
 
-//   if (tacCheck.hasDate) {
-//     if (tacCheck.expired) {
-//       result.cop = "NA";
-//       result.possible = possibleDateRaw || "NA";
-//     } else {
-//       result.cop = "NA";
-//       result.possible = "NA";
-//     }
-//   } else {
-//     const isCopBlank = !copCertRaw.trim();
-//     const isTacBlank = !tacValueRaw.trim();
-//     result.cop = isCopBlank ? "" : copCertRaw;
-//     result.possible = isTacBlank && isCopBlank ? "" : "NA";
-//   }
 
-//   return result;
-// }
-
-// function TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw) {
-//     const tacCheck = parseAndCheckTACValidity(tacValueRaw);
-//     const result = { cop: "", possible: "" };
-
-//     const isTacBlank = !tacValueRaw.trim();
-//     const isCopPresent = !!copCertRaw.trim();
-//     const isCopBlank = !isCopPresent;
-
-//     if (!isTacBlank && tacCheck.hasDate) {
-//         if (tacCheck.expired) {
-//             // ✅ Condition 1: TAC given & expired
-//             result.cop = "NA";
-//             result.possible = possibleDateRaw || "NA";
-//         } else {
-//             // ✅ Condition 2: TAC given & valid
-//             result.cop = "NA";
-//             result.possible = "NA";
-//         }
-//     } else if (isTacBlank && isCopPresent) {
-//         // ✅ Condition 3 / 5: TAC missing, CoP present
-//         result.cop = copCertRaw;
-//         result.possible = "NA";
-//     } else if (isTacBlank && isCopBlank && !possibleDateRaw) {
-//         // ✅ Condition 4: All missing
-//         result.cop = "";
-//         result.possible = "";
-//     } else {
-//         // 🔁 Fallback for edge cases
-//         result.cop = isCopBlank ? "" : copCertRaw;
-//         result.possible = "NA";
-//     }
-
-//     return result;
-// }
 
 function TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw) {
   const tacCheck = parseAndCheckTACValidity(tacValueRaw);
@@ -544,7 +301,7 @@ function TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw) {
 
 async function generateForm8(form8Data, footerData) {
   const docSealImage = await fetchAndProcessImage(footerData);
-  console.log("form8Data:", form8Data);
+  // console.log("form8Data:", form8Data);
   const dataOfFooter = footerData.footerData.footer.properties;
   const dataOfFooterr = footerData.footerData.SealSign.properties;
 
@@ -572,51 +329,8 @@ async function generateForm8(form8Data, footerData) {
     )}`;
   }
 
-  // const HandleLockList = form8Data?.Handle_Lock?.HandleLock || [];
-  // let HandleLockDataList = mainData();
+  
 
-  // // Ensure lists are initialized
-  // HandleLockDataList.suppNameList = HandleLockDataList.suppNameList || [];
-  // HandleLockDataList.MakeList = HandleLockDataList.MakeList || [];
-  // HandleLockDataList.tacNumberList = HandleLockDataList.tacNumberList || [];
-  // HandleLockDataList.possibleDateList = HandleLockDataList.possibleDateList || [];
-  // HandleLockDataList.copCertList = HandleLockDataList.copCertList || [];
-
-  // HandleLockList.map(vehHandleLock => {
-  //     const Vehicle_category = vehHandleLock?.Protective_Device_Handle_Lock?.properties?.Vehicle_category?.value;
-  //     console.log('Vehicle category:', Vehicle_category);
-
-  //     twoWheeler = Vehicle_category === "L1" || Vehicle_category === "L2";
-
-  //     if (twoWheeler && vehHandleLock?.supplier?.active === true) {
-  //         let supplierName = vehHandleLock?.supplier?.nameOfSupplier || "NA";
-  //         let makeValue = vehHandleLock?.Protective_Device_Handle_Lock?.properties?.Make?.value || "NA";
-
-  //         if (supplierName !== "NA" && !supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         if (makeValue !== "NA" && !makeValue.startsWith("M/")) {
-  //             makeValue = `M/s. ${makeValue}`;
-  //         }
-
-  //         HandleLockDataList.suppNameList.push(supplierName);
-  //         HandleLockDataList.MakeList.push(makeValue);
-  //         HandleLockDataList.tacNumberList.push(vehHandleLock?.Protective_Device_Handle_Lock?.properties?.TAC_Number?.value || "NA");
-  //         HandleLockDataList.possibleDateList.push(vehHandleLock?.Protective_Device_Handle_Lock?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA");
-  //         HandleLockDataList.copCertList.push(vehHandleLock?.Protective_Device_Handle_Lock?.properties?.CoP_Cert_No_with_validity_date?.value || "NA");
-
-  //     } else {
-  //         // If not L1/L2 or supplier inactive, push NA
-  //         HandleLockDataList.suppNameList.push("NA");
-  //         HandleLockDataList.MakeList.push("NA");
-  //         HandleLockDataList.tacNumberList.push("NA");
-  //         HandleLockDataList.possibleDateList.push("NA");
-  //         HandleLockDataList.copCertList.push("NA");
-  //     }
-  // });
-
-  // Assuming parseAndCheckTACValidity function is defined somewhere accessible
 
   const HandleLockList = form8Data?.Handle_Lock?.HandleLock || [];
   let HandleLockDataList = mainData();
@@ -648,7 +362,7 @@ async function generateForm8(form8Data, footerData) {
     const Vehicle_category =
       vehHandleLock?.Protective_Device_Handle_Lock?.properties?.Vehicle_category
         ?.value;
-    console.log("Vehicle category:", Vehicle_category);
+    // console.log("Vehicle category:", Vehicle_category);
 
     twoWheeler = Vehicle_category === "L1" || Vehicle_category === "L2";
 
@@ -708,383 +422,8 @@ makeValue = makePrefix(makeValue);
     }
   });
 
-  console.log("handledatalist.suppNameList", HandleLockDataList.suppNameList);
-  console.log("handledatalist.MakeList", HandleLockDataList.MakeList);
-  console.log("handledatalist.tacNumberList", HandleLockDataList.tacNumberList);
-  console.log(
-    "handledatalist.possibleDateList",
-    HandleLockDataList.possibleDateList
-  );
-  console.log("handledatalist.copCertList", HandleLockDataList.copCertList);
-
-  // const reflectorsList = form8Data.Retro_Reflectors.RetroReflectors;
-
-  // let reflDataList = {
-  //     suppNameList: [] = [],
-  //     frontWhiteList: mainData(),
-  //     rearRedList: mainData(),
-  //     sideAmberList: mainData()
-  // };
-  // reflectorsList.map(vehRefl => {
-  //     if (vehRefl.supplier.active === true) {
-
-  //         let supplierName = vehRefl.supplier.nameOfSupplier;
-
-  //         // Modify supplierName directly
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-
-  //         }
-
-  //         // reflDataList.suppNameList.push(supplierName);
-
-  //         // // reflDataList.suppNameList.push(vehRefl.supplier.nameOfSupplier);
-  //         // reflDataList.frontWhiteList.tacNumberList.push(vehRefl?.Front_White_Reflector?.properties?.TAC_Number?.value);
-  //         // Get the TAC Number value for Front White Reflector
-  //         const frontWhiteTACValue = vehRefl?.Front_White_Reflector?.properties?.TAC_Number?.value;
-
-  //         // Push the TAC value to reflDataList
-  //         reflDataList.frontWhiteList.tacNumberList.push(frontWhiteTACValue);
-
-  //         // Check if TAC value is present
-  //         // reflDataList.suppNameList.push(frontWhiteTACValue ? supplierName : "");
-  //         // reflDataList.suppNameList.push(frontWhiteTACValue === "NA" ? "" : supplierName);
-  //         if (frontWhiteTACValue && frontWhiteTACValue.trim() !== "NA") {
-  //             reflDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         let makeValue = vehRefl?.Front_White_Reflector?.properties?.Make?.value;
-
-  //         if (makeValue && !makeValue.startsWith("M/")) {
-  //             makeValue = `M/s. ${makeValue}`;
-  //         }
-
-  //         reflDataList.frontWhiteList.MakeList.push(makeValue);
-
-  //         reflDataList.frontWhiteList.possibleDateList.push(vehRefl?.Front_White_Reflector?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         reflDataList.frontWhiteList.copCertList.push(vehRefl?.Front_White_Reflector?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         reflDataList.frontWhiteList.validityList.push(vehRefl?.Front_White_Reflector?.properties?.TAC_Validity?.value);
-
-  //         let rearMakeValue = vehRefl?.Rear_Red_Reflector?.properties?.Make?.value;
-
-  //         if (rearMakeValue && !rearMakeValue.startsWith("M/")) {
-  //             rearMakeValue = `M/s. ${rearMakeValue}`;
-  //         }
-
-  //         reflDataList.rearRedList.MakeList.push(rearMakeValue);
-
-  //         reflDataList.rearRedList.tacNumberList.push(vehRefl?.Rear_Red_Reflector?.properties?.TAC_Number?.value);
-  //         reflDataList.rearRedList.possibleDateList.push(vehRefl?.Rear_Red_Reflector?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         reflDataList.rearRedList.copCertList.push(vehRefl?.Rear_Red_Reflector?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         reflDataList.rearRedList.validityList.push(vehRefl?.Rear_Red_Reflector?.properties?.TAC_Validity?.value);
-
-  //         let sideAmberMakeValue = vehRefl?.Side_Amber_Reflector?.properties?.Make?.value;
-
-  //         if (sideAmberMakeValue && !sideAmberMakeValue.startsWith("M/")) {
-  //             sideAmberMakeValue = `M/s. ${sideAmberMakeValue}`;
-  //         }
-
-  //         reflDataList.sideAmberList.MakeList.push(sideAmberMakeValue);
-
-  //         reflDataList.sideAmberList.tacNumberList.push(vehRefl?.Side_Amber_Reflector?.properties?.TAC_Number?.value);
-  //         reflDataList.sideAmberList.possibleDateList.push(vehRefl?.Side_Amber_Reflector?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         reflDataList.sideAmberList.copCertList.push(vehRefl?.Side_Amber_Reflector?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         reflDataList.sideAmberList.validityList.push(vehRefl?.Side_Amber_Reflector?.properties?.TAC_Validity?.value);
-
-  //         console.log("Front White Reflector:");
-  //         console.log("  suppNameList:", reflDataList.frontWhiteList.suppNameList);
-  //         console.log("  possibleDateList:", reflDataList.frontWhiteList.possibleDateList);
-  //         console.log("  copCertList:", reflDataList.frontWhiteList.copCertList);
-  //         console.log("  validityList:", reflDataList.frontWhiteList.validityList);
-
-  //         console.log("Rear Red Reflector:");
-  //         console.log("  suppNameList:", reflDataList.rearRedList.suppNameList);
-  //         console.log("  possibleDateList:", reflDataList.rearRedList.possibleDateList);
-  //         console.log("  copCertList:", reflDataList.rearRedList.copCertList);
-  //         console.log("  validityList:", reflDataList.rearRedList.validityList);
-
-  //         console.log("Side Amber Reflector:");
-  //         console.log("  suppNameList:", reflDataList.sideAmberList.suppNameList);
-  //         console.log("  possibleDateList:", reflDataList.sideAmberList.possibleDateList);
-  //         console.log("  copCertList:", reflDataList.sideAmberList.copCertList);
-  //         console.log("  validityList:", reflDataList.sideAmberList.validityList);
-
-  //     }
-  // });
-
-  // const reflectorsList = form8Data.Retro_Reflectors.RetroReflectors;
-
-  // let reflDataList = {
-  //     suppNameList: [],
-  //     frontWhiteList: mainData(),
-  //     rearRedList: mainData(),
-  //     sideAmberList: mainData()
-  // };
-
-  // reflectorsList.map((vehRefl) => {
-  //     if (vehRefl?.supplier?.active === true) {
-  //         let supplierName = vehRefl?.supplier?.nameOfSupplier || "";
-  //         if (supplierName && !supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // --- FRONT WHITE ---
-  //         const frontWhite = vehRefl?.Front_White_Reflector?.properties || {};
-  //         const fwMakeRaw = frontWhite?.Make?.value || "";
-  //         const fwMake = fwMakeRaw && !fwMakeRaw.startsWith("M/") ? `M/s. ${fwMakeRaw}` : fwMakeRaw;
-  //         const fwTAC = frontWhite?.TAC_Validity?.value || "";
-  //         const fwCheck = parseAndCheckTACValidity(fwTAC);
-
-  //         reflDataList.frontWhiteList.MakeList.push(fwMake);
-  //         reflDataList.frontWhiteList.validityList.push(fwTAC);
-
-  //         const fwCop = frontWhite?.CoP_Cert_No_with_validity_date?.value || "NA";
-  //         const fwDate = frontWhite?.Possible_date_of_submission_of_required_approval?.value || "NA";
-
-  //         reflDataList.suppNameList.push(fwMake);
-  //         if (fwCheck.hasDate) {
-  //             reflDataList.frontWhiteList.copCertList.push(fwCheck.expired ? fwCop : "NA");
-  //             reflDataList.frontWhiteList.possibleDateList.push(fwCheck.expired ? fwDate : "NA");
-  //         } else {
-  //             reflDataList.frontWhiteList.copCertList.push(fwCop);
-  //             reflDataList.frontWhiteList.possibleDateList.push(fwDate);
-  //         }
-
-  //         // --- REAR RED ---
-  //         const rearRed = vehRefl?.Rear_Red_Reflector?.properties || {};
-  //         const rrMakeRaw = rearRed?.Make?.value || "";
-  //         const rrMake = rrMakeRaw && !rrMakeRaw.startsWith("M/") ? `M/s. ${rrMakeRaw}` : rrMakeRaw;
-  //         const rrTAC = rearRed?.TAC_Validity?.value || "";
-  //         const rrCheck = parseAndCheckTACValidity(rrTAC);
-
-  //         reflDataList.rearRedList.MakeList.push(rrMake);
-  //         reflDataList.rearRedList.validityList.push(rrTAC);
-
-  //         const rrCop = rearRed?.CoP_Cert_No_with_validity_date?.value || "NA";
-  //         const rrDate = rearRed?.Possible_date_of_submission_of_required_approval?.value || "NA";
-
-  //         reflDataList.suppNameList.push(rrMake);
-  //         if (rrCheck.hasDate) {
-  //             reflDataList.rearRedList.copCertList.push(rrCheck.expired ? rrCop : "NA");
-  //             reflDataList.rearRedList.possibleDateList.push(rrCheck.expired ? rrDate : "NA");
-  //         } else {
-  //             reflDataList.rearRedList.copCertList.push(rrCop);
-  //             reflDataList.rearRedList.possibleDateList.push(rrDate);
-  //         }
-
-  //         // --- SIDE AMBER ---
-  //         const sideAmber = vehRefl?.Side_Amber_Reflector?.properties || {};
-  //         const saMakeRaw = sideAmber?.Make?.value || "";
-  //         const saMake = saMakeRaw && !saMakeRaw.startsWith("M/") ? `M/s. ${saMakeRaw}` : saMakeRaw;
-  //         const saTAC = sideAmber?.TAC_Validity?.value || "";
-  //         const saCheck = parseAndCheckTACValidity(saTAC);
-
-  //         reflDataList.sideAmberList.MakeList.push(saMake);
-  //         reflDataList.sideAmberList.validityList.push(saTAC);
-
-  //         const saCop = sideAmber?.CoP_Cert_No_with_validity_date?.value || "NA";
-  //         const saDate = sideAmber?.Possible_date_of_submission_of_required_approval?.value || "NA";
-
-  //         reflDataList.suppNameList.push(saMake);
-  //         if (saCheck.hasDate) {
-  //             reflDataList.sideAmberList.copCertList.push(saCheck.expired ? saCop : "NA");
-  //             reflDataList.sideAmberList.possibleDateList.push(saCheck.expired ? saDate : "NA");
-  //         } else {
-  //             reflDataList.sideAmberList.copCertList.push(saCop);
-  //             reflDataList.sideAmberList.possibleDateList.push(saDate);
-  //         }
-  //     }
-  // });
-
-  // const reflectorsList = form8Data?.Retro_Reflectors?.RetroReflectors;
-
-  // let reflDataList = {
-  //     suppNameList: [],
-  //     frontWhiteList: mainData(),
-  //     rearRedList: mainData(),
-  //     sideAmberList: mainData()
-  // };
-
-  // const getCoPValue = (check, cop) => (!check.hasDate ? "NA" : (check.expired ? cop : "NA"));
-  // const getDateValue = (check, date) => (!check.hasDate ? "NA" : (check.expired ? date : "NA"));
-
-  // reflectorsList.forEach((vehRefl) => {
-  //     if (!vehRefl?.supplier?.active) return;
-  //     const addPrefix = (make) => {
-  //         if (make && !make.startsWith("M/")) {
-  //             return `M/s. ${make}`;
-  //         }
-  //         return make || "";
-  //     };
-  //     // --- FRONT WHITE REFLECTOR ---
-  //     const frontWhiteProps = vehRefl?.Front_White_Reflector?.properties || {};
-  //     const fwMake = addPrefix(frontWhiteProps?.Make?.value);
-  //     const fwTAC = frontWhiteProps?.TAC_Validity?.value || "";
-  //     const fwCheck = parseAndCheckTACValidity(fwTAC);
-  //     const fwTacNumber = frontWhiteProps?.TAC_Number?.value || "";
-  //     const fwCop = frontWhiteProps?.CoP_Cert_No_with_validity_date?.value || "NA";
-  //     const fwDate = frontWhiteProps?.Possible_date_of_submission_of_required_approval?.value || "NA";
-
-  //     reflDataList.frontWhiteList.MakeList.push(fwMake);
-  //     reflDataList.frontWhiteList.validityList.push(fwTAC);
-  //     reflDataList.frontWhiteList.tacNumberList.push(fwTacNumber);
-  //     reflDataList.frontWhiteList.copCertList.push(getCoPValue(fwCheck, fwCop));
-  //     reflDataList.frontWhiteList.possibleDateList.push(getDateValue(fwCheck, fwDate));
-  //     reflDataList.suppNameList.push(fwMake);
-
-  //     // --- REAR RED REFLECTOR ---
-  //     const rearRedProps = vehRefl?.Rear_Red_Reflector?.properties || {};
-  //     const rrMake = addPrefix(rearRedProps?.Make?.value);
-  //     const rrTAC = rearRedProps?.TAC_Validity?.value || "";
-  //     const rrCheck = parseAndCheckTACValidity(rrTAC);
-  //     const rrTacNumber = rearRedProps?.TAC_Number?.value || "";
-  //     const rrCop = rearRedProps?.CoP_Cert_No_with_validity_date?.value || "NA";
-  //     const rrDate = rearRedProps?.Possible_date_of_submission_of_required_approval?.value || "NA";
-
-  //     reflDataList.rearRedList.MakeList.push(rrMake);
-  //     reflDataList.rearRedList.validityList.push(rrTAC);
-  //     reflDataList.rearRedList.tacNumberList.push(rrTacNumber);
-  //     reflDataList.rearRedList.copCertList.push(getCoPValue(rrCheck, rrCop));
-  //     reflDataList.rearRedList.possibleDateList.push(getDateValue(rrCheck, rrDate));
-  //     reflDataList.suppNameList.push(rrMake);
-
-  //     // --- SIDE AMBER REFLECTOR ---
-  //     const sideAmberProps = vehRefl?.Side_Amber_Reflector?.properties || {};
-  //     const saMake = addPrefix(sideAmberProps?.Make?.value);
-  //     const saTAC = sideAmberProps?.TAC_Validity?.value || "";
-  //     const saCheck = parseAndCheckTACValidity(saTAC);
-  //     const saTacNumber = sideAmberProps?.TAC_Number?.value || "";
-  //     const saCop = sideAmberProps?.CoP_Cert_No_with_validity_date?.value || "NA";
-  //     const saDate = sideAmberProps?.Possible_date_of_submission_of_required_approval?.value || "NA";
-
-  //     reflDataList.sideAmberList.MakeList.push(saMake);
-  //     reflDataList.sideAmberList.validityList.push(saTAC);
-  //     reflDataList.sideAmberList.tacNumberList.push(saTacNumber);
-  //     reflDataList.sideAmberList.copCertList.push(getCoPValue(saCheck, saCop));
-  //     reflDataList.sideAmberList.possibleDateList.push(getDateValue(saCheck, saDate));
-  //     reflDataList.suppNameList.push(saMake);
-  // });
-
-  //   const reflectorsList = form8Data?.Retro_Reflectors?.RetroReflectors;
-
-  //   let reflDataList = {
-  //     suppNameList: [],
-  //     frontWhiteList: mainData(),
-  //     rearRedList: mainData(),
-  //     sideAmberList: mainData(),
-  //   };
-
-  //   reflectorsList.forEach((vehRefl) => {
-  //     if (!vehRefl?.supplier?.active) return;
-
-  //     const makePrefix = (make) => {
-  //       if (make && !make.startsWith("M/")) return `M/s. ${make}`;
-  //       return make || "";
-  //     };
-
-  //     // --- FRONT WHITE REFLECTOR ---
-  //     const frontWhiteProps = vehRefl?.Front_White_Reflector?.properties || {};
-  //     const fwMake = makePrefix(frontWhiteProps?.Make?.value);
-  //     const fwTacValidity = frontWhiteProps?.TAC_Validity?.value || "";
-  //     const fwTacNumber = frontWhiteProps?.TAC_Number?.value || "";
-  //     const fwCop = frontWhiteProps?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const fwDate =
-  //       frontWhiteProps?.Possible_date_of_submission_of_required_approval
-  //         ?.value || "";
-
-  //     reflDataList.frontWhiteList.MakeList.push(fwMake);
-  //     reflDataList.frontWhiteList.validityList.push(fwTacValidity);
-  //     reflDataList.frontWhiteList.tacNumberList.push(fwTacNumber);
-  //     reflDataList.suppNameList.push(fwMake);
-
-  //     const { cop: fwCopFinal, possible: fwPossible } = TACvalidationcheck(
-  //       fwTacValidity,
-  //       fwCop,
-  //       fwDate
-  //     );
-  //     reflDataList.frontWhiteList.copCertList.push(fwCopFinal);
-  //     reflDataList.frontWhiteList.possibleDateList.push(fwPossible);
-
-  //     // --- REAR RED REFLECTOR ---
-  //     const rearRedProps = vehRefl?.Rear_Red_Reflector?.properties || {};
-  //     const rrMake = makePrefix(rearRedProps?.Make?.value);
-  //     const rrTacValidity = rearRedProps?.TAC_Validity?.value || "";
-  //     const rrTacNumber = rearRedProps?.TAC_Number?.value || "";
-  //     const rrCop = rearRedProps?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const rrDate =
-  //       rearRedProps?.Possible_date_of_submission_of_required_approval?.value ||
-  //       "";
-
-  //     reflDataList.rearRedList.MakeList.push(rrMake);
-  //     reflDataList.rearRedList.validityList.push(rrTacValidity);
-  //     reflDataList.rearRedList.tacNumberList.push(rrTacNumber);
-  //     reflDataList.suppNameList.push(rrMake);
-
-  //     const { cop: rrCopFinal, possible: rrPossible } = TACvalidationcheck(
-  //       rrTacValidity,
-  //       rrCop,
-  //       rrDate
-  //     );
-  //     reflDataList.rearRedList.copCertList.push(rrCopFinal);
-  //     reflDataList.rearRedList.possibleDateList.push(rrPossible);
-
-  //     // --- SIDE AMBER REFLECTOR ---
-  //     const sideAmberProps = vehRefl?.Side_Amber_Reflector?.properties || {};
-  //     const saMake = makePrefix(sideAmberProps?.Make?.value);
-  //     const saTacValidity = sideAmberProps?.TAC_Validity?.value || "";
-  //     const saTacNumber = sideAmberProps?.TAC_Number?.value || "";
-  //     const saCop = sideAmberProps?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const saDate =
-  //       sideAmberProps?.Possible_date_of_submission_of_required_approval?.value ||
-  //       "";
-
-  //     reflDataList.sideAmberList.MakeList.push(saMake);
-  //     reflDataList.sideAmberList.validityList.push(saTacValidity);
-  //     reflDataList.sideAmberList.tacNumberList.push(saTacNumber);
-  //     reflDataList.suppNameList.push(saMake);
-
-  //     const { cop: saCopFinal, possible: saPossible } = TACvalidationcheck(
-  //       saTacValidity,
-  //       saCop,
-  //       saDate
-  //     );
-  //     reflDataList.sideAmberList.copCertList.push(saCopFinal);
-  //     reflDataList.sideAmberList.possibleDateList.push(saPossible);
-  //   });
-
-  //   console.log("----- Reflector Data Lists -----");
-
-  //   // Supplier Name List
-  //   console.log("Supplier Name List:", reflDataList.suppNameList);
-
-  //   // FRONT WHITE
-  //   console.log("\n--- Front White Reflector ---");
-  //   console.log("Make List:", reflDataList.frontWhiteList.MakeList);
-  //   console.log("TAC Validity List:", reflDataList.frontWhiteList.validityList);
-  //   console.log("CoP Cert List:", reflDataList.frontWhiteList.copCertList);
-  //   console.log(
-  //     "Possible Date List:",
-  //     reflDataList.frontWhiteList.possibleDateList
-  //   );
-
-  //   // REAR RED
-  //   console.log("\n--- Rear Red Reflector ---");
-  //   console.log("Make List:", reflDataList.rearRedList.MakeList);
-  //   console.log("TAC Validity List:", reflDataList.rearRedList.validityList);
-  //   console.log("CoP Cert List:", reflDataList.rearRedList.copCertList);
-  //   console.log("Possible Date List:", reflDataList.rearRedList.possibleDateList);
-
-  //   // SIDE AMBER
-  //   console.log("\n--- Side Amber Reflector ---");
-  //   console.log("Make List:", reflDataList.sideAmberList.MakeList);
-  //   console.log("TAC Validity List:", reflDataList.sideAmberList.validityList);
-  //   console.log("CoP Cert List:", reflDataList.sideAmberList.copCertList);
-  //   console.log(
-  //     "Possible Date List:",
-  //     reflDataList.sideAmberList.possibleDateList
-  //   );
-
-  const reflectorsList = form8Data?.Retro_Reflectors?.RetroReflectors;
+  
+const reflectorsList = form8Data?.Retro_Reflectors?.RetroReflectors;
 
   let reflDataList = {
     suppNameList: [],
@@ -1425,271 +764,6 @@ if (finalSideAmberTacValidity === "NA") {
     );
   });
 
-  console.log("----- Reflector Data Lists -----");
-
-  console.log("Supplier Name List:", reflDataList.suppNameList);
-
-  // FRONT WHITE
-  console.log("\n--- Front White Reflector ---");
-  console.log("Make List:", reflDataList.frontWhiteList.MakeList);
-  console.log("TAC Validity List:", reflDataList.frontWhiteList.tacNumberList);
-  console.log("TAC Validity List:", reflDataList.frontWhiteList.validityList);
-  console.log("CoP Cert List:", reflDataList.frontWhiteList.copCertList);
-  console.log(
-    "Possible Date List:",
-    reflDataList.frontWhiteList.possibleDateList
-  );
-
-  // REAR RED
-  console.log("\n--- Rear Red Reflector ---");
-  console.log("Make List:", reflDataList.rearRedList.MakeList);
-  console.log("TAC Validity List:", reflDataList.rearRedList.validityList);
-  console.log("TAC Validity List:", reflDataList.rearRedList.tacNumberList);
-  console.log("CoP Cert List:", reflDataList.rearRedList.copCertList);
-  console.log("Possible Date List:", reflDataList.rearRedList.possibleDateList);
-
-  // SIDE AMBER
-  console.log("\n--- Side Amber Reflector ---");
-  console.log("Make List:", reflDataList.sideAmberList.MakeList);
-  console.log("TAC Validity List:", reflDataList.sideAmberList.tacNumberList);
-  console.log("TAC Validity List:", reflDataList.sideAmberList.validityList);
-  console.log("CoP Cert List:", reflDataList.sideAmberList.copCertList);
-  console.log(
-    "Possible Date List:",
-    reflDataList.sideAmberList.possibleDateList
-  );
-
-  // const hornList = form8Data?.Horn?.Horn;
-  // let hornDataList = mainData();
-  // hornList.map(vehHorn => {
-  //     if (vehHorn.supplier.active === true) {
-
-  //         let supplierName = vehHorn?.supplier?.nameOfSupplier;
-
-  //         // Modify supplierName directly
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // hornDataList.suppNameList.push(supplierName);
-  //         // // hornDataList.suppNameList.push(vehHorn?.supplier?.nameOfSupplier);
-  //         // hornDataList.validityList.push(vehHorn?.Horn?.properties?.TAC_Number_Its_Validity?.value);
-  //         // Get the TAC Number validity value for Horn
-  //         const hornTACValue = vehHorn?.Horn?.properties?.TAC_Number_Its_Validity?.value;
-
-  //         // Push the TAC value to hornDataList
-  //         hornDataList.validityList.push(hornTACValue);
-
-  //         // Check if TAC value is present
-  //         // hornDataList.suppNameList.push(hornTACValue ? supplierName : "");
-  //         if (hornTACValue && hornTACValue.trim() !== "") {
-  //             hornDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         hornDataList.MakeList.push(vehHorn?.Horn?.properties?.Make?.value);
-  //         hornDataList.possibleDateList.push(vehHorn?.Horn?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         hornDataList.copCertList.push(vehHorn?.Horn?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //     }
-  // });
-
-  /////////////////
-  // const hornList = form8Data?.Horn?.Horn;
-  // let hornDataList = mainData();
-
-  // hornList.map(vehHorn => {
-  //     if (vehHorn?.supplier?.active === true) {
-  //         // Get and process Make
-  //         let make = vehHorn?.Horn?.properties?.Make?.value || "";
-
-  //         if (make && !make.startsWith("M/")) {
-  //             make = `M/s. ${make}`;
-  //         }
-
-  //         // TAC value
-  //         const hornTACValue = vehHorn?.Horn?.properties?.TAC_Number_Its_Validity?.value;
-  //         hornDataList.validityList.push(hornTACValue);
-
-  //         // Add Make to suppNameList only if TAC value is present
-  //         if (hornTACValue && hornTACValue.trim() !== "") {
-  //             hornDataList.suppNameList.push(make);
-  //         }
-
-  //         hornDataList.MakeList.push(make);
-
-  //         const possibleDate = (make.includes("NA"))
-  //             ? "NA"
-  //             : vehHorn?.Horn?.properties?.Possible_date_of_submission_of_required_approval?.value;
-  //         hornDataList.possibleDateList.push(possibleDate);
-
-  //         hornDataList.copCertList.push(vehHorn?.Horn?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //     }
-  // });
-
-  // const hornList = form8Data?.Horn?.Horn;
-  // let hornDataList = mainData();
-  // const today = new Date();
-
-  // hornList.map((vehHorn) => {
-  //     if (vehHorn?.supplier?.active === true) {
-  //         let make = vehHorn?.Horn?.properties?.Make?.value || "";
-  //         if (make && !make.startsWith("M/")) {
-  //             make = `M/s. ${make}`;
-  //         }
-
-  //         const tacValueRaw = vehHorn?.Horn?.properties?.TAC_Number_Its_Validity?.value || "";
-  //         const tacParts = tacValueRaw.split(/and|&/); // supports both 'and' and '&'
-  //         const tacDateStr = tacParts.length > 1 ? tacParts[1].trim() : "";
-
-  //         let tacDate;
-  //         let isTACExpired = false;
-
-  //         if (tacDateStr) {
-  //             const [day, month, year] = tacDateStr.split("/").map(Number);
-  //             if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
-  //                 tacDate = new Date(year, month - 1, day);
-  //                 isTACExpired = tacDate < today;
-  //             }
-  //         }
-
-  //         hornDataList.validityList.push(tacValueRaw);
-  //         hornDataList.MakeList.push(make);
-
-  //         const copCert = vehHorn?.Horn?.properties?.CoP_Cert_No_with_validity_date?.value || "NA";
-  //         const possibleDate = vehHorn?.Horn?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA";
-
-  //         // Apply condition
-  //         if (tacDateStr) {
-  //             if (isTACExpired) {
-  //                 hornDataList.suppNameList.push(make);
-  //                 hornDataList.copCertList.push(copCert);
-  //                 hornDataList.possibleDateList.push(possibleDate);
-  //             } else {
-  //                 hornDataList.suppNameList.push(make);
-  //                 hornDataList.copCertList.push("NA");
-  //                 hornDataList.possibleDateList.push("NA");
-  //             }
-  //         } else {
-  //             hornDataList.suppNameList.push(make);
-  //             hornDataList.copCertList.push(copCert);
-  //             hornDataList.possibleDateList.push(possibleDate);
-  //         }
-  //     }
-  // });
-
-  // Example usage in your existing code
-  // const hornList = form8Data?.Horn?.Horn;
-  // let hornDataList = mainData();
-  // const today = new Date();
-
-  // hornList.map((vehHorn) => {
-  //     if (vehHorn?.supplier?.active === true) {
-  //         let make = vehHorn?.Horn?.properties?.Make?.value || "";
-  //         if (make && !make.startsWith("M/")) {
-  //             make = `M/s. ${make}`;
-  //         }
-
-  //         const tacValueRaw = vehHorn?.Horn?.properties?.TAC_Number_Its_Validity?.value || "";
-  //         const tacCheck = parseAndCheckTACValidity(tacValueRaw);
-
-  //         hornDataList.validityList.push(tacValueRaw);
-  //         hornDataList.MakeList.push(make);
-
-  //         const copCert = vehHorn?.Horn?.properties?.CoP_Cert_No_with_validity_date?.value || "NA";
-  //         const possibleDate = vehHorn?.Horn?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA";
-
-  //         if (tacCheck.hasDate) {
-  //             if (tacCheck.expired) {
-  //                 hornDataList.suppNameList.push(make);
-  //                 hornDataList.copCertList.push(copCert);
-  //                 hornDataList.possibleDateList.push(possibleDate);
-  //             } else {
-  //                 hornDataList.suppNameList.push(make);
-  //                 hornDataList.copCertList.push("NA");
-  //                 hornDataList.possibleDateList.push("NA");
-  //             }
-  //         } else {
-  //             hornDataList.suppNameList.push(make);
-  //             hornDataList.copCertList.push(copCert);
-  //             hornDataList.possibleDateList.push(possibleDate);
-  //         }
-  //     }
-  // });
-
-  //     const hornList = form8Data?.Horn?.Horn;
-  // let hornDataList = mainData();
-  // const today = new Date();
-
-  // hornList.map((vehHorn) => {
-  //     if (vehHorn?.supplier?.active === true) {
-  //         let make = vehHorn?.Horn?.properties?.Make?.value || "";
-  //         if (make && !make.startsWith("M/")) {
-  //             make = `M/s. ${make}`;
-  //         }
-
-  //         const tacValueRaw = vehHorn?.Horn?.properties?.TAC_Number_Its_Validity?.value || "";
-  //         const tacCheck = parseAndCheckTACValidity(tacValueRaw);
-
-  //         const copCertRaw = vehHorn?.Horn?.properties?.CoP_Cert_No_with_validity_date?.value || "";
-  //         const possibleDateRaw = vehHorn?.Horn?.properties?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //         hornDataList.validityList.push(tacValueRaw);
-  //         hornDataList.MakeList.push(make);
-  // hornDataList.suppNameList.push(make);
-  //         if (tacCheck.hasDate) {
-  //             if (tacCheck.expired) {
-
-  //                 hornDataList.copCertList.push("NA");
-  //                 hornDataList.possibleDateList.push(possibleDateRaw || "NA");
-  //             } else {
-
-  //                 hornDataList.copCertList.push("NA");
-  //                 hornDataList.possibleDateList.push("NA");
-  //             }
-  //         } else {
-
-  //             const isCopBlank = !copCertRaw.trim();
-  //             const isTacBlank = !tacValueRaw.trim();
-  //             const possibleDateFinal = (isTacBlank && isCopBlank) ? "" : "NA";
-
-  //             hornDataList.copCertList.push(isCopBlank ? "" : copCertRaw);
-  //             hornDataList.possibleDateList.push(possibleDateFinal);
-  //         }
-  //     }
-  // });
-
-  //   const hornList = form8Data?.Horn?.Horn;
-  //   let hornDataList = mainData();
-
-  //   hornList.map((vehHorn) => {
-  //     if (vehHorn?.supplier?.active === true) {
-  //       let make = vehHorn?.Horn?.properties?.Make?.value || "";
-  //       if (make && !make.startsWith("M/")) {
-  //         make = `M/s. ${make}`;
-  //       }
-
-  //       const tacValueRaw =
-  //         vehHorn?.Horn?.properties?.TAC_Number_Its_Validity?.value || "";
-  //       const copCertRaw =
-  //         vehHorn?.Horn?.properties?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDateRaw =
-  //         vehHorn?.Horn?.properties
-  //           ?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       hornDataList.validityList.push(tacValueRaw);
-  //       hornDataList.MakeList.push(make);
-  //       hornDataList.suppNameList.push(make);
-
-  //       // ✅ Modular & correct usage
-  //       const { cop, possible } = TACvalidationcheck(
-  //         tacValueRaw,
-  //         copCertRaw,
-  //         possibleDateRaw
-  //       );
-  //       hornDataList.copCertList.push(cop);
-  //       hornDataList.possibleDateList.push(possible);
-  //     }
-  //   });
-
   const hornList = form8Data?.Horn?.Horn;
   let hornDataList = mainData();
 
@@ -1743,283 +817,10 @@ if (finalSideAmberTacValidity === "NA") {
     }
   });
 
-  console.log(" Horn suppNameList:", hornDataList.suppNameList);
-  console.log("possibleDateList:", hornDataList.possibleDateList);
-  console.log("copCertList:", hornDataList.copCertList);
-  console.log("validityList:", hornDataList.validityList);
+ 
+  
 
-  const tyreList = form8Data?.Tyres?.TyresData;
-
-  // let ftyreDataList = mainData();
-  // let rtyreDataList = mainData();
-  // let atyreDataList = mainData();
-  // tyreList.map(vehTyre => {
-  //     if (vehTyre.supplier.active === true) {
-  //         // ftyreDataList.suppNameList.push(vehTyre?.supplier?.nameOfSupplier);
-  //         let frontTyreMakeValue = vehTyre?.Front_tyre?.properties?.Make?.value;
-
-  //         if (frontTyreMakeValue && !frontTyreMakeValue.startsWith("M/")) {
-  //             frontTyreMakeValue = `M/s. ${frontTyreMakeValue}`;
-  //         }
-
-  //         ftyreDataList.MakeList.push(frontTyreMakeValue);
-
-  //         ftyreDataList.validityList.push(vehTyre?.Front_tyre?.properties?.TAC_Number_Its_Validity?.value);
-  //         ftyreDataList.possibleDateList.push(vehTyre?.Front_tyre?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         ftyreDataList.copCertList.push(vehTyre?.Front_tyre?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         ftyreDataList.vehType.push(vehTyre?.Front_tyre?.properties?.tyre_vehicle_type?.value);
-  //         let rearTyreMakeValue = vehTyre?.Rear_tyre?.properties?.Make?.value;
-
-  //         if (rearTyreMakeValue && !rearTyreMakeValue.startsWith("M/")) {
-  //             rearTyreMakeValue = `M/s. ${rearTyreMakeValue}`;
-  //         }
-
-  //         rtyreDataList.MakeList.push(rearTyreMakeValue);
-
-  //         rtyreDataList.validityList.push(vehTyre?.Rear_tyre?.properties?.TAC_Number_Its_Validity?.value);
-  //         rtyreDataList.possibleDateList.push(vehTyre?.Rear_tyre?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         rtyreDataList.copCertList.push(vehTyre?.Rear_tyre?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //         const tacValidity = vehTyre?.Any_other_Tyre?.properties?.TAC_Number_Its_Validity?.value;
-  //         atyreDataList.validityList.push(tacValidity);
-  //         // if (tacValidity && tacValidity.trim() !== "NA") {
-  //         //     atyreDataList.suppNameList.push(vehTyre?.supplier?.nameOfSupplier);
-  //         // } else {
-  //         //     atyreDataList.suppNameList.push(""); // If TAC validity is "NA" or not present, push an empty string
-  //         // }
-  //         let anyOtherTyreMakeValue = vehTyre?.Any_other_Tyre?.properties?.Make?.value;
-
-  //         if (anyOtherTyreMakeValue && !anyOtherTyreMakeValue.startsWith("M/")) {
-  //             anyOtherTyreMakeValue = `M/s. ${anyOtherTyreMakeValue}`;
-  //         }
-
-  //         atyreDataList.MakeList.push(anyOtherTyreMakeValue);
-
-  //         atyreDataList.possibleDateList.push(vehTyre?.Any_other_Tyre?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         atyreDataList.copCertList.push(vehTyre?.Any_other_Tyre?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //         console.log("Front Tyre Make (raw):", vehTyre?.Front_tyre?.properties?.Make?.value);
-  //         console.log("Formatted Front Tyre Make:", frontTyreMakeValue);
-  //         console.log("Front Tyre TAC Validity:", vehTyre?.Front_tyre?.properties?.TAC_Number_Its_Validity?.value);
-  //         console.log("Front Tyre Possible Submission Date:", vehTyre?.Front_tyre?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         console.log("Front Tyre CoP Cert No:", vehTyre?.Front_tyre?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         console.log("Front Tyre Vehicle Type:", vehTyre?.Front_tyre?.properties?.tyre_vehicle_type?.value);
-
-  //         console.log("Rear Tyre Make (raw):", vehTyre?.Rear_tyre?.properties?.Make?.value);
-  //         console.log("Formatted Rear Tyre Make:", rearTyreMakeValue);
-  //         console.log("Rear Tyre TAC Validity:", vehTyre?.Rear_tyre?.properties?.TAC_Number_Its_Validity?.value);
-  //         console.log("Rear Tyre Possible Submission Date:", vehTyre?.Rear_tyre?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         console.log("Rear Tyre CoP Cert No:", vehTyre?.Rear_tyre?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //         console.log("Any Other Tyre TAC Validity:", tacValidity);
-  //         console.log("Any Other Tyre Make (raw):", vehTyre?.Any_other_Tyre?.properties?.Make?.value);
-  //         console.log("Formatted Any Other Tyre Make:", anyOtherTyreMakeValue);
-  //         console.log("Any Other Tyre Possible Submission Date:", vehTyre?.Any_other_Tyre?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         console.log("Any Other Tyre CoP Cert No:", vehTyre?.Any_other_Tyre?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //     }
-  // });
-
-  // let ftyreDataList = mainData();
-  // let rtyreDataList = mainData();
-  // let atyreDataList = mainData();
-
-  // tyreList.map(vehTyre => {
-  //     if (vehTyre.supplier.active === true) {
-  //         // FRONT TYRE
-  //         let frontTyreMakeValue = vehTyre?.Front_tyre?.properties?.Make?.value || "";
-  //         if (frontTyreMakeValue && !frontTyreMakeValue.startsWith("M/")) {
-  //             frontTyreMakeValue = `M/s. ${frontTyreMakeValue}`;
-  //         }
-
-  //         const frontTyreTAC = vehTyre?.Front_tyre?.properties?.TAC_Number_Its_Validity?.value;
-  //         const tacCheckFront = parseAndCheckTACValidity(frontTyreTAC);
-
-  //         ftyreDataList.MakeList.push(frontTyreMakeValue);
-  //         ftyreDataList.validityList.push(frontTyreTAC);
-
-  //         if (frontTyreTAC && frontTyreTAC.trim() !== "") {
-  //             if (tacCheckFront.hasDate) {
-  //                 if (tacCheckFront.expired) {
-  //                     ftyreDataList.copCertList.push(vehTyre?.Front_tyre?.properties?.CoP_Cert_No_with_validity_date?.value || "NA");
-  //                     ftyreDataList.possibleDateList.push(vehTyre?.Front_tyre?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA");
-  //                 } else {
-  //                     ftyreDataList.copCertList.push("NA");
-  //                     ftyreDataList.possibleDateList.push("NA");
-  //                 }
-  //             } else {
-  //                 ftyreDataList.copCertList.push(vehTyre?.Front_tyre?.properties?.CoP_Cert_No_with_validity_date?.value || "NA");
-  //                 ftyreDataList.possibleDateList.push(vehTyre?.Front_tyre?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA");
-  //             }
-  //         } else {
-  //             ftyreDataList.copCertList.push("NA");
-  //             ftyreDataList.possibleDateList.push("NA");
-  //         }
-
-  //         ftyreDataList.vehType.push(vehTyre?.Front_tyre?.properties?.tyre_vehicle_type?.value);
-
-  //         // REAR TYRE
-  //         let rearTyreMakeValue = vehTyre?.Rear_tyre?.properties?.Make?.value || "";
-  //         if (rearTyreMakeValue && !rearTyreMakeValue.startsWith("M/")) {
-  //             rearTyreMakeValue = `M/s. ${rearTyreMakeValue}`;
-  //         }
-
-  //         const rearTyreTAC = vehTyre?.Rear_tyre?.properties?.TAC_Number_Its_Validity?.value;
-  //         const tacCheckRear = parseAndCheckTACValidity(rearTyreTAC);
-
-  //         rtyreDataList.MakeList.push(rearTyreMakeValue);
-  //         rtyreDataList.validityList.push(rearTyreTAC);
-
-  //         if (rearTyreTAC && rearTyreTAC.trim() !== "") {
-  //             if (tacCheckRear.hasDate) {
-  //                 if (tacCheckRear.expired) {
-  //                     rtyreDataList.copCertList.push(vehTyre?.Rear_tyre?.properties?.CoP_Cert_No_with_validity_date?.value || "NA");
-  //                     rtyreDataList.possibleDateList.push(vehTyre?.Rear_tyre?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA");
-  //                 } else {
-  //                     rtyreDataList.copCertList.push("NA");
-  //                     rtyreDataList.possibleDateList.push("NA");
-  //                 }
-  //             } else {
-  //                 rtyreDataList.copCertList.push(vehTyre?.Rear_tyre?.properties?.CoP_Cert_No_with_validity_date?.value || "NA");
-  //                 rtyreDataList.possibleDateList.push(vehTyre?.Rear_tyre?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA");
-  //             }
-  //         } else {
-  //             rtyreDataList.copCertList.push("NA");
-  //             rtyreDataList.possibleDateList.push("NA");
-  //         }
-
-  //         // ANY OTHER TYRE
-  //         let anyOtherTyreMakeValue = vehTyre?.Any_other_Tyre?.properties?.Make?.value || "";
-  //         if (anyOtherTyreMakeValue && !anyOtherTyreMakeValue.startsWith("M/")) {
-  //             anyOtherTyreMakeValue = `M/s. ${anyOtherTyreMakeValue}`;
-  //         }
-
-  //         const anyOtherTyreTAC = vehTyre?.Any_other_Tyre?.properties?.TAC_Number_Its_Validity?.value;
-  //         const tacCheckAnyOther = parseAndCheckTACValidity(anyOtherTyreTAC);
-
-  //         atyreDataList.MakeList.push(anyOtherTyreMakeValue);
-  //         atyreDataList.validityList.push(anyOtherTyreTAC);
-
-  //         if (anyOtherTyreTAC && anyOtherTyreTAC.trim() !== "") {
-  //             if (tacCheckAnyOther.hasDate) {
-  //                 if (tacCheckAnyOther.expired) {
-  //                     atyreDataList.copCertList.push(vehTyre?.Any_other_Tyre?.properties?.CoP_Cert_No_with_validity_date?.value || "NA");
-  //                     atyreDataList.possibleDateList.push(vehTyre?.Any_other_Tyre?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA");
-  //                 } else {
-  //                     atyreDataList.copCertList.push("NA");
-  //                     atyreDataList.possibleDateList.push("NA");
-  //                 }
-  //             } else {
-  //                 atyreDataList.copCertList.push(vehTyre?.Any_other_Tyre?.properties?.CoP_Cert_No_with_validity_date?.value || "NA");
-  //                 atyreDataList.possibleDateList.push(vehTyre?.Any_other_Tyre?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA");
-  //             }
-  //         } else {
-  //             atyreDataList.copCertList.push("NA");
-  //             atyreDataList.possibleDateList.push("NA");
-  //         }
-
-  //         // Debug logs (optional)
-  //         console.log("Front Tyre Make (raw):", vehTyre?.Front_tyre?.properties?.Make?.value);
-  //         console.log("Formatted Front Tyre Make:", frontTyreMakeValue);
-  //         console.log("Front Tyre TAC Validity:", frontTyreTAC);
-  //         console.log("Front Tyre Possible Submission Date:", vehTyre?.Front_tyre?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         console.log("Front Tyre CoP Cert No:", vehTyre?.Front_tyre?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         console.log("Front Tyre Vehicle Type:", vehTyre?.Front_tyre?.properties?.tyre_vehicle_type?.value);
-
-  //         console.log("Rear Tyre Make (raw):", vehTyre?.Rear_tyre?.properties?.Make?.value);
-  //         console.log("Formatted Rear Tyre Make:", rearTyreMakeValue);
-  //         console.log("Rear Tyre TAC Validity:", rearTyreTAC);
-  //         console.log("Rear Tyre Possible Submission Date:", vehTyre?.Rear_tyre?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         console.log("Rear Tyre CoP Cert No:", vehTyre?.Rear_tyre?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //         console.log("Any Other Tyre TAC Validity:", anyOtherTyreTAC);
-  //         console.log("Any Other Tyre Make (raw):", vehTyre?.Any_other_Tyre?.properties?.Make?.value);
-  //         console.log("Formatted Any Other Tyre Make:", anyOtherTyreMakeValue);
-  //         console.log("Any Other Tyre Possible Submission Date:", vehTyre?.Any_other_Tyre?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         console.log("Any Other Tyre CoP Cert No:", vehTyre?.Any_other_Tyre?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //     }
-  // });
-
-  //   let ftyreDataList = mainData();
-  //   let rtyreDataList = mainData();
-  //   let atyreDataList = mainData();
-
-  //   tyreList.map((vehTyre) => {
-  //     if (vehTyre?.supplier?.active === true) {
-  //       // ---------- FRONT TYRE ----------
-  //       const frontProps = vehTyre?.Front_tyre?.properties || {};
-  //       let frontTyreMake = frontProps?.Make?.value || "";
-  //       if (frontTyreMake && !frontTyreMake.startsWith("M/")) {
-  //         frontTyreMake = `M/s. ${frontTyreMake}`;
-  //       }
-
-  //       const frontTAC = frontProps?.TAC_Number_Its_Validity?.value || "";
-  //       const frontCoP = frontProps?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const frontPossible =
-  //         frontProps?.Possible_date_of_submission_of_required_approval?.value ||
-  //         "";
-
-  //       const { cop: frontCop, possible: frontPossibleDate } = TACvalidationcheck(
-  //         frontTAC,
-  //         frontCoP,
-  //         frontPossible
-  //       );
-
-  //       ftyreDataList.MakeList.push(frontTyreMake);
-  //       ftyreDataList.validityList.push(frontTAC);
-  //       ftyreDataList.copCertList.push(frontCop);
-  //       ftyreDataList.possibleDateList.push(frontPossibleDate);
-  //       ftyreDataList.vehType.push(frontProps?.tyre_vehicle_type?.value);
-
-  //       // ---------- REAR TYRE ----------
-  //       const rearProps = vehTyre?.Rear_tyre?.properties || {};
-  //       let rearTyreMake = rearProps?.Make?.value || "";
-  //       if (rearTyreMake && !rearTyreMake.startsWith("M/")) {
-  //         rearTyreMake = `M/s. ${rearTyreMake}`;
-  //       }
-
-  //       const rearTAC = rearProps?.TAC_Number_Its_Validity?.value || "";
-  //       const rearCoP = rearProps?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const rearPossible =
-  //         rearProps?.Possible_date_of_submission_of_required_approval?.value ||
-  //         "";
-
-  //       const { cop: rearCop, possible: rearPossibleDate } = TACvalidationcheck(
-  //         rearTAC,
-  //         rearCoP,
-  //         rearPossible
-  //       );
-
-  //       rtyreDataList.MakeList.push(rearTyreMake);
-  //       rtyreDataList.validityList.push(rearTAC);
-  //       rtyreDataList.copCertList.push(rearCop);
-  //       rtyreDataList.possibleDateList.push(rearPossibleDate);
-
-  //       // ---------- ANY OTHER TYRE ----------
-  //       const otherProps = vehTyre?.Any_other_Tyre?.properties || {};
-  //       let otherTyreMake = otherProps?.Make?.value || "";
-  //       if (otherTyreMake && !otherTyreMake.startsWith("M/")) {
-  //         otherTyreMake = `M/s. ${otherTyreMake}`;
-  //       }
-
-  //       const otherTAC = otherProps?.TAC_Number_Its_Validity?.value || "";
-  //       const otherCoP = otherProps?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const otherPossible =
-  //         otherProps?.Possible_date_of_submission_of_required_approval?.value ||
-  //         "";
-
-  //       const { cop: otherCop, possible: otherPossibleDate } = TACvalidationcheck(
-  //         otherTAC,
-  //         otherCoP,
-  //         otherPossible
-  //       );
-
-  //       atyreDataList.MakeList.push(otherTyreMake);
-  //       atyreDataList.validityList.push(otherTAC);
-  //       atyreDataList.copCertList.push(otherCop);
-  //       atyreDataList.possibleDateList.push(otherPossibleDate);
-  //     }
-  //   });
+  const tyreList = form8Data?.Tyres?.TyresData
 
   let ftyreDataList = mainData();
   let rtyreDataList = mainData();
@@ -2134,276 +935,7 @@ if (finalSideAmberTacValidity === "NA") {
     }
   });
 
-  // const firstValue = ftyreDataList?.vehType?.[0] || '';
-  // if (firstValue === "2-Wheeler") {
-  //     twoWheeler = true;
-  //     console.log('true');
-  // }
-
-  // const headLampList = form8Data?.Head_Lamp?.HeadLamp;
-  // let hlMainBeamDataList = mainData();
-  // let hlDipBeamDataList = mainData();
-  // headLampList.map(vehHeadLamp => {
-  //     if (vehHeadLamp.supplier.active === true) {
-
-  //         let supplierName = vehHeadLamp?.supplier?.nameOfSupplier;
-
-  //         // Modify supplierName directly
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // hlMainBeamDataList.suppNameList.push(supplierName);
-
-  //         // // hlMainBeamDataList.suppNameList.push(vehHeadLamp?.supplier?.nameOfSupplier);
-  //         hlMainBeamDataList.validityList.push(vehHeadLamp?.Main_Beam_Head_Lamp_LED_type?.properties?.TAC_Validity?.value);
-  //         // Get the TAC Validity value for Main Beam Head Lamp
-  //         const hlMainBeamTACValue = vehHeadLamp?.Main_Beam_Head_Lamp_LED_type?.properties?.TAC_Number?.value;
-
-  //         // Push the TAC value to hlMainBeamDataList
-  //         hlMainBeamDataList.tacNumberList.push(hlMainBeamTACValue);
-
-  //         // // Check if TAC value is present
-  //         // hlMainBeamDataList.suppNameList.push(hlMainBeamTACValue ? supplierName : "");
-  //         // If hlMainBeamTACValue is "NA", push an empty string; otherwise, push supplierName
-  //         // hlMainBeamDataList.suppNameList.push(hlMainBeamTACValue === "NA" ? "" : supplierName);
-
-  //         // hlMainBeamDataList.suppNameList.push(hlMainBeamTACValue?.trim() === "NA" ? "" : supplierName);
-  //         if (hlMainBeamTACValue && hlMainBeamTACValue.trim() !== "NA") {
-  //             hlMainBeamDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         hlMainBeamDataList.possibleDateList.push(vehHeadLamp?.Main_Beam_Head_Lamp_LED_type?.properties?.Possible_date_of_submission_of_required_approval?.value)
-  //         hlMainBeamDataList.copCertList.push(vehHeadLamp?.Main_Beam_Head_Lamp_LED_type?.properties?.CoP_Cert_No_with_validity_date?.value)
-  //         // hlMainBeamDataList.tacNumberList.push(vehHeadLamp?.Main_Beam_Head_Lamp_LED_type?.properties?.TAC_Number?.value)
-  //         // hlDipBeamDataList.suppNameList.push(vehHeadLamp?.supplier?.nameOfSupplier);
-  //         // hlDipBeamDataList.suppNameList.push(supplierName);
-  //         hlDipBeamDataList.validityList.push(vehHeadLamp?.Dipped_Beam_Headlamp_LED_Type?.properties?.TAC_Validity?.value);
-  //         // Get the TAC Validity value for Dipped Beam Headlamp
-  //         const hlDipBeamTACValue = vehHeadLamp?.Dipped_Beam_Headlamp_LED_Type?.properties?.TAC_Number?.value;
-
-  //         // Push the TAC value to hlDipBeamDataList
-  //         hlDipBeamDataList.tacNumberList.push(hlDipBeamTACValue);
-
-  //         // // Check if TAC value is present
-  //         // hlDipBeamDataList.suppNameList.push(hlDipBeamTACValue ? supplierName : "");
-  //         // hlDipBeamDataList.suppNameList.push(hlDipBeamTACValue === "NA" ? "" : supplierName);
-  //         if (hlDipBeamTACValue && hlDipBeamTACValue.trim() !== "NA") {
-  //             hlDipBeamDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         hlDipBeamDataList.possibleDateList.push(vehHeadLamp?.Dipped_Beam_Headlamp_LED_Type?.properties?.Possible_date_of_submission_of_required_approval?.value)
-  //         hlDipBeamDataList.copCertList.push(vehHeadLamp?.Dipped_Beam_Headlamp_LED_Type?.properties?.CoP_Cert_No_with_validity_date?.value)
-  //         // hlDipBeamDataList.tacNumberList.push(vehHeadLamp?.Dipped_Beam_Headlamp_LED_Type?.properties?.TAC_Number?.value)
-
-  //         hlMainBeamDataList.validityLampList.push(vehHeadLamp?.Main_Beam_Headlamp_Filament_Type?.properties?.TAC_Validity?.value)
-  //         const hlMainBeamTAcValue = vehHeadLamp?.Main_Beam_Headlamp_Filament_Type?.properties?.TAC_Number?.value;
-
-  //         // Push the TAC value to hlMainBeamDataList
-  //         hlMainBeamDataList.tacNumberLampList.push(hlMainBeamTAcValue);
-
-  //         // Check if TAC value is present
-  //         // hlMainBeamDataList.suppNameLampList.push(hlMainBeamTAcValue ? supplierName : "");
-  //         // hlMainBeamDataList.suppNameLampList.push(hlMainBeamTAcValue === "NA" ? "" : supplierName);
-  //         if (hlMainBeamTAcValue && hlMainBeamTAcValue.trim() !== "NA") {
-  //             hlMainBeamDataList.suppNameLampList.push(supplierName);
-  //         }
-
-  //         hlMainBeamDataList.possibleDateLampList.push(vehHeadLamp?.Main_Beam_Headlamp_Filament_Type?.properties?.Possible_date_of_submission_of_required_approval?.value)
-  //         hlMainBeamDataList.copCertLampList.push(vehHeadLamp?.Main_Beam_Headlamp_Filament_Type?.properties?.CoP_Cert_No_with_validity_date?.value)
-  //         // hlMainBeamDataList.tacNumberLampList.push(vehHeadLamp?.Main_Beam_Headlamp_Filament_Type?.properties?.TAC_Number?.value)
-
-  //         // hlDipBeamDataList.validityLampList.push(vehHeadLamp?.Dipped_Beam_Headlamp_Filament_Type?.properties?.TAC_Validity?.value)
-  //         const hlDipBeamFilamentTACValue = vehHeadLamp?.Dipped_Beam_Headlamp_Filament_Type?.properties?.TAC_Number?.value;
-
-  //         // Push the TAC value to hlDipBeamDataList
-  //         hlDipBeamDataList.tacNumberLampList.push(hlDipBeamFilamentTACValue);
-
-  //         // Check if TAC value is present
-  //         // hlDipBeamDataList.suppNameLampList.push(hlDipBeamFilamentTACValue ? supplierName : "");
-  //         // hlDipBeamDataList.suppNameLampList.push(hlDipBeamFilamentTACValue === "NA" ? "" : supplierName);
-  //         if (hlDipBeamFilamentTACValue && hlDipBeamFilamentTACValue.trim() !== "NA") {
-  //             hlDipBeamDataList.suppNameLampList.push(supplierName);
-  //         }
-
-  //         hlDipBeamDataList.possibleDateLampList.push(vehHeadLamp?.Dipped_Beam_Headlamp_Filament_Type?.properties?.Possible_date_of_submission_of_required_approval?.value)
-  //         hlDipBeamDataList.copCertLampList.push(vehHeadLamp?.Dipped_Beam_Headlamp_Filament_Type?.properties?.CoP_Cert_No_with_validity_date?.value)
-  //         // hlDipBeamDataList.tacNumberLampList.push(vehHeadLamp?.Dipped_Beam_Headlamp_Filament_Type?.properties?.TAC_Number?.value)
-  //         hlDipBeamDataList.validityLampList.push(vehHeadLamp?.Dipped_Beam_Headlamp_Filament_Type?.properties?.TAC_Validity?.value)
-
-  //     }
-  // });
-
-  // const headLampList = form8Data?.Head_Lamp?.HeadLamp;
-  // let hlMainBeamDataList = mainData();
-  // let hlDipBeamDataList = mainData();
-
-  // headLampList.map(vehHeadLamp => {
-  //     if (vehHeadLamp.supplier.active === true) {
-
-  //         // Function to add prefix 'M/s.' if missing
-  //         const addPrefix = (make) => {
-  //             if (make && !make.startsWith("M/")) {
-  //                 return `M/s. ${make}`;
-  //             }
-  //             return make || "";
-  //         };
-
-  //         // Main Beam LED Make
-  //         let mainBeamMake = addPrefix(vehHeadLamp?.Main_Beam_Head_Lamp_LED_type?.properties?.Main_Beam_Head_Lamp_make?.value);
-
-  //         // Dip Beam LED Make
-  //         let dipBeamMake = addPrefix(vehHeadLamp?.Dipped_Beam_Headlamp_LED_Type?.properties?.Make?.value);
-
-  //         // Main Beam Filament Make
-  //         let mainBeamFilamentMake = addPrefix(vehHeadLamp?.Main_Beam_Headlamp_Filament_Type?.properties?.Make?.value);
-
-  //         // Dip Beam Filament Make
-  //         let dipBeamFilamentMake = addPrefix(vehHeadLamp?.Dipped_Beam_Headlamp_Filament_Type?.properties?.Make?.value);
-
-  //         // Main Beam LED TAC and lists
-  //         const hlMainBeamTACValue = vehHeadLamp?.Main_Beam_Head_Lamp_LED_type?.properties?.TAC_Number?.value;
-  //         hlMainBeamDataList.validityList.push(vehHeadLamp?.Main_Beam_Head_Lamp_LED_type?.properties?.TAC_Validity?.value);
-  //         hlMainBeamDataList.tacNumberList.push(hlMainBeamTACValue);
-  //         if (hlMainBeamTACValue && hlMainBeamTACValue.trim() !== "NA") {
-  //             hlMainBeamDataList.suppNameList.push(mainBeamMake);
-  //         }
-  //         hlMainBeamDataList.possibleDateList.push(vehHeadLamp?.Main_Beam_Head_Lamp_LED_type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         hlMainBeamDataList.copCertList.push(vehHeadLamp?.Main_Beam_Head_Lamp_LED_type?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //         // Dip Beam LED TAC and lists
-  //         const hlDipBeamTACValue = vehHeadLamp?.Dipped_Beam_Headlamp_LED_Type?.properties?.TAC_Number?.value;
-  //         hlDipBeamDataList.validityList.push(vehHeadLamp?.Dipped_Beam_Headlamp_LED_Type?.properties?.TAC_Validity?.value);
-  //         hlDipBeamDataList.tacNumberList.push(hlDipBeamTACValue);
-  //         if (hlDipBeamTACValue && hlDipBeamTACValue.trim() !== "NA") {
-  //             hlDipBeamDataList.suppNameList.push(dipBeamMake);
-  //         }
-  //         hlDipBeamDataList.possibleDateList.push(vehHeadLamp?.Dipped_Beam_Headlamp_LED_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         hlDipBeamDataList.copCertList.push(vehHeadLamp?.Dipped_Beam_Headlamp_LED_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         hlDipBeamDataList.MakeList.push(dipBeamMake);
-
-  //         // Main Beam Filament TAC and lists
-  //         const hlMainBeamTAcValue = vehHeadLamp?.Main_Beam_Headlamp_Filament_Type?.properties?.TAC_Number?.value;
-  //         hlMainBeamDataList.validityLampList.push(vehHeadLamp?.Main_Beam_Headlamp_Filament_Type?.properties?.TAC_Validity?.value);
-  //         hlMainBeamDataList.tacNumberLampList.push(hlMainBeamTAcValue);
-  //         if (hlMainBeamTAcValue && hlMainBeamTAcValue.trim() !== "NA") {
-  //             hlMainBeamDataList.suppNameLampList.push(mainBeamFilamentMake);
-  //         }
-  //         hlMainBeamDataList.possibleDateLampList.push(vehHeadLamp?.Main_Beam_Headlamp_Filament_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         hlMainBeamDataList.copCertLampList.push(vehHeadLamp?.Main_Beam_Headlamp_Filament_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         hlMainBeamDataList.MakeLampList.push(mainBeamFilamentMake);
-
-  //         // Dip Beam Filament TAC and lists
-  //         const hlDipBeamFilamentTACValue = vehHeadLamp?.Dipped_Beam_Headlamp_Filament_Type?.properties?.TAC_Number?.value;
-  //         hlDipBeamDataList.validityLampList.push(vehHeadLamp?.Dipped_Beam_Headlamp_Filament_Type?.properties?.TAC_Validity?.value);
-  //         hlDipBeamDataList.tacNumberLampList.push(hlDipBeamFilamentTACValue);
-  //         if (hlDipBeamFilamentTACValue && hlDipBeamFilamentTACValue.trim() !== "NA") {
-  //             hlDipBeamDataList.suppNameLampList.push(dipBeamFilamentMake);
-  //         }
-  //         hlDipBeamDataList.possibleDateLampList.push(vehHeadLamp?.Dipped_Beam_Headlamp_Filament_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         hlDipBeamDataList.copCertLampList.push(vehHeadLamp?.Dipped_Beam_Headlamp_Filament_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         hlDipBeamDataList.MakeLampList.push(dipBeamFilamentMake);
-  //     }
-  // });
-
-  //   const headLampList = form8Data?.Head_Lamp?.HeadLamp;
-  //   let hlMainBeamDataList = mainData();
-  //   let hlDipBeamDataList = mainData();
-
-  //   // Add M/s. if needed
-  //   const addPrefix = (make) => {
-  //     return make && !make.startsWith("M/") ? `M/s. ${make}` : make || "";
-  //   };
-
-  //   headLampList?.map((vehHeadLamp) => {
-  //     if (vehHeadLamp?.supplier?.active) {
-  //       // --- MAIN BEAM LED ---
-  //       const mainLED =
-  //         vehHeadLamp?.Main_Beam_Head_Lamp_LED_type?.properties || {};
-  //       const mainLEDMk = addPrefix(mainLED?.Main_Beam_Head_Lamp_make?.value);
-  //       const mainLEDValidity = mainLED?.TAC_Validity?.value || "";
-  //       const mainLEDCop = mainLED?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const mainLEDPossible =
-  //         mainLED?.Possible_date_of_submission_of_required_approval?.value || "";
-  //       const { cop: copMainLED, possible: possibleMainLED } = TACvalidationcheck(
-  //         mainLEDValidity,
-  //         mainLEDCop,
-  //         mainLEDPossible
-  //       );
-
-  //       hlMainBeamDataList.MakeList.push(mainLEDMk);
-  //       hlMainBeamDataList.validityList.push(mainLEDValidity);
-  //       hlMainBeamDataList.tacNumberList.push(mainLED?.TAC_Number?.value || "");
-  //       hlMainBeamDataList.suppNameList.push(mainLEDMk);
-  //       hlMainBeamDataList.copCertList.push(copMainLED);
-  //       hlMainBeamDataList.possibleDateList.push(possibleMainLED);
-
-  //       // --- DIPPED BEAM LED ---
-  //       const dipLED =
-  //         vehHeadLamp?.Dipped_Beam_Headlamp_LED_Type?.properties || {};
-  //       const dipLEDMk = addPrefix(dipLED?.Make?.value);
-  //       const dipLEDValidity = dipLED?.TAC_Validity?.value || "";
-  //       const dipLEDCop = dipLED?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const dipLEDPossible =
-  //         dipLED?.Possible_date_of_submission_of_required_approval?.value || "";
-  //       const { cop: copDipLED, possible: possibleDipLED } = TACvalidationcheck(
-  //         dipLEDValidity,
-  //         dipLEDCop,
-  //         dipLEDPossible
-  //       );
-
-  //       hlDipBeamDataList.MakeList.push(dipLEDMk);
-  //       hlDipBeamDataList.validityList.push(dipLEDValidity);
-  //       hlDipBeamDataList.tacNumberList.push(dipLED?.TAC_Number?.value || "");
-  //       hlDipBeamDataList.suppNameList.push(dipLEDMk);
-  //       hlDipBeamDataList.copCertList.push(copDipLED);
-  //       hlDipBeamDataList.possibleDateList.push(possibleDipLED);
-
-  //       // --- MAIN BEAM FILAMENT ---
-  //       const mainFil =
-  //         vehHeadLamp?.Main_Beam_Headlamp_Filament_Type?.properties || {};
-  //       const mainFilMk = addPrefix(mainFil?.Make?.value);
-  //       const mainFilValidity = mainFil?.TAC_Validity?.value || "";
-  //       const mainFilCop = mainFil?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const mainFilPossible =
-  //         mainFil?.Possible_date_of_submission_of_required_approval?.value || "";
-  //       const { cop: copMainFil, possible: possibleMainFil } = TACvalidationcheck(
-  //         mainFilValidity,
-  //         mainFilCop,
-  //         mainFilPossible
-  //       );
-
-  //       hlMainBeamDataList.MakeLampList.push(mainFilMk);
-  //       hlMainBeamDataList.validityLampList.push(mainFilValidity);
-  //       hlMainBeamDataList.tacNumberLampList.push(
-  //         mainFil?.TAC_Number?.value || ""
-  //       );
-  //       hlMainBeamDataList.suppNameLampList.push(mainFilMk);
-  //       hlMainBeamDataList.copCertLampList.push(copMainFil);
-  //       hlMainBeamDataList.possibleDateLampList.push(possibleMainFil);
-
-  //       // --- DIPPED BEAM FILAMENT ---
-  //       const dipFil =
-  //         vehHeadLamp?.Dipped_Beam_Headlamp_Filament_Type?.properties || {};
-  //       const dipFilMk = addPrefix(dipFil?.Make?.value);
-  //       const dipFilValidity = dipFil?.TAC_Validity?.value || "";
-  //       const dipFilCop = dipFil?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const dipFilPossible =
-  //         dipFil?.Possible_date_of_submission_of_required_approval?.value || "";
-  //       const { cop: copDipFil, possible: possibleDipFil } = TACvalidationcheck(
-  //         dipFilValidity,
-  //         dipFilCop,
-  //         dipFilPossible
-  //       );
-
-  //       hlDipBeamDataList.MakeLampList.push(dipFilMk);
-  //       hlDipBeamDataList.validityLampList.push(dipFilValidity);
-  //       hlDipBeamDataList.tacNumberLampList.push(dipFil?.TAC_Number?.value || "");
-  //       hlDipBeamDataList.suppNameLampList.push(dipFilMk);
-  //       hlDipBeamDataList.copCertLampList.push(copDipFil);
-  //       hlDipBeamDataList.possibleDateLampList.push(possibleDipFil);
-  //     }
-  //   });
+  
 
   const headLampList = form8Data?.Head_Lamp?.HeadLamp;
   let hlMainBeamDataList = mainData();
@@ -2609,208 +1141,10 @@ if (finalSideAmberTacValidity === "NA") {
     }
   });
 
-  // Main Beam LED
-  console.log("Main Beam LED - suppNameList:", hlMainBeamDataList.suppNameList);
-  console.log(
-    "Main Beam LED - tacNumberList:",
-    hlMainBeamDataList.tacNumberList
-  );
-  console.log("Main Beam LED - validityList:", hlMainBeamDataList.validityList);
-  console.log(
-    "Main Beam LED - possibleDateList:",
-    hlMainBeamDataList.possibleDateList
-  );
-  console.log("Main Beam LED - copCertList:", hlMainBeamDataList.copCertList);
-
-  // Dip Beam LED
-  console.log("Dip Beam LED - suppNameList:", hlDipBeamDataList.suppNameList);
-  console.log("Dip Beam LED - tacNumberList:", hlDipBeamDataList.tacNumberList);
-  console.log("Dip Beam LED - validityList:", hlDipBeamDataList.validityList);
-  console.log(
-    "Dip Beam LED - possibleDateList:",
-    hlDipBeamDataList.possibleDateList
-  );
-  console.log("Dip Beam LED - copCertList:", hlDipBeamDataList.copCertList);
-
-  // Main Beam Filament
-  console.log(
-    "Main Beam Filament - suppNameLampList:",
-    hlMainBeamDataList.suppNameLampList
-  );
-  console.log(
-    "Main Beam Filament - tacNumberLampList:",
-    hlMainBeamDataList.tacNumberLampList
-  );
-  console.log(
-    "Main Beam Filament - validityLampList:",
-    hlMainBeamDataList.validityLampList
-  );
-  console.log(
-    "Main Beam Filament - possibleDateLampList:",
-    hlMainBeamDataList.possibleDateLampList
-  );
-  console.log(
-    "Main Beam Filament - copCertLampList:",
-    hlMainBeamDataList.copCertLampList
-  );
-
-  // Dip Beam Filament
-  console.log(
-    "Dip Beam Filament - suppNameLampList:",
-    hlDipBeamDataList.suppNameLampList
-  );
-  console.log(
-    "Dip Beam Filament - tacNumberLampList:",
-    hlDipBeamDataList.tacNumberLampList
-  );
-  console.log(
-    "Dip Beam Filament - validityLampList:",
-    hlDipBeamDataList.validityLampList
-  );
-  console.log(
-    "Dip Beam Filament - possibleDateLampList:",
-    hlDipBeamDataList.possibleDateLampList
-  );
-  console.log(
-    "Dip Beam Filament - copCertLampList:",
-    hlDipBeamDataList.copCertLampList
-  );
-
-  // const dtRunnLampList = form8Data?.Daytime_Running_Lamp?.DaytimeRunningLamp;
-  // let dtRunnLampDataList = mainData();
-  // dtRunnLampList.map(vehRunnLamp => {
-  //     if (vehRunnLamp.supplier.active === true) {
-
-  //         let supplierName = vehRunnLamp?.supplier?.nameOfSupplier;
-
-  //         // Modify supplierName directly
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // dtRunnLampDataList.suppNameList.push(supplierName);
-  //         // // dtRunnLampDataList.suppNameList.push(vehRunnLamp?.supplier?.nameOfSupplier);
-  //         // dtRunnLampDataList.validityList.push(vehRunnLamp?.Daytime_Running_Lamp?.properties?.TAC_Validity?.value);
-  //         // Get the TAC Validity value for Daytime Running Lamp
-  //         const dtRunnLampTACValue = vehRunnLamp?.Daytime_Running_Lamp?.properties?.CoP_Cert_No_with_validity_date?.value;
-
-  //         // Push the TAC value to dtRunnLampDataList
-  //         dtRunnLampDataList.copCertList.push(dtRunnLampTACValue);
-
-  //         // Check if TAC value is present
-  //         // dtRunnLampDataList.suppNameList.push(dtRunnLampTACValue ? supplierName : "");
-  //         // dtRunnLampDataList.suppNameList.push(dtRunnLampTACValue === "NA" ? "" : supplierName);
-  //         if (dtRunnLampTACValue && dtRunnLampTACValue.trim() !== "NA") {
-  //             dtRunnLampDataList.suppNameList.push(supplierName);
-  //         }
-  //         dtRunnLampDataList.MakeList.push(vehRunnLamp?.Daytime_Running_Lamp.properties?.Make?.value);
-  //         dtRunnLampDataList.possibleDateList.push(vehRunnLamp?.Daytime_Running_Lamp.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         dtRunnLampDataList.validityList.push(vehRunnLamp?.Daytime_Running_Lamp?.properties?.TAC_Validity?.value);
-  //         // dtRunnLampDataList.copCertList.push(vehRunnLamp?.Daytime_Running_Lamp?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //     }
-  // });
-
-  // const dtRunnLampList = form8Data?.Daytime_Running_Lamp?.DaytimeRunningLamp;
-  // let dtRunnLampDataList = mainData();
-
-  // dtRunnLampList.map(vehRunnLamp => {
-  //     if (vehRunnLamp.supplier.active === true) {
-
-  //         // Get Make from properties
-  //         let make = vehRunnLamp?.Daytime_Running_Lamp?.properties?.Make?.value || "";
-
-  //         // Add 'M/s.' prefix if missing
-  //         if (make && !make.startsWith("M/")) {
-  //             make = `M/s. ${make}`;
-  //         }
-
-  //         // Get the TAC Validity value
-  //         const dtRunnLampTACValue = vehRunnLamp?.Daytime_Running_Lamp?.properties?.CoP_Cert_No_with_validity_date?.value;
-
-  //         // Push TAC value
-  //         dtRunnLampDataList.copCertList.push(dtRunnLampTACValue);
-
-  //         // Push make instead of supplierName if TAC value present and not "NA"
-  //         if (dtRunnLampTACValue && dtRunnLampTACValue.trim() !== "NA") {
-  //             dtRunnLampDataList.suppNameList.push(make);
-  //         }
-
-  //         dtRunnLampDataList.MakeList.push(make);
-  //         dtRunnLampDataList.possibleDateList.push(vehRunnLamp?.Daytime_Running_Lamp?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         dtRunnLampDataList.validityList.push(vehRunnLamp?.Daytime_Running_Lamp?.properties?.TAC_Validity?.value);
-  //     }
-  // });
-
-  // const dtRunnLampList = form8Data?.Daytime_Running_Lamp?.DaytimeRunningLamp || [];
-  // let dtRunnLampDataList = mainData();
-
-  // dtRunnLampList.map(vehRunnLamp => {
-  //     if (vehRunnLamp?.supplier?.active === true) {
-  //         const props = vehRunnLamp?.Daytime_Running_Lamp?.properties || {};
-  //         let make = props?.Make?.value || "";
-
-  //         // Add 'M/s.' prefix if missing
-  //         if (make && !make.startsWith("M/")) {
-  //             make = `M/s. ${make}`;
-  //         }
-
-  //         const validityStr = props?.TAC_Validity?.value || "";
-  //         const validityResult = parseAndCheckTACValidity(validityStr);
-
-  //         const copValue = props?.CoP_Cert_No_with_validity_date?.value || "NA";
-  //         const possibleDateValue = props?.Possible_date_of_submission_of_required_approval?.value || "NA";
-
-  //         // Always push make & validity
-  //         dtRunnLampDataList.MakeList.push(make);
-  //         dtRunnLampDataList.validityList.push(validityStr);
-  //         dtRunnLampDataList.suppNameList.push(make);
-
-  //         // Push CoP and possible date as per expiry logic
-  //         if (!validityResult.hasDate || validityResult.expired) {
-  //             dtRunnLampDataList.copCertList.push(copValue);
-  //             dtRunnLampDataList.possibleDateList.push(possibleDateValue);
-  //         } else {
-  //             dtRunnLampDataList.copCertList.push("NA");
-  //             dtRunnLampDataList.possibleDateList.push("NA");
-  //         }
-  //     }
-  // });
-
-  //   const dtRunnLampList =
-  //     form8Data?.Daytime_Running_Lamp?.DaytimeRunningLamp || [];
-  //   let dtRunnLampDataList = mainData();
-
-  //   dtRunnLampList.map((vehRunnLamp) => {
-  //     if (vehRunnLamp?.supplier?.active === true) {
-  //       let make =
-  //         vehRunnLamp?.Daytime_Running_Lamp?.properties?.Make?.value || "";
-  //       if (make && !make.startsWith("M/")) {
-  //         make = `M/s. ${make}`;
-  //       }
-
-  //       const tacValueRaw =
-  //         vehRunnLamp?.Daytime_Running_Lamp?.properties?.TAC_Validity?.value ||
-  //         "";
-  //       const copCertRaw =
-  //         vehRunnLamp?.Daytime_Running_Lamp?.properties
-  //           ?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDateRaw =
-  //         vehRunnLamp?.Daytime_Running_Lamp?.properties
-  //           ?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       dtRunnLampDataList.validityList.push(tacValueRaw);
-  //       dtRunnLampDataList.MakeList.push(make);
-  //       dtRunnLampDataList.suppNameList.push(make);
-
-  //       const { cop, possible } = TACvalidationcheck(
-  //         tacValueRaw,
-  //         copCertRaw,
-  //         possibleDateRaw
-  //       );
-  //       dtRunnLampDataList.copCertList.push(cop);
-  //       dtRunnLampDataList.possibleDateList.push(possible);
-  //     }
-  //   });
+  
+  
+ 
+  
 
   const dtRunnLampList =
     form8Data?.Daytime_Running_Lamp?.DaytimeRunningLamp || [];
@@ -2857,1241 +1191,11 @@ if (finalSideAmberTacValidity === "NA") {
     }
   });
 
-  console.log("Current suppNameList:", dtRunnLampDataList.suppNameList);
-  console.log("Current MakeList:", dtRunnLampDataList.MakeList);
-  console.log("Possible Date List:", dtRunnLampDataList.possibleDateList);
-  console.log("cop List:", dtRunnLampDataList.copCertList);
-  console.log("Validity List:", dtRunnLampDataList.validityList);
-
-  // const posLampsList = form8Data.Position_Lamps.PositionLamps;
-  // let frontPosLampDataList = mainData();
-  // let rearPosLampDataList = mainData();
-  // let stopLampDataList = mainData();
-  // posLampsList.map(vehPosLamp => {
-  //     if (vehPosLamp.supplier.active === true) {
-  //         let supplierName = vehPosLamp?.supplier?.nameOfSupplier;
-
-  //         // Modify supplierName directly
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // frontPosLampDataList.suppNameList.push(supplierName);
-  //         // frontPosLampDataList.suppNameList.push(vehPosLamp?.supplier.nameOfSupplier);
-  //         // frontPosLampDataList.validityList.push(vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.TAC_Validity?.value);
-  //         // Get the validity value (TAC_Validity)
-  //         const validityValue = vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.TAC_Number?.value;
-
-  //         // Push the validity value to validityList
-  //         frontPosLampDataList.tacNumberList.push(validityValue);
-
-  //         // Check if validity data is present
-  //         // if (validityValue) {
-  //         //     // If data is present, add supplier name
-  //         //     frontPosLampDataList.suppNameList.push(supplierName);
-  //         // } else {
-  //         //     // If no data is present, add a blank space
-  //         //     frontPosLampDataList.suppNameList.push("");
-  //         // }
-  //         // frontPosLampDataList.suppNameList.push(validityValue === "NA" ? "" : supplierName);
-  //         if (validityValue && validityValue.trim() !== "NA") {
-  //             frontPosLampDataList.suppNameList.push(supplierName);
-  //         }
-  //         frontPosLampDataList.MakeList.push(vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.Make?.value);
-
-  //         frontPosLampDataList.possibleDateList.push(vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         frontPosLampDataList.copCertList.push(vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         frontPosLampDataList.validityList.push(vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.TAC_Validity?.value);
-  //         // frontPosLampDataList.tacNumberList.push(vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.TAC_Number?.value);
-  //         // rearPosLampDataList.suppNameList.push(vehPosLamp?.supplier?.nameOfSupplier);
-
-  //         // rearPosLampDataList.suppNameList.push(supplierName);
-  //         // rearPosLampDataList.validityList.push(vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.TAC_Validity?.value);
-  //         // Get the validity value for Parking_Lamp_Bulb_Rear (TAC_Validity)
-  //         const rearValidityValue = vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.TAC_Number?.value;
-
-  //         // Push the validity value to validityList for rearPosLampDataList
-  //         rearPosLampDataList.tacNumberLampList.push(rearValidityValue);
-
-  //         // // Check if validity data is present
-  //         // if (rearValidityValue) {
-  //         //     // If data is present, add supplier name
-  //         //     rearPosLampDataList.suppNameList.push(supplierName);
-  //         // } else {
-  //         //     // If no data is present, add a blank space
-  //         //     rearPosLampDataList.suppNameList.push("");
-  //         // }
-  //         // rearPosLampDataList.suppNameList.push(rearValidityValue === "NA" ? "" : supplierName);
-  //         if (rearValidityValue && rearValidityValue.trim() !== "NA") {
-  //             rearPosLampDataList.suppNameLampList.push(supplierName);
-  //         }
-
-  //         rearPosLampDataList.MakeList.push(vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.Make?.value);
-
-  //         rearPosLampDataList.possibleDateLampList.push(vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         rearPosLampDataList.copCertLampList.push(vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         rearPosLampDataList.validityLampList.push(vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.TAC_Validity?.value);
-
-  //         // rearPosLampDataList.tacNumberList.push(vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.TAC_Number?.value);
-
-  //         const rearValidityValueled = vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.TAC_Number?.value;
-
-  //         // Push the validity value to validityList for rearPosLampDataList
-  //         rearPosLampDataList.tacNumberList.push(rearValidityValueled);
-
-  //         if (rearValidityValueled && rearValidityValueled.trim() !== "NA") {
-  //             rearPosLampDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         rearPosLampDataList.MakeList.push(vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.Make_of_Parking_lamp_led_rear?.value);
-
-  //         rearPosLampDataList.possibleDateList.push(vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         rearPosLampDataList.copCertList.push(vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         rearPosLampDataList.validityList.push(vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.TAC_Validity?.value);
-
-  //         // stopLampDataList.suppNameList.push(vehPosLamp?.supplier?.nameOfSupplier);
-
-  //         // stopLampDataList.suppNameList.push(supplierName);
-  //         // stopLampDataList.validityList.push(vehPosLamp?.Stop_Lamp_LED_Type?.properties?.TAC_Validity?.value);
-
-  //         // Get the validity value for Stop Lamp
-  //         const stopValidityValue = vehPosLamp?.Stop_Lamp_LED_Type?.properties?.TAC_Number?.value;
-
-  //         // Push the validity value to stopLampDataList and add the supplier name (or blank space)
-  //         stopLampDataList.tacNumberList.push(stopValidityValue);
-  //         // stopLampDataList.suppNameList.push(stopValidityValue ? supplierName : "");
-  //         // stopLampDataList.suppNameList.push(stopValidityValue === "NA" ? "" : supplierName);
-  //         if (stopValidityValue && stopValidityValue.trim() !== "NA") {
-  //             stopLampDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         stopLampDataList.MakeList.push(vehPosLamp?.Stop_Lamp_LED_Type?.properties?.Make?.value);
-
-  //         stopLampDataList.possibleDateList.push(vehPosLamp?.Stop_Lamp_LED_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         stopLampDataList.copCertList.push(vehPosLamp?.Stop_Lamp_LED_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         stopLampDataList.validityList.push(vehPosLamp?.Stop_Lamp_LED_Type?.properties?.TAC_Validity?.value);
-  //         // stopLampDataList.tacNumberList.push(vehPosLamp?.Stop_Lamp_LED_Type?.properties?.TAC_Number?.value);
-  //         // stopLampDataList.suppNameLampList.push(supplierName);
-  //         // stopLampDataList.validityLampList.push(vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.TAC_Validity?.value);
-  //         // Get the TAC Validity value for Stop Lamp
-  //         const stopLampTACValue = vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.TAC_Number?.value;
-
-  //         // Push the TAC value to stopLampDataList
-  //         stopLampDataList.tacNumberLampList.push(stopLampTACValue);
-
-  //         // Check if TAC value is present
-  //         // stopLampDataList.suppNameLampList.push(stopLampTACValue ? supplierName : "");
-  //         // stopLampDataList.suppNameLampList.push(stopLampTACValue === "NA" ? "" : supplierName);
-  //         if (stopLampTACValue && stopLampTACValue.trim() !== "NA") {
-  //             stopLampDataList.suppNameLampList.push(supplierName);
-  //         }
-
-  //         stopLampDataList.MakeList.push(vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.Make?.value);
-
-  //         stopLampDataList.possibleDateLampList.push(vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         stopLampDataList.copCertLampList.push(vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         stopLampDataList.validityLampList.push(vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.TAC_Validity?.value);
-  //         // stopLampDataList.tacNumberLampList.push(vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.TAC_Number?.value);
-
-  //         // frontPosLampDataList.validityLampList.push(vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.TAC_Validity?.value);
-  //         // Get the TAC Validity value for Front Position Lamp
-  //         const frontPosLampTACValue = vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.TAC_Number?.value;
-
-  //         // Push the TAC value to frontPosLampDataList
-  //         frontPosLampDataList.tacNumberLampList.push(frontPosLampTACValue);
-
-  //         // Check if TAC value is present
-  //         // frontPosLampDataList.suppNameLampList.push(frontPosLampTACValue ? supplierName : "");
-  //         // frontPosLampDataList.suppNameLampList.push(frontPosLampTACValue === "NA" ? "" : supplierName);
-  //         if (frontPosLampTACValue && frontPosLampTACValue.trim() !== "NA") {
-  //             frontPosLampDataList.suppNameLampList.push(supplierName);
-  //         }
-
-  //         frontPosLampDataList.MakeList.push(vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.Make?.value);
-
-  //         frontPosLampDataList.possibleDateLampList.push(vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         frontPosLampDataList.copCertLampList.push(vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         frontPosLampDataList.validityLampList.push(vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.TAC_Validity?.value);
-  //         // frontPosLampDataList.tacNumberLampList.push(vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.TAC_Number?.value);
-
-  //     }
-  // });
-
-  // const posLampsList = form8Data.Position_Lamps.PositionLamps;
-  // let frontPosLampDataList = mainData();
-  // let rearPosLampDataList = mainData();
-  // let stopLampDataList = mainData();
-  // const prefixMake = (make) => {
-  //     if (make && !make.startsWith("M/s.")) {
-  //         return `M/s. ${make}`;
-  //     }
-  //     return make || "";
-  // };
-
-  // posLampsList.map(vehPosLamp => {
-  //     if (vehPosLamp.supplier.active === true) {
-  //         // Get Make values for the different lamps with prefix applied
-  //         const frontMake = prefixMake(vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.Make?.value);
-  //         const rearMake = prefixMake(vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.Make?.value);
-  //         const rearLedMake = prefixMake(vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.Make_of_Parking_lamp_led_rear?.value);
-  //         const stopMake = prefixMake(vehPosLamp?.Stop_Lamp_LED_Type?.properties?.Make?.value);
-  //         const stopFilamentMake = prefixMake(vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.Make?.value);
-  //         const frontBulbMake = prefixMake(vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.Make?.value);
-
-  //         // Front Position Lamp LED Type
-  //         const validityValue = vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.TAC_Number?.value;
-  //         frontPosLampDataList.tacNumberList.push(validityValue);
-  //         if (validityValue && validityValue.trim() !== "NA") {
-  //             frontPosLampDataList.suppNameList.push(frontMake);
-  //         }
-  //         frontPosLampDataList.MakeList.push(frontMake);
-  //         frontPosLampDataList.possibleDateList.push(vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         frontPosLampDataList.copCertList.push(vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         frontPosLampDataList.validityList.push(vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.TAC_Validity?.value);
-
-  //         // Rear Position Lamp Bulb Rear
-  //         const rearValidityValue = vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.TAC_Number?.value;
-  //         rearPosLampDataList.tacNumberLampList.push(rearValidityValue);
-  //         if (rearValidityValue && rearValidityValue.trim() !== "NA") {
-  //             rearPosLampDataList.suppNameLampList.push(rearMake);
-  //         }
-  //         rearPosLampDataList.MakeList.push(rearMake);
-  //         rearPosLampDataList.possibleDateLampList.push(vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         rearPosLampDataList.copCertLampList.push(vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         rearPosLampDataList.validityLampList.push(vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.TAC_Validity?.value);
-
-  //         // Rear Position Lamp LED Rear
-  //         const rearValidityValueled = vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.TAC_Number?.value;
-  //         rearPosLampDataList.tacNumberList.push(rearValidityValueled);
-  //         if (rearValidityValueled && rearValidityValueled.trim() !== "NA") {
-  //             rearPosLampDataList.suppNameList.push(rearLedMake);
-  //         }
-  //         rearPosLampDataList.MakeList.push(rearLedMake);
-  //         rearPosLampDataList.possibleDateList.push(vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         rearPosLampDataList.copCertList.push(vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         rearPosLampDataList.validityList.push(vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.TAC_Validity?.value);
-
-  //         // Stop Lamp LED Type
-  //         const stopValidityValue = vehPosLamp?.Stop_Lamp_LED_Type?.properties?.TAC_Number?.value;
-  //         stopLampDataList.tacNumberList.push(stopValidityValue);
-  //         if (stopValidityValue && stopValidityValue.trim() !== "NA") {
-  //             stopLampDataList.suppNameList.push(stopMake);
-  //         }
-  //         stopLampDataList.MakeList.push(stopMake);
-  //         stopLampDataList.possibleDateList.push(vehPosLamp?.Stop_Lamp_LED_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         stopLampDataList.copCertList.push(vehPosLamp?.Stop_Lamp_LED_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         stopLampDataList.validityList.push(vehPosLamp?.Stop_Lamp_LED_Type?.properties?.TAC_Validity?.value);
-
-  //         // Stop Lamp Bulb Filament Type
-  //         const stopLampTACValue = vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.TAC_Number?.value;
-  //         stopLampDataList.tacNumberLampList.push(stopLampTACValue);
-  //         if (stopLampTACValue && stopLampTACValue.trim() !== "NA") {
-  //             stopLampDataList.suppNameLampList.push(stopFilamentMake);
-  //         }
-  //         stopLampDataList.MakeList.push(stopFilamentMake);
-  //         stopLampDataList.possibleDateLampList.push(vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         stopLampDataList.copCertLampList.push(vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         stopLampDataList.validityLampList.push(vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.TAC_Validity?.value);
-
-  //         // Front Position Lamp Bulb Type
-  //         const frontPosLampTACValue = vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.TAC_Number?.value;
-  //         frontPosLampDataList.tacNumberLampList.push(frontPosLampTACValue);
-  //         if (frontPosLampTACValue && frontPosLampTACValue.trim() !== "NA") {
-  //             frontPosLampDataList.suppNameLampList.push(frontBulbMake);
-  //         }
-  //         frontPosLampDataList.MakeList.push(frontBulbMake);
-  //         frontPosLampDataList.possibleDateLampList.push(vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         frontPosLampDataList.copCertLampList.push(vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         frontPosLampDataList.validityLampList.push(vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.TAC_Validity?.value);
-  //     }
-  // });
-
-  // const posLampsList = form8Data.Position_Lamps.PositionLamps;
-  // let frontPosLampDataList = mainData();
-  // let rearPosLampDataList = mainData();
-  // let stopLampDataList = mainData();
-
-  // const prefixMake = (make) => {
-  //     if (make && !make.startsWith("M/s.")) {
-  //         return `M/s. ${make}`;
-  //     }
-  //     return make || "";
-  // };
-
-  // posLampsList.map(vehPosLamp => {
-  //     if (vehPosLamp.supplier.active === true) {
-  //         // Get Make values for the different lamps with prefix applied
-  //         const frontMake = prefixMake(vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.Make?.value);
-  //         const rearMake = prefixMake(vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.Make?.value);
-  //         const rearLedMake = prefixMake(vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.Make_of_Parking_lamp_led_rear?.value);
-  //         const stopMake = prefixMake(vehPosLamp?.Stop_Lamp_LED_Type?.properties?.Make?.value);
-  //         const stopFilamentMake = prefixMake(vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.Make?.value);
-  //         const frontBulbMake = prefixMake(vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.Make?.value);
-
-  //         // Front Position Lamp LED Type
-  //         const validityCheckFront = parseAndCheckTACValidity(vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.TAC_Validity?.value);
-  //         const validityValueFront = vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.TAC_Number?.value;
-  //         frontPosLampDataList.tacNumberList.push(validityValueFront);
-  //         if (validityValueFront && validityValueFront.trim() !== "NA") {
-  //             frontPosLampDataList.suppNameList.push(frontMake);
-  //         }
-  //         frontPosLampDataList.MakeList.push(frontMake);
-  //         frontPosLampDataList.possibleDateList.push(
-  //             !validityCheckFront.expired
-  //                 ? vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.Possible_date_of_submission_of_required_approval?.value
-  //                 : "NA"
-  //         );
-  //         frontPosLampDataList.copCertList.push(
-  //             !validityCheckFront.expired
-  //                 ? vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.CoP_Cert_No_with_validity_date?.value
-  //                 : "NA"
-  //         );
-  //         frontPosLampDataList.validityList.push(vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.TAC_Validity?.value);
-
-  //         // Rear Position Lamp Bulb Rear
-  //         const validityCheckRearBulb = parseAndCheckTACValidity(vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.TAC_Validity?.value);
-  //         const validityValueRearBulb = vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.TAC_Number?.value;
-  //         rearPosLampDataList.tacNumberLampList.push(validityValueRearBulb);
-  //         if (validityValueRearBulb && validityValueRearBulb.trim() !== "NA") {
-  //             rearPosLampDataList.suppNameLampList.push(rearMake);
-  //         }
-  //         rearPosLampDataList.MakeList.push(rearMake);
-  //         rearPosLampDataList.possibleDateLampList.push(
-  //             !validityCheckRearBulb.expired
-  //                 ? vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.Possible_date_of_submission_of_required_approval?.value
-  //                 : "NA"
-  //         );
-  //         rearPosLampDataList.copCertLampList.push(
-  //             !validityCheckRearBulb.expired
-  //                 ? vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.CoP_Cert_No_with_validity_date?.value
-  //                 : "NA"
-  //         );
-  //         rearPosLampDataList.validityLampList.push(vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.TAC_Validity?.value);
-
-  //         // Rear Position Lamp LED Rear
-  //         const validityCheckRearLed = parseAndCheckTACValidity(vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.TAC_Validity?.value);
-  //         const validityValueRearLed = vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.TAC_Number?.value;
-  //         rearPosLampDataList.tacNumberList.push(validityValueRearLed);
-  //         if (validityValueRearLed && validityValueRearLed.trim() !== "NA") {
-  //             rearPosLampDataList.suppNameList.push(rearLedMake);
-  //         }
-  //         rearPosLampDataList.MakeList.push(rearLedMake);
-  //         rearPosLampDataList.possibleDateList.push(
-  //             !validityCheckRearLed.expired
-  //                 ? vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.Possible_date_of_submission_of_required_approval?.value
-  //                 : "NA"
-  //         );
-  //         rearPosLampDataList.copCertList.push(
-  //             !validityCheckRearLed.expired
-  //                 ? vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.CoP_Cert_No_with_validity_date?.value
-  //                 : "NA"
-  //         );
-  //         rearPosLampDataList.validityList.push(vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.TAC_Validity?.value);
-
-  //         // Stop Lamp LED Type
-  //         const validityCheckStopLed = parseAndCheckTACValidity(vehPosLamp?.Stop_Lamp_LED_Type?.properties?.TAC_Validity?.value);
-  //         const validityValueStopLed = vehPosLamp?.Stop_Lamp_LED_Type?.properties?.TAC_Number?.value;
-  //         stopLampDataList.tacNumberList.push(validityValueStopLed);
-  //         if (validityValueStopLed && validityValueStopLed.trim() !== "NA") {
-  //             stopLampDataList.suppNameList.push(stopMake);
-  //         }
-  //         stopLampDataList.MakeList.push(stopMake);
-  //         stopLampDataList.possibleDateList.push(
-  //             !validityCheckStopLed.expired
-  //                 ? vehPosLamp?.Stop_Lamp_LED_Type?.properties?.Possible_date_of_submission_of_required_approval?.value
-  //                 : "NA"
-  //         );
-  //         stopLampDataList.copCertList.push(
-  //             !validityCheckStopLed.expired
-  //                 ? vehPosLamp?.Stop_Lamp_LED_Type?.properties?.CoP_Cert_No_with_validity_date?.value
-  //                 : "NA"
-  //         );
-  //         stopLampDataList.validityList.push(vehPosLamp?.Stop_Lamp_LED_Type?.properties?.TAC_Validity?.value);
-
-  //         // Stop Lamp Bulb Filament Type
-  //         const validityCheckStopFilament = parseAndCheckTACValidity(vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.TAC_Validity?.value);
-  //         const validityValueStopFilament = vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.TAC_Number?.value;
-  //         stopLampDataList.tacNumberLampList.push(validityValueStopFilament);
-  //         if (validityValueStopFilament && validityValueStopFilament.trim() !== "NA") {
-  //             stopLampDataList.suppNameLampList.push(stopFilamentMake);
-  //         }
-  //         stopLampDataList.MakeList.push(stopFilamentMake);
-  //         stopLampDataList.possibleDateLampList.push(
-  //             !validityCheckStopFilament.expired
-  //                 ? vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.Possible_date_of_submission_of_required_approval?.value
-  //                 : "NA"
-  //         );
-  //         stopLampDataList.copCertLampList.push(
-  //             !validityCheckStopFilament.expired
-  //                 ? vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.CoP_Cert_No_with_validity_date?.value
-  //                 : "NA"
-  //         );
-  //         stopLampDataList.validityLampList.push(vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.TAC_Validity?.value);
-
-  //         // Front Position Lamp Bulb Type
-  //         const validityCheckFrontBulb = parseAndCheckTACValidity(vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.TAC_Validity?.value);
-  //         const validityValueFrontBulb = vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.TAC_Number?.value;
-  //         frontPosLampDataList.tacNumberLampList.push(validityValueFrontBulb);
-  //         if (validityValueFrontBulb && validityValueFrontBulb.trim() !== "NA") {
-  //             frontPosLampDataList.suppNameLampList.push(frontBulbMake);
-  //         }
-  //         frontPosLampDataList.MakeList.push(frontBulbMake);
-  //         frontPosLampDataList.possibleDateLampList.push(
-  //             !validityCheckFrontBulb.expired
-  //                 ? vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.Possible_date_of_submission_of_required_approval?.value
-  //                 : "NA"
-  //         );
-  //         frontPosLampDataList.copCertLampList.push(
-  //             !validityCheckFrontBulb.expired
-  //                 ? vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.CoP_Cert_No_with_validity_date?.value
-  //                 : "NA"
-  //         );
-  //         frontPosLampDataList.validityLampList.push(vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.TAC_Validity?.value);
-  //     }
-  // });
-
-  //   const posLampsList = form8Data?.Position_Lamps?.PositionLamps || [];
-  //   let frontPosLampDataList = mainData();
-  //   let rearPosLampDataList = mainData();
-  //   let stopLampDataList = mainData();
-
-  //   const prefixMake = (make) => {
-  //     if (make && !make.startsWith("M/s.")) {
-  //       return `M/s. ${make}`;
-  //     }
-  //     return make || "";
-  //   };
-
-  //   posLampsList.map((vehPosLamp) => {
-  //     if (vehPosLamp?.supplier?.active !== true) return;
-
-  //     // === FRONT LED ===
-  //     {
-  //       const tacVal =
-  //         vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.TAC_Validity
-  //           ?.value || "";
-  //       const tacNum =
-  //         vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.TAC_Number
-  //           ?.value || "";
-  //       const cop =
-  //         vehPosLamp?.Front_Position_Lamp_LED_Type?.properties
-  //           ?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const poss =
-  //         vehPosLamp?.Front_Position_Lamp_LED_Type?.properties
-  //           ?.Possible_date_of_submission_of_required_approval?.value || "";
-  //       const make = prefixMake(
-  //         vehPosLamp?.Front_Position_Lamp_LED_Type?.properties?.Make?.value
-  //       );
-  //       frontPosLampDataList.MakeList.push(make);
-  //       frontPosLampDataList.suppNameList.push(make);
-  //       if (tacVal && tacVal.trim() !== "NA" && tacNum) {
-  //         frontPosLampDataList.validityList.push(tacVal);
-
-  //         frontPosLampDataList.tacNumberList.push(tacNum);
-
-  //         const { cop: c, possible: p } = TACvalidationcheck(tacVal, cop, poss);
-  //         frontPosLampDataList.copCertList.push(c);
-  //         frontPosLampDataList.possibleDateList.push(p);
-  //       }
-  //     }
-
-  //     // === FRONT BULB ===
-  //     {
-  //       const tacVal =
-  //         vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.TAC_Validity
-  //           ?.value || "";
-  //       const tacNum =
-  //         vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.TAC_Number
-  //           ?.value || "";
-  //       const cop =
-  //         vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties
-  //           ?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const poss =
-  //         vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties
-  //           ?.Possible_date_of_submission_of_required_approval?.value || "";
-  //       const make = prefixMake(
-  //         vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties?.Make?.value
-  //       );
-  //       frontPosLampDataList.MakeList.push(make);
-  //       frontPosLampDataList.suppNameLampList.push(make);
-  //       if (tacVal && tacVal.trim() !== "NA" && tacNum) {
-  //         frontPosLampDataList.validityLampList.push(tacVal);
-
-  //         frontPosLampDataList.tacNumberLampList.push(tacNum);
-
-  //         const { cop: c, possible: p } = TACvalidationcheck(tacVal, cop, poss);
-  //         frontPosLampDataList.copCertLampList.push(c);
-  //         frontPosLampDataList.possibleDateLampList.push(p);
-  //       }
-  //     }
-
-  //     // === REAR BULB ===
-  //     {
-  //       const tacVal =
-  //         vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.TAC_Validity?.value ||
-  //         "";
-  //       const tacNum =
-  //         vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.TAC_Number?.value || "";
-  //       const cop =
-  //         vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties
-  //           ?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const poss =
-  //         vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties
-  //           ?.Possible_date_of_submission_of_required_approval?.value || "";
-  //       const make = prefixMake(
-  //         vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties?.Make?.value
-  //       );
-  //       rearPosLampDataList.MakeList.push(make);
-  //       rearPosLampDataList.suppNameLampList.push(make);
-  //       if (tacVal && tacVal.trim() !== "NA" && tacNum) {
-  //         rearPosLampDataList.validityLampList.push(tacVal);
-
-  //         rearPosLampDataList.tacNumberLampList.push(tacNum);
-
-  //         const { cop: c, possible: p } = TACvalidationcheck(tacVal, cop, poss);
-  //         rearPosLampDataList.copCertLampList.push(c);
-  //         rearPosLampDataList.possibleDateLampList.push(p);
-  //       }
-  //     }
-
-  //     // === REAR LED ===
-  //     {
-  //       const tacVal =
-  //         vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.TAC_Validity?.value ||
-  //         "";
-  //       const tacNum =
-  //         vehPosLamp?.Parking_Lamp_Led_Rear?.properties?.TAC_Number?.value || "";
-  //       const cop =
-  //         vehPosLamp?.Parking_Lamp_Led_Rear?.properties
-  //           ?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const poss =
-  //         vehPosLamp?.Parking_Lamp_Led_Rear?.properties
-  //           ?.Possible_date_of_submission_of_required_approval?.value || "";
-  //       const make = prefixMake(
-  //         vehPosLamp?.Parking_Lamp_Led_Rear?.properties
-  //           ?.Make_of_Parking_lamp_led_rear?.value
-  //       );
-  //       rearPosLampDataList.MakeList.push(make);
-  //       rearPosLampDataList.suppNameList.push(make);
-  //       if (tacVal && tacVal.trim() !== "NA" && tacNum) {
-  //         rearPosLampDataList.validityList.push(tacVal);
-
-  //         rearPosLampDataList.tacNumberList.push(tacNum);
-
-  //         const { cop: c, possible: p } = TACvalidationcheck(tacVal, cop, poss);
-  //         rearPosLampDataList.copCertList.push(c);
-  //         rearPosLampDataList.possibleDateList.push(p);
-  //       }
-  //     }
-
-  //     // === STOP LED ===
-  //     {
-  //       const tacVal =
-  //         vehPosLamp?.Stop_Lamp_LED_Type?.properties?.TAC_Validity?.value || "";
-  //       const tacNum =
-  //         vehPosLamp?.Stop_Lamp_LED_Type?.properties?.TAC_Number?.value || "";
-  //       const cop =
-  //         vehPosLamp?.Stop_Lamp_LED_Type?.properties
-  //           ?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const poss =
-  //         vehPosLamp?.Stop_Lamp_LED_Type?.properties
-  //           ?.Possible_date_of_submission_of_required_approval?.value || "";
-  //       const make = prefixMake(
-  //         vehPosLamp?.Stop_Lamp_LED_Type?.properties?.Make?.value
-  //       );
-  //       stopLampDataList.MakeList.push(make);
-  //       stopLampDataList.suppNameList.push(make);
-  //       if (tacVal && tacVal.trim() !== "NA" && tacNum) {
-  //         stopLampDataList.validityList.push(tacVal);
-
-  //         stopLampDataList.tacNumberList.push(tacNum);
-
-  //         const { cop: c, possible: p } = TACvalidationcheck(tacVal, cop, poss);
-  //         stopLampDataList.copCertList.push(c);
-  //         stopLampDataList.possibleDateList.push(p);
-  //       }
-  //     }
-
-  //     // === STOP BULB ===
-  //     {
-  //       const tacVal =
-  //         vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.TAC_Validity
-  //           ?.value || "";
-  //       const tacNum =
-  //         vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.TAC_Number
-  //           ?.value || "";
-  //       const cop =
-  //         vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties
-  //           ?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const poss =
-  //         vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties
-  //           ?.Possible_date_of_submission_of_required_approval?.value || "";
-  //       const make = prefixMake(
-  //         vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties?.Make?.value
-  //       );
-  //       stopLampDataList.MakeList.push(make);
-  //       stopLampDataList.suppNameLampList.push(make);
-  //       if (tacVal && tacVal.trim() !== "NA" && tacNum) {
-  //         stopLampDataList.validityLampList.push(tacVal);
-
-  //         stopLampDataList.tacNumberLampList.push(tacNum);
-
-  //         const { cop: c, possible: p } = TACvalidationcheck(tacVal, cop, poss);
-  //         stopLampDataList.copCertLampList.push(c);
-  //         stopLampDataList.possibleDateLampList.push(p);
-  //       }
-  //     }
-  //   });
-
-  // const posLampsList = form8Data?.Position_Lamps?.PositionLamps || [];
-
-  // let frontPosLampDataList = mainData();
-  // let rearPosLampDataList = mainData();
-  // let stopLampDataList = mainData();
-
-  // posLampsList.forEach((vehPosLamp) => {
-  //   if (vehPosLamp?.supplier?.active !== true) return;
-
-  //   // FRONT POSITION LAMP LED
-  //   {
-  //     const props = vehPosLamp?.Front_Position_Lamp_LED_Type?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //     frontPosLampDataList.validityList.push(props?.TAC_Validity?.value || "");
-  //     frontPosLampDataList.MakeList.push(make);
-  //     frontPosLampDataList.suppNameList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     frontPosLampDataList.tacNumberList.push(tac);
-  //     frontPosLampDataList.copCertList.push(copFinal);
-  //     frontPosLampDataList.possibleDateList.push(possibleFinal);
-  //   }
-
-  //   // FRONT POSITION LAMP BULB
-  //   {
-  //     const props = vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //     frontPosLampDataList.validityLampList.push(props?.TAC_Validity?.value || "");
-  //     frontPosLampDataList.MakeList.push(make);
-  //     frontPosLampDataList.suppNameLampList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     frontPosLampDataList.tacNumberLampList.push(tac);
-  //     frontPosLampDataList.copCertLampList.push(copFinal);
-  //     frontPosLampDataList.possibleDateLampList.push(possibleFinal);
-  //   }
-
-  //   // REAR PARKING LAMP LED
-  //   {
-  //     const props = vehPosLamp?.Parking_Lamp_Led_Rear?.properties || {};
-  //     let make = props?.Make_of_Parking_lamp_led_rear?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //     rearPosLampDataList.validityList.push(props?.TAC_Validity?.value || "");
-  //     rearPosLampDataList.MakeList.push(make);
-  //     rearPosLampDataList.suppNameList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     rearPosLampDataList.tacNumberList.push(tac);
-  //     rearPosLampDataList.copCertList.push(copFinal);
-  //     rearPosLampDataList.possibleDateList.push(possibleFinal);
-  //   }
-
-  //   // REAR PARKING LAMP BULB
-  //   {
-  //     const props = vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //     rearPosLampDataList.validityLampList.push(props?.TAC_Validity?.value || "");
-  //     rearPosLampDataList.MakeList.push(make);
-  //     rearPosLampDataList.suppNameLampList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     rearPosLampDataList.tacNumberLampList.push(tac);
-  //     rearPosLampDataList.copCertLampList.push(copFinal);
-  //     rearPosLampDataList.possibleDateLampList.push(possibleFinal);
-  //   }
-
-  //   // STOP LAMP LED
-  //   {
-  //     const props = vehPosLamp?.Stop_Lamp_LED_Type?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //     stopLampDataList.validityList.push(props?.TAC_Validity?.value || "");
-  //     stopLampDataList.MakeList.push(make);
-  //     stopLampDataList.suppNameList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     stopLampDataList.tacNumberList.push(tac);
-  //     stopLampDataList.copCertList.push(copFinal);
-  //     stopLampDataList.possibleDateList.push(possibleFinal);
-  //   }
-
-  //   // STOP LAMP BULB FILAMENT TYPE
-  //   {
-  //     const props = vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //     stopLampDataList.validityLampList.push(props?.TAC_Validity?.value || "");
-  //     stopLampDataList.MakeList.push(make);
-  //     stopLampDataList.suppNameLampList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     stopLampDataList.tacNumberLampList.push(tac);
-  //     stopLampDataList.copCertLampList.push(copFinal);
-  //     stopLampDataList.possibleDateLampList.push(possibleFinal);
-  //   }
-  // });
-
-  // const posLampsList = form8Data?.Position_Lamps?.PositionLamps || [];
-
-  // let frontPosLampDataList = mainData();
-  // let rearPosLampDataList = mainData();
-  // let stopLampDataList = mainData();
-
-  // posLampsList.forEach((vehPosLamp) => {
-  //   if (vehPosLamp?.supplier?.active !== true) return;
-
-  //   // Helper function for TAC with condition
-  //   const getFinalTAC = (tacRaw, copRaw) => {
-  //     const isTacMissing = tacRaw.trim() === "";
-  //     const isCopPresent = copRaw.trim() !== "";
-  //     return isTacMissing && isCopPresent ? "NA" : tacRaw;
-  //   };
-
-  //   // FRONT POSITION LAMP LED
-  //   {
-  //     const props = vehPosLamp?.Front_Position_Lamp_LED_Type?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const tacValidityRaw = props?.TAC_Validity?.value || "";
-  //     const tacValidity = getFinalTAC(tacValidityRaw, cop);
-
-  //     frontPosLampDataList.validityList.push(tacValidity);
-  //     frontPosLampDataList.MakeList.push(make);
-  //     frontPosLampDataList.suppNameList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     frontPosLampDataList.tacNumberList.push(tac);
-  //     frontPosLampDataList.copCertList.push(copFinal);
-  //     frontPosLampDataList.possibleDateList.push(possibleFinal);
-  //   }
-
-  //   // FRONT POSITION LAMP BULB
-  //   {
-  //     const props = vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const tacValidityRaw = props?.TAC_Validity?.value || "";
-  //     const tacValidity = getFinalTAC(tacValidityRaw, cop);
-
-  //     frontPosLampDataList.validityLampList.push(tacValidity);
-  //     frontPosLampDataList.MakeList.push(make);
-  //     frontPosLampDataList.suppNameLampList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     frontPosLampDataList.tacNumberLampList.push(tac);
-  //     frontPosLampDataList.copCertLampList.push(copFinal);
-  //     frontPosLampDataList.possibleDateLampList.push(possibleFinal);
-  //   }
-
-  //   // REAR PARKING LAMP LED
-  //   {
-  //     const props = vehPosLamp?.Parking_Lamp_Led_Rear?.properties || {};
-  //     let make = props?.Make_of_Parking_lamp_led_rear?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const tacValidityRaw = props?.TAC_Validity?.value || "";
-  //     const tacValidity = getFinalTAC(tacValidityRaw, cop);
-
-  //     rearPosLampDataList.validityList.push(tacValidity);
-  //     rearPosLampDataList.MakeList.push(make);
-  //     rearPosLampDataList.suppNameList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     rearPosLampDataList.tacNumberList.push(tac);
-  //     rearPosLampDataList.copCertList.push(copFinal);
-  //     rearPosLampDataList.possibleDateList.push(possibleFinal);
-  //   }
-
-  //   // REAR PARKING LAMP BULB
-  //   {
-  //     const props = vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const tacValidityRaw = props?.TAC_Validity?.value || "";
-  //     const tacValidity = getFinalTAC(tacValidityRaw, cop);
-
-  //     rearPosLampDataList.validityLampList.push(tacValidity);
-  //     rearPosLampDataList.MakeList.push(make);
-  //     rearPosLampDataList.suppNameLampList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     rearPosLampDataList.tacNumberLampList.push(tac);
-  //     rearPosLampDataList.copCertLampList.push(copFinal);
-  //     rearPosLampDataList.possibleDateLampList.push(possibleFinal);
-  //   }
-
-  //   // STOP LAMP LED
-  //   {
-  //     const props = vehPosLamp?.Stop_Lamp_LED_Type?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const tacValidityRaw = props?.TAC_Validity?.value || "";
-  //     const tacValidity = getFinalTAC(tacValidityRaw, cop);
-
-  //     stopLampDataList.validityList.push(tacValidity);
-  //     stopLampDataList.MakeList.push(make);
-  //     stopLampDataList.suppNameList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     stopLampDataList.tacNumberList.push(tac);
-  //     stopLampDataList.copCertList.push(copFinal);
-  //     stopLampDataList.possibleDateList.push(possibleFinal);
-  //   }
-
-  //   // STOP LAMP BULB FILAMENT TYPE
-  //   {
-  //     const props = vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const tacValidityRaw = props?.TAC_Validity?.value || "";
-  //     const tacValidity = getFinalTAC(tacValidityRaw, cop);
-
-  //     stopLampDataList.validityLampList.push(tacValidity);
-  //     stopLampDataList.MakeList.push(make);
-  //     stopLampDataList.suppNameLampList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     stopLampDataList.tacNumberLampList.push(tac);
-  //     stopLampDataList.copCertLampList.push(copFinal);
-  //     stopLampDataList.possibleDateLampList.push(possibleFinal);
-  //   }
-  // });
-
-  // const posLampsList = form8Data?.Position_Lamps?.PositionLamps || [];
-
-  // let frontPosLampDataList = mainData();
-  // let rearPosLampDataList = mainData();
-  // let stopLampDataList = mainData();
-
-  // posLampsList.forEach((vehPosLamp) => {
-  //   if (vehPosLamp?.supplier?.active !== true) return;
-
-  //   const getFinalTAC = (tacRaw, copRaw) => {
-  //     const isTacMissing = tacRaw.trim() === "";
-  //     const isCopPresent = copRaw.trim() !== "";
-  //     return isTacMissing && isCopPresent ? "NA" : tacRaw;
-  //   };
-
-  //   // FRONT POSITION LAMP LED
-  //   {
-  //     const props = vehPosLamp?.Front_Position_Lamp_LED_Type?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const tacValidityRaw = props?.TAC_Validity?.value || "";
-  //     const tacValidity = getFinalTAC(tacValidityRaw, cop);
-
-  //     frontPosLampDataList.validityList.push(tacValidity);
-  //     frontPosLampDataList.MakeList.push(make);
-  //     frontPosLampDataList.suppNameList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     frontPosLampDataList.tacNumberList.push(tac);
-  //     frontPosLampDataList.copCertList.push(copFinal);
-  //     frontPosLampDataList.possibleDateList.push(possibleFinal);
-  //   }
-
-  //   // FRONT POSITION LAMP BULB
-  //   {
-  //     const props = vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const tacValidityRaw = props?.TAC_Validity?.value || "";
-  //     const tacValidity = getFinalTAC(tacValidityRaw, cop);
-
-  //     frontPosLampDataList.validityLampList.push(tacValidity);
-  //     frontPosLampDataList.MakeList.push(make);
-  //     frontPosLampDataList.suppNameLampList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     frontPosLampDataList.tacNumberLampList.push(tac);
-  //     frontPosLampDataList.copCertLampList.push(copFinal);
-  //     frontPosLampDataList.possibleDateLampList.push(possibleFinal);
-  //   }
-
-  //   // REAR PARKING LAMP LED
-  //   {
-  //     const props = vehPosLamp?.Parking_Lamp_Led_Rear?.properties || {};
-  //     let make = props?.Make_of_Parking_lamp_led_rear?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const tacValidityRaw = props?.TAC_Validity?.value || "";
-  //     const tacValidity = getFinalTAC(tacValidityRaw, cop);
-
-  //     rearPosLampDataList.validityList.push(tacValidity);
-  //     rearPosLampDataList.MakeList.push(make);
-  //     rearPosLampDataList.suppNameList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     rearPosLampDataList.tacNumberList.push(tac);
-  //     rearPosLampDataList.copCertList.push(copFinal);
-  //     rearPosLampDataList.possibleDateList.push(possibleFinal);
-  //   }
-
-  //   // REAR PARKING LAMP BULB
-  //   {
-  //     const props = vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const tacValidityRaw = props?.TAC_Validity?.value || "";
-  //     const tacValidity = getFinalTAC(tacValidityRaw, cop);
-
-  //     rearPosLampDataList.validityLampList.push(tacValidity);
-  //     rearPosLampDataList.MakeList.push(make);
-  //     rearPosLampDataList.suppNameLampList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     rearPosLampDataList.tacNumberLampList.push(tac);
-  //     rearPosLampDataList.copCertLampList.push(copFinal);
-  //     rearPosLampDataList.possibleDateLampList.push(possibleFinal);
-  //   }
-
-  //   // STOP LAMP LED
-  //   {
-  //     const props = vehPosLamp?.Stop_Lamp_LED_Type?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const tacValidityRaw = props?.TAC_Validity?.value || "";
-  //     const tacValidity = getFinalTAC(tacValidityRaw, cop);
-
-  //     stopLampDataList.validityList.push(tacValidity);
-  //     stopLampDataList.MakeList.push(make);
-  //     stopLampDataList.suppNameList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     stopLampDataList.tacNumberList.push(tac);
-  //     stopLampDataList.copCertList.push(copFinal);
-  //     stopLampDataList.possibleDateList.push(possibleFinal);
-  //   }
-
-  //   // STOP LAMP BULB FILAMENT TYPE
-  //   {
-  //     const props = vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties || {};
-  //     let make = props?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) make = `M/s. ${make}`;
-
-  //     const tac = props?.TAC_Number?.value || "";
-  //     const cop = props?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possible = props?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const tacValidityRaw = props?.TAC_Validity?.value || "";
-  //     const tacValidity = getFinalTAC(tacValidityRaw, cop);
-
-  //     stopLampDataList.validityLampList.push(tacValidity);
-  //     stopLampDataList.MakeList.push(make);
-  //     stopLampDataList.suppNameLampList.push(make);
-  //     const { cop: copFinal, possible: possibleFinal } = TACvalidationcheck(tac, cop, possible);
-  //     stopLampDataList.tacNumberLampList.push(tac);
-  //     stopLampDataList.copCertLampList.push(copFinal);
-  //     stopLampDataList.possibleDateLampList.push(possibleFinal);
-  //   }
-  // });
-
-
-
-
-
-
-//   const posLampsList = form8Data?.Position_Lamps?.PositionLamps || [];
-
-//   let frontPosLampDataList = mainData();
-//   let rearPosLampDataList = mainData();
-//   let stopLampDataList = mainData();
-
-//   posLampsList.forEach((vehPosLamp) => {
-//     if (vehPosLamp?.supplier?.active === true) {
-//       // FRONT POSITION LAMP LED
-//       {
-//         const props =
-//           vehPosLamp?.Front_Position_Lamp_LED_Type?.properties || {};
-//         // let make = props?.Make?.value || "";
-//         // if (make && !make.startsWith("M/")) {
-//         //   make = `M/s. ${make}`;
-//         // }
-//         let make = makePrefix(props?.Make?.value);
-//         const tacValueRaw = props?.TAC_Validity?.value?.trim() || "";
-//         const copCertRaw =
-//           props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-//         const possibleDateRaw =
-//           props?.Possible_date_of_submission_of_required_approval?.value?.trim() ||
-//           "";
-
-//         const isTacMissing = tacValueRaw === "";
-//         const isPossibleDatePresent = possibleDateRaw !== "";
-
-//         let finalTAC = tacValueRaw;
-//         if (isTacMissing && isPossibleDatePresent) {
-//           finalTAC = "NA";
-//         }
-
-//         frontPosLampDataList.validityList.push(finalTAC);
-//         frontPosLampDataList.MakeList.push(make);
-//         frontPosLampDataList.suppNameList.push(make);
-
-//         const { cop, possible } = TACvalidationcheck(
-//           tacValueRaw,
-//           copCertRaw,
-//           possibleDateRaw
-//         );
-//         frontPosLampDataList.copCertList.push(cop);
-//         frontPosLampDataList.possibleDateList.push(possible);
-//       }
-
-//       // FRONT POSITION LAMP BULB
-//       {
-//         const props =
-//           vehPosLamp?.Front_Position_Lamp_Bulb_Type?.properties || {};
-//         // let make = props?.Make?.value || "";
-//         // if (make && !make.startsWith("M/")) {
-//         //   make = `M/s. ${make}`;
-//         // }
-//         let make = makePrefix(props?.Make?.value);
-
-//         const tacValueRaw = props?.TAC_Validity?.value?.trim() || "";
-//         const copCertRaw =
-//           props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-//         const possibleDateRaw =
-//           props?.Possible_date_of_submission_of_required_approval?.value?.trim() ||
-//           "";
-
-//         const isTacMissing = tacValueRaw === "";
-//         const isPossibleDatePresent = possibleDateRaw !== "";
-
-//         let finalTAC = tacValueRaw;
-//         if (isTacMissing && isPossibleDatePresent) {
-//           finalTAC = "NA";
-//         }
-
-//         frontPosLampDataList.validityLampList.push(finalTAC);
-//         frontPosLampDataList.MakeList.push(make);
-//         frontPosLampDataList.suppNameLampList.push(make);
-
-//         const { cop, possible } = TACvalidationcheck(
-//           tacValueRaw,
-//           copCertRaw,
-//           possibleDateRaw
-//         );
-//         frontPosLampDataList.copCertLampList.push(cop);
-//         frontPosLampDataList.possibleDateLampList.push(possible);
-//       }
-
-//       // REAR PARKING LAMP LED
-//       {
-//         const props = vehPosLamp?.Parking_Lamp_Led_Rear?.properties || {};
-//         // let make = props?.Make_of_Parking_lamp_led_rear?.value || "";
-//         // if (make && !make.startsWith("M/")) {
-//         //   make = `M/s. ${make}`;
-//         // }
-//         let make = makePrefix(props?.Make_of_Parking_lamp_led_rear?.value);
-
-//         const tacValueRaw = props?.TAC_Validity?.value?.trim() || "";
-//         const copCertRaw =
-//           props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-//         const possibleDateRaw =
-//           props?.Possible_date_of_submission_of_required_approval?.value?.trim() ||
-//           "";
-
-//         const isTacMissing = tacValueRaw === "";
-//         const isPossibleDatePresent = possibleDateRaw !== "";
-
-//         let finalTAC = tacValueRaw;
-//         if (isTacMissing && isPossibleDatePresent) {
-//           finalTAC = "NA";
-//         }
-
-//         rearPosLampDataList.validityList.push(finalTAC);
-//         rearPosLampDataList.MakeList.push(make);
-//         rearPosLampDataList.suppNameList.push(make);
-
-//         const { cop, possible } = TACvalidationcheck(
-//           tacValueRaw,
-//           copCertRaw,
-//           possibleDateRaw
-//         );
-//         rearPosLampDataList.copCertList.push(cop);
-//         rearPosLampDataList.possibleDateList.push(possible);
-//       }
-
-//       // REAR PARKING LAMP BULB
-//       {
-//         const props = vehPosLamp?.Parking_Lamp_Bulb_Rear?.properties || {};
-//         // let make = props?.Make?.value || "";
-//         // if (make && !make.startsWith("M/")) {
-//         //   make = `M/s. ${make}`;
-//         // }
-//         let make = makePrefix(props?.Make?.value);
-
-//         const tacValueRaw = props?.TAC_Validity?.value?.trim() || "";
-//         const copCertRaw =
-//           props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-//         const possibleDateRaw =
-//           props?.Possible_date_of_submission_of_required_approval?.value?.trim() ||
-//           "";
-
-//         const isTacMissing = tacValueRaw === "";
-//         const isPossibleDatePresent = possibleDateRaw !== "";
-
-//         let finalTAC = tacValueRaw;
-//         if (isTacMissing && isPossibleDatePresent) {
-//           finalTAC = "NA";
-//         }
-
-//         rearPosLampDataList.validityLampList.push(finalTAC);
-//         rearPosLampDataList.MakeList.push(make);
-//         rearPosLampDataList.suppNameLampList.push(make);
-
-//         const { cop, possible } = TACvalidationcheck(
-//           tacValueRaw,
-//           copCertRaw,
-//           possibleDateRaw
-//         );
-//         rearPosLampDataList.copCertLampList.push(cop);
-//         rearPosLampDataList.possibleDateLampList.push(possible);
-//       }
-
-//       // STOP LAMP LED
-//       {
-//         const props = vehPosLamp?.Stop_Lamp_LED_Type?.properties || {};
-//         // let make = props?.Make?.value || "";
-//         // if (make && !make.startsWith("M/")) {
-//         //   make = `M/s. ${make}`;
-//         // }
-//         let make = makePrefix(props?.Make?.value);
-
-//         const tacValueRaw = props?.TAC_Validity?.value?.trim() || "";
-//         const copCertRaw =
-//           props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-//         const possibleDateRaw =
-//           props?.Possible_date_of_submission_of_required_approval?.value?.trim() ||
-//           "";
-
-//         const isTacMissing = tacValueRaw === "";
-//         const isPossibleDatePresent = possibleDateRaw !== "";
-
-//         let finalTAC = tacValueRaw;
-//         if (isTacMissing && isPossibleDatePresent) {
-//           finalTAC = "NA";
-//         }
-
-//         stopLampDataList.validityList.push(finalTAC);
-//         stopLampDataList.MakeList.push(make);
-//         stopLampDataList.suppNameList.push(make);
-
-//         const { cop, possible } = TACvalidationcheck(
-//           tacValueRaw,
-//           copCertRaw,
-//           possibleDateRaw
-//         );
-//         stopLampDataList.copCertList.push(cop);
-//         stopLampDataList.possibleDateList.push(possible);
-//       }
-
-//       // STOP LAMP BULB FILAMENT TYPE
-//       {
-//         const props =
-//           vehPosLamp?.Stop_lamp_bulb_Filament_Type?.properties || {};
-//         // let make = props?.Make?.value || "";
-//         // if (make && !make.startsWith("M/")) {
-//         //   make = `M/s. ${make}`;
-//         // }
-//         let make = makePrefix(props?.Make?.value);
-
-//         const tacValueRaw = props?.TAC_Validity?.value?.trim() || "";
-//         const copCertRaw =
-//           props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-//         const possibleDateRaw =
-//           props?.Possible_date_of_submission_of_required_approval?.value?.trim() ||
-//           "";
-
-//         const isTacMissing = tacValueRaw === "";
-//         const isPossibleDatePresent = possibleDateRaw !== "";
-
-//         let finalTAC = tacValueRaw;
-//         if (isTacMissing && isPossibleDatePresent) {
-//           finalTAC = "NA";
-//         }
-
-//         stopLampDataList.validityLampList.push(finalTAC);
-//         stopLampDataList.MakeList.push(make);
-//         stopLampDataList.suppNameLampList.push(make);
-
-//         const { cop, possible } = TACvalidationcheck(
-//           tacValueRaw,
-//           copCertRaw,
-//           possibleDateRaw
-//         );
-//         stopLampDataList.copCertLampList.push(cop);
-//         stopLampDataList.possibleDateLampList.push(possible);
-//       }
-//     }
-//   });
-
-
+  // console.log("Current suppNameList:", dtRunnLampDataList.suppNameList);
+  // console.log("Current MakeList:", dtRunnLampDataList.MakeList);
+  // console.log("Possible Date List:", dtRunnLampDataList.possibleDateList);
+  // console.log("cop List:", dtRunnLampDataList.copCertList);
+  // console.log("Validity List:", dtRunnLampDataList.validityList);
 
 
 const posLampsList = form8Data?.Position_Lamps?.PositionLamps || [];
@@ -4321,1148 +1425,122 @@ posLampsList.forEach((vehPosLamp) => {
 });
 
 
-  console.log("frontPosLampDataList.MakeList", frontPosLampDataList.MakeList);
-  console.log(
-    "frontPosLampDataList.possibleDateList",
-    frontPosLampDataList.possibleDateList
-  );
-  console.log(
-    "frontPosLampDataList.copCertList",
-    frontPosLampDataList.copCertList
-  );
-  console.log(
-    "frontPosLampDataList.validityList",
-    frontPosLampDataList.validityList
-  );
-  console.log(
-    "frontPosLampDataList.tacNumberLampList",
-    frontPosLampDataList.tacNumberList
-  );
-  console.log(
-    "frontPosLampDataList.tacNumberLampList",
-    frontPosLampDataList.tacNumberLampList
-  );
-  console.log(
-    "frontPosLampDataList.suppNameLampList",
-    frontPosLampDataList.suppNameLampList
-  );
-  console.log(
-    "frontPosLampDataList.possibleDateLampList",
-    frontPosLampDataList.possibleDateLampList
-  );
-  console.log(
-    "frontPosLampDataList.copCertLampList",
-    frontPosLampDataList.copCertLampList
-  );
-  console.log(
-    "frontPosLampDataList.validityLampList",
-    frontPosLampDataList.validityLampList
-  );
+  // console.log("frontPosLampDataList.MakeList", frontPosLampDataList.MakeList);
+  // console.log(
+  //   "frontPosLampDataList.possibleDateList",
+  //   frontPosLampDataList.possibleDateList
+  // );
+  // console.log(
+  //   "frontPosLampDataList.copCertList",
+  //   frontPosLampDataList.copCertList
+  // );
+  // console.log(
+  //   "frontPosLampDataList.validityList",
+  //   frontPosLampDataList.validityList
+  // );
+  // console.log(
+  //   "frontPosLampDataList.tacNumberLampList",
+  //   frontPosLampDataList.tacNumberList
+  // );
+  // console.log(
+  //   "frontPosLampDataList.tacNumberLampList",
+  //   frontPosLampDataList.tacNumberLampList
+  // );
+  // console.log(
+  //   "frontPosLampDataList.suppNameLampList",
+  //   frontPosLampDataList.suppNameLampList
+  // );
+  // console.log(
+  //   "frontPosLampDataList.possibleDateLampList",
+  //   frontPosLampDataList.possibleDateLampList
+  // );
+  // console.log(
+  //   "frontPosLampDataList.copCertLampList",
+  //   frontPosLampDataList.copCertLampList
+  // );
+  // console.log(
+  //   "frontPosLampDataList.validityLampList",
+  //   frontPosLampDataList.validityLampList
+  // );
 
-  console.log(
-    "rearPosLampDataList.tacNumberLampList",
-    rearPosLampDataList.tacNumberLampList
-  );
-  console.log(
-    "rearPosLampDataList.suppNameLampList",
-    rearPosLampDataList.suppNameLampList
-  );
-  console.log("rearPosLampDataList.MakeList", rearPosLampDataList.MakeList);
-  console.log(
-    "rearPosLampDataList.possibleDateLampList",
-    rearPosLampDataList.possibleDateLampList
-  );
-  console.log(
-    "rearPosLampDataList.copCertLampList",
-    rearPosLampDataList.copCertLampList
-  );
-  console.log(
-    "rearPosLampDataList.validityLampList",
-    rearPosLampDataList.validityLampList
-  );
-  console.log(
-    "rearPosLampDataList.tacNumberList",
-    rearPosLampDataList.tacNumberList
-  );
-  console.log(
-    "rearPosLampDataList.suppNameList",
-    rearPosLampDataList.suppNameList
-  );
-  console.log(
-    "rearPosLampDataList.possibleDateList",
-    rearPosLampDataList.possibleDateList
-  );
-  console.log(
-    "rearPosLampDataList.copCertList",
-    rearPosLampDataList.copCertList
-  );
-  console.log(
-    "rearPosLampDataList.validityList",
-    rearPosLampDataList.validityList
-  );
+  // console.log(
+  //   "rearPosLampDataList.tacNumberLampList",
+  //   rearPosLampDataList.tacNumberLampList
+  // );
+  // console.log(
+  //   "rearPosLampDataList.suppNameLampList",
+  //   rearPosLampDataList.suppNameLampList
+  // );
+  // console.log("rearPosLampDataList.MakeList", rearPosLampDataList.MakeList);
+  // console.log(
+  //   "rearPosLampDataList.possibleDateLampList",
+  //   rearPosLampDataList.possibleDateLampList
+  // );
+  // console.log(
+  //   "rearPosLampDataList.copCertLampList",
+  //   rearPosLampDataList.copCertLampList
+  // );
+  // console.log(
+  //   "rearPosLampDataList.validityLampList",
+  //   rearPosLampDataList.validityLampList
+  // );
+  // console.log(
+  //   "rearPosLampDataList.tacNumberList",
+  //   rearPosLampDataList.tacNumberList
+  // );
+  // console.log(
+  //   "rearPosLampDataList.suppNameList",
+  //   rearPosLampDataList.suppNameList
+  // );
+  // console.log(
+  //   "rearPosLampDataList.possibleDateList",
+  //   rearPosLampDataList.possibleDateList
+  // );
+  // console.log(
+  //   "rearPosLampDataList.copCertList",
+  //   rearPosLampDataList.copCertList
+  // );
+  // console.log(
+  //   "rearPosLampDataList.validityList",
+  //   rearPosLampDataList.validityList
+  // );
 
-  console.log("stopLampDataList.tacNumberList", stopLampDataList.tacNumberList);
-  console.log("stopLampDataList.suppNameList", stopLampDataList.suppNameList);
-  console.log("stopLampDataList.MakeList", stopLampDataList.MakeList);
-  console.log(
-    "stopLampDataList.possibleDateList",
-    stopLampDataList.possibleDateList
-  );
-  console.log("stopLampDataList.copCertList", stopLampDataList.copCertList);
-  console.log("stopLampDataList.validityList", stopLampDataList.validityList);
-  console.log(
-    "stopLampDataList.tacNumberLampList",
-    stopLampDataList.tacNumberLampList
-  );
-  console.log(
-    "stopLampDataList.suppNameLampList",
-    stopLampDataList.suppNameLampList
-  );
-  console.log(
-    "stopLampDataList.possibleDateLampList",
-    stopLampDataList.possibleDateLampList
-  );
-  console.log(
-    "stopLampDataList.copCertLampList",
-    stopLampDataList.copCertLampList
-  );
-  console.log(
-    "stopLampDataList.validityLampList",
-    stopLampDataList.validityLampList
-  );
-
-  // const dirIndLampList = form8Data?.Direction_Indicator_Lamp?.DirectionIndicatorLamp;
-  // let fdIndLampDataList = mainData();
-  // let sdIndLampDataList = mainData();
-  // let rdIndLampDataList = mainData();
-  // dirIndLampList.map(vehDirInd => {
-  //     if (vehDirInd.supplier.active === true) {
-  //         let supplierName = vehDirInd?.supplier?.nameOfSupplier;
-
-  //         // Modify supplierName directly
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // fdIndLampDataList.suppNameList.push(supplierName);
-
-  //         // fdIndLampDataList.validityList.push(vehDirInd?.Front_Direction_Indicator_LED_Type?.properties?.TAC_Validity?.value);
-  //         // Get the validity value for Front Direction Indicator Lamp
-  //         const fdIndValidityValue = vehDirInd?.Front_Direction_Indicator_LED_Type?.properties?.TAC_Number?.value;
-
-  //         // Push the validity value to fdIndLampDataList
-  //         fdIndLampDataList.tacNumberList.push(fdIndValidityValue);
-
-  //         // Check if validity data is present
-  //         // fdIndLampDataList.suppNameList.push(fdIndValidityValue ? supplierName : "");
-  //         // fdIndLampDataList.suppNameList.push(fdIndValidityValue === "NA" ? "" : supplierName);
-  //         if (fdIndValidityValue && fdIndValidityValue.trim() !== "NA") {
-  //             fdIndLampDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         fdIndLampDataList.MakeList.push(vehDirInd?.Front_Direction_Indicator_LED_Type?.properties?.Make?.value);
-  //         fdIndLampDataList.validityList.push(vehDirInd?.Front_Direction_Indicator_LED_Type?.properties?.TAC_Validity?.value);
-  //         // fdIndLampDataList.tacNumberList.push(vehDirInd?.Front_Direction_Indicator_LED_Type?.properties?.TAC_Number?.value);
-  //         fdIndLampDataList.possibleDateList.push(vehDirInd?.Front_Direction_Indicator_LED_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         fdIndLampDataList.copCertList.push(vehDirInd?.Front_Direction_Indicator_LED_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //         // sdIndLampDataList.suppNameList.push(supplierName);
-  //         // sdIndLampDataList.validityList.push(vehDirInd?.Side_Direction_Indicator?.properties?.TAC_Validity?.value);
-  //         // Get the validity value for Side Direction Indicator Lamp
-  //         const sdIndValidityValue = vehDirInd?.Side_Direction_Indicator?.properties?.TAC_Number?.value;
-
-  //         // Push the validity value to sdIndLampDataList
-  //         sdIndLampDataList.tacNumberList.push(sdIndValidityValue);
-
-  //         // Check if validity data is present
-  //         // sdIndLampDataList.suppNameList.push(sdIndValidityValue ? supplierName : "");
-  //         // sdIndLampDataList.suppNameList.push(sdIndValidityValue === "NA" ? "" : supplierName);
-  //         if (sdIndValidityValue && sdIndValidityValue.trim() !== "NA") {
-  //             sdIndLampDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         sdIndLampDataList.MakeList.push(vehDirInd?.Side_Direction_Indicator?.properties?.Make?.value);
-  //         sdIndLampDataList.validityList.push(vehDirInd?.Side_Direction_Indicator?.properties?.TAC_Validity?.value);
-  //         // sdIndLampDataList.tacNumberList.push(vehDirInd?.Side_Direction_Indicator?.properties?.TAC_Number?.value);
-  //         sdIndLampDataList.possibleDateList.push(vehDirInd?.Side_Direction_Indicator?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         sdIndLampDataList.copCertList.push(vehDirInd?.Side_Direction_Indicator?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //         // rdIndLampDataList.suppNameList.push(supplierName);
-  //         // rdIndLampDataList.validityList.push(vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties?.TAC_Validity?.value);
-  //         // Get the validity value for Rear Direction Indicator Lamp
-  //         const rdIndValidityValue = vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties?.TAC_Number?.value;
-
-  //         // Push the validity value to rdIndLampDataList
-  //         rdIndLampDataList.tacNumberList.push(rdIndValidityValue);
-
-  //         // Check if validity data is present
-  //         // rdIndLampDataList.suppNameList.push(rdIndValidityValue ? supplierName : "");
-  //         // rdIndLampDataList.suppNameList.push(rdIndValidityValue === "NA" ? "" : supplierName);
-  //         if (rdIndValidityValue && rdIndValidityValue.trim() !== "NA") {
-  //             rdIndLampDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         rdIndLampDataList.MakeList.push(vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties?.Make?.value);
-  //         rdIndLampDataList.validityList.push(vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties?.TAC_Validity?.value);
-  //         // rdIndLampDataList.tacNumberList.push(vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties?.TAC_Number?.value);
-  //         rdIndLampDataList.possibleDateList.push(vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         rdIndLampDataList.copCertList.push(vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //         // fdIndLampDataList.validityLampList.push(vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties?.TAC_Validity?.value);
-  //         // Get the TAC Validity value for Front Direction Indicator Lamp
-  //         const fdIndLampTACValue = vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties?.TAC_Number?.value;
-
-  //         // Push the TAC value to fdIndLampDataList
-  //         fdIndLampDataList.tacNumberLampList.push(fdIndLampTACValue);
-
-  //         // Check if TAC value is present
-  //         // fdIndLampDataList.suppNameLampList.push(fdIndLampTACValue ? supplierName : "");
-  //         // fdIndLampDataList.suppNameLampList.push(fdIndLampTACValue === "NA" ? "" : supplierName);
-  //         if (fdIndLampTACValue && fdIndLampTACValue.trim() !== "NA") {
-  //             fdIndLampDataList.suppNameLampList.push(supplierName);
-  //         }
-
-  //         fdIndLampDataList.MakeList.push(vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties?.Make?.value);
-  //         fdIndLampDataList.validityLampList.push(vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties?.TAC_Validity?.value);
-  //         // fdIndLampDataList.tacNumberLampList.push(vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties?.TAC_Number?.value);
-  //         fdIndLampDataList.possibleDateLampList.push(vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         fdIndLampDataList.copCertLampList.push(vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //         // rdIndLampDataList.validityLampList.push(vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties?.TAC_Validity?.value);
-  //         // Get the TAC Validity value for Rear Direction Indicator Lamp
-  //         const rdIndLampTACValue = vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties?.TAC_Number?.value;
-
-  //         // Push the TAC value to rdIndLampDataList
-  //         rdIndLampDataList.tacNumberLampList.push(rdIndLampTACValue);
-
-  //         // Check if TAC value is present
-  //         // rdIndLampDataList.suppNameLampList.push(rdIndLampTACValue ? supplierName : "");
-  //         // rdIndLampDataList.suppNameLampList.push(rdIndLampTACValue === "NA" ? "" : supplierName);
-  //         if (rdIndLampTACValue && rdIndLampTACValue.trim() !== "NA") {
-  //             rdIndLampDataList.suppNameLampList.push(supplierName);
-  //         }
-
-  //         rdIndLampDataList.MakeList.push(vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties?.Make?.value);
-  //         rdIndLampDataList.validityLampList.push(vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties?.TAC_Validity?.value);
-  //         // rdIndLampDataList.tacNumberLampList.push(vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties?.TAC_Number?.value);
-  //         rdIndLampDataList.possibleDateLampList.push(vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         rdIndLampDataList.copCertLampList.push(vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //     }
-  // });
-
-  // const dirIndLampList = form8Data?.Direction_Indicator_Lamp?.DirectionIndicatorLamp;
-
-  // let fdIndLampDataList = mainData();
-  // let sdIndLampDataList = mainData();
-  // let rdIndLampDataList = mainData();
-
-  // dirIndLampList?.forEach(vehDirInd => {
-  //     if (vehDirInd.supplier?.active) {
-
-  //         // Front Direction Indicator LED
-  //         const fdLED = vehDirInd?.Front_Direction_Indicator_LED_Type?.properties || {};
-  //         const fdTACNumber = fdLED?.TAC_Number?.value;
-  //         const fdMake = fdLED?.Make?.value || "";
-  //         if (fdTACNumber && fdTACNumber.trim() !== "NA") {
-  //             // Push prefixed make instead of supplier name
-  //             fdIndLampDataList.suppNameList.push(prefixMake(fdMake));
-  //         }
-  //         fdIndLampDataList.tacNumberList.push(fdTACNumber);
-  //         fdIndLampDataList.MakeList.push(fdMake);  // Raw make here, no prefix
-  //         fdIndLampDataList.validityList.push(fdLED?.TAC_Validity?.value);
-  //         fdIndLampDataList.possibleDateList.push(fdLED?.Possible_date_of_submission_of_required_approval?.value);
-  //         fdIndLampDataList.copCertList.push(fdLED?.CoP_Cert_No_with_validity_date?.value);
-
-  //         // Side Direction Indicator LED
-  //         const sdLED = vehDirInd?.Side_Direction_Indicator?.properties || {};
-  //         console.log('sdlED:', sdLED);
-  //         const sdTACNumber = sdLED?.TAC_Number?.value;
-  //         const sdMake = sdLED?.Make?.value || "";
-  //         if (sdTACNumber && sdTACNumber.trim() !== "NA") {
-  //             sdIndLampDataList.suppNameList.push(prefixMake(sdMake));
-  //         }
-  //         sdIndLampDataList.tacNumberList.push(sdTACNumber);
-  //         sdIndLampDataList.MakeList.push(sdMake);
-  //         sdIndLampDataList.validityList.push(sdLED?.TAC_Validity?.value);
-  //         sdIndLampDataList.possibleDateList.push(sdLED?.Possible_date_of_submission_of_required_approval?.value);
-  //         sdIndLampDataList.copCertList.push(sdLED?.CoP_Cert_No_with_validity_date?.value);
-
-  //         // Rear Direction Indicator LED
-  //         const rdLED = vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties || {};
-  //         const rdTACNumber = rdLED?.TAC_Number?.value;
-  //         const rdMake = rdLED?.Make?.value || "";
-  //         if (rdTACNumber && rdTACNumber.trim() !== "NA") {
-  //             rdIndLampDataList.suppNameList.push(prefixMake(rdMake));
-  //         }
-  //         rdIndLampDataList.tacNumberList.push(rdTACNumber);
-  //         rdIndLampDataList.MakeList.push(rdMake);
-  //         rdIndLampDataList.validityList.push(rdLED?.TAC_Validity?.value);
-  //         rdIndLampDataList.possibleDateList.push(rdLED?.Possible_date_of_submission_of_required_approval?.value);
-  //         rdIndLampDataList.copCertList.push(rdLED?.CoP_Cert_No_with_validity_date?.value);
-
-  //         // Front Direction Indicator Bulb
-  //         const fdBulb = vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties || {};
-  //         const fdBulbTAC = fdBulb?.TAC_Number?.value;
-  //         const fdBulbMake = fdBulb?.Make?.value || "";
-  //         if (fdBulbTAC && fdBulbTAC.trim() !== "NA") {
-  //             fdIndLampDataList.suppNameLampList.push(prefixMake(fdBulbMake));
-  //         }
-  //         fdIndLampDataList.tacNumberLampList.push(fdBulbTAC);
-  //         fdIndLampDataList.MakeList.push(fdBulbMake);
-  //         fdIndLampDataList.validityLampList.push(fdBulb?.TAC_Validity?.value);
-  //         fdIndLampDataList.possibleDateLampList.push(fdBulb?.Possible_date_of_submission_of_required_approval?.value);
-  //         fdIndLampDataList.copCertLampList.push(fdBulb?.CoP_Cert_No_with_validity_date?.value);
-
-  //         // Rear Direction Indicator Bulb
-  //         const rdBulb = vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties || {};
-  //         const rdBulbTAC = rdBulb?.TAC_Number?.value;
-  //         const rdBulbMake = rdBulb?.Make?.value || "";
-  //         if (rdBulbTAC && rdBulbTAC.trim() !== "NA") {
-  //             rdIndLampDataList.suppNameLampList.push(prefixMake(rdBulbMake));
-  //         }
-  //         rdIndLampDataList.tacNumberLampList.push(rdBulbTAC);
-  //         rdIndLampDataList.MakeList.push(rdBulbMake);
-  //         rdIndLampDataList.validityLampList.push(rdBulb?.TAC_Validity?.value);
-  //         rdIndLampDataList.possibleDateLampList.push(rdBulb?.Possible_date_of_submission_of_required_approval?.value);
-  //         rdIndLampDataList.copCertLampList.push(rdBulb?.CoP_Cert_No_with_validity_date?.value);
-  //     }
-  // });
-
-  // const dirIndLampList = form8Data?.Direction_Indicator_Lamp?.DirectionIndicatorLamp;
-
-  // let fdIndLampDataList = mainData();
-  // let sdIndLampDataList = mainData();
-  // let rdIndLampDataList = mainData();
-
-  // dirIndLampList?.forEach(vehDirInd => {
-  //     if (vehDirInd.supplier?.active) {
-
-  //         // --- Front Direction Indicator LED ---
-  //         const fdLED = vehDirInd?.Front_Direction_Indicator_LED_Type?.properties || {};
-  //         const fdTACNumber = fdLED?.TAC_Number?.value;
-  //         const fdMake = fdLED?.Make?.value || "";
-  //         const validityFD = parseAndCheckTACValidity(fdLED?.TAC_Validity?.value);
-
-  //         if (fdTACNumber && fdTACNumber.trim() !== "NA") {
-  //             fdIndLampDataList.suppNameList.push(prefixMake(fdMake));
-  //         }
-  //         fdIndLampDataList.tacNumberList.push(fdTACNumber);
-  //         fdIndLampDataList.MakeList.push(fdMake);
-  //         fdIndLampDataList.validityList.push(fdLED?.TAC_Validity?.value);
-  //         fdIndLampDataList.possibleDateList.push(
-  //             !validityFD.expired ? fdLED?.Possible_date_of_submission_of_required_approval?.value : "NA"
-  //         );
-  //         fdIndLampDataList.copCertList.push(
-  //             !validityFD.expired ? fdLED?.CoP_Cert_No_with_validity_date?.value : "NA"
-  //         );
-
-  //         // --- Side Direction Indicator LED ---
-  //         const sdLED = vehDirInd?.Side_Direction_Indicator?.properties || {};
-  //         const sdTACNumber = sdLED?.TAC_Number?.value;
-  //         const sdMake = sdLED?.Make?.value || "";
-  //         const validitySD = parseAndCheckTACValidity(sdLED?.TAC_Validity?.value);
-
-  //         if (sdTACNumber && sdTACNumber.trim() !== "NA") {
-  //             sdIndLampDataList.suppNameList.push(prefixMake(sdMake));
-  //         }
-  //         sdIndLampDataList.tacNumberList.push(sdTACNumber);
-  //         sdIndLampDataList.MakeList.push(sdMake);
-  //         sdIndLampDataList.validityList.push(sdLED?.TAC_Validity?.value);
-  //         sdIndLampDataList.possibleDateList.push(
-  //             !validitySD.expired ? sdLED?.Possible_date_of_submission_of_required_approval?.value : "NA"
-  //         );
-  //         sdIndLampDataList.copCertList.push(
-  //             !validitySD.expired ? sdLED?.CoP_Cert_No_with_validity_date?.value : "NA"
-  //         );
-
-  //         // --- Rear Direction Indicator LED ---
-  //         const rdLED = vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties || {};
-  //         const rdTACNumber = rdLED?.TAC_Number?.value;
-  //         const rdMake = rdLED?.Make?.value || "";
-  //         const validityRD = parseAndCheckTACValidity(rdLED?.TAC_Validity?.value);
-
-  //         if (rdTACNumber && rdTACNumber.trim() !== "NA") {
-  //             rdIndLampDataList.suppNameList.push(prefixMake(rdMake));
-  //         }
-  //         rdIndLampDataList.tacNumberList.push(rdTACNumber);
-  //         rdIndLampDataList.MakeList.push(rdMake);
-  //         rdIndLampDataList.validityList.push(rdLED?.TAC_Validity?.value);
-  //         rdIndLampDataList.possibleDateList.push(
-  //             !validityRD.expired ? rdLED?.Possible_date_of_submission_of_required_approval?.value : "NA"
-  //         );
-  //         rdIndLampDataList.copCertList.push(
-  //             !validityRD.expired ? rdLED?.CoP_Cert_No_with_validity_date?.value : "NA"
-  //         );
-
-  //         // --- Front Direction Indicator Bulb ---
-  //         const fdBulb = vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties || {};
-  //         const fdBulbTAC = fdBulb?.TAC_Number?.value;
-  //         const fdBulbMake = fdBulb?.Make?.value || "";
-  //         const validityFDBulb = parseAndCheckTACValidity(fdBulb?.TAC_Validity?.value);
-
-  //         if (fdBulbTAC && fdBulbTAC.trim() !== "NA") {
-  //             fdIndLampDataList.suppNameLampList.push(prefixMake(fdBulbMake));
-  //         }
-  //         fdIndLampDataList.tacNumberLampList.push(fdBulbTAC);
-  //         fdIndLampDataList.MakeList.push(fdBulbMake);
-  //         fdIndLampDataList.validityLampList.push(fdBulb?.TAC_Validity?.value);
-  //         fdIndLampDataList.possibleDateLampList.push(
-  //             !validityFDBulb.expired ? fdBulb?.Possible_date_of_submission_of_required_approval?.value : "NA"
-  //         );
-  //         fdIndLampDataList.copCertLampList.push(
-  //             !validityFDBulb.expired ? fdBulb?.CoP_Cert_No_with_validity_date?.value : "NA"
-  //         );
-
-  //         // --- Rear Direction Indicator Bulb ---
-  //         const rdBulb = vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties || {};
-  //         const rdBulbTAC = rdBulb?.TAC_Number?.value;
-  //         const rdBulbMake = rdBulb?.Make?.value || "";
-  //         const validityRDBulb = parseAndCheckTACValidity(rdBulb?.TAC_Validity?.value);
-
-  //         if (rdBulbTAC && rdBulbTAC.trim() !== "NA") {
-  //             rdIndLampDataList.suppNameLampList.push(prefixMake(rdBulbMake));
-  //         }
-  //         rdIndLampDataList.tacNumberLampList.push(rdBulbTAC);
-  //         rdIndLampDataList.MakeList.push(rdBulbMake);
-  //         rdIndLampDataList.validityLampList.push(rdBulb?.TAC_Validity?.value);
-  //         rdIndLampDataList.possibleDateLampList.push(
-  //             !validityRDBulb.expired ? rdBulb?.Possible_date_of_submission_of_required_approval?.value : "NA"
-  //         );
-  //         rdIndLampDataList.copCertLampList.push(
-  //             !validityRDBulb.expired ? rdBulb?.CoP_Cert_No_with_validity_date?.value : "NA"
-  //         );
-  //     }
-  // });
-
+  // console.log("stopLampDataList.tacNumberList", stopLampDataList.tacNumberList);
+  // console.log("stopLampDataList.suppNameList", stopLampDataList.suppNameList);
+  // console.log("stopLampDataList.MakeList", stopLampDataList.MakeList);
+  // console.log(
+  //   "stopLampDataList.possibleDateList",
+  //   stopLampDataList.possibleDateList
+  // );
+  // console.log("stopLampDataList.copCertList", stopLampDataList.copCertList);
+  // console.log("stopLampDataList.validityList", stopLampDataList.validityList);
+  // console.log(
+  //   "stopLampDataList.tacNumberLampList",
+  //   stopLampDataList.tacNumberLampList
+  // );
+  // console.log(
+  //   "stopLampDataList.suppNameLampList",
+  //   stopLampDataList.suppNameLampList
+  // );
+  // console.log(
+  //   "stopLampDataList.possibleDateLampList",
+  //   stopLampDataList.possibleDateLampList
+  // );
+  // console.log(
+  //   "stopLampDataList.copCertLampList",
+  //   stopLampDataList.copCertLampList
+  // );
+  // console.log(
+  //   "stopLampDataList.validityLampList",
+  //   stopLampDataList.validityLampList
+  // );
+ 
   const dirIndLampList =
     form8Data?.Direction_Indicator_Lamp?.DirectionIndicatorLamp;
 
   let fdIndLampDataList = mainData();
   let sdIndLampDataList = mainData();
   let rdIndLampDataList = mainData();
-
-  // const prefixMake = (make) => {
-  //     if (make && !make.startsWith("M/s.")) {
-  //         return `M/s. ${make}`;
-  //     }
-  //     return make || "";
-  // };
-
-  //   const extractAndPush = (component, dataList, isLamp = false) => {
-  //     const tacVal = component?.TAC_Validity?.value || "";
-  //     const tacNum = component?.TAC_Number?.value || "";
-  //     const cop = component?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const poss =
-  //       component?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const make = prefixMake(component?.Make?.value);
-  //     dataList.MakeList.push(make);
-  //     dataList.suppNameLampList.push(make);
-  //     if (tacVal && tacVal.trim() !== "NA" && tacNum && tacNum.trim() !== "NA") {
-  //       if (isLamp) {
-  //         dataList.validityLampList.push(tacVal);
-  //         dataList.tacNumberLampList.push(tacNum);
-
-  //         const { cop: c, possible: p } = TACvalidationcheck(tacVal, cop, poss);
-  //         dataList.copCertLampList.push(c);
-  //         dataList.possibleDateLampList.push(p);
-  //       } else {
-  //         dataList.validityList.push(tacVal);
-  //         dataList.tacNumberList.push(tacNum);
-
-  //         const { cop: c, possible: p } = TACvalidationcheck(tacVal, cop, poss);
-  //         dataList.copCertList.push(c);
-  //         dataList.possibleDateList.push(p);
-  //       }
-  //     }
-  //   };
-
-  //   dirIndLampList?.forEach((vehDirInd) => {
-  //     if (vehDirInd?.supplier?.active) {
-  //       // Front Direction Indicator LED
-  //       extractAndPush(
-  //         vehDirInd?.Front_Direction_Indicator_LED_Type?.properties,
-  //         fdIndLampDataList
-  //       );
-
-  //       // Side Direction Indicator LED
-  //       extractAndPush(
-  //         vehDirInd?.Side_Direction_Indicator?.properties,
-  //         sdIndLampDataList
-  //       );
-
-  //       // Rear Direction Indicator LED
-  //       extractAndPush(
-  //         vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties,
-  //         rdIndLampDataList
-  //       );
-
-  //       // Front Direction Indicator Bulb
-  //       extractAndPush(
-  //         vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties,
-  //         fdIndLampDataList,
-  //         true
-  //       );
-
-  //       // Rear Direction Indicator Bulb
-  //       extractAndPush(
-  //         vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties,
-  //         rdIndLampDataList,
-  //         true
-  //       );
-  //     }
-  //   });
-
-  // const extractAndPush = (component, dataList, isLamp = false) => {
-  //     const tacVal = component?.TAC_Validity?.value || "";
-  //     const tacNum = component?.TAC_Number?.value || "";
-  //     const cop = component?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const poss = component?.Possible_date_of_submission_of_required_approval?.value || "";
-  //     const make = prefixMake(component?.Make?.value);
-
-  //     dataList.MakeList.push(make);
-  //     dataList.suppNameList.push(make); // unified list name
-
-  //     dataList.validityList.push(tacVal);
-  //     dataList.tacNumberList.push(tacNum);
-
-  //     const { cop: c, possible: p } = TACvalidationcheck(tacVal, cop, poss);
-  //     dataList.copCertList.push(c);
-  //     dataList.possibleDateList.push(p);
-  //   };
-
-  //   dirIndLampList?.forEach((vehDirInd) => {
-  //     if (vehDirInd?.supplier?.active) {
-  //       // Front Direction Indicator LED
-  //       extractAndPush(
-  //         vehDirInd?.Front_Direction_Indicator_LED_Type?.properties,
-  //         fdIndLampDataList
-  //       );
-
-  //       // Side Direction Indicator LED
-  //       extractAndPush(
-  //         vehDirInd?.Side_Direction_Indicator?.properties,
-  //         sdIndLampDataList
-  //       );
-
-  //       // Rear Direction Indicator LED
-  //       extractAndPush(
-  //         vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties,
-  //         rdIndLampDataList
-  //       );
-
-  //       // Front Direction Indicator Bulb
-  //       extractAndPush(
-  //         vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties,
-  //         fdIndLampDataList
-  //       );
-
-  //       // Rear Direction Indicator Bulb
-  //       extractAndPush(
-  //         vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties,
-  //         rdIndLampDataList
-  //       );
-  //     }
-  //   });
-
-  // // Front Direction Indicator LED
-  // dirIndLampList.map((vehDirInd) => {
-  //   if (vehDirInd?.supplier?.active === true) {
-  //     const fdLED = vehDirInd?.Front_Direction_Indicator_LED_Type?.properties || {};
-  //     let make = fdLED?.Make?.value || "";
-  //     if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //     const tacValueRaw = fdLED?.TAC_Number?.value || "";
-  //     const copCertRaw = fdLED?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possibleDateRaw = fdLED?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //     fdIndLampDataList.validityList.push(tacValueRaw);
-  //     fdIndLampDataList.MakeList.push(make);
-  //     fdIndLampDataList.suppNameList.push(make);
-
-  //     const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //     fdIndLampDataList.copCertList.push(cop);
-  //     fdIndLampDataList.possibleDateList.push(possible);
-  //   }
-  // });
-
-  // // Side Direction Indicator LED
-  // dirIndLampList.map((vehDirInd) => {
-  //   if (vehDirInd?.supplier?.active === true) {
-  //     const sdLED = vehDirInd?.Side_Direction_Indicator?.properties || {};
-  //     let make = sdLED?.Make?.value || "";
-  //     if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //     const tacValueRaw = sdLED?.TAC_Number?.value || "";
-  //     const copCertRaw = sdLED?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possibleDateRaw = sdLED?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //     sdIndLampDataList.validityList.push(tacValueRaw);
-  //     sdIndLampDataList.MakeList.push(make);
-  //     sdIndLampDataList.suppNameList.push(make);
-
-  //     const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //     sdIndLampDataList.copCertList.push(cop);
-  //     sdIndLampDataList.possibleDateList.push(possible);
-  //   }
-  // });
-
-  // // Rear Direction Indicator LED
-  // dirIndLampList.map((vehDirInd) => {
-  //   if (vehDirInd?.supplier?.active === true) {
-  //     const rdLED = vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties || {};
-  //     let make = rdLED?.Make?.value || "";
-  //     if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //     const tacValueRaw = rdLED?.TAC_Number?.value || "";
-  //     const copCertRaw = rdLED?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possibleDateRaw = rdLED?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //     rdIndLampDataList.validityList.push(tacValueRaw);
-  //     rdIndLampDataList.MakeList.push(make);
-  //     rdIndLampDataList.suppNameList.push(make);
-
-  //     const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //     rdIndLampDataList.copCertList.push(cop);
-  //     rdIndLampDataList.possibleDateList.push(possible);
-  //   }
-  // });
-
-  // // Front Direction Indicator Bulb
-  // dirIndLampList.map((vehDirInd) => {
-  //   if (vehDirInd?.supplier?.active === true) {
-  //     const fdBulb = vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties || {};
-  //     let make = fdBulb?.Make?.value || "";
-  //     if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //     const tacValueRaw = fdBulb?.TAC_Number?.value || "";
-  //     const copCertRaw = fdBulb?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possibleDateRaw = fdBulb?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //     fdIndLampDataList.validityLampList.push(tacValueRaw);
-  //     fdIndLampDataList.MakeList.push(make);
-  //     fdIndLampDataList.suppNameLampList.push(make);
-
-  //     const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //     fdIndLampDataList.copCertLampList.push(cop);
-  //     fdIndLampDataList.possibleDateLampList.push(possible);
-  //   }
-  // });
-
-  // // Rear Direction Indicator Bulb
-  // dirIndLampList.map((vehDirInd) => {
-  //   if (vehDirInd?.supplier?.active === true) {
-  //     const rdBulb = vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties || {};
-  //     let make = rdBulb?.Make?.value || "";
-  //     if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //     const tacValueRaw = rdBulb?.TAC_Number?.value || "";
-  //     const copCertRaw = rdBulb?.CoP_Cert_No_with_validity_date?.value || "";
-  //     const possibleDateRaw = rdBulb?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //     rdIndLampDataList.validityLampList.push(tacValueRaw);
-  //     rdIndLampDataList.MakeList.push(make);
-  //     rdIndLampDataList.suppNameLampList.push(make);
-
-  //     const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //     rdIndLampDataList.copCertLampList.push(cop);
-  //     rdIndLampDataList.possibleDateLampList.push(possible);
-  //   }
-  // });
-
-  // const getFinalTAC = (tacRaw, copRaw) => {
-  //     const isTacMissing = tacRaw.trim() === "";
-  //     const isCopPresent = copRaw.trim() !== "";
-  //     return isTacMissing && isCopPresent ? "NA" : tacRaw;
-  //   };
-
-  //   // Front Direction Indicator LED
-  //   dirIndLampList.map((vehDirInd) => {
-  //     if (vehDirInd?.supplier?.active === true) {
-  //       const fdLED = vehDirInd?.Front_Direction_Indicator_LED_Type?.properties || {};
-  //       let make = fdLED?.Make?.value || "";
-  //       if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //       const tacValueRaw = fdLED?.TAC_Number?.value || "";
-  //       const copCertRaw = fdLED?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDateRaw = fdLED?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       const tacValidity = getFinalTAC(tacValueRaw, copCertRaw);
-
-  //       fdIndLampDataList.validityList.push(tacValidity);
-  //       fdIndLampDataList.MakeList.push(make);
-  //       fdIndLampDataList.suppNameList.push(make);
-
-  //       const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //       fdIndLampDataList.copCertList.push(cop);
-  //       fdIndLampDataList.possibleDateList.push(possible);
-  //     }
-  //   });
-
-  //   // Side Direction Indicator LED
-  //   dirIndLampList.map((vehDirInd) => {
-  //     if (vehDirInd?.supplier?.active === true) {
-  //       const sdLED = vehDirInd?.Side_Direction_Indicator?.properties || {};
-  //       let make = sdLED?.Make?.value || "";
-  //       if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //       const tacValueRaw = sdLED?.TAC_Number?.value || "";
-  //       const copCertRaw = sdLED?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDateRaw = sdLED?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       const tacValidity = getFinalTAC(tacValueRaw, copCertRaw);
-
-  //       sdIndLampDataList.validityList.push(tacValidity);
-  //       sdIndLampDataList.MakeList.push(make);
-  //       sdIndLampDataList.suppNameList.push(make);
-
-  //       const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //       sdIndLampDataList.copCertList.push(cop);
-  //       sdIndLampDataList.possibleDateList.push(possible);
-  //     }
-  //   });
-
-  //   // Rear Direction Indicator LED
-  //   dirIndLampList.map((vehDirInd) => {
-  //     if (vehDirInd?.supplier?.active === true) {
-  //       const rdLED = vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties || {};
-  //       let make = rdLED?.Make?.value || "";
-  //       if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //       const tacValueRaw = rdLED?.TAC_Number?.value || "";
-  //       const copCertRaw = rdLED?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDateRaw = rdLED?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       const tacValidity = getFinalTAC(tacValueRaw, copCertRaw);
-
-  //       rdIndLampDataList.validityList.push(tacValidity);
-  //       rdIndLampDataList.MakeList.push(make);
-  //       rdIndLampDataList.suppNameList.push(make);
-
-  //       const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //       rdIndLampDataList.copCertList.push(cop);
-  //       rdIndLampDataList.possibleDateList.push(possible);
-  //     }
-  //   });
-
-  //   // Front Direction Indicator Bulb
-  //   dirIndLampList.map((vehDirInd) => {
-  //     if (vehDirInd?.supplier?.active === true) {
-  //       const fdBulb = vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties || {};
-  //       let make = fdBulb?.Make?.value || "";
-  //       if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //       const tacValueRaw = fdBulb?.TAC_Number?.value || "";
-  //       const copCertRaw = fdBulb?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDateRaw = fdBulb?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       const tacValidity = getFinalTAC(tacValueRaw, copCertRaw);
-
-  //       fdIndLampDataList.validityLampList.push(tacValidity);
-  //       fdIndLampDataList.MakeList.push(make);
-  //       fdIndLampDataList.suppNameLampList.push(make);
-
-  //       const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //       fdIndLampDataList.copCertLampList.push(cop);
-  //       fdIndLampDataList.possibleDateLampList.push(possible);
-  //     }
-  //   });
-
-  //   // Rear Direction Indicator Bulb
-  //   dirIndLampList.map((vehDirInd) => {
-  //     if (vehDirInd?.supplier?.active === true) {
-  //       const rdBulb = vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties || {};
-  //       let make = rdBulb?.Make?.value || "";
-  //       if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //       const tacValueRaw = rdBulb?.TAC_Number?.value || "";
-  //       const copCertRaw = rdBulb?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDateRaw = rdBulb?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       const tacValidity = getFinalTAC(tacValueRaw, copCertRaw);
-
-  //       rdIndLampDataList.validityLampList.push(tacValidity);
-  //       rdIndLampDataList.MakeList.push(make);
-  //       rdIndLampDataList.suppNameLampList.push(make);
-
-  //       const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //       rdIndLampDataList.copCertLampList.push(cop);
-  //       rdIndLampDataList.possibleDateLampList.push(possible);
-  //     }
-  //   });
-
-  // dirIndLampList.forEach((vehDirInd) => {
-  //     if (vehDirInd?.supplier?.active === true) {
-  //       // FRONT DIRECTION INDICATOR LED
-  //       {
-  //         const props = vehDirInd?.Front_Direction_Indicator_LED_Type?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacValueRaw = props?.TAC_Number?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         const isTacMissing = tacValueRaw === "";
-  //         const isPossibleDatePresent = possibleDateRaw !== "";
-
-  //         let finalTAC = tacValueRaw;
-  //         if (isTacMissing && isPossibleDatePresent) {
-  //           finalTAC = "NA";
-  //         }
-
-  //         fdIndLampDataList.validityList.push(finalTAC);
-  //         fdIndLampDataList.MakeList.push(make);
-  //         fdIndLampDataList.suppNameList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //         fdIndLampDataList.copCertList.push(cop);
-  //         fdIndLampDataList.possibleDateList.push(possible);
-  //       }
-
-  //       // SIDE DIRECTION INDICATOR LED
-  //       {
-  //         const props = vehDirInd?.Side_Direction_Indicator?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacValueRaw = props?.TAC_Number?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         const isTacMissing = tacValueRaw === "";
-  //         const isPossibleDatePresent = possibleDateRaw !== "";
-
-  //         let finalTAC = tacValueRaw;
-  //         if (isTacMissing && isPossibleDatePresent) {
-  //           finalTAC = "NA";
-  //         }
-
-  //         sdIndLampDataList.validityList.push(finalTAC);
-  //         sdIndLampDataList.MakeList.push(make);
-  //         sdIndLampDataList.suppNameList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //         sdIndLampDataList.copCertList.push(cop);
-  //         sdIndLampDataList.possibleDateList.push(possible);
-  //       }
-
-  //       // REAR DIRECTION INDICATOR LED
-  //       {
-  //         const props = vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacValueRaw = props?.TAC_Number?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         const isTacMissing = tacValueRaw === "";
-  //         const isPossibleDatePresent = possibleDateRaw !== "";
-
-  //         let finalTAC = tacValueRaw;
-  //         if (isTacMissing && isPossibleDatePresent) {
-  //           finalTAC = "NA";
-  //         }
-
-  //         rdIndLampDataList.validityList.push(finalTAC);
-  //         rdIndLampDataList.MakeList.push(make);
-  //         rdIndLampDataList.suppNameList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //         rdIndLampDataList.copCertList.push(cop);
-  //         rdIndLampDataList.possibleDateList.push(possible);
-  //       }
-
-  //       // FRONT DIRECTION INDICATOR BULB
-  //       {
-  //         const props = vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacValueRaw = props?.TAC_Number?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         const isTacMissing = tacValueRaw === "";
-  //         const isPossibleDatePresent = possibleDateRaw !== "";
-
-  //         let finalTAC = tacValueRaw;
-  //         if (isTacMissing && isPossibleDatePresent) {
-  //           finalTAC = "NA";
-  //         }
-
-  //         fdIndLampDataList.validityLampList.push(finalTAC);
-  //         fdIndLampDataList.MakeList.push(make);
-  //         fdIndLampDataList.suppNameLampList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //         fdIndLampDataList.copCertLampList.push(cop);
-  //         fdIndLampDataList.possibleDateLampList.push(possible);
-  //       }
-
-  //       // REAR DIRECTION INDICATOR BULB
-  //       {
-  //         const props = vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacValueRaw = props?.TAC_Number?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         const isTacMissing = tacValueRaw === "";
-  //         const isPossibleDatePresent = possibleDateRaw !== "";
-
-  //         let finalTAC = tacValueRaw;
-  //         if (isTacMissing && isPossibleDatePresent) {
-  //           finalTAC = "NA";
-  //         }
-
-  //         rdIndLampDataList.validityLampList.push(finalTAC);
-  //         rdIndLampDataList.MakeList.push(make);
-  //         rdIndLampDataList.suppNameLampList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //         rdIndLampDataList.copCertLampList.push(cop);
-  //         rdIndLampDataList.possibleDateLampList.push(possible);
-  //       }
-  //     }
-  //   });
-
-  // dirIndLampList.forEach((vehDirInd) => {
-  //     if (vehDirInd?.supplier?.active === true) {
-
-  //       // FRONT DIRECTION INDICATOR LED
-  //       {
-  //         const props = vehDirInd?.Front_Direction_Indicator_LED_Type?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacNumber = props?.TAC_Number?.value?.trim() || "";
-  //         const tacValidity = props?.TAC_Validity?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         fdIndLampDataList.tacNumberList.push(tacNumber);
-  //         fdIndLampDataList.validityList.push(tacValidity);
-  //         fdIndLampDataList.MakeList.push(make);
-  //         fdIndLampDataList.suppNameList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValidity, copCertRaw, possibleDateRaw);
-  //         fdIndLampDataList.copCertList.push(cop);
-  //         fdIndLampDataList.possibleDateList.push(possible);
-  //       }
-
-  //       // SIDE DIRECTION INDICATOR LED
-  //       {
-  //         const props = vehDirInd?.Side_Direction_Indicator?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacNumber = props?.TAC_Number?.value?.trim() || "";
-  //         const tacValidity = props?.TAC_Validity?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         sdIndLampDataList.tacNumberList.push(tacNumber);
-  //         sdIndLampDataList.validityList.push(tacValidity);
-  //         sdIndLampDataList.MakeList.push(make);
-  //         sdIndLampDataList.suppNameList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValidity, copCertRaw, possibleDateRaw);
-  //         sdIndLampDataList.copCertList.push(cop);
-  //         sdIndLampDataList.possibleDateList.push(possible);
-  //       }
-
-  //       // REAR DIRECTION INDICATOR LED
-  //       {
-  //         const props = vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacNumber = props?.TAC_Number?.value?.trim() || "";
-  //         const tacValidity = props?.TAC_Validity?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         rdIndLampDataList.tacNumberList.push(tacNumber);
-  //         rdIndLampDataList.validityList.push(tacValidity);
-  //         rdIndLampDataList.MakeList.push(make);
-  //         rdIndLampDataList.suppNameList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValidity, copCertRaw, possibleDateRaw);
-  //         rdIndLampDataList.copCertList.push(cop);
-  //         rdIndLampDataList.possibleDateList.push(possible);
-  //       }
-
-  //       // FRONT DIRECTION INDICATOR BULB
-  //       {
-  //         const props = vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacNumber = props?.TAC_Number?.value?.trim() || "";
-  //         const tacValidity = props?.TAC_Validity?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         fdIndLampDataList.tacNumberLampList.push(tacNumber);
-  //         fdIndLampDataList.validityLampList.push(tacValidity);
-  //         fdIndLampDataList.MakeList.push(make);
-  //         fdIndLampDataList.suppNameLampList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValidity, copCertRaw, possibleDateRaw);
-  //         fdIndLampDataList.copCertLampList.push(cop);
-  //         fdIndLampDataList.possibleDateLampList.push(possible);
-  //       }
-
-  //       // REAR DIRECTION INDICATOR BULB
-  //       {
-  //         const props = vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacNumber = props?.TAC_Number?.value?.trim() || "";
-  //         const tacValidity = props?.TAC_Validity?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         rdIndLampDataList.tacNumberLampList.push(tacNumber);
-  //         rdIndLampDataList.validityLampList.push(tacValidity);
-  //         rdIndLampDataList.MakeList.push(make);
-  //         rdIndLampDataList.suppNameLampList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValidity, copCertRaw, possibleDateRaw);
-  //         rdIndLampDataList.copCertLampList.push(cop);
-  //         rdIndLampDataList.possibleDateLampList.push(possible);
-  //       }
-  //     }
-  //   });
-
-  // dirIndLampList.forEach((vehDirInd) => {
-  //     if (vehDirInd?.supplier?.active === true) {
-
-  //       // FRONT DIRECTION INDICATOR LED
-  //       {
-  //         const props = vehDirInd?.Front_Direction_Indicator_LED_Type?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacNumberRaw = props?.TAC_Number?.value?.trim() || "";
-  //         const tacValidity = props?.TAC_Validity?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         let finalTAC = tacNumberRaw;
-  //         if (!tacNumberRaw && copCertRaw) finalTAC = "NA";
-
-  //         fdIndLampDataList.tacNumberList.push(finalTAC);
-  //         fdIndLampDataList.validityList.push(finalTAC !== "NA" ? tacValidity : "");
-  //         fdIndLampDataList.MakeList.push(make);
-  //         fdIndLampDataList.suppNameList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValidity, copCertRaw, possibleDateRaw);
-  //         fdIndLampDataList.copCertList.push(cop);
-  //         fdIndLampDataList.possibleDateList.push(possible);
-  //       }
-
-  //       // SIDE DIRECTION INDICATOR LED
-  //       {
-  //         const props = vehDirInd?.Side_Direction_Indicator?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacNumberRaw = props?.TAC_Number?.value?.trim() || "";
-  //         const tacValidity = props?.TAC_Validity?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         let finalTAC = tacNumberRaw;
-  //         if (!tacNumberRaw && copCertRaw) finalTAC = "NA";
-
-  //         sdIndLampDataList.tacNumberList.push(finalTAC);
-  //         sdIndLampDataList.validityList.push(finalTAC !== "NA" ? tacValidity : "");
-  //         sdIndLampDataList.MakeList.push(make);
-  //         sdIndLampDataList.suppNameList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValidity, copCertRaw, possibleDateRaw);
-  //         sdIndLampDataList.copCertList.push(cop);
-  //         sdIndLampDataList.possibleDateList.push(possible);
-  //       }
-
-  //       // REAR DIRECTION INDICATOR LED
-  //       {
-  //         const props = vehDirInd?.Rear_Direction_Indicator_LED_Type?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacNumberRaw = props?.TAC_Number?.value?.trim() || "";
-  //         const tacValidity = props?.TAC_Validity?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         let finalTAC = tacNumberRaw;
-  //         if (!tacNumberRaw && copCertRaw) finalTAC = "NA";
-
-  //         rdIndLampDataList.tacNumberList.push(finalTAC);
-  //         rdIndLampDataList.validityList.push(finalTAC !== "NA" ? tacValidity : "");
-  //         rdIndLampDataList.MakeList.push(make);
-  //         rdIndLampDataList.suppNameList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValidity, copCertRaw, possibleDateRaw);
-  //         rdIndLampDataList.copCertList.push(cop);
-  //         rdIndLampDataList.possibleDateList.push(possible);
-  //       }
-
-  //       // FRONT DIRECTION INDICATOR BULB
-  //       {
-  //         const props = vehDirInd?.Front_Direction_indicator_Bulb_Type?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacNumberRaw = props?.TAC_Number?.value?.trim() || "";
-  //         const tacValidity = props?.TAC_Validity?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         let finalTAC = tacNumberRaw;
-  //         if (!tacNumberRaw && copCertRaw) finalTAC = "NA";
-
-  //         fdIndLampDataList.tacNumberLampList.push(finalTAC);
-  //         fdIndLampDataList.validityLampList.push(finalTAC !== "NA" ? tacValidity : "");
-  //         fdIndLampDataList.MakeList.push(make);
-  //         fdIndLampDataList.suppNameLampList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValidity, copCertRaw, possibleDateRaw);
-  //         fdIndLampDataList.copCertLampList.push(cop);
-  //         fdIndLampDataList.possibleDateLampList.push(possible);
-  //       }
-
-  //       // REAR DIRECTION INDICATOR BULB
-  //       {
-  //         const props = vehDirInd?.Rear_Direction_Indicator_Bulb_Type?.properties || {};
-  //         let make = props?.Make?.value || "";
-  //         if (make && !make.startsWith("M/s.")) make = `M/s. ${make}`;
-
-  //         const tacNumberRaw = props?.TAC_Number?.value?.trim() || "";
-  //         const tacValidity = props?.TAC_Validity?.value?.trim() || "";
-  //         const copCertRaw = props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //         const possibleDateRaw = props?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //         let finalTAC = tacNumberRaw;
-  //         if (!tacNumberRaw && copCertRaw) finalTAC = "NA";
-
-  //         rdIndLampDataList.tacNumberLampList.push(finalTAC);
-  //         rdIndLampDataList.validityLampList.push(finalTAC !== "NA" ? tacValidity : "");
-  //         rdIndLampDataList.MakeList.push(make);
-  //         rdIndLampDataList.suppNameLampList.push(make);
-
-  //         const { cop, possible } = TACvalidationcheck(tacValidity, copCertRaw, possibleDateRaw);
-  //         rdIndLampDataList.copCertLampList.push(cop);
-  //         rdIndLampDataList.possibleDateLampList.push(possible);
-  //       }
-  //     }
-  //   });
 
   dirIndLampList.forEach((vehDirInd) => {
     if (vehDirInd?.supplier?.active === true) {
@@ -5714,325 +1792,92 @@ posLampsList.forEach((vehPosLamp) => {
     }
   });
 
-  console.log("fdIndLampDataList.suppNameList", fdIndLampDataList.suppNameList);
-  console.log(
-    "fdIndLampDataList.tacNumberList",
-    fdIndLampDataList.tacNumberList
-  );
-  console.log("fdIndLampDataList.MakeList", fdIndLampDataList.MakeList);
-  console.log("fdIndLampDataList.tacNumberList", fdIndLampDataList.tacNumberList);
-  console.log("fdIndLampDataList.validityList", fdIndLampDataList.validityList);
-  console.log(
-    "fdIndLampDataList.possibleDateList",
-    fdIndLampDataList.possibleDateList
-  );
-  console.log("fdIndLampDataList.copCertList", fdIndLampDataList.copCertList);
+  // console.log("fdIndLampDataList.suppNameList", fdIndLampDataList.suppNameList);
+  // console.log(
+  //   "fdIndLampDataList.tacNumberList",
+  //   fdIndLampDataList.tacNumberList
+  // );
+  // console.log("fdIndLampDataList.MakeList", fdIndLampDataList.MakeList);
+  // console.log("fdIndLampDataList.tacNumberList", fdIndLampDataList.tacNumberList);
+  // console.log("fdIndLampDataList.validityList", fdIndLampDataList.validityList);
+  // console.log(
+  //   "fdIndLampDataList.possibleDateList",
+  //   fdIndLampDataList.possibleDateList
+  // );
+  // console.log("fdIndLampDataList.copCertList", fdIndLampDataList.copCertList);
 
-  console.log("sdIndLampDataList.suppNameList", sdIndLampDataList.suppNameList);
-  console.log(
-    "sdIndLampDataList.tacNumberList",
-    sdIndLampDataList.tacNumberList
-  );
-  console.log("sdIndLampDataList.MakeList", sdIndLampDataList.MakeList);
-  console.log("sdIndLampDataList.tacNumberList", sdIndLampDataList.tacNumberList);
-  console.log("sdIndLampDataList.validityList", sdIndLampDataList.validityList);
-  console.log(
-    "sdIndLampDataList.possibleDateList",
-    sdIndLampDataList.possibleDateList
-  );
-  console.log("sdIndLampDataList.copCertList", sdIndLampDataList.copCertList);
+  // console.log("sdIndLampDataList.suppNameList", sdIndLampDataList.suppNameList);
+  // console.log(
+  //   "sdIndLampDataList.tacNumberList",
+  //   sdIndLampDataList.tacNumberList
+  // );
+  // console.log("sdIndLampDataList.MakeList", sdIndLampDataList.MakeList);
+  // console.log("sdIndLampDataList.tacNumberList", sdIndLampDataList.tacNumberList);
+  // console.log("sdIndLampDataList.validityList", sdIndLampDataList.validityList);
+  // console.log(
+  //   "sdIndLampDataList.possibleDateList",
+  //   sdIndLampDataList.possibleDateList
+  // );
+  // console.log("sdIndLampDataList.copCertList", sdIndLampDataList.copCertList);
 
-  console.log("rdIndLampDataList.suppNameList", rdIndLampDataList.suppNameList);
-  console.log(
-    "rdIndLampDataList.tacNumberList",
-    rdIndLampDataList.tacNumberList
-  );
-  console.log("rdIndLampDataList.MakeList", rdIndLampDataList.MakeList);
-  console.log("rdIndLampDataList.tacNumberList", rdIndLampDataList.tacNumberList);
-  console.log("rdIndLampDataList.validityList", rdIndLampDataList.validityList);
-  console.log(
-    "rdIndLampDataList.possibleDateList",
-    rdIndLampDataList.possibleDateList
-  );
-  console.log("rdIndLampDataList.copCertList", rdIndLampDataList.copCertList);
+  // console.log("rdIndLampDataList.suppNameList", rdIndLampDataList.suppNameList);
+  // console.log(
+  //   "rdIndLampDataList.tacNumberList",
+  //   rdIndLampDataList.tacNumberList
+  // );
+  // console.log("rdIndLampDataList.MakeList", rdIndLampDataList.MakeList);
+  // console.log("rdIndLampDataList.tacNumberList", rdIndLampDataList.tacNumberList);
+  // console.log("rdIndLampDataList.validityList", rdIndLampDataList.validityList);
+  // console.log(
+  //   "rdIndLampDataList.possibleDateList",
+  //   rdIndLampDataList.possibleDateList
+  // );
+  // console.log("rdIndLampDataList.copCertList", rdIndLampDataList.copCertList);
 
-  console.log(
-    "fdIndLampDataList.suppNameLampList",
-    fdIndLampDataList.suppNameLampList
-  );
-  console.log(
-    "fdIndLampDataList.tacNumberLampList",
-    fdIndLampDataList.tacNumberLampList
-  );
-  console.log(
-    "fdIndLampDataList.validityLampList",
-    fdIndLampDataList.validityLampList
-  );
-  console.log(
-    "fdIndLampDataList.possibleDateLampList",
-    fdIndLampDataList.possibleDateLampList
-  );
-  console.log(
-    "fdIndLampDataList.copCertLampList",
-    fdIndLampDataList.copCertLampList
-  );
+  // console.log(
+  //   "fdIndLampDataList.suppNameLampList",
+  //   fdIndLampDataList.suppNameLampList
+  // );
+  // console.log(
+  //   "fdIndLampDataList.tacNumberLampList",
+  //   fdIndLampDataList.tacNumberLampList
+  // );
+  // console.log(
+  //   "fdIndLampDataList.validityLampList",
+  //   fdIndLampDataList.validityLampList
+  // );
+  // console.log(
+  //   "fdIndLampDataList.possibleDateLampList",
+  //   fdIndLampDataList.possibleDateLampList
+  // );
+  // console.log(
+  //   "fdIndLampDataList.copCertLampList",
+  //   fdIndLampDataList.copCertLampList
+  // );
 
-  console.log(
-    "rdIndLampDataList.suppNameLampList",
-    rdIndLampDataList.suppNameLampList
-  );
-  console.log(
-    "rdIndLampDataList.tacNumberLampList",
-    rdIndLampDataList.tacNumberLampList
-  );
-  console.log(
-    "rdIndLampDataList.validityLampList",
-    rdIndLampDataList.validityLampList
-  );
-  console.log(
-    "rdIndLampDataList.possibleDateLampList",
-    rdIndLampDataList.possibleDateLampList
-  );
-  console.log(
-    "rdIndLampDataList.copCertLampList",
-    rdIndLampDataList.copCertLampList
-  );
+  // console.log(
+  //   "rdIndLampDataList.suppNameLampList",
+  //   rdIndLampDataList.suppNameLampList
+  // );
+  // console.log(
+  //   "rdIndLampDataList.tacNumberLampList",
+  //   rdIndLampDataList.tacNumberLampList
+  // );
+  // console.log(
+  //   "rdIndLampDataList.validityLampList",
+  //   rdIndLampDataList.validityLampList
+  // );
+  // console.log(
+  //   "rdIndLampDataList.possibleDateLampList",
+  //   rdIndLampDataList.possibleDateLampList
+  // );
+  // console.log(
+  //   "rdIndLampDataList.copCertLampList",
+  //   rdIndLampDataList.copCertLampList
+  // );
 
-  // const revLampList = form8Data?.Reversing_Lamp?.ReversingLamp;
-
-  // let revLampDataList = mainData();
-  // //     revLampList.map(vehRevLamp => {
-  // //         if (vehRevLamp.supplier.active === true) {
-  // //             let supplierName = vehRevLamp?.supplier?.nameOfSupplier;
-
-  // //             // Modify supplierName directly
-  // //             if (!supplierName.startsWith("M/")) {
-  // //                 supplierName = `M/s. ${supplierName}`;
-  // //             }
-
-  // //             // revLampDataList.suppNameList.push(supplierName);
-  // //             // // revLampDataList.suppNameList.push(vehRevLamp?.supplier?.nameOfSupplier);
-  // //             // revLampDataList.validityList.push(vehRevLamp?.Reversing_Lamp?.properties?.TAC_Validity?.value);
-  // //             // Get the validity value for Reversing Lamp
-  // //             const revLampValidityValue = vehRevLamp?.Reversing_Lamp?.properties?.CoP_Cert_No_with_validity_date?.value;
-
-  // //             // Push the validity value to revLampDataList
-  // //             revLampDataList.copCertList.push(revLampValidityValue);
-
-  // //             // Check if validity data is present
-  // //             // revLampDataList.suppNameList.push(revLampValidityValue ? supplierName : "");
-  // //             // revLampDataList.suppNameList.push(revLampValidityValue === "NA" ? "" : supplierName);
-  // //             if (revLampValidityValue && revLampValidityValue.trim() !== "NA") {
-  // //                 revLampDataList.suppNameList.push(supplierName);
-  // //             }
-
-  // //             revLampDataList.possibleDateList.push(vehRevLamp?.Reversing_Lamp?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  // //             // revLampDataList.copCertList.push(vehRevLamp?.Reversing_Lamp?.properties?.CoP_Cert_No_with_validity_date?.value);
-  // //             revLampDataList.validityList.push(vehRevLamp?.Reversing_Lamp?.properties?.TAC_Validity?.value);
-  // //             // revLampDataList.tacNumberList.push(vehRevLamp?.Reversing_Lamp?.properties?.TAC_Number?.value);
-
-  // //             // revLampDataList.validityLampList.push(vehRevLamp?.Reverse_Lamp_Bulb_Type?.properties?.TAC_Validity?.value);
-  // //             // Get the TAC Validity value for Reverse Lamp
-  // // const revLampTACValue = vehRevLamp?.Reverse_Lamp_Bulb_Type?.properties?.CoP_Cert_No_with_validity_date?.value;
-
-  // // // Push the TAC value to revLampDataList
-  // // revLampDataList.copCertLampList.push(revLampTACValue);
-
-  // // // Check if TAC value is present
-  // // // revLampDataList.suppNameLampList.push(revLampTACValue ? supplierName : "");
-  // // // revLampDataList.suppNameLampList.push(revLampTACValue === "NA" ? "" : supplierName);
-  // // if (revLampTACValue && revLampTACValue.trim() !== "NA") {
-  // //     revLampDataList.suppNameLampList.push(supplierName);
-  // // }
-
-  // //             revLampDataList.possibleDateLampList.push(vehRevLamp?.Reverse_Lamp_Bulb_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  // //             // revLampDataList.copCertLampList.push(vehRevLamp?.Reverse_Lamp_Bulb_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  // //             revLampDataList.validityLampList.push(vehRevLamp?.Reverse_Lamp_Bulb_Type?.properties?.TAC_Validity?.value);
-  // //             // revLampDataList.tacNumberLampList.push(vehRevLamp?.Reverse_Lamp_Bulb_Type?.properties?.TAC_Number?.value);
-  // //         }
-  // //     });
-
-  // revLampList?.forEach(vehRevLamp => {
-  //     if (vehRevLamp?.supplier?.active === true) {
-  //         let supplierName = vehRevLamp?.supplier?.nameOfSupplier || "";
-
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // ==== List (Reversing_Lamp) ====
-  //         if (!twoWheeler) {
-  //             const revLampValidityValue = vehRevLamp?.Reversing_Lamp?.properties?.CoP_Cert_No_with_validity_date?.value?.trim();
-  //             if (revLampValidityValue && revLampValidityValue !== "NA") {
-  //                 revLampDataList.suppNameList.push(supplierName);
-  //             }
-
-  //             revLampDataList.copCertList.push(revLampValidityValue || "NA");
-  //             revLampDataList.MakeList.push(
-  //                 vehRevLamp?.Reversing_Lamp?.properties?.Make?.value || "NA"
-  //             );
-  //             revLampDataList.possibleDateList.push(
-  //                 vehRevLamp?.Reversing_Lamp?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA"
-  //             );
-  //             revLampDataList.validityList.push(
-  //                 vehRevLamp?.Reversing_Lamp?.properties?.TAC_Validity?.value || "NA"
-  //             );
-  //         } else {
-  //             // For twoWheeler: push "NA" only once
-  //             if (revLampDataList.suppNameList.length === 0) {
-  //                 revLampDataList.suppNameList.push("NA");
-  //                 revLampDataList.copCertList.push("NA");
-  //                 revLampDataList.possibleDateList.push("NA");
-  //                 revLampDataList.validityList.push("NA");
-  //             }
-  //         }
-
-  //         // ==== LampList (Reverse_Lamp_Bulb_Type) ====
-  //         const revLampTACValue = vehRevLamp?.Reverse_Lamp_Bulb_Type?.properties?.CoP_Cert_No_with_validity_date?.value?.trim();
-  //         if (revLampTACValue && revLampTACValue !== "NA") {
-  //             revLampDataList.suppNameLampList.push(supplierName);
-  //         }
-
-  //         revLampDataList.copCertLampList.push(revLampTACValue || "NA");
-  //         revLampDataList.MakeList.push(
-  //             vehRevLamp?.Reverse_Lamp_Bulb_Type?.properties?.Make?.value || "NA"
-  //         );
-  //         revLampDataList.possibleDateLampList.push(
-  //             vehRevLamp?.Reverse_Lamp_Bulb_Type?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA"
-  //         );
-  //         revLampDataList.validityLampList.push(
-  //             vehRevLamp?.Reverse_Lamp_Bulb_Type?.properties?.TAC_Validity?.value || "NA"
-  //         );
-  //     }
-  // });
-
-  // const revLampList = form8Data?.Reversing_Lamp?.ReversingLamp;
-  // let revLampDataList = mainData();
-
-  // revLampList?.forEach(vehRevLamp => {
-  //     if (vehRevLamp?.supplier?.active === true) {
-  //         const revLampProps = vehRevLamp?.Reversing_Lamp?.properties || {};
-  //         let revLampMake = revLampProps?.Make?.value || "NA";
-  //         const revLampCoP = revLampProps?.CoP_Cert_No_with_validity_date?.value?.trim();
-
-  //         // Add "M/s." prefix if not starting with "M/"
-  //         if (revLampMake && !revLampMake.startsWith("M/") && revLampMake !== "NA") {
-  //             revLampMake = `M/s. ${revLampMake}`;
-  //         }
-
-  //         // ==== List (Reversing_Lamp) ====
-  //         if (!twoWheeler) {
-  //             if (revLampCoP && revLampCoP !== "NA") {
-  //                 revLampDataList.suppNameList.push(revLampMake); // use Make with prefix
-  //             }
-
-  //             revLampDataList.copCertList.push(revLampCoP || "NA");
-  //             revLampDataList.MakeList.push(revLampMake);
-  //             revLampDataList.tacNumberList.push(
-  //                 revLampProps?.TAC_Number?.value || "NA"
-  //             );
-  //             revLampDataList.possibleDateList.push(
-  //                 revLampProps?.Possible_date_of_submission_of_required_approval?.value || "NA"
-  //             );
-  //             revLampDataList.validityList.push(
-  //                 revLampProps?.TAC_Validity?.value || "NA"
-  //             );
-  //         } else {
-  //             if (revLampDataList.suppNameList.length === 0) {
-  //                 revLampDataList.suppNameList.push("NA");
-  //                 revLampDataList.copCertList.push("NA");
-  //                 revLampDataList.MakeList.push("NA");
-  //                 revLampDataList.possibleDateList.push("NA");
-  //                 revLampDataList.validityList.push("NA");
-  //             }
-  //         }
-
-  //         // ==== LampList (Reverse_Lamp_Bulb_Type) ====
-  //         const bulbProps = vehRevLamp?.Reverse_Lamp_Bulb_Type?.properties || {};
-  //         let bulbMake = bulbProps?.Make?.value || "NA";
-  //         const bulbCoP = bulbProps?.CoP_Cert_No_with_validity_date?.value?.trim();
-
-  //         if (bulbMake && !bulbMake.startsWith("M/") && bulbMake !== "NA") {
-  //             bulbMake = `M/s. ${bulbMake}`;
-  //         }
-
-  //         if (bulbCoP && bulbCoP !== "NA") {
-  //             revLampDataList.suppNameLampList.push(bulbMake);
-  //         }
-
-  //         revLampDataList.copCertLampList.push(bulbCoP || "NA");
-  //         revLampDataList.MakeList.push(bulbMake);
-  //         revLampDataList.tacNumberLampList.push(
-  //             bulbProps?.TAC_Number?.value || "NA"
-  //         );
-  //         revLampDataList.possibleDateLampList.push(
-  //             bulbProps?.Possible_date_of_submission_of_required_approval?.value || "NA"
-  //         );
-  //         revLampDataList.validityLampList.push(
-  //             bulbProps?.TAC_Validity?.value || "NA"
-  //         );
-  //     }
-  // });
-
-  //   const revLampList = form8Data?.Reversing_Lamp?.ReversingLamp || [];
-  //   let revLampDataList = mainData();
-
-  //   revLampList.forEach((vehRevLamp) => {
-  //     if (vehRevLamp?.supplier?.active === true) {
-  //       // --- Reversing Lamp ---
-  //       const revLamp = vehRevLamp?.Reversing_Lamp?.properties || {};
-  //       let revLampMake = revLamp?.Make?.value || "";
-  //       if (revLampMake && !revLampMake.startsWith("M/")) {
-  //         revLampMake = `M/s. ${revLampMake}`;
-  //       }
-
-  //       const revLampValidity = revLamp?.TAC_Validity?.value || "";
-  //       const revLampCopCert =
-  //         revLamp?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const revLampPossibleDate =
-  //         revLamp?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       revLampDataList.validityList.push(revLampValidity);
-  //       revLampDataList.tacNumberList.push(revLamp?.TAC_Number?.value || "");
-  //       revLampDataList.MakeList.push(revLampMake);
-  //       revLampDataList.suppNameList.push(revLampMake);
-
-  //       const { cop, possible } = TACvalidationcheck(
-  //         revLampValidity,
-  //         revLampCopCert,
-  //         revLampPossibleDate
-  //       );
-  //       revLampDataList.copCertList.push(cop);
-  //       revLampDataList.possibleDateList.push(possible);
-
-  //       // --- Reverse Lamp Bulb ---
-  //       const revBulb = vehRevLamp?.Reverse_Lamp_Bulb_Type?.properties || {};
-  //       let revBulbMake = revBulb?.Make?.value || "";
-  //       if (revBulbMake && !revBulbMake.startsWith("M/")) {
-  //         revBulbMake = `M/s. ${revBulbMake}`;
-  //       }
-
-  //       const revBulbValidity = revBulb?.TAC_Validity?.value || "";
-  //       const revBulbCopCert =
-  //         revBulb?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const revBulbPossibleDate =
-  //         revBulb?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       revLampDataList.validityLampList.push(revBulbValidity);
-  //       revLampDataList.MakeList.push(revBulbMake);
-  //       revLampDataList.suppNameLampList.push(revBulbMake);
-  //       revLampDataList.tacNumberLampList.push(revBulb?.TAC_Number?.value || "");
-  //       const { cop: bulbCop, possible: bulbPossible } = TACvalidationcheck(
-  //         revBulbValidity,
-  //         revBulbCopCert,
-  //         revBulbPossibleDate
-  //       );
-  //       revLampDataList.copCertLampList.push(bulbCop);
-  //       revLampDataList.possibleDateLampList.push(bulbPossible);
-  //     }
-  //   });
-
-  const revLampList = form8Data?.Reversing_Lamp?.ReversingLamp || [];
+  
+const revLampList = form8Data?.Reversing_Lamp?.ReversingLamp || [];
   let revLampDataList = mainData();
 
   revLampList.forEach((vehRevLamp) => {
@@ -6057,6 +1902,7 @@ posLampsList.forEach((vehPosLamp) => {
       let finalRevLampValidity = revLampValidityRaw;
       if (!revLampValidityRaw && revLampPossibleDate) {
         finalRevLampValidity = "NA";
+
       }
 
     //   if (finalRevLampValidity !== "NA") {
@@ -6138,270 +1984,18 @@ posLampsList.forEach((vehPosLamp) => {
     }
   });
 
-  console.log("revlampdatalist.suppNameList", revLampDataList.suppNameList);
-  console.log("revlampdatalist.copCertList", revLampDataList.copCertList);
-  console.log("revlampdatalist.MakeList", revLampDataList.MakeList);
-  console.log(
-    "revlampdatalist.possibleDateList",
-    revLampDataList.possibleDateList
-  );
-  console.log("revlampdatalist.validityList", revLampDataList.validityList);
-  console.log("revlampdatalist.tacNumberList", revLampDataList.tacNumberList);
+  // console.log("revlampdatalist.suppNameList", revLampDataList.suppNameList);
+  // console.log("revlampdatalist.copCertList", revLampDataList.copCertList);
+  // console.log("revlampdatalist.MakeList", revLampDataList.MakeList);
+  // console.log(
+  //   "revlampdatalist.possibleDateList",
+  //   revLampDataList.possibleDateList
+  // );
+  // console.log("revlampdatalist.validityList", revLampDataList.validityList);
+  // console.log("revlampdatalist.tacNumberList", revLampDataList.tacNumberList);
 
-  // const rrpLampList = form8Data?.Rear_Registration_Plate_lamp?.RearRegistrationPlatelamp;
-  // let rrpLampDataList = mainData();
-  // rrpLampList.map(vehRRPLamp => {
-  //     if (vehRRPLamp.supplier.active === true) {
-  //         let supplierName = vehRRPLamp?.supplier?.nameOfSupplier;
-
-  //         // Modify supplierName directly
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // rrpLampDataList.suppNameList.push(supplierName);
-  //         // // rrpLampDataList.suppNameList.push(vehRRPLamp?.supplier?.nameOfSupplier);
-  //         // rrpLampDataList.validityList.push(vehRRPLamp?.Registration_Plate_Lamp_LED_Type?.properties?.TAC_Validity?.value);
-  //         // Get the validity value for Registration Plate Lamp
-  //         const rrpLampValidityValue = vehRRPLamp?.Registration_Plate_Lamp_LED_Type?.properties?.TAC_Number?.value;
-
-  //         // Push the validity value to rrpLampDataList
-  //         rrpLampDataList.tacNumberList.push(rrpLampValidityValue);
-
-  //         // Check if validity data is present
-  //         // rrpLampDataList.suppNameList.push(rrpLampValidityValue ? supplierName : "");
-  //         // rrpLampDataList.suppNameList.push(rrpLampValidityValue === "NA" ? "" : supplierName);
-  //         if (rrpLampValidityValue && rrpLampValidityValue.trim() !== "NA") {
-  //             rrpLampDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         rrpLampDataList.MakeList.push(vehRRPLamp?.Registration_Plate_Lamp_LED_Type?.properties?.Make?.value);
-  //         rrpLampDataList.validityList.push(vehRRPLamp?.Registration_Plate_Lamp_LED_Type?.properties?.TAC_Validity?.value);
-  //         // rrpLampDataList.tacNumberList.push(vehRRPLamp?.Registration_Plate_Lamp_LED_Type?.properties?.TAC_Number?.value);
-  //         rrpLampDataList.possibleDateList.push(vehRRPLamp?.Registration_Plate_Lamp_LED_Type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         rrpLampDataList.copCertList.push(vehRRPLamp?.Registration_Plate_Lamp_LED_Type?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //         // rrpLampDataList.validityLampList.push(vehRRPLamp?.Registration_Plate_Lamp_bulb_type?.properties?.TAC_Validity?.value);
-  //         // Get the TAC Validity value for Registration Plate Lamp
-  //         const rrpLampTACValue = vehRRPLamp?.Registration_Plate_Lamp_bulb_type?.properties?.TAC_Number?.value;
-
-  //         // Push the TAC value to rrpLampDataList
-  //         rrpLampDataList.tacNumberLampList.push(rrpLampTACValue);
-
-  //         // Check if TAC value is present
-  //         // rrpLampDataList.suppNameLampList.push(rrpLampTACValue ? supplierName : "");
-  //         // rrpLampDataList.suppNameLampList.push(rrpLampTACValue === "NA" ? "" : supplierName);
-  //         if (rrpLampTACValue && rrpLampTACValue.trim() !== "NA") {
-  //             rrpLampDataList.suppNameLampList.push(supplierName);
-  //         }
-
-  //         rrpLampDataList.MakeList.push(vehRRPLamp?.Registration_Plate_Lamp_bulb_type?.properties?.Make?.value);
-  //         rrpLampDataList.validityLampList.push(vehRRPLamp?.Registration_Plate_Lamp_bulb_type?.properties?.TAC_Validity?.value);
-  //         // rrpLampDataList.tacNumberLampList.push(vehRRPLamp?.Registration_Plate_Lamp_bulb_type?.properties?.TAC_Number?.value);
-  //         rrpLampDataList.possibleDateLampList.push(vehRRPLamp?.Registration_Plate_Lamp_bulb_type?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         rrpLampDataList.copCertLampList.push(vehRRPLamp?.Registration_Plate_Lamp_bulb_type?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //     }
-  // });
-
-  // const rrpLampList = form8Data?.Rear_Registration_Plate_lamp?.RearRegistrationPlatelamp || [];
-  // let rrpLampDataList = mainData();
-
-  // rrpLampList.forEach(vehRRPLamp => {
-  //     if (vehRRPLamp.supplier?.active) {
-  //         // For LED Type
-  //         const ledType = vehRRPLamp.Registration_Plate_Lamp_LED_Type?.properties || {};
-  //         let ledMake = ledType.Make?.value || "";
-
-  //         if (ledMake && !ledMake.startsWith("M/")) {
-  //             ledMake = `M/s. ${ledMake}`;
-  //         }
-
-  //         const rrpLampValidityValue = ledType.TAC_Number?.value;
-  //         rrpLampDataList.tacNumberList.push(rrpLampValidityValue);
-
-  //         if (rrpLampValidityValue && rrpLampValidityValue.trim() !== "NA") {
-  //             rrpLampDataList.suppNameList.push(ledMake);
-  //         }
-
-  //         rrpLampDataList.MakeList.push(ledMake);
-  //         rrpLampDataList.validityList.push(ledType.TAC_Validity?.value);
-  //         rrpLampDataList.possibleDateList.push(ledType.Possible_date_of_submission_of_required_approval?.value);
-  //         rrpLampDataList.copCertList.push(ledType.CoP_Cert_No_with_validity_date?.value);
-
-  //         // For Bulb Type
-  //         const bulbType = vehRRPLamp.Registration_Plate_Lamp_bulb_type?.properties || {};
-  //         let bulbMake = bulbType.Make?.value || "";
-
-  //         if (bulbMake && !bulbMake.startsWith("M/")) {
-  //             bulbMake = `M/s. ${bulbMake}`;
-  //         }
-
-  //         const rrpLampTACValue = bulbType.TAC_Number?.value;
-  //         rrpLampDataList.tacNumberLampList.push(rrpLampTACValue);
-
-  //         if (rrpLampTACValue && rrpLampTACValue.trim() !== "NA") {
-  //             rrpLampDataList.suppNameLampList.push(bulbMake);
-  //         }
-
-  //         rrpLampDataList.MakeList.push(bulbMake);
-  //         rrpLampDataList.validityLampList.push(bulbType.TAC_Validity?.value);
-  //         rrpLampDataList.possibleDateLampList.push(bulbType.Possible_date_of_submission_of_required_approval?.value);
-  //         rrpLampDataList.copCertLampList.push(bulbType.CoP_Cert_No_with_validity_date?.value);
-
-  //         console.log('rrpLampDataList.tacNumberList', rrpLampDataList.tacNumberList);
-  //         console.log('rrpLampDataList.suppNameList', rrpLampDataList.suppNameList);
-  //         console.log('rrpLampDataList.MakeList', rrpLampDataList.MakeList);
-  //         console.log('rrpLampDataList.validityList', rrpLampDataList.validityList);
-  //         console.log('rrpLampDataList.possibleDateList', rrpLampDataList.possibleDateList);
-  //         console.log('rrpLampDataList.copCertList', rrpLampDataList.copCertList);
-
-  //         console.log('rrpLampDataList.tacNumberLampList', rrpLampDataList.tacNumberLampList);
-  //         console.log('rrpLampDataList.suppNameLampList', rrpLampDataList.suppNameLampList);
-  //         console.log('rrpLampDataList.validityLampList', rrpLampDataList.validityLampList);
-  //         console.log('rrpLampDataList.possibleDateLampList', rrpLampDataList.possibleDateLampList);
-  //         console.log('rrpLampDataList.copCertLampList', rrpLampDataList.copCertLampList);
-  //     }
-  // });
-
-  // const rrpLampList = form8Data?.Rear_Registration_Plate_lamp?.RearRegistrationPlatelamp || [];
-  // let rrpLampDataList = mainData();
-
-  // rrpLampList.forEach(vehRRPLamp => {
-  //     if (vehRRPLamp.supplier?.active) {
-  //         // For LED Type
-  //         const ledType = vehRRPLamp.Registration_Plate_Lamp_LED_Type?.properties || {};
-  //         let ledMake = ledType.Make?.value || "";
-
-  //         if (ledMake && !ledMake.startsWith("M/")) {
-  //             ledMake = `M/s. ${ledMake}`;
-  //         }
-
-  //         const validityLed = parseAndCheckTACValidity(ledType.TAC_Validity?.value);
-  //         const rrpLampValidityValue = ledType.TAC_Number?.value;
-  //         rrpLampDataList.tacNumberList.push(rrpLampValidityValue);
-
-  //         if (rrpLampValidityValue && rrpLampValidityValue.trim() !== "NA") {
-  //             rrpLampDataList.suppNameList.push(ledMake);
-  //         }
-
-  //         rrpLampDataList.MakeList.push(ledMake);
-  //         rrpLampDataList.validityList.push(ledType.TAC_Validity?.value);
-  //         rrpLampDataList.possibleDateList.push(
-  //             !validityLed.expired
-  //                 ? ledType.Possible_date_of_submission_of_required_approval?.value
-  //                 : "NA"
-  //         );
-  //         rrpLampDataList.copCertList.push(
-  //             !validityLed.expired
-  //                 ? ledType.CoP_Cert_No_with_validity_date?.value
-  //                 : "NA"
-  //         );
-
-  //         // For Bulb Type
-  //         const bulbType = vehRRPLamp.Registration_Plate_Lamp_bulb_type?.properties || {};
-  //         let bulbMake = bulbType.Make?.value || "";
-
-  //         if (bulbMake && !bulbMake.startsWith("M/")) {
-  //             bulbMake = `M/s. ${bulbMake}`;
-  //         }
-
-  //         const validityBulb = parseAndCheckTACValidity(bulbType.TAC_Validity?.value);
-  //         const rrpLampTACValue = bulbType.TAC_Number?.value;
-  //         rrpLampDataList.tacNumberLampList.push(rrpLampTACValue);
-
-  //         if (rrpLampTACValue && rrpLampTACValue.trim() !== "NA") {
-  //             rrpLampDataList.suppNameLampList.push(bulbMake);
-  //         }
-
-  //         rrpLampDataList.MakeList.push(bulbMake);
-  //         rrpLampDataList.validityLampList.push(bulbType.TAC_Validity?.value);
-  //         rrpLampDataList.possibleDateLampList.push(
-  //             !validityBulb.expired
-  //                 ? bulbType.Possible_date_of_submission_of_required_approval?.value
-  //                 : "NA"
-  //         );
-  //         rrpLampDataList.copCertLampList.push(
-  //             !validityBulb.expired
-  //                 ? bulbType.CoP_Cert_No_with_validity_date?.value
-  //                 : "NA"
-  //         );
-
-  //         console.log('rrpLampDataList.tacNumberList', rrpLampDataList.tacNumberList);
-  //         console.log('rrpLampDataList.suppNameList', rrpLampDataList.suppNameList);
-  //         console.log('rrpLampDataList.MakeList', rrpLampDataList.MakeList);
-  //         console.log('rrpLampDataList.validityList', rrpLampDataList.validityList);
-  //         console.log('rrpLampDataList.possibleDateList', rrpLampDataList.possibleDateList);
-  //         console.log('rrpLampDataList.copCertList', rrpLampDataList.copCertList);
-
-  //         console.log('rrpLampDataList.tacNumberLampList', rrpLampDataList.tacNumberLampList);
-  //         console.log('rrpLampDataList.suppNameLampList', rrpLampDataList.suppNameLampList);
-  //         console.log('rrpLampDataList.validityLampList', rrpLampDataList.validityLampList);
-  //         console.log('rrpLampDataList.possibleDateLampList', rrpLampDataList.possibleDateLampList);
-  //         console.log('rrpLampDataList.copCertLampList', rrpLampDataList.copCertLampList);
-  //     }
-  // });
-
-  //   const rrpLampList =
-  //     form8Data?.Rear_Registration_Plate_lamp?.RearRegistrationPlatelamp || [];
-  //   let rrpLampDataList = mainData();
-
-  //   rrpLampList.forEach((vehRRPLamp) => {
-  //     if (vehRRPLamp?.supplier?.active === true) {
-  //       // --- LED Type ---
-  //       const ledType =
-  //         vehRRPLamp?.Registration_Plate_Lamp_LED_Type?.properties || {};
-  //       let ledMake = ledType?.Make?.value || "";
-  //       if (ledMake && !ledMake.startsWith("M/")) {
-  //         ledMake = `M/s. ${ledMake}`;
-  //       }
-
-  //       const tacValidityLed = ledType?.TAC_Validity?.value || "";
-  //       const tacNumberLed = ledType?.TAC_Number?.value || "";
-  //       const copCertLed = ledType?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDateLed =
-  //         ledType?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       rrpLampDataList.validityList.push(tacValidityLed);
-  //       rrpLampDataList.tacNumberList.push(tacNumberLed);
-  //       rrpLampDataList.MakeList.push(ledMake);
-  //       rrpLampDataList.suppNameList.push(ledMake);
-
-  //       const { cop, possible } = TACvalidationcheck(
-  //         tacValidityLed,
-  //         copCertLed,
-  //         possibleDateLed
-  //       );
-  //       rrpLampDataList.copCertList.push(cop);
-  //       rrpLampDataList.possibleDateList.push(possible);
-
-  //       // --- Bulb Type ---
-  //       const bulbType =
-  //         vehRRPLamp?.Registration_Plate_Lamp_bulb_type?.properties || {};
-  //       let bulbMake = bulbType?.Make?.value || "";
-  //       if (bulbMake && !bulbMake.startsWith("M/")) {
-  //         bulbMake = `M/s. ${bulbMake}`;
-  //       }
-
-  //       const tacValidityBulb = bulbType?.TAC_Validity?.value || "";
-  //       const tacNumberBulb = bulbType?.TAC_Number?.value || "";
-  //       const copCertBulb = bulbType?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDateBulb =
-  //         bulbType?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       rrpLampDataList.validityLampList.push(tacValidityBulb);
-  //       rrpLampDataList.tacNumberLampList.push(tacNumberBulb);
-  //       rrpLampDataList.MakeList.push(bulbMake);
-  //       rrpLampDataList.suppNameLampList.push(bulbMake);
-
-  //       const { cop: bulbCop, possible: bulbPossible } = TACvalidationcheck(
-  //         tacValidityBulb,
-  //         copCertBulb,
-  //         possibleDateBulb
-  //       );
-  //       rrpLampDataList.copCertLampList.push(bulbCop);
-  //       rrpLampDataList.possibleDateLampList.push(bulbPossible);
-  //     }
-  //   });
+  
+ 
 
   const rrpLampList =
     form8Data?.Rear_Registration_Plate_lamp?.RearRegistrationPlatelamp || [];
@@ -6525,211 +2119,41 @@ posLampsList.forEach((vehPosLamp) => {
     }
   });
 
-  console.log("rrpLampDataList.tacNumberList", rrpLampDataList.tacNumberList);
-  console.log("rrpLampDataList.suppNameList", rrpLampDataList.suppNameList);
-  console.log("rrpLampDataList.MakeList", rrpLampDataList.MakeList);
-  console.log("rrpLampDataList.validityList", rrpLampDataList.validityList);
-  console.log(
-    "rrpLampDataList.possibleDateList",
-    rrpLampDataList.possibleDateList
-  );
-  console.log("rrpLampDataList.copCertList", rrpLampDataList.copCertList);
+  // console.log("rrpLampDataList.tacNumberList", rrpLampDataList.tacNumberList);
+  // console.log("rrpLampDataList.suppNameList", rrpLampDataList.suppNameList);
+  // console.log("rrpLampDataList.MakeList", rrpLampDataList.MakeList);
+  // console.log("rrpLampDataList.validityList", rrpLampDataList.validityList);
+  // console.log(
+  //   "rrpLampDataList.possibleDateList",
+  //   rrpLampDataList.possibleDateList
+  // );
+  // console.log("rrpLampDataList.copCertList", rrpLampDataList.copCertList);
 
-  console.log(
-    "rrpLampDataList.tacNumberLampList",
-    rrpLampDataList.tacNumberLampList
-  );
-  console.log(
-    "rrpLampDataList.suppNameLampList",
-    rrpLampDataList.suppNameLampList
-  );
-  console.log(
-    "rrpLampDataList.validityLampList",
-    rrpLampDataList.validityLampList
-  );
-  console.log(
-    "rrpLampDataList.possibleDateLampList",
-    rrpLampDataList.possibleDateLampList
-  );
-  console.log(
-    "rrpLampDataList.copCertLampList",
-    rrpLampDataList.copCertLampList
-  );
+  // console.log(
+  //   "rrpLampDataList.tacNumberLampList",
+  //   rrpLampDataList.tacNumberLampList
+  // );
+  // console.log(
+  //   "rrpLampDataList.suppNameLampList",
+  //   rrpLampDataList.suppNameLampList
+  // );
+  // console.log(
+  //   "rrpLampDataList.validityLampList",
+  //   rrpLampDataList.validityLampList
+  // );
+  // console.log(
+  //   "rrpLampDataList.possibleDateLampList",
+  //   rrpLampDataList.possibleDateLampList
+  // );
+  // console.log(
+  //   "rrpLampDataList.copCertLampList",
+  //   rrpLampDataList.copCertLampList
+  // );
 
-  // const hydrBrakeHoseList = form8Data?.Hydraulic_Brake_Hose?.HydraulicBrakeHose;
-  // let hydrBrkHoseDataList = mainData();
-  // hydrBrakeHoseList.map(vehHydr => {
-  //     if (vehHydr.supplier.active === true) {
-  //         let supplierName = vehHydr?.supplier?.nameOfSupplier;
+  
+  
 
-  //         // Modify supplierName directly
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // hydrBrkHoseDataList.suppNameList.push(supplierName);
-  //         // // hydrBrkHoseDataList.suppNameList.push(vehHydr?.supplier?.nameOfSupplier);
-  //         // hydrBrkHoseDataList.validityList.push(vehHydr?.Hydraulic_Brake_Hose?.properties?.TAC_Number?.value);
-  //         // Get the validity value for Hydraulic Brake Hose (using TAC_Number)
-  //         const hydrBrkHoseTACValue = vehHydr?.Hydraulic_Brake_Hose?.properties?.TAC_Number?.value;
-
-  //         // Push the validity value to hydrBrkHoseDataList
-  //         hydrBrkHoseDataList.validityList.push(hydrBrkHoseTACValue);
-
-  //         // Check if validity data is present
-  //         // hydrBrkHoseDataList.suppNameList.push(hydrBrkHoseTACValue ? supplierName : "");
-  //         // hydrBrkHoseDataList.suppNameList.push(hydrBrkHoseTACValue === "NA" ? "" : supplierName);
-
-  //         if (hydrBrkHoseTACValue && hydrBrkHoseTACValue.trim() !== "") {
-  //             hydrBrkHoseDataList.suppNameList.push(supplierName);
-  //         }
-  //         hydrBrkHoseDataList.MakeList.push(vehHydr?.Hydraulic_Brake_Hose?.properties?.Make?.value);
-
-  //         hydrBrkHoseDataList.possibleDateList.push(vehHydr?.Hydraulic_Brake_Hose?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         hydrBrkHoseDataList.copCertList.push(vehHydr?.Hydraulic_Brake_Hose?.properties.CoP_Cert_No_with_validity_date?.value);
-
-  //     }
-  // });
-
-  // const hydrBrakeHoseList = form8Data?.Hydraulic_Brake_Hose?.HydraulicBrakeHose;
-  // let hydrBrkHoseDataList = mainData();
-
-  // hydrBrakeHoseList?.map(vehHydr => {
-  //     if (vehHydr?.supplier?.active === true) {
-  //         const hoseProps = vehHydr?.Hydraulic_Brake_Hose?.properties || {};
-  //         let make = hoseProps?.Make?.value || "";
-
-  //         // Add M/s. prefix if not present and make is not empty
-  //         if (make && !make.startsWith("M/")) {
-  //             make = `M/s. ${make}`;
-  //         }
-
-  //         const tacNumber = hoseProps?.TAC_Number?.value?.trim();
-
-  //         // Push TAC Number into validity list
-  //         hydrBrkHoseDataList.validityList.push(tacNumber || "NA");
-
-  //         // If TAC Number is present and not NA, push make into suppNameList
-  //         if (tacNumber && tacNumber !== "NA") {
-  //             hydrBrkHoseDataList.suppNameList.push(make);
-  //         }
-
-  //         hydrBrkHoseDataList.MakeList.push(make);
-  //         hydrBrkHoseDataList.possibleDateList.push(
-  //             hoseProps?.Possible_date_of_submission_of_required_approval?.value || "NA"
-  //         );
-  //         hydrBrkHoseDataList.copCertList.push(
-  //             hoseProps?.CoP_Cert_No_with_validity_date?.value || "NA"
-  //         );
-
-  //         console.log('hydrBrkHoseDataList.validityList', hydrBrkHoseDataList.validityList);
-  //         console.log('hydrBrkHoseDataList.suppNameList', hydrBrkHoseDataList.suppNameList);
-  //         console.log('hydrBrkHoseDataList.MakeList', hydrBrkHoseDataList.MakeList);
-  //         console.log('hydrBrkHoseDataList.possibleDateList', hydrBrkHoseDataList.possibleDateList);
-  //         console.log('hydrBrkHoseDataList.copCertList', hydrBrkHoseDataList.copCertList);
-  //     }
-  // });
-
-  // const hydrBrakeHoseList = form8Data?.Hydraulic_Brake_Hose?.HydraulicBrakeHose;
-  // let hydrBrkHoseDataList = mainData();
-
-  // hydrBrakeHoseList?.map((vehHydr) => {
-  //     if (vehHydr?.supplier?.active === true) {
-  //         const hoseProps = vehHydr?.Hydraulic_Brake_Hose?.properties || {};
-  //         let make = hoseProps?.Make?.value || "";
-
-  //         if (make && !make.startsWith("M/")) {
-  //             make = `M/s. ${make}`;
-  //         }
-
-  //         const tacRaw = hoseProps?.TAC_Number?.value || "";
-  //         const tacCheck = parseAndCheckTACValidity(tacRaw);
-
-  //         hydrBrkHoseDataList.validityList.push(tacRaw);
-  //         hydrBrkHoseDataList.MakeList.push(make);
-
-  //         const copCert = hoseProps?.CoP_Cert_No_with_validity_date?.value || "NA";
-  //         const possibleDate = hoseProps?.Possible_date_of_submission_of_required_approval?.value || "NA";
-
-  //         hydrBrkHoseDataList.suppNameList.push(make);
-
-  //         if (tacCheck.hasDate) {
-  //             if (tacCheck.expired) {
-  //                 hydrBrkHoseDataList.copCertList.push(copCert);
-  //                 hydrBrkHoseDataList.possibleDateList.push(possibleDate);
-  //             } else {
-  //                 hydrBrkHoseDataList.copCertList.push("NA");
-  //                 hydrBrkHoseDataList.possibleDateList.push("NA");
-  //             }
-  //         } else {
-  //             hydrBrkHoseDataList.copCertList.push(copCert);
-  //             hydrBrkHoseDataList.possibleDateList.push(possibleDate);
-  //         }
-  //     }
-  // });
-
-  //   const hydrBrakeHoseList = form8Data?.Hydraulic_Brake_Hose?.HydraulicBrakeHose;
-  //   let hydrBrkHoseDataList = mainData();
-
-  //   hydrBrakeHoseList?.map((vehHydr) => {
-  //     if (vehHydr?.supplier?.active === true) {
-  //       const hoseProps = vehHydr?.Hydraulic_Brake_Hose?.properties || {};
-  //       let make = hoseProps?.Make?.value || "";
-
-  //       if (make && !make.startsWith("M/")) {
-  //         make = `M/s. ${make}`;
-  //       }
-
-  //       const tacValidity = hoseProps?.TAC_Number?.value || "";
-  //       const copCert = hoseProps?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDate =
-  //         hoseProps?.Possible_date_of_submission_of_required_approval?.value ||
-  //         "";
-
-  //       hydrBrkHoseDataList.validityList.push(tacValidity);
-  //       hydrBrkHoseDataList.MakeList.push(make);
-  //       hydrBrkHoseDataList.suppNameList.push(make);
-
-  //       const { cop, possible } = TACvalidationcheck(
-  //         tacValidity,
-  //         copCert,
-  //         possibleDate
-  //       );
-  //       hydrBrkHoseDataList.copCertList.push(cop);
-  //       hydrBrkHoseDataList.possibleDateList.push(possible);
-  //     }
-  //   });
-
-  // const hydrBrakeHoseList = form8Data?.Hydraulic_Brake_Hose?.HydraulicBrakeHose;
-  // let hydrBrkHoseDataList = mainData();
-
-  // hydrBrakeHoseList?.map((vehHydr) => {
-  //   if (vehHydr?.supplier?.active === true) {
-  //     const hoseProps = vehHydr?.Hydraulic_Brake_Hose?.properties || {};
-  //     let make = hoseProps?.Make?.value?.trim() || "";
-
-  //     if (make && !make.startsWith("M/")) {
-  //       make = `M/s. ${make}`;
-  //     }
-
-  //     const tacRaw = hoseProps?.TAC_Number?.value?.trim() || "";
-  //     const copCert = hoseProps?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //     const possibleDate = hoseProps?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //     let finalTac = tacRaw;
-  //     if (!tacRaw && copCert) {
-  //       finalTac = "NA";
-  //     }
-
-  //     hydrBrkHoseDataList.validityList.push(finalTac);
-  //     hydrBrkHoseDataList.MakeList.push(make);
-  //     hydrBrkHoseDataList.suppNameList.push(make);
-
-  //     const { cop, possible } = TACvalidationcheck(finalTac, copCert, possibleDate);
-  //     hydrBrkHoseDataList.copCertList.push(cop);
-  //     hydrBrkHoseDataList.possibleDateList.push(possible);
-  //   }
-  // });
+  
 
   const hydrBrakeHoseList =
     form8Data?.Hydraulic_Brake_Hose?.HydraulicBrakeHose || [];
@@ -6793,225 +2217,30 @@ posLampsList.forEach((vehPosLamp) => {
     }
   });
 
-  console.log(
-    "hydrBrkHoseDataList.tacNumberList",
-    hydrBrkHoseDataList.tacNumberList
-  );
-  console.log(
-    "hydrBrkHoseDataList.validityList",
-    hydrBrkHoseDataList.validityList
-  );
-  console.log(
-    "hydrBrkHoseDataList.suppNameList",
-    hydrBrkHoseDataList.suppNameList
-  );
-  console.log(
-    "hydrBrkHoseDataList.copCertList",
-    hydrBrkHoseDataList.copCertList
-  );
-  console.log(
-    "hydrBrkHoseDataList.possibleDateList",
-    hydrBrkHoseDataList.possibleDateList
-  );
+  // console.log(
+  //   "hydrBrkHoseDataList.tacNumberList",
+  //   hydrBrkHoseDataList.tacNumberList
+  // );
+  // console.log(
+  //   "hydrBrkHoseDataList.validityList",
+  //   hydrBrkHoseDataList.validityList
+  // );
+  // console.log(
+  //   "hydrBrkHoseDataList.suppNameList",
+  //   hydrBrkHoseDataList.suppNameList
+  // );
+  // console.log(
+  //   "hydrBrkHoseDataList.copCertList",
+  //   hydrBrkHoseDataList.copCertList
+  // );
+  // console.log(
+  //   "hydrBrkHoseDataList.possibleDateList",
+  //   hydrBrkHoseDataList.possibleDateList
+  // );
 
-  // const wheelRimList = form8Data?.Wheel_Rim?.WheelRim;
-  // let wheelRimDataList = mainData();
-  // wheelRimList.map(vehWheelRim => {
-  //     if (vehWheelRim?.supplier?.active === true) {
-  //         wheelRimDataList.suppNameList.push(vehWheelRim?.supplier?.nameOfSupplier);
-  //         wheelRimDataList.tacNumberList.push(vehWheelRim?.Front_Wheel_Rim?.properties?.BIS_License_TAC_Number_with_its_Validity?.value);
-  //         wheelRimDataList.possibleDateList.push(vehWheelRim?.Front_Wheel_Rim?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         wheelRimDataList.copCertList.push(vehWheelRim?.Front_Wheel_Rim?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //     }
-  // });
-
-  // const mirrorsList = form8Data?.Rear_View_Mirror?.RearViewMirror;
-  // let rearViewMirrorsDataList = mainData();
-  // mirrorsList.map(vehMirror => {
-  //     if (vehMirror.supplier.active === true) {
-  //         let supplierName = vehMirror?.supplier?.nameOfSupplier;
-
-  //         // Modify supplierName directly
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // rearViewMirrorsDataList.suppNameList.push(supplierName);
-  //         // // rearViewMirrorsDataList.suppNameList.push(vehMirror?.supplier?.nameOfSupplier);
-  //         // rearViewMirrorsDataList.tacNumberList.push(vehMirror?.Rear_View_Mirror?.properties?.TAC_Number_Its_Validity?.value);
-  //         // Get the TAC Number value for Rear View Mirror
-  //         const rearViewMirrorTACValue = vehMirror?.Rear_View_Mirror?.properties?.TAC_Number_Its_Validity?.value;
-
-  //         // Push the TAC value to rearViewMirrorsDataList
-  //         rearViewMirrorsDataList.tacNumberList.push(rearViewMirrorTACValue);
-
-  //         // Check if TAC value is present
-  //         // rearViewMirrorsDataList.suppNameList.push(rearViewMirrorTACValue ? supplierName : "");
-  //         // rearViewMirrorsDataList.suppNameList.push(rearViewMirrorTACValue === "NA" ? "" : supplierName);
-  //         if (rearViewMirrorTACValue && rearViewMirrorTACValue.trim() !== "") {
-  //             rearViewMirrorsDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         rearViewMirrorsDataList.MakeList.push(vehMirror?.Rear_View_Mirror?.properties?.Make?.value);
-
-  //         rearViewMirrorsDataList.possibleDateList.push(vehMirror?.Rear_View_Mirror?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         rearViewMirrorsDataList.copCertList.push(vehMirror?.Rear_View_Mirror?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //     }
-  // });
-
-  // const mirrorsList = form8Data?.Rear_View_Mirror?.RearViewMirror;
-  // let rearViewMirrorsDataList = mainData();
-
-  // mirrorsList.map(vehMirror => {
-  //     if (vehMirror?.supplier?.active === true) {
-  //         // Extract and process Make
-  //         let make = vehMirror?.Rear_View_Mirror?.properties?.Make?.value || "";
-
-  //         if (make && !make.startsWith("M/")) {
-  //             make = `M/s. ${make}`;
-  //         }
-
-  //         // TAC Number
-  //         const rearViewMirrorTACValue = vehMirror?.Rear_View_Mirror?.properties?.TAC_Number_Its_Validity?.value;
-  //         rearViewMirrorsDataList.tacNumberList.push(rearViewMirrorTACValue);
-
-  //         // Push Make to suppNameList only if TAC value is present
-  //         if (rearViewMirrorTACValue && rearViewMirrorTACValue.trim() !== "") {
-  //             rearViewMirrorsDataList.suppNameList.push(make);
-  //         }
-
-  //         rearViewMirrorsDataList.MakeList.push(make);
-
-  //         const possibleDate = (make.includes("NA"))
-  //             ? "NA"
-  //             : vehMirror?.Rear_View_Mirror?.properties?.Possible_date_of_submission_of_required_approval?.value;
-  //         rearViewMirrorsDataList.possibleDateList.push(possibleDate);
-
-  //         rearViewMirrorsDataList.copCertList.push(vehMirror?.Rear_View_Mirror?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //     }
-  // });
-
-  // const mirrorsList = form8Data?.Rear_View_Mirror?.RearViewMirror;
-  // let rearViewMirrorsDataList = mainData();
-
-  // mirrorsList.map(vehMirror => {
-  //     if (vehMirror?.supplier?.active === true) {
-  //         // Extract and process Make
-  //         let make = vehMirror?.Rear_View_Mirror?.properties?.Make?.value || "";
-  //         if (make && !make.startsWith("M/")) {
-  //             make = `M/s. ${make}`;
-  //         }
-
-  //         // TAC Number
-  //         const rearViewMirrorTACValue = vehMirror?.Rear_View_Mirror?.properties?.TAC_Number_Its_Validity?.value;
-  //         rearViewMirrorsDataList.tacNumberList.push(rearViewMirrorTACValue);
-  //         rearViewMirrorsDataList.MakeList.push(make);
-
-  //         // Check TAC expiry
-  //         const tacCheck = parseAndCheckTACValidity(rearViewMirrorTACValue);
-
-  //         if (rearViewMirrorTACValue && rearViewMirrorTACValue.trim() !== "") {
-  //             rearViewMirrorsDataList.suppNameList.push(make);
-
-  //             if (tacCheck.hasDate) {
-  //                 if (tacCheck.expired) {
-  //                     // TAC expired — push actual CoP and submission date
-  //                     rearViewMirrorsDataList.copCertList.push(
-  //                         vehMirror?.Rear_View_Mirror?.properties?.CoP_Cert_No_with_validity_date?.value || "NA"
-  //                     );
-  //                     rearViewMirrorsDataList.possibleDateList.push(
-  //                         vehMirror?.Rear_View_Mirror?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA"
-  //                     );
-  //                 } else {
-  //                     // TAC valid — no need for CoP or submission date
-  //                     rearViewMirrorsDataList.copCertList.push("NA");
-  //                     rearViewMirrorsDataList.possibleDateList.push("NA");
-  //                 }
-  //             } else {
-  //                 // TAC has no recognizable date — assume manual entry
-  //                 rearViewMirrorsDataList.copCertList.push(
-  //                     vehMirror?.Rear_View_Mirror?.properties?.CoP_Cert_No_with_validity_date?.value || "NA"
-  //                 );
-  //                 rearViewMirrorsDataList.possibleDateList.push(
-  //                     vehMirror?.Rear_View_Mirror?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA"
-  //                 );
-  //             }
-  //         } else {
-  //             // No TAC value — skip CoP/possible date
-  //             rearViewMirrorsDataList.copCertList.push("NA");
-  //             rearViewMirrorsDataList.possibleDateList.push("NA");
-  //         }
-  //     }
-  // });
-
-  //   const mirrorsList = form8Data?.Rear_View_Mirror?.RearViewMirror;
-  //   let rearViewMirrorsDataList = mainData();
-
-  //   mirrorsList.map((vehMirror) => {
-  //     if (vehMirror?.supplier?.active === true) {
-  //       let make = vehMirror?.Rear_View_Mirror?.properties?.Make?.value || "";
-  //       if (make && !make.startsWith("M/")) {
-  //         make = `M/s. ${make}`;
-  //       }
-
-  //       const tacValueRaw =
-  //         vehMirror?.Rear_View_Mirror?.properties?.TAC_Number_Its_Validity
-  //           ?.value || "";
-  //       const copCertRaw =
-  //         vehMirror?.Rear_View_Mirror?.properties?.CoP_Cert_No_with_validity_date
-  //           ?.value || "";
-  //       const possibleDateRaw =
-  //         vehMirror?.Rear_View_Mirror?.properties
-  //           ?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       rearViewMirrorsDataList.tacNumberList.push(tacValueRaw);
-  //       rearViewMirrorsDataList.MakeList.push(make);
-  //       rearViewMirrorsDataList.suppNameList.push(make);
-
-  //       const { cop, possible } = TACvalidationcheck(
-  //         tacValueRaw,
-  //         copCertRaw,
-  //         possibleDateRaw
-  //       );
-  //       rearViewMirrorsDataList.copCertList.push(cop);
-  //       rearViewMirrorsDataList.possibleDateList.push(possible);
-  //     }
-  //   });
-
-  // const mirrorsList = form8Data?.Rear_View_Mirror?.RearViewMirror || [];
-  // let rearViewMirrorsDataList = mainData();
-
-  // mirrorsList.map((vehMirror) => {
-  //   if (vehMirror?.supplier?.active === true) {
-  //     let make = vehMirror?.Rear_View_Mirror?.properties?.Make?.value || "";
-  //     if (make && !make.startsWith("M/")) {
-  //       make = `M/s. ${make}`;
-  //     }
-
-  //     const tacValueRaw = vehMirror?.Rear_View_Mirror?.properties?.TAC_Number_Its_Validity?.value?.trim() || "";
-  //     const copCertRaw = vehMirror?.Rear_View_Mirror?.properties?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //     const possibleDateRaw = vehMirror?.Rear_View_Mirror?.properties?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //     // Logic for handling TAC when only CoP is present
-  //     const isTacMissing = tacValueRaw === "";
-  //     const isPossibleDatePresent = possibleDateRaw !== "";
-
-  //     let finalTAC = tacValueRaw;
-  //     if (isTacMissing && isPossibleDatePresent) {
-  //       finalTAC = "NA";
-  //     }
-
-  //     rearViewMirrorsDataList.validityList.push(finalTAC);
-  //     rearViewMirrorsDataList.MakeList.push(make);
-  //     rearViewMirrorsDataList.suppNameList.push(make);
-
-  //     const { cop, possible } = TACvalidationcheck(tacValueRaw, copCertRaw, possibleDateRaw);
-  //     rearViewMirrorsDataList.copCertList.push(cop);
-  //     rearViewMirrorsDataList.possibleDateList.push(possible);
-  //   }
-  // });
-
+  
+  
+  
   const mirrorsList = form8Data?.Rear_View_Mirror?.RearViewMirror || [];
   let rearViewMirrorsDataList = mainData();
 
@@ -7047,136 +2276,27 @@ posLampsList.forEach((vehPosLamp) => {
     }
   });
 
-  console.log(
-    "rearviewmirrorsdatalist.tacNumberList",
-    rearViewMirrorsDataList.tacNumberList
-  );
-  console.log(
-    "rearviewmirrorsdatalist.suppNameList",
-    rearViewMirrorsDataList.suppNameList
-  );
-  console.log(
-    "rearviewmirrorsdatalist.MakeList",
-    rearViewMirrorsDataList.MakeList
-  );
-  console.log(
-    "rearviewmirrorsdatalist.possibleDateList",
-    rearViewMirrorsDataList.possibleDateList
-  );
-  console.log(
-    "rearviewmirrorsdatalist.copCertList",
-    rearViewMirrorsDataList.copCertList
-  );
+  // console.log(
+  //   "rearviewmirrorsdatalist.tacNumberList",
+  //   rearViewMirrorsDataList.tacNumberList
+  // );
+  // console.log(
+  //   "rearviewmirrorsdatalist.suppNameList",
+  //   rearViewMirrorsDataList.suppNameList
+  // );
+  // console.log(
+  //   "rearviewmirrorsdatalist.MakeList",
+  //   rearViewMirrorsDataList.MakeList
+  // );
+  // console.log(
+  //   "rearviewmirrorsdatalist.possibleDateList",
+  //   rearViewMirrorsDataList.possibleDateList
+  // );
+  // console.log(
+  //   "rearviewmirrorsdatalist.copCertList",
+  //   rearViewMirrorsDataList.copCertList
+  // );
 
-  // const TractionBatterypackList = form8Data?.Traction_Battery_Pack?.TractionBatterypack;
-  // let TractionBatterypackDataList = mainData();
-  // TractionBatterypackList.map(vehTractionBatterypack => {
-  //     if (vehTractionBatterypack.supplier.active === true) {
-  //         let supplierName = vehTractionBatterypack?.supplier?.nameOfSupplier;
-
-  //         // Modify supplierName directly
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // TractionBatterypackDataList.suppNameList.push(supplierName);
-  //         // // TractionBatterypackDataList.suppNameList.push(vehTractionBatterypack?.supplier?.nameOfSupplier);
-  //         // TractionBatterypackDataList.tacNumberList.push(vehTractionBatterypack?.Traction_Battery_Pack?.properties?.Type_approval_Certififcate_number?.value);
-  //         // Get the TAC Number value for Traction Battery Pack
-  //         const tractionBatteryTACValue = vehTractionBatterypack?.Traction_Battery_Pack?.properties?.Type_approval_Certififcate_number?.value;
-
-  //         // Push the TAC value to TractionBatterypackDataList
-  //         TractionBatterypackDataList.tacNumberList.push(tractionBatteryTACValue);
-
-  //         // Check if TAC value is present
-  //         // TractionBatterypackDataList.suppNameList.push(tractionBatteryTACValue ? supplierName : "");
-  //         // TractionBatterypackDataList.suppNameList.push(tractionBatteryTACValue === "NA" ? "" : supplierName);
-  //         if (tractionBatteryTACValue && tractionBatteryTACValue.trim() !== "") {
-  //             TractionBatterypackDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         TractionBatterypackDataList.MakeList.push(vehTractionBatterypack?.Traction_Battery_Pack?.properties?.Make?.value);
-  //         TractionBatterypackDataList.possibleDateList.push(vehTractionBatterypack?.Traction_Battery_Pack?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         TractionBatterypackDataList.copCertList.push(vehTractionBatterypack?.Traction_Battery_Pack?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //     }
-  // });
-
-  // const TractionBatterypackList = form8Data?.Traction_Battery_Pack?.TractionBatterypack;
-  // let TractionBatterypackDataList = mainData();
-
-  // TractionBatterypackList.map(vehTractionBatterypack => {
-  //     if (vehTractionBatterypack?.supplier?.active === true) {
-  //         // Extract and format Make
-  //         let make = vehTractionBatterypack?.Traction_Battery_Pack?.properties?.Make?.value || "";
-
-  //         if (make && !make.startsWith("M/")) {
-  //             make = `M/s. ${make}`;
-  //         }
-
-  //         // Get the TAC Number
-  //         const tractionBatteryTACValue = vehTractionBatterypack?.Traction_Battery_Pack?.properties?.TAC_Number_Its_Validity?.value;
-  //         TractionBatterypackDataList.tacNumberList.push(tractionBatteryTACValue);
-
-  //         // Push Make to suppNameList if TAC value is present
-  //         if (tractionBatteryTACValue && tractionBatteryTACValue.trim() !== "") {
-  //             TractionBatterypackDataList.suppNameList.push(make);
-  //         }
-
-  //         TractionBatterypackDataList.MakeList.push(make);
-
-  //         const possibleDate = (make.includes("NA"))
-  //             ? "NA"
-  //             : vehTractionBatterypack?.Traction_Battery_Pack?.properties?.Possible_date_of_submission_of_required_approval?.value;
-  //         TractionBatterypackDataList.possibleDateList.push(possibleDate);
-
-  //         TractionBatterypackDataList.copCertList.push(vehTractionBatterypack?.Traction_Battery_Pack?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //         console.log('TractionBatterypackDataList.tacNumberList', TractionBatterypackDataList.tacNumberList);
-  //         console.log('TractionBatterypackDataList.suppNameList', TractionBatterypackDataList.suppNameList);
-  //         console.log('TractionBatterypackDataList.MakeList', TractionBatterypackDataList.MakeList);
-  //         console.log('TractionBatterypackDataList.possibleDateList', TractionBatterypackDataList.possibleDateList);
-  //         console.log('TractionBatterypackDataList.copCertList', TractionBatterypackDataList.copCertList);
-
-  //     }
-  // });
-
-  //   const TractionBatterypackList =
-  //     form8Data?.Traction_Battery_Pack?.TractionBatterypack;
-  //   let TractionBatterypackDataList = mainData();
-
-  //   TractionBatterypackList.map((vehTractionBatterypack) => {
-  //     if (vehTractionBatterypack?.supplier?.active === true) {
-  //       let make =
-  //         vehTractionBatterypack?.Traction_Battery_Pack?.properties?.Make
-  //           ?.value || "";
-
-  //       if (make && !make.startsWith("M/")) {
-  //         make = `M/s. ${make}`;
-  //       }
-
-  //       const tacValueRaw =
-  //         vehTractionBatterypack?.Traction_Battery_Pack?.properties
-  //           ?.Type_approval_Certififcate_number?.value || "";
-  //       const copCertRaw =
-  //         vehTractionBatterypack?.Traction_Battery_Pack?.properties
-  //           ?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDateRaw =
-  //         vehTractionBatterypack?.Traction_Battery_Pack?.properties
-  //           ?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       TractionBatterypackDataList.tacNumberList.push(tacValueRaw);
-  //       TractionBatterypackDataList.MakeList.push(make);
-  //       TractionBatterypackDataList.suppNameList.push(make);
-
-  //       const { cop, possible } = TACvalidationcheck(
-  //         tacValueRaw,
-  //         copCertRaw,
-  //         possibleDateRaw
-  //       );
-  //       TractionBatterypackDataList.copCertList.push(cop);
-  //       TractionBatterypackDataList.possibleDateList.push(possible);
-  //     }
-  //   });
 
   const TractionBatterypackList =
     form8Data?.Traction_Battery_Pack?.TractionBatterypack || [];
@@ -7228,416 +2348,28 @@ posLampsList.forEach((vehPosLamp) => {
     }
   });
 
-  console.log(
-    "TractionBatterypackDataList.tacNumberList",
-    TractionBatterypackDataList.tacNumberList
-  );
-  console.log(
-    "TractionBatterypackDataList.suppNameList",
-    TractionBatterypackDataList.suppNameList
-  );
-  console.log(
-    "TractionBatterypackDataList.MakeList",
-    TractionBatterypackDataList.MakeList
-  );
-  console.log(
-    "TractionBatterypackDataList.possibleDateList",
-    TractionBatterypackDataList.possibleDateList
-  );
-  console.log(
-    "TractionBatterypackDataList.copCertList",
-    TractionBatterypackDataList.copCertList
-  );
+  // console.log(
+  //   "TractionBatterypackDataList.tacNumberList",
+  //   TractionBatterypackDataList.tacNumberList
+  // );
+  // console.log(
+  //   "TractionBatterypackDataList.suppNameList",
+  //   TractionBatterypackDataList.suppNameList
+  // );
+  // console.log(
+  //   "TractionBatterypackDataList.MakeList",
+  //   TractionBatterypackDataList.MakeList
+  // );
+  // console.log(
+  //   "TractionBatterypackDataList.possibleDateList",
+  //   TractionBatterypackDataList.possibleDateList
+  // );
+  // console.log(
+  //   "TractionBatterypackDataList.copCertList",
+  //   TractionBatterypackDataList.copCertList
+  // );
 
-  // const WheelRimList = form8Data?.Wheel_Rim?.WheelRim;
 
-  // let FWheelRimDataList = mainData();
-  // let RWheelRimDataList = mainData();
-
-  // WheelRimList.map(vehWheelRim => {
-  //     if (vehWheelRim.supplier.active === true) {
-  //         let supplierName = vehWheelRim?.supplier?.nameOfSupplier;
-
-  //         // Modify supplierName directly
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // FWheelRimDataList.suppNameList.push(supplierName);
-  //         // // FWheelRimDataList.suppNameList.push(vehWheelRim?.supplier?.nameOfSupplier);
-  //         // FWheelRimDataList.tacNumberList.push(vehWheelRim?.Front_Wheel_Rim?.properties?.BIS_License_TAC_Number_with_its_Validity?.value);
-  //         // Get the TAC Number value for Front Wheel Rim
-  //         const fWheelRimTACValue = vehWheelRim?.Front_Wheel_Rim?.properties?.BIS_License_TAC_Number_with_its_Validity?.value;
-
-  //         // Push the TAC value to FWheelRimDataList
-  //         FWheelRimDataList.tacNumberList.push(fWheelRimTACValue);
-
-  //         // Check if TAC value is present
-  //         // FWheelRimDataList.suppNameList.push(fWheelRimTACValue ? supplierName : "");
-  //         // FWheelRimDataList.suppNameList.push(fWheelRimTACValue === "NA" ? "" : supplierName);
-  //         if (fWheelRimTACValue && fWheelRimTACValue.trim() !== "") {
-  //             FWheelRimDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         FWheelRimDataList.MakeList.push(vehWheelRim?.Front_Wheel_Rim?.properties?.Make?.value);
-  //         FWheelRimDataList.possibleDateList.push(vehWheelRim?.Front_Wheel_Rim?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         FWheelRimDataList.copCertList.push(vehWheelRim?.Front_Wheel_Rim?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         // RWheelRimDataList.suppNameList.push(vehWheelRim?.supplier?.nameOfSupplier);
-  //         RWheelRimDataList.suppNameList.push(supplierName);
-  //         RWheelRimDataList.MakeList.push(vehWheelRim?.Rear_Wheel_Rim?.properties?.Make?.value);
-  //         RWheelRimDataList.tacNumberList.push(vehWheelRim?.Rear_Wheel_Rim?.properties?.BIS_License_TAC_Number_its_Validity?.value);
-  //         RWheelRimDataList.possibleDateList.push(vehWheelRim?.Rear_Wheel_Rim?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         RWheelRimDataList.copCertList.push(vehWheelRim?.Rear_Wheel_Rim?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //     }
-  // });
-
-  // const WheelRimList = form8Data?.Wheel_Rim?.WheelRim;
-
-  // let FWheelRimDataList = mainData();
-  // let RWheelRimDataList = mainData();
-
-  // WheelRimList.map(vehWheelRim => {
-  //     if (vehWheelRim?.supplier?.active === true) {
-  //         // FRONT
-  //         let frontMake = vehWheelRim?.Front_Wheel_Rim?.properties?.Make?.value || "";
-  //         if (frontMake && !frontMake.startsWith("M/")) {
-  //             frontMake = `M/s. ${frontMake}`;
-  //         }
-
-  //         const fWheelRimTACValue = vehWheelRim?.Front_Wheel_Rim?.properties?.BIS_License_TAC_Number_with_its_Validity?.value;
-  //         if (fWheelRimTACValue && fWheelRimTACValue.trim() !== "") {
-  //             FWheelRimDataList.suppNameList.push(frontMake);
-  //         }
-
-  //         FWheelRimDataList.tacNumberList.push(fWheelRimTACValue);
-  //         FWheelRimDataList.MakeList.push(frontMake);
-
-  //         const frontPossibleDate = (frontMake.includes("NA"))
-  //             ? "NA"
-  //             : vehWheelRim?.Front_Wheel_Rim?.properties?.Possible_date_of_submission_of_required_approval?.value;
-  //         FWheelRimDataList.possibleDateList.push(frontPossibleDate);
-
-  //         FWheelRimDataList.copCertList.push(vehWheelRim?.Front_Wheel_Rim?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //         // REAR
-  //         let rearMake = vehWheelRim?.Rear_Wheel_Rim?.properties?.Make?.value || "";
-  //         if (rearMake && !rearMake.startsWith("M/")) {
-  //             rearMake = `M/s. ${rearMake}`;
-  //         }
-
-  //         RWheelRimDataList.suppNameList.push(rearMake);
-  //         RWheelRimDataList.MakeList.push(rearMake);
-  //         RWheelRimDataList.tacNumberList.push(vehWheelRim?.Rear_Wheel_Rim?.properties?.BIS_License_TAC_Number_its_Validity?.value);
-
-  //         const rearPossibleDate = (rearMake.includes("NA"))
-  //             ? "NA"
-  //             : vehWheelRim?.Rear_Wheel_Rim?.properties?.Possible_date_of_submission_of_required_approval?.value;
-  //         RWheelRimDataList.possibleDateList.push(rearPossibleDate);
-
-  //         RWheelRimDataList.copCertList.push(vehWheelRim?.Rear_Wheel_Rim?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //         console.log('FWheelRimDataList.suppNameList', FWheelRimDataList.suppNameList);
-  //         console.log('FWheelRimDataList.tacNumberList', FWheelRimDataList.tacNumberList);
-  //         console.log('FWheelRimDataList.MakeList', FWheelRimDataList.MakeList);
-  //         console.log('FWheelRimDataList.possibleDateList', FWheelRimDataList.possibleDateList);
-  //         console.log('FWheelRimDataList.copCertList', FWheelRimDataList.copCertList);
-
-  //         console.log('RWheelRimDataList.suppNameList', RWheelRimDataList.suppNameList);
-  //         console.log('RWheelRimDataList.tacNumberList', RWheelRimDataList.tacNumberList);
-  //         console.log('RWheelRimDataList.MakeList', RWheelRimDataList.MakeList);
-  //         console.log('RWheelRimDataList.possibleDateList', RWheelRimDataList.possibleDateList);
-  //         console.log('RWheelRimDataList.copCertList', RWheelRimDataList.copCertList);
-
-  //     }
-  // });
-
-  // const WheelRimList = form8Data?.Wheel_Rim?.WheelRim;
-
-  // let FWheelRimDataList = mainData();
-  // let RWheelRimDataList = mainData();
-
-  // WheelRimList.map(vehWheelRim => {
-  //     if (vehWheelRim?.supplier?.active === true) {
-  //         // FRONT
-  //         let frontMake = vehWheelRim?.Front_Wheel_Rim?.properties?.Make?.value || "";
-  //         if (frontMake && !frontMake.startsWith("M/")) {
-  //             frontMake = `M/s. ${frontMake}`;
-  //         }
-
-  //         const fWheelRimTACValue = vehWheelRim?.Front_Wheel_Rim?.properties?.BIS_License_TAC_Number_with_its_Validity?.value;
-  //         const tacCheckFront = parseAndCheckTACValidity(fWheelRimTACValue);
-
-  //         if (fWheelRimTACValue && fWheelRimTACValue.trim() !== "") {
-  //             FWheelRimDataList.suppNameList.push(frontMake);
-  //         }
-
-  //         FWheelRimDataList.tacNumberList.push(fWheelRimTACValue);
-  //         FWheelRimDataList.MakeList.push(frontMake);
-
-  //         if (tacCheckFront.hasDate) {
-  //             if (tacCheckFront.expired) {
-  //                 FWheelRimDataList.copCertList.push(vehWheelRim?.Front_Wheel_Rim?.properties?.CoP_Cert_No_with_validity_date?.value || "NA");
-  //                 FWheelRimDataList.possibleDateList.push(vehWheelRim?.Front_Wheel_Rim?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA");
-  //             } else {
-  //                 FWheelRimDataList.copCertList.push("NA");
-  //                 FWheelRimDataList.possibleDateList.push("NA");
-  //             }
-  //         } else {
-  //             FWheelRimDataList.copCertList.push(vehWheelRim?.Front_Wheel_Rim?.properties?.CoP_Cert_No_with_validity_date?.value || "NA");
-  //             FWheelRimDataList.possibleDateList.push(vehWheelRim?.Front_Wheel_Rim?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA");
-  //         }
-
-  //         // REAR
-  //         let rearMake = vehWheelRim?.Rear_Wheel_Rim?.properties?.Make?.value || "";
-  //         if (rearMake && !rearMake.startsWith("M/")) {
-  //             rearMake = `M/s. ${rearMake}`;
-  //         }
-
-  //         const rWheelRimTACValue = vehWheelRim?.Rear_Wheel_Rim?.properties?.BIS_License_TAC_Number_its_Validity?.value;
-  //         const tacCheckRear = parseAndCheckTACValidity(rWheelRimTACValue);
-
-  //         RWheelRimDataList.suppNameList.push(rearMake);
-  //         RWheelRimDataList.MakeList.push(rearMake);
-  //         RWheelRimDataList.tacNumberList.push(rWheelRimTACValue);
-
-  //         if (tacCheckRear.hasDate) {
-  //             if (tacCheckRear.expired) {
-  //                 RWheelRimDataList.copCertList.push(vehWheelRim?.Rear_Wheel_Rim?.properties?.CoP_Cert_No_with_validity_date?.value || "NA");
-  //                 RWheelRimDataList.possibleDateList.push(vehWheelRim?.Rear_Wheel_Rim?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA");
-  //             } else {
-  //                 RWheelRimDataList.copCertList.push("NA");
-  //                 RWheelRimDataList.possibleDateList.push("NA");
-  //             }
-  //         } else {
-  //             RWheelRimDataList.copCertList.push(vehWheelRim?.Rear_Wheel_Rim?.properties?.CoP_Cert_No_with_validity_date?.value || "NA");
-  //             RWheelRimDataList.possibleDateList.push(vehWheelRim?.Rear_Wheel_Rim?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA");
-  //         }
-  //     }
-  // });
-
-  //   const WheelRimList = form8Data?.Wheel_Rim?.WheelRim;
-
-  //   let FWheelRimDataList = mainData();
-  //   let RWheelRimDataList = mainData();
-
-  //   WheelRimList.map((vehWheelRim) => {
-  //     if (vehWheelRim?.supplier?.active === true) {
-  //       // FRONT Wheel Rim
-  //       let frontMake =
-  //         vehWheelRim?.Front_Wheel_Rim?.properties?.Make?.value || "";
-  //       if (frontMake && !frontMake.startsWith("M/")) {
-  //         frontMake = `M/s. ${frontMake}`;
-  //       }
-
-  //       const frontTAC =
-  //         vehWheelRim?.Front_Wheel_Rim?.properties
-  //           ?.BIS_License_TAC_Number_with_its_Validity?.value || "";
-  //       const frontCoP =
-  //         vehWheelRim?.Front_Wheel_Rim?.properties?.CoP_Cert_No_with_validity_date
-  //           ?.value || "";
-  //       const frontDate =
-  //         vehWheelRim?.Front_Wheel_Rim?.properties
-  //           ?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       FWheelRimDataList.tacNumberList.push(frontTAC);
-  //       FWheelRimDataList.MakeList.push(frontMake);
-  //       FWheelRimDataList.suppNameList.push(frontMake);
-
-  //       const { cop: fCop, possible: fDate } = TACvalidationcheck(
-  //         frontTAC,
-  //         frontCoP,
-  //         frontDate
-  //       );
-  //       FWheelRimDataList.copCertList.push(fCop);
-  //       FWheelRimDataList.possibleDateList.push(fDate);
-
-  //       // REAR Wheel Rim
-  //       let rearMake = vehWheelRim?.Rear_Wheel_Rim?.properties?.Make?.value || "";
-  //       if (rearMake && !rearMake.startsWith("M/")) {
-  //         rearMake = `M/s. ${rearMake}`;
-  //       }
-
-  //       const rearTAC =
-  //         vehWheelRim?.Rear_Wheel_Rim?.properties
-  //           ?.BIS_License_TAC_Number_its_Validity?.value || "";
-  //       const rearCoP =
-  //         vehWheelRim?.Rear_Wheel_Rim?.properties?.CoP_Cert_No_with_validity_date
-  //           ?.value || "";
-  //       const rearDate =
-  //         vehWheelRim?.Rear_Wheel_Rim?.properties
-  //           ?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       RWheelRimDataList.tacNumberList.push(rearTAC);
-  //       RWheelRimDataList.MakeList.push(rearMake);
-  //       RWheelRimDataList.suppNameList.push(rearMake);
-
-  //       const { cop: rCop, possible: rDate } = TACvalidationcheck(
-  //         rearTAC,
-  //         rearCoP,
-  //         rearDate
-  //       );
-  //       RWheelRimDataList.copCertList.push(rCop);
-  //       RWheelRimDataList.possibleDateList.push(rDate);
-  //     }
-  //   });
-
-  // const WheelRimList = form8Data?.Wheel_Rim?.WheelRim || [];
-
-  // let FWheelRimDataList = mainData();
-  // let RWheelRimDataList = mainData();
-
-  // WheelRimList.map((vehWheelRim) => {
-  //   if (vehWheelRim?.supplier?.active === true) {
-  //     // FRONT Wheel Rim
-  //     let frontMake = vehWheelRim?.Front_Wheel_Rim?.properties?.Make?.value || "";
-  //     if (frontMake && !frontMake.startsWith("M/")) {
-  //       frontMake = `M/s. ${frontMake}`;
-  //     }
-
-  //     const frontTAC = vehWheelRim?.Front_Wheel_Rim?.properties
-  //       ?.BIS_License_TAC_Number_with_its_Validity?.value?.trim() || "";
-  //     const frontCoP = vehWheelRim?.Front_Wheel_Rim?.properties
-  //       ?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //     const frontDate = vehWheelRim?.Front_Wheel_Rim?.properties
-  //       ?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //     const isFrontTacMissing = frontTAC === "";
-  //     const isFrontCopPresent = frontCoP !== "";
-
-  //     let finalFrontTAC = frontTAC;
-  //     if (isFrontTacMissing && isFrontCopPresent) {
-  //       finalFrontTAC = "NA";
-  //     }
-
-  //     FWheelRimDataList.tacNumberList.push(finalFrontTAC);
-  //     FWheelRimDataList.MakeList.push(frontMake);
-  //     FWheelRimDataList.suppNameList.push(frontMake);
-
-  //     const { cop: fCop, possible: fDate } = TACvalidationcheck(
-  //       frontTAC,
-  //       frontCoP,
-  //       frontDate
-  //     );
-  //     FWheelRimDataList.copCertList.push(fCop);
-  //     FWheelRimDataList.possibleDateList.push(fDate);
-
-  //     // REAR Wheel Rim
-  //     let rearMake = vehWheelRim?.Rear_Wheel_Rim?.properties?.Make?.value || "";
-  //     if (rearMake && !rearMake.startsWith("M/")) {
-  //       rearMake = `M/s. ${rearMake}`;
-  //     }
-
-  //     const rearTAC = vehWheelRim?.Rear_Wheel_Rim?.properties
-  //       ?.BIS_License_TAC_Number_its_Validity?.value?.trim() || "";
-  //     const rearCoP = vehWheelRim?.Rear_Wheel_Rim?.properties
-  //       ?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //     const rearDate = vehWheelRim?.Rear_Wheel_Rim?.properties
-  //       ?.Possible_date_of_submission_of_required_approval?.value?.trim() || "";
-
-  //     const isRearTacMissing = rearTAC === "";
-  //     const isRearCopPresent = rearCoP !== "";
-
-  //     let finalRearTAC = rearTAC;
-  //     if (isRearTacMissing && isRearCopPresent) {
-  //       finalRearTAC = "NA";
-  //     }
-
-  //     RWheelRimDataList.tacNumberList.push(finalRearTAC);
-  //     RWheelRimDataList.MakeList.push(rearMake);
-  //     RWheelRimDataList.suppNameList.push(rearMake);
-
-  //     const { cop: rCop, possible: rDate } = TACvalidationcheck(
-  //       rearTAC,
-  //       rearCoP,
-  //       rearDate
-  //     );
-  //     RWheelRimDataList.copCertList.push(rCop);
-  //     RWheelRimDataList.possibleDateList.push(rDate);
-  //   }
-  // });
-
-  // const WheelRimList = form8Data?.Wheel_Rim?.WheelRim || [];
-
-  // let FWheelRimDataList = mainData();
-  // let RWheelRimDataList = mainData();
-
-  // WheelRimList.forEach((vehWheelRim) => {
-  //   if (vehWheelRim?.supplier?.active === true) {
-  //     // FRONT WHEEL RIM
-  //     {
-  //       const props = vehWheelRim?.Front_Wheel_Rim?.properties || {};
-  //       // let make = props?.Make?.value || "";
-  //       // if (make && !make.startsWith("M/")) {
-  //       //   make = `M/s. ${make}`;
-  //       // }
-  //       let make = makePrefix(props?.Make?.value);
-
-  //       const tacRaw =
-  //         props?.BIS_License_TAC_Number_with_its_Validity?.value?.trim() || "";
-  //       const copRaw =
-  //         props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //       const possibleDateRaw =
-  //         props?.Possible_date_of_submission_of_required_approval?.value?.trim() ||
-  //         "";
-
-  //       const isTacMissing = tacRaw === "";
-  //       const isPossibleDatePresent = possibleDateRaw !== "";
-  //       let finalTAC = tacRaw;
-  //       if (isTacMissing && isPossibleDatePresent) {
-  //         finalTAC = "NA";
-  //       }
-
-  //       FWheelRimDataList.tacNumberList.push(finalTAC);
-  //       FWheelRimDataList.MakeList.push(make);
-  //       FWheelRimDataList.suppNameList.push(make);
-
-  //       const { cop, possible } = TACvalidationcheck(
-  //         tacRaw,
-  //         copRaw,
-  //         possibleDateRaw
-  //       );
-  //       FWheelRimDataList.copCertList.push(cop);
-  //       FWheelRimDataList.possibleDateList.push(possible);
-  //     }
-
-  //     // REAR WHEEL RIM
-  //     {
-  //       const props = vehWheelRim?.Rear_Wheel_Rim?.properties || {};
-  //       // let make = props?.Make?.value || "";
-  //       // if (make && !make.startsWith("M/")) {
-  //       //   make = `M/s. ${make}`;
-  //       // }
-  //       let make = makePrefix(props?.Make?.value);
-
-  //       const tacRaw =
-  //         props?.BIS_License_TAC_Number_its_Validity?.value?.trim() || "";
-  //       const copRaw =
-  //         props?.CoP_Cert_No_with_validity_date?.value?.trim() || "";
-  //       const possibleDateRaw =
-  //         props?.Possible_date_of_submission_of_required_approval?.value?.trim() ||
-  //         "";
-
-  //       const isTacMissing = tacRaw === "";
-  //       const isPossibleDatePresent = possibleDateRaw !== "";
-  //       let finalTAC = tacRaw;
-  //       if (isTacMissing && isPossibleDatePresent) {
-  //         finalTAC = "NA";
-  //       }
-
-  //       RWheelRimDataList.tacNumberList.push(finalTAC);
-  //       RWheelRimDataList.MakeList.push(make);
-  //       RWheelRimDataList.suppNameList.push(make);
-
-  //       const { cop, possible } = TACvalidationcheck(
-  //         tacRaw,
-  //         copRaw,
-  //         possibleDateRaw
-  //       );
-  //       RWheelRimDataList.copCertList.push(cop);
-  //       RWheelRimDataList.possibleDateList.push(possible);
-  //     }
-  //   }
-  // });
   const WheelRimList = form8Data?.Wheel_Rim?.WheelRim || [];
 
   let FWheelRimDataList = mainData();
@@ -7717,211 +2449,33 @@ posLampsList.forEach((vehPosLamp) => {
     }
   });
 
-  console.log("FWheelRimDataList.suppNameList", FWheelRimDataList.suppNameList);
-  console.log(
-    "FWheelRimDataList.tacNumberList",
-    FWheelRimDataList.tacNumberList
-  );
-  console.log("FWheelRimDataList.MakeList", FWheelRimDataList.MakeList);
-  console.log(
-    "FWheelRimDataList.possibleDateList",
-    FWheelRimDataList.possibleDateList
-  );
-  console.log("FWheelRimDataList.copCertList", FWheelRimDataList.copCertList);
+  // console.log("FWheelRimDataList.suppNameList", FWheelRimDataList.suppNameList);
+  // console.log(
+  //   "FWheelRimDataList.tacNumberList",
+  //   FWheelRimDataList.tacNumberList
+  // );
+  // console.log("FWheelRimDataList.MakeList", FWheelRimDataList.MakeList);
+  // console.log(
+  //   "FWheelRimDataList.possibleDateList",
+  //   FWheelRimDataList.possibleDateList
+  // );
+  // console.log("FWheelRimDataList.copCertList", FWheelRimDataList.copCertList);
 
-  console.log("RWheelRimDataList.suppNameList", RWheelRimDataList.suppNameList);
-  console.log(
-    "RWheelRimDataList.tacNumberList",
-    RWheelRimDataList.tacNumberList
-  );
-  console.log("RWheelRimDataList.MakeList", RWheelRimDataList.MakeList);
-  console.log(
-    "RWheelRimDataList.possibleDateList",
-    RWheelRimDataList.possibleDateList
-  );
-  console.log("RWheelRimDataList.copCertList", RWheelRimDataList.copCertList);
+  // console.log("RWheelRimDataList.suppNameList", RWheelRimDataList.suppNameList);
+  // console.log(
+  //   "RWheelRimDataList.tacNumberList",
+  //   RWheelRimDataList.tacNumberList
+  // );
+  // console.log("RWheelRimDataList.MakeList", RWheelRimDataList.MakeList);
+  // console.log(
+  //   "RWheelRimDataList.possibleDateList",
+  //   RWheelRimDataList.possibleDateList
+  // );
+  // console.log("RWheelRimDataList.copCertList", RWheelRimDataList.copCertList);
 
-  // const WindscreenList = form8Data?.Wind_screen?.Windscreen;
-  // let WindscreenDataList = mainData();
-
-  // WindscreenList.map(vehWindscreen => {
-  //     if (vehWindscreen.supplier.active === true) {
-  //         let supplierName = vehWindscreen?.supplier?.nameOfSupplier;
-
-  //         // Modify supplierName directly
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // WindscreenDataList.suppNameList.push(supplierName);
-  //         // // WindscreenDataList.suppNameList.push(vehWindscreen?.supplier?.nameOfSupplier);
-  //         // WindscreenDataList.tacNumberList.push(vehWindscreen?.Windscreen?.properties?.BIS_License_Number_Validity?.value);
-  //         // Get the TAC Number value for Windscreen
-  //         const windscreenTACValue = vehWindscreen?.Windscreen?.properties?.BIS_License_Number_Validity?.value;
-
-  //         // Push the TAC value to WindscreenDataList
-  //         WindscreenDataList.tacNumberList.push(windscreenTACValue);
-
-  //         // Check if TAC value is present
-  //         // WindscreenDataList.suppNameList.push(windscreenTACValue ? supplierName : "");
-  //         // WindscreenDataList.suppNameList.push(windscreenTACValue === "NA" ? "" : supplierName);
-  //         if (windscreenTACValue && windscreenTACValue.trim() !== "") {
-  //             WindscreenDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         WindscreenDataList.possibleDateList.push(vehWindscreen?.Windscreen?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         WindscreenDataList.copCertList.push(vehWindscreen?.Windscreen?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //     }
-  // });
-  // if (twoWheeler) {
-  //     WindscreenDataList.suppNameList = ["NA"];
-  //     WindscreenDataList.tacNumberList = ["NA"];
-  //     WindscreenDataList.possibleDateList = ["NA"];
-  //     WindscreenDataList.copCertList = ["NA"];
-  //     WindscreenDataList.MakeList = ["NA"];
-  // } else {
-  //     WindscreenList?.forEach(vehWindscreen => {
-  //         if (vehWindscreen?.supplier?.active === true) {
-  //             const tacValue = vehWindscreen?.Windscreen?.properties?.BIS_License_Number_Validity?.value?.trim();
-
-  //             if (tacValue && tacValue !== "NA") {
-  //                 let supplierName = vehWindscreen?.supplier?.nameOfSupplier || "";
-
-  //                 if (!supplierName.startsWith("M/")) {
-  //                     supplierName = `M/s. ${supplierName}`;
-  //                 }
-
-  //                 WindscreenDataList.suppNameList.push(supplierName);
-  //                 WindscreenDataList.tacNumberList.push(tacValue);
-  //                 WindscreenDataList.possibleDateList.push(
-  //                     vehWindscreen?.Windscreen?.properties?.Possible_date_of_submission_of_required_approval?.value || ""
-  //                 );
-  //                 WindscreenDataList.copCertList.push(
-  //                     vehWindscreen?.Windscreen?.properties?.CoP_Cert_No_with_validity_date?.value || ""
-  //                 );
-  //                 WindscreenDataList.MakeList.push(
-  //                     vehWindscreen?.Windscreen?.properties?.Make?.value || ""
-  //                 );
-  //             }
-  //         }
-  //     });
-  // }
-
-  // const WindscreenList = form8Data?.Wind_screen?.Windscreen;
-  // let WindscreenDataList = mainData();
-
-  // if (twoWheeler) {
-  //     WindscreenDataList.suppNameList = ["NA"];
-  //     WindscreenDataList.tacNumberList = ["NA"];
-  //     WindscreenDataList.possibleDateList = ["NA"];
-  //     WindscreenDataList.copCertList = ["NA"];
-  // } else {
-  //     WindscreenList?.forEach(vehWindscreen => {
-  //         if (vehWindscreen?.supplier?.active === true) {
-  //             const tacValue = vehWindscreen?.Windscreen?.properties?.BIS_License_Number_Validity?.value?.trim();
-
-  //             if (tacValue && tacValue !== "NA") {
-  //                 let make = vehWindscreen?.Windscreen?.properties?.Make?.value || "";
-
-  //                 if (make && !make.startsWith("M/")) {
-  //                     make = `M/s. ${make}`;
-  //                 }
-
-  //                 WindscreenDataList.suppNameList.push(make);
-  //                 WindscreenDataList.tacNumberList.push(tacValue);
-
-  //                 const possibleDate = (make.includes("NA"))
-  //                     ? "NA"
-  //                     : vehWindscreen?.Windscreen?.properties?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //                 WindscreenDataList.possibleDateList.push(possibleDate);
-  //                 WindscreenDataList.copCertList.push(
-  //                     vehWindscreen?.Windscreen?.properties?.CoP_Cert_No_with_validity_date?.value || ""
-  //                 );
-  //                 WindscreenDataList.MakeList.push(make);
-  //             }
-  //         }
-  //     });
-  // }
-
-  //   const WindscreenList = form8Data?.Wind_screen?.Windscreen;
-  //   let WindscreenDataList = mainData();
-
-  //   if (twoWheeler) {
-  //     WindscreenDataList.suppNameList = ["NA"];
-  //     WindscreenDataList.tacNumberList = ["NA"];
-  //     WindscreenDataList.possibleDateList = ["NA"];
-  //     WindscreenDataList.copCertList = ["NA"];
-  //     WindscreenDataList.MakeList = ["NA"];
-  //   } else {
-  //     WindscreenList?.forEach((vehWindscreen) => {
-  //       if (vehWindscreen?.supplier?.active === true) {
-  //         const tacRaw =
-  //           vehWindscreen?.Windscreen?.properties?.BIS_License_Number_Validity?.value?.trim() ||
-  //           "";
-  //         const copCert =
-  //           vehWindscreen?.Windscreen?.properties?.CoP_Cert_No_with_validity_date
-  //             ?.value || "";
-  //         const possibleDate =
-  //           vehWindscreen?.Windscreen?.properties
-  //             ?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //         if (tacRaw && tacRaw !== "NA") {
-  //           let make = vehWindscreen?.Windscreen?.properties?.Make?.value || "";
-  //           if (make && !make.startsWith("M/")) {
-  //             make = `M/s. ${make}`;
-  //           }
-
-  //           WindscreenDataList.tacNumberList.push(tacRaw);
-  //           WindscreenDataList.MakeList.push(make);
-  //           WindscreenDataList.suppNameList.push(make);
-
-  //           const { cop, possible } = TACvalidationcheck(
-  //             tacRaw,
-  //             copCert,
-  //             possibleDate
-  //           );
-  //           WindscreenDataList.copCertList.push(cop);
-  //           WindscreenDataList.possibleDateList.push(possible);
-  //         }
-  //       }
-  //     });
-  //   }
-
-  // const WindscreenList = form8Data?.Wind_screen?.Windscreen || [];
-  // let WindscreenDataList = mainData();
-
-  // if (twoWheeler) {
-  //   WindscreenDataList.suppNameList = ["NA"];
-  //   WindscreenDataList.tacNumberList = ["NA"];
-  //   WindscreenDataList.possibleDateList = ["NA"];
-  //   WindscreenDataList.copCertList = ["NA"];
-  //   WindscreenDataList.MakeList = ["NA"];
-  // } else {
-  //   WindscreenList.map((vehWindscreen) => {
-  //     if (vehWindscreen?.supplier?.active === true) {
-  //       let make = vehWindscreen?.Windscreen?.properties?.Make?.value || "";
-  //       if (make && !make.startsWith("M/")) {
-  //         make = `M/s. ${make}`;
-  //       }
-
-  //       const tacRaw =
-  //         vehWindscreen?.Windscreen?.properties?.BIS_License_Number_Validity?.value?.trim() || "";
-  //       const copCert =
-  //         vehWindscreen?.Windscreen?.properties?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDate =
-  //         vehWindscreen?.Windscreen?.properties?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       WindscreenDataList.tacNumberList.push(tacRaw);
-  //       WindscreenDataList.MakeList.push(make);
-  //       WindscreenDataList.suppNameList.push(make);
-
-  //       const { cop, possible } = TACvalidationcheck(tacRaw, copCert, possibleDate);
-  //       WindscreenDataList.copCertList.push(cop);
-  //       WindscreenDataList.possibleDateList.push(possible);
-  //     }
-  //   });
-  // }
+  
+  
+  
 
   const WindscreenList = form8Data?.Wind_screen?.Windscreen || [];
   let WindscreenDataList = mainData();
@@ -7975,208 +2529,23 @@ posLampsList.forEach((vehPosLamp) => {
     });
   }
 
-  console.log(
-    "windscreendatalist.suppNameList",
-    WindscreenDataList.suppNameList
-  );
-  console.log(
-    "windscreendatalist.tacNumberList",
-    WindscreenDataList.tacNumberList
-  );
-  console.log(
-    "windscreendatalist.possibleDateList",
-    WindscreenDataList.possibleDateList
-  );
-  console.log("windscreendatalist.copCertList", WindscreenDataList.copCertList);
-  console.log("windscreendatalist.MakeList", WindscreenDataList.MakeList);
+  // console.log(
+  //   "windscreendatalist.suppNameList",
+  //   WindscreenDataList.suppNameList
+  // );
+  // console.log(
+  //   "windscreendatalist.tacNumberList",
+  //   WindscreenDataList.tacNumberList
+  // );
+  // console.log(
+  //   "windscreendatalist.possibleDateList",
+  //   WindscreenDataList.possibleDateList
+  // );
+  // console.log("windscreendatalist.copCertList", WindscreenDataList.copCertList);
+  // console.log("windscreendatalist.MakeList", WindscreenDataList.MakeList);
 
-  // const SideglassList = form8Data?.Side_glass?.Sideglass;
-  // let SideglassDataList = mainData();
-  // // SideglassList.map(vehSideglass => {
-  // //     if (vehSideglass.supplier.active === true) {
-  // //         let supplierName = vehSideglass?.supplier?.nameOfSupplier;
-
-  // //         // Modify supplierName directly
-  // //         if (!supplierName.startsWith("M/")) {
-  // //             supplierName = `M/s. ${supplierName}`;
-  // //         }
-
-  // //         // SideglassDataList.suppNameList.push(supplierName);
-  // //         // // SideglassDataList.suppNameList.push(vehSideglass?.supplier?.nameOfSupplier);
-  // //         // SideglassDataList.tacNumberList.push(vehSideglass?.Side_Glass?.properties?.BIS_License_Number_Validity?.value);
-  // //         // Get the TAC Number value for Side Glass
-  // //         const sideglassTACValue = vehSideglass?.Side_Glass?.properties?.BIS_License_Number_Validity?.value;
-
-  // //         // Push the TAC value to SideglassDataList
-  // //         SideglassDataList.tacNumberList.push(sideglassTACValue);
-
-  // //         // Check if TAC value is present
-  // //         // SideglassDataList.suppNameList.push(sideglassTACValue ? supplierName : "");
-  // //         // SideglassDataList.suppNameList.push(sideglassTACValue === "NA" ? "" : supplierName);
-  // //         if (sideglassTACValue && sideglassTACValue.trim() !== "") {
-  // //             SideglassDataList.suppNameList.push(supplierName);
-  // //         }
-
-  // //         SideglassDataList.possibleDateList.push(vehSideglass?.Side_Glass?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  // //         SideglassDataList.copCertList.push(vehSideglass?.Side_Glass?.properties?.CoP_Cert_No_with_validity_date?.value);
-  // //     }
-  // // });
-
-  // if (twoWheeler) {
-  //     SideglassDataList.suppNameList = ["NA"];
-  //     SideglassDataList.tacNumberList = ["NA"];
-  //     SideglassDataList.possibleDateList = ["NA"];
-  //     SideglassDataList.copCertList = ["NA"];
-  // } else {
-  //     SideglassList?.forEach(vehSideglass => {
-  //         if (vehSideglass?.supplier?.active === true) {
-  //             const tacValue = vehSideglass?.Side_Glass?.properties?.BIS_License_Number_Validity?.value?.trim();
-
-  //             if (tacValue && tacValue !== "NA") {
-  //                 let supplierName = vehSideglass?.supplier?.nameOfSupplier || "";
-
-  //                 if (!supplierName.startsWith("M/")) {
-  //                     supplierName = `M/s. ${supplierName}`;
-  //                 }
-
-  //                 SideglassDataList.suppNameList.push(supplierName);
-  //                 SideglassDataList.tacNumberList.push(tacValue);
-  //                 SideglassDataList.possibleDateList.push(
-  //                     vehSideglass?.Side_Glass?.properties?.Possible_date_of_submission_of_required_approval?.value || ""
-  //                 );
-  //                 SideglassDataList.copCertList.push(
-  //                     vehSideglass?.Side_Glass?.properties?.CoP_Cert_No_with_validity_date?.value || ""
-  //                 );
-  //             }
-  //         }
-  //     });
-  // }
-
-  // const SideglassList = form8Data?.Side_glass?.Sideglass;
-
-  // let SideglassDataList = mainData();
-
-  // if (twoWheeler) {
-  //     SideglassDataList.suppNameList = ["NA"];
-  //     SideglassDataList.tacNumberList = ["NA"];
-  //     SideglassDataList.possibleDateList = ["NA"];
-  //     SideglassDataList.copCertList = ["NA"];
-  // } else {
-  //     SideglassList?.forEach(vehSideglass => {
-  //         if (vehSideglass?.supplier?.active === true) {
-  //             const tacValue = vehSideglass?.Side_Glass?.properties?.BIS_License_Number_Validity?.value?.trim();
-
-  //             if (tacValue && tacValue !== "NA") {
-  //                 let make = vehSideglass?.Side_Glass?.properties?.Make?.value || "";
-
-  //                 if (make && !make.startsWith("M/")) {
-  //                     make = `M/s. ${make}`;
-  //                 }
-
-  //                 SideglassDataList.suppNameList.push(make);
-  //                 SideglassDataList.tacNumberList.push(tacValue);
-
-  //                 const possibleDate = (make.includes("NA"))
-  //                     ? "NA"
-  //                     : vehSideglass?.Side_Glass?.properties?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //                 SideglassDataList.possibleDateList.push(possibleDate);
-  //                 SideglassDataList.copCertList.push(
-  //                     vehSideglass?.Side_Glass?.properties?.CoP_Cert_No_with_validity_date?.value || ""
-  //                 );
-  //                 console.log("SuppNameList (Make):", SideglassDataList.suppNameList);
-  //                 console.log("TAC Number List:", SideglassDataList.tacNumberList);
-  //                 console.log("Possible Date List:", SideglassDataList.possibleDateList);
-  //                 console.log("CoP Cert List:", SideglassDataList.copCertList);
-
-  //             }
-  //         }
-  //     });
-  // }
-
-  //   const SideglassList = form8Data?.Side_glass?.Sideglass;
-  //   let SideglassDataList = mainData();
-
-  //   if (twoWheeler) {
-  //     SideglassDataList.suppNameList = ["NA"];
-  //     SideglassDataList.tacNumberList = ["NA"];
-  //     SideglassDataList.possibleDateList = ["NA"];
-  //     SideglassDataList.copCertList = ["NA"];
-  //     SideglassDataList.MakeList = ["NA"];
-  //   } else {
-  //     SideglassList?.forEach((vehSideglass) => {
-  //       if (vehSideglass?.supplier?.active === true) {
-  //         const tacRaw =
-  //           vehSideglass?.Side_Glass?.properties?.BIS_License_Number_Validity?.value?.trim() ||
-  //           "";
-  //         const copCert =
-  //           vehSideglass?.Side_Glass?.properties?.CoP_Cert_No_with_validity_date
-  //             ?.value || "";
-  //         const possibleDate =
-  //           vehSideglass?.Side_Glass?.properties
-  //             ?.Possible_date_of_submission_of_required_approval?.value || "";
-  //             let make = vehSideglass?.Side_Glass?.properties?.Make?.value || "";
-  //             if (make && !make.startsWith("M/")) {
-  //               make = `M/s. ${make}`;
-  //             }
-  //         SideglassDataList.MakeList.push(make);
-  //         SideglassDataList.suppNameList.push(make);
-  //         if (tacRaw && tacRaw !== "NA") {
-
-  //           SideglassDataList.tacNumberList.push(tacRaw);
-
-  //           const { cop, possible } = TACvalidationcheck(
-  //             tacRaw,
-  //             copCert,
-  //             possibleDate
-  //           );
-  //           SideglassDataList.copCertList.push(cop);
-  //           SideglassDataList.possibleDateList.push(possible);
-  //         }
-  //         console.log("SuppNameList (Make):", SideglassDataList.suppNameList);
-  //         console.log("TAC Number List:", SideglassDataList.tacNumberList);
-  //         console.log("Possible Date List:", SideglassDataList.possibleDateList);
-  //         console.log("CoP Cert List:", SideglassDataList.copCertList);
-  //       }
-  //     });
-  //   }
-
-  // const SideglassList = form8Data?.Side_glass?.Sideglass || [];
-  // let SideglassDataList = mainData();
-
-  // if (twoWheeler) {
-  //   SideglassDataList.suppNameList = ["NA"];
-  //   SideglassDataList.tacNumberList = ["NA"];
-  //   SideglassDataList.possibleDateList = ["NA"];
-  //   SideglassDataList.copCertList = ["NA"];
-  //   SideglassDataList.MakeList = ["NA"];
-  // } else {
-  //   SideglassList.map((vehSideglass) => {
-  //     if (vehSideglass?.supplier?.active === true) {
-  //       const tacRaw =
-  //         vehSideglass?.Side_Glass?.properties?.BIS_License_Number_Validity?.value?.trim() || "";
-  //       const copCert =
-  //         vehSideglass?.Side_Glass?.properties?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDate =
-  //         vehSideglass?.Side_Glass?.properties?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       let make = vehSideglass?.Side_Glass?.properties?.Make?.value || "";
-  //       if (make && !make.startsWith("M/")) {
-  //         make = `M/s. ${make}`;
-  //       }
-
-  //       SideglassDataList.MakeList.push(make);
-  //       SideglassDataList.suppNameList.push(make);
-  //       SideglassDataList.tacNumberList.push(tacRaw);
-
-  //       const { cop, possible } = TACvalidationcheck(tacRaw, copCert, possibleDate);
-  //       SideglassDataList.copCertList.push(cop);
-  //       SideglassDataList.possibleDateList.push(possible);
-  //     }
-  //   });
-  // }
-
-  const SideglassList = form8Data?.Side_glass?.Sideglass || [];
+  
+ const SideglassList = form8Data?.Side_glass?.Sideglass || [];
   let SideglassDataList = mainData();
 
   if (twoWheeler) {
@@ -8227,245 +2596,6 @@ posLampsList.forEach((vehPosLamp) => {
       }
     });
   }
-
-  // const RearglassList = form8Data?.Rear_glass?.Rearglass;
-  // let RearglassDataList = mainData();
-  // // RearglassList.map(vehRearglass => {
-  // //     if (vehRearglass.supplier.active === true) {
-  // //         let supplierName = vehRearglass?.supplier?.nameOfSupplier;
-
-  // //         // Modify supplierName directly
-  // //         if (!supplierName.startsWith("M/")) {
-  // //             supplierName = `M/s. ${supplierName}`;
-  // //         }
-
-  // //         // RearglassDataList.suppNameList.push(supplierName);
-  // //         // // RearglassDataList.suppNameList.push(vehRearglass?.supplier?.nameOfSupplier);
-  // //         // RearglassDataList.tacNumberList.push(vehRearglass?.Rear_Glass?.properties?.BIS_License_Number_Validity?.value);
-  // //         // Get the TAC Number value for Rear Glass
-  // //         const rearglassTACValue = vehRearglass?.Rear_Glass?.properties?.BIS_License_Number_Validity?.value;
-
-  // //         // Push the TAC value to RearglassDataList
-  // //         RearglassDataList.tacNumberList.push(rearglassTACValue);
-
-  // //         // Check if TAC value is present
-  // //         // RearglassDataList.suppNameList.push(rearglassTACValue ? supplierName : "");
-  // //         // RearglassDataList.suppNameList.push(rearglassTACValue === "NA" ? "" : supplierName);
-  // //         if (rearglassTACValue && rearglassTACValue.trim() !== "") {
-  // //             RearglassDataList.suppNameList.push(supplierName);
-  // //         }
-
-  // //         RearglassDataList.possibleDateList.push(vehRearglass?.Rear_Glass?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  // //         RearglassDataList.copCertList.push(vehRearglass?.Rear_Glass?.properties?.CoP_Cert_No_with_validity_date?.value);
-  // //     }
-  // // });
-  // if (twoWheeler) {
-  //     RearglassDataList.suppNameList = ["NA"];
-  //     RearglassDataList.tacNumberList = ["NA"];
-  //     RearglassDataList.possibleDateList = ["NA"];
-  //     RearglassDataList.copCertList = ["NA"];
-  // } else {
-  //     RearglassList?.forEach(vehRearglass => {
-  //         if (vehRearglass?.supplier?.active === true) {
-  //             const tacValue = vehRearglass?.Rear_Glass?.properties?.BIS_License_Number_Validity?.value?.trim();
-
-  //             if (tacValue && tacValue !== "NA") {
-  //                 let supplierName = vehRearglass?.supplier?.nameOfSupplier || "";
-
-  //                 if (!supplierName.startsWith("M/")) {
-  //                     supplierName = `M/s. ${supplierName}`;
-  //                 }
-
-  //                 RearglassDataList.suppNameList.push(supplierName);
-  //                 RearglassDataList.tacNumberList.push(tacValue);
-  //                 RearglassDataList.possibleDateList.push(
-  //                     vehRearglass?.Rear_Glass?.properties?.Possible_date_of_submission_of_required_approval?.value || ""
-  //                 );
-  //                 RearglassDataList.copCertList.push(
-  //                     vehRearglass?.Rear_Glass?.properties?.CoP_Cert_No_with_validity_date?.value || ""
-  //                 );
-  //             }
-  //         }
-  //     });
-  // }
-
-  // const RearglassList = form8Data?.Rear_glass?.Rearglass;
-  // let RearglassDataList = mainData();
-
-  // if (twoWheeler) {
-  //     RearglassDataList.suppNameList = ["NA"];
-  //     RearglassDataList.tacNumberList = ["NA"];
-  //     RearglassDataList.possibleDateList = ["NA"];
-  //     RearglassDataList.copCertList = ["NA"];
-  // } else {
-  //     RearglassList?.forEach(vehRearglass => {
-  //         if (vehRearglass?.supplier?.active === true) {
-  //             const tacValue = vehRearglass?.Rear_Glass?.properties?.BIS_License_Number_Validity?.value?.trim();
-
-  //             if (tacValue && tacValue !== "NA") {
-  //                 let make = vehRearglass?.Rear_Glass?.properties?.Make?.value || "";
-
-  //                 if (make && !make.startsWith("M/")) {
-  //                     make = `M/s. ${make}`;
-  //                 }
-
-  //                 RearglassDataList.suppNameList.push(make);
-  //                 RearglassDataList.tacNumberList.push(tacValue);
-
-  //                 const possibleDate = (make.includes("NA"))
-  //                     ? "NA"
-  //                     : vehRearglass?.Rear_Glass?.properties?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //                 RearglassDataList.possibleDateList.push(possibleDate);
-  //                 RearglassDataList.copCertList.push(
-  //                     vehRearglass?.Rear_Glass?.properties?.CoP_Cert_No_with_validity_date?.value || ""
-  //                 );
-  //                 console.log("SuppNameList (Make):", RearglassDataList.suppNameList);
-  //                 console.log("TAC Number List:", RearglassDataList.tacNumberList);
-  //                 console.log("Possible Date List:", RearglassDataList.possibleDateList);
-  //                 console.log("CoP Cert List:", RearglassDataList.copCertList);
-
-  //             }
-  //         }
-  //     });
-  // }
-
-  // const RearglassList = form8Data?.Rear_glass?.Rearglass;
-  // let RearglassDataList = mainData();
-
-  // if (twoWheeler) {
-  //     RearglassDataList.suppNameList = ["NA"];
-  //     RearglassDataList.tacNumberList = ["NA"];
-  //     RearglassDataList.possibleDateList = ["NA"];
-  //     RearglassDataList.copCertList = ["NA"];
-  // } else {
-  //     RearglassList?.forEach(vehRearglass => {
-  //         if (vehRearglass?.supplier?.active === true) {
-  //             const tacValue = vehRearglass?.Rear_Glass?.properties?.BIS_License_Number_Validity?.value?.trim();
-
-  //             if (tacValue && tacValue !== "NA") {
-  //                 let make = vehRearglass?.Rear_Glass?.properties?.Make?.value || "";
-  //                 if (make && !make.startsWith("M/")) {
-  //                     make = `M/s. ${make}`;
-  //                 }
-
-  //                 RearglassDataList.tacNumberList.push(tacValue);
-  //                 RearglassDataList.suppNameList.push(make);
-
-  //                 const tacCheck = parseAndCheckTACValidity(tacValue);
-
-  //                 if (tacCheck.hasDate) {
-  //                     if (tacCheck.expired) {
-  //                         RearglassDataList.possibleDateList.push(
-  //                             vehRearglass?.Rear_Glass?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA"
-  //                         );
-  //                         RearglassDataList.copCertList.push(
-  //                             vehRearglass?.Rear_Glass?.properties?.CoP_Cert_No_with_validity_date?.value || "NA"
-  //                         );
-  //                     } else {
-  //                         RearglassDataList.possibleDateList.push("NA");
-  //                         RearglassDataList.copCertList.push("NA");
-  //                     }
-  //                 } else {
-  //                     RearglassDataList.possibleDateList.push(
-  //                         vehRearglass?.Rear_Glass?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA"
-  //                     );
-  //                     RearglassDataList.copCertList.push(
-  //                         vehRearglass?.Rear_Glass?.properties?.CoP_Cert_No_with_validity_date?.value || "NA"
-  //                     );
-  //                 }
-
-  //                 console.log("SuppNameList (Make):", RearglassDataList.suppNameList);
-  //                 console.log("TAC Number List:", RearglassDataList.tacNumberList);
-  //                 console.log("Possible Date List:", RearglassDataList.possibleDateList);
-  //                 console.log("CoP Cert List:", RearglassDataList.copCertList);
-  //             }
-  //         }
-  //     });
-  // }
-
-  //   const RearglassList = form8Data?.Rear_glass?.Rearglass;
-  //   let RearglassDataList = mainData();
-
-  //   if (twoWheeler) {
-  //     RearglassDataList.suppNameList = ["NA"];
-  //     RearglassDataList.tacNumberList = ["NA"];
-  //     RearglassDataList.possibleDateList = ["NA"];
-  //     RearglassDataList.copCertList = ["NA"];
-  //     RearglassDataList.MakeList = ["NA"];
-  //   } else {
-  //     RearglassList?.forEach((vehRearglass) => {
-  //       if (vehRearglass?.supplier?.active === true) {
-  //         const tacRaw =
-  //           vehRearglass?.Rear_Glass?.properties?.BIS_License_Number_Validity?.value?.trim() ||
-  //           "";
-  //         const copCert =
-  //           vehRearglass?.Rear_Glass?.properties?.CoP_Cert_No_with_validity_date
-  //             ?.value || "";
-  //         const possibleDate =
-  //           vehRearglass?.Rear_Glass?.properties
-  //             ?.Possible_date_of_submission_of_required_approval?.value || "";
-  //             let make = vehRearglass?.Rear_Glass?.properties?.Make?.value || "";
-  //             if (make && !make.startsWith("M/")) {
-  //               make = `M/s. ${make}`;
-  //             }
-
-  //         RearglassDataList.MakeList.push(make);
-  //         RearglassDataList.suppNameList.push(make);
-  //         if (tacRaw && tacRaw !== "NA") {
-
-  //           RearglassDataList.tacNumberList.push(tacRaw);
-
-  //           const { cop, possible } = TACvalidationcheck(
-  //             tacRaw,
-  //             copCert,
-  //             possibleDate
-  //           );
-  //           RearglassDataList.copCertList.push(cop);
-  //           RearglassDataList.possibleDateList.push(possible);
-  //         }
-  //         console.log("SuppNameList (Make):", RearglassDataList.suppNameList);
-  //         console.log("TAC Number List:", RearglassDataList.tacNumberList);
-  //         console.log("Possible Date List:", RearglassDataList.possibleDateList);
-  //         console.log("CoP Cert List:", RearglassDataList.copCertList);
-  //       }
-  //     });
-  //   }
-
-  // const RearglassList = form8Data?.Rear_glass?.Rearglass || [];
-  // let RearglassDataList = mainData();
-
-  // if (twoWheeler) {
-  //   RearglassDataList.suppNameList = ["NA"];
-  //   RearglassDataList.tacNumberList = ["NA"];
-  //   RearglassDataList.possibleDateList = ["NA"];
-  //   RearglassDataList.copCertList = ["NA"];
-  //   RearglassDataList.MakeList = ["NA"];
-  // } else {
-  //   RearglassList.map((vehRearglass) => {
-  //     if (vehRearglass?.supplier?.active === true) {
-  //       const tacRaw =
-  //         vehRearglass?.Rear_Glass?.properties?.BIS_License_Number_Validity?.value?.trim() || "";
-  //       const copCert =
-  //         vehRearglass?.Rear_Glass?.properties?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDate =
-  //         vehRearglass?.Rear_Glass?.properties?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       let make = vehRearglass?.Rear_Glass?.properties?.Make?.value || "";
-  //       if (make && !make.startsWith("M/")) {
-  //         make = `M/s. ${make}`;
-  //       }
-
-  //       RearglassDataList.MakeList.push(make);
-  //       RearglassDataList.suppNameList.push(make);
-  //       RearglassDataList.tacNumberList.push(tacRaw);
-
-  //       const { cop, possible } = TACvalidationcheck(tacRaw, copCert, possibleDate);
-  //       RearglassDataList.copCertList.push(cop);
-  //       RearglassDataList.possibleDateList.push(possible);
-  //     }
-  //   });
-  // }
 
   const RearglassList = form8Data?.Rear_glass?.Rearglass || [];
   let RearglassDataList = mainData();
@@ -8518,281 +2648,8 @@ posLampsList.forEach((vehPosLamp) => {
     });
   }
 
-  // const WindscreenwipingList = form8Data?.Windscreen_wiping?.Windscreenwiping;
-  // let WindscreenwipingDataList = mainData();
-  // WindscreenwipingList.map(vehWindscreenwiping => {
-  //     if (vehWindscreenwiping.supplier.active === true) {
-  //         let supplierName = vehWindscreenwiping?.supplier?.nameOfSupplier;
-
-  //         // Modify supplierName directly
-  //         if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // WindscreenwipingDataList.suppNameList.push(supplierName);
-  //         // // WindscreenwipingDataList.suppNameList.push(vehWindscreenwiping?.supplier?.nameOfSupplier);
-  //         // WindscreenwipingDataList.tacNumberList.push(vehWindscreenwiping?.Wiping_System?.properties?.TAC_Number_Its_Validity?.value);
-  //         // Get the TAC Number value for Wiping System
-  //         const windscreenwipingTACValue = vehWindscreenwiping?.Wiping_System?.properties?.TAC_Number_Its_Validity?.value;
-
-  //         // Push the TAC value to WindscreenwipingDataList
-  //         WindscreenwipingDataList.tacNumberList.push(windscreenwipingTACValue);
-
-  //         // Check if TAC value is present
-  //         // WindscreenwipingDataList.suppNameList.push(windscreenwipingTACValue ? supplierName : "");
-  //         // WindscreenwipingDataList.suppNameList.push(windscreenwipingTACValue === "NA" ? "" : supplierName);
-
-  //         if (windscreenwipingTACValue && windscreenwipingTACValue.trim() !== "") {
-  //             WindscreenwipingDataList.suppNameList.push(supplierName);
-  //         }
-
-  //         WindscreenwipingDataList.possibleDateList.push(vehWindscreenwiping?.Wiping_System?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         WindscreenwipingDataList.copCertList.push(vehWindscreenwiping?.Wiping_System?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //     }
-  // });
-
-  // const WindscreenwipingList = form8Data?.Windscreen_wiping?.Windscreenwiping;
-  // let WindscreenwipingDataList = mainData();
-  // if (twoWheeler) {
-  //     WindscreenwipingDataList.suppNameList = ["NA"];
-  //     WindscreenwipingDataList.tacNumberList = ["NA"];
-  //     WindscreenwipingDataList.possibleDateList = ["NA"];
-  //     WindscreenwipingDataList.copCertList = ["NA"];
-  // } else {
-  //     WindscreenwipingList?.forEach(vehWindscreenwiping => {
-  //         if (vehWindscreenwiping?.supplier?.active === true) {
-  //             const tacValue = vehWindscreenwiping?.Wiping_System?.properties?.TAC_Number_Its_Validity?.value?.trim();
-
-  //             if (tacValue && tacValue !== "NA") {
-  //                 let supplierName = vehWindscreenwiping?.supplier?.nameOfSupplier || "";
-
-  //                 if (!supplierName.startsWith("M/")) {
-  //                     supplierName = `M/s. ${supplierName}`;
-  //                 }
-
-  //                 WindscreenwipingDataList.suppNameList.push(supplierName);
-  //                 WindscreenwipingDataList.tacNumberList.push(tacValue);
-  //                 WindscreenwipingDataList.possibleDateList.push(
-  //                     vehWindscreenwiping?.Wiping_System?.properties?.Possible_date_of_submission_of_required_approval?.value || ""
-  //                 );
-  //                 WindscreenwipingDataList.copCertList.push(
-  //                     vehWindscreenwiping?.Wiping_System?.properties?.CoP_Cert_No_with_validity_date?.value || ""
-  //                 );
-  //                 console.log("Windscreen SuppNameList:", WindscreenwipingDataList.suppNameList);
-  //                 console.log("Windscreen TAC Number List:", WindscreenwipingDataList.tacNumberList);
-  //                 console.log("Windscreen Possible Date List:", WindscreenwipingDataList.possibleDateList);
-  //                 console.log("Windscreen CoP Cert List:", WindscreenwipingDataList.copCertList);
-
-  //             }
-  //         }
-  //     });
-  // }
-
-  // const WindscreenwipingList = form8Data?.Windscreen_wiping?.Windscreenwiping;
-  // let WindscreenwipingDataList = mainData();
-
-  // if (twoWheeler) {
-  //     WindscreenwipingDataList.suppNameList = ["NA"];
-  //     WindscreenwipingDataList.tacNumberList = ["NA"];
-  //     WindscreenwipingDataList.possibleDateList = ["NA"];
-  //     WindscreenwipingDataList.copCertList = ["NA"];
-  // } else {
-  //     WindscreenwipingList?.forEach(vehWindscreenwiping => {
-  //         if (vehWindscreenwiping?.supplier?.active === true) {
-  //             const tacValue = vehWindscreenwiping?.Wiping_System?.properties?.TAC_Number_Its_Validity?.value?.trim();
-
-  //             if (tacValue && tacValue !== "NA") {
-  //                 let supplierName = vehWindscreenwiping?.supplier?.nameOfSupplier || "";
-
-  //                 if (!supplierName.startsWith("M/")) {
-  //                     supplierName = `M/s. ${supplierName}`;
-  //                 }
-
-  //                 WindscreenwipingDataList.tacNumberList.push(tacValue);
-  //                 WindscreenwipingDataList.suppNameList.push(supplierName);
-
-  //                 const tacCheck = parseAndCheckTACValidity(tacValue);
-
-  //                 if (tacCheck.hasDate) {
-  //                     if (tacCheck.expired) {
-  //                         WindscreenwipingDataList.possibleDateList.push(
-  //                             vehWindscreenwiping?.Wiping_System?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA"
-  //                         );
-  //                         WindscreenwipingDataList.copCertList.push(
-  //                             vehWindscreenwiping?.Wiping_System?.properties?.CoP_Cert_No_with_validity_date?.value || "NA"
-  //                         );
-  //                     } else {
-  //                         WindscreenwipingDataList.possibleDateList.push("NA");
-  //                         WindscreenwipingDataList.copCertList.push("NA");
-  //                     }
-  //                 } else {
-  //                     WindscreenwipingDataList.possibleDateList.push(
-  //                         vehWindscreenwiping?.Wiping_System?.properties?.Possible_date_of_submission_of_required_approval?.value || "NA"
-  //                     );
-  //                     WindscreenwipingDataList.copCertList.push(
-  //                         vehWindscreenwiping?.Wiping_System?.properties?.CoP_Cert_No_with_validity_date?.value || "NA"
-  //                     );
-  //                 }
-
-  //                 console.log("Windscreen SuppNameList:", WindscreenwipingDataList.suppNameList);
-  //                 console.log("Windscreen TAC Number List:", WindscreenwipingDataList.tacNumberList);
-  //                 console.log("Windscreen Possible Date List:", WindscreenwipingDataList.possibleDateList);
-  //                 console.log("Windscreen CoP Cert List:", WindscreenwipingDataList.copCertList);
-  //             }
-  //         }
-  //     });
-  // }
-
-  //   const WindscreenwipingList = form8Data?.Windscreen_wiping?.Windscreenwiping;
-  //   let WindscreenwipingDataList = mainData();
-
-  //   if (twoWheeler) {
-  //     WindscreenwipingDataList.suppNameList = ["NA"];
-  //     WindscreenwipingDataList.tacNumberList = ["NA"];
-  //     WindscreenwipingDataList.possibleDateList = ["NA"];
-  //     WindscreenwipingDataList.copCertList = ["NA"];
-  //     WindscreenwipingDataList.MakeList = ["NA"];
-  //   } else {
-  //     WindscreenwipingList?.forEach((vehWindscreenwiping) => {
-  //       if (vehWindscreenwiping?.supplier?.active === true) {
-  //         const tacRaw =
-  //           vehWindscreenwiping?.Wiping_System?.properties?.TAC_Number_Its_Validity?.value?.trim() ||
-  //           "";
-  //         const copCert =
-  //           vehWindscreenwiping?.Wiping_System?.properties
-  //             ?.CoP_Cert_No_with_validity_date?.value || "";
-  //         const possibleDate =
-  //           vehWindscreenwiping?.Wiping_System?.properties
-  //             ?.Possible_date_of_submission_of_required_approval?.value || "";
-  //             let supplierName =
-  //             vehWindscreenwiping?.supplier?.nameOfSupplier || "";
-  //           if (!supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //           }
-
-  //         WindscreenwipingDataList.suppNameList.push(supplierName);
-  //         WindscreenwipingDataList.MakeList.push(supplierName); // Assuming MakeList should match supplier name
-  //         if (tacRaw && tacRaw !== "NA") {
-
-  //           WindscreenwipingDataList.tacNumberList.push(tacRaw);
-
-  //           const { cop, possible } = TACvalidationcheck(
-  //             tacRaw,
-  //             copCert,
-  //             possibleDate
-  //           );
-  //           WindscreenwipingDataList.copCertList.push(cop);
-  //           WindscreenwipingDataList.possibleDateList.push(possible);
-  //         }
-
-  //         console.log(
-  //           "Windscreenwiping SuppNameList:",
-  //           WindscreenwipingDataList.suppNameList
-  //         );
-  //         console.log(
-  //           "Windscreenwiping Validity List:",
-  //           WindscreenwipingDataList.tacNumberList
-  //         );
-  //         console.log(
-  //           "Windscreenwiping Possible Date List:",
-  //           WindscreenwipingDataList.possibleDateList
-  //         );
-  //         console.log(
-  //           "Windscreenwiping CoP Cert List:",
-  //           WindscreenwipingDataList.copCertList
-  //         );
-  //       }
-  //     });
-  //   }
-
-  // const WindscreenwipingList = form8Data?.Windscreen_wiping?.Windscreenwiping || [];
-  // let WindscreenwipingDataList = mainData();
-
-  // if (twoWheeler) {
-  //   WindscreenwipingDataList.suppNameList = ["NA"];
-  //   WindscreenwipingDataList.tacNumberList = ["NA"];
-  //   WindscreenwipingDataList.possibleDateList = ["NA"];
-  //   WindscreenwipingDataList.copCertList = ["NA"];
-  //   WindscreenwipingDataList.MakeList = ["NA"];
-  // } else {
-  //   WindscreenwipingList.map((vehWindscreenwiping) => {
-  //     if (vehWindscreenwiping?.supplier?.active === true) {
-  //       const tacRaw =
-  //         vehWindscreenwiping?.Wiping_System?.properties?.TAC_Number_Its_Validity?.value?.trim() || "";
-  //       const copCert =
-  //         vehWindscreenwiping?.Wiping_System?.properties?.CoP_Cert_No_with_validity_date?.value || "";
-  //       const possibleDate =
-  //         vehWindscreenwiping?.Wiping_System?.properties?.Possible_date_of_submission_of_required_approval?.value || "";
-
-  //       let supplierName = vehWindscreenwiping?.supplier?.nameOfSupplier || "";
-  //       if (supplierName && !supplierName.startsWith("M/")) {
-  //         supplierName = `M/s. ${supplierName}`;
-  //       }
-
-  //       WindscreenwipingDataList.suppNameList.push(supplierName);
-  //       WindscreenwipingDataList.MakeList.push(supplierName); // Assuming MakeList = SupplierName
-
-  //       WindscreenwipingDataList.tacNumberList.push(tacRaw);
-
-  //       const { cop, possible } = TACvalidationcheck(tacRaw, copCert, possibleDate);
-  //       WindscreenwipingDataList.copCertList.push(cop);
-  //       WindscreenwipingDataList.possibleDateList.push(possible);
-  //     }
-  //   });
-  // }
-
-//   const WindscreenwipingList =
-//     form8Data?.Windscreen_wiping?.Windscreenwiping || [];
-    
-//   let WindscreenwipingDataList = mainData();
-
-//   if (twoWheeler) {
-//     WindscreenwipingDataList.suppNameList = ["NA"];
-//     WindscreenwipingDataList.tacNumberList = ["NA"];
-//     WindscreenwipingDataList.possibleDateList = ["NA"];
-//     WindscreenwipingDataList.copCertList = ["NA"];
-//     WindscreenwipingDataList.MakeList = ["NA"];
-//   } else {
-//     WindscreenwipingList.map((vehWindscreenwiping) => {
-//       if (vehWindscreenwiping?.supplier?.active === true) {
-//         const tacRaw =
-//           vehWindscreenwiping?.Wiping_System?.properties?.TAC_Number_Its_Validity?.value?.trim() ||
-//           "";
-//         const copCert =
-//           vehWindscreenwiping?.Wiping_System?.properties?.CoP_Cert_No_with_validity_date?.value?.trim() ||
-//           "";
-//         const possibleDate =
-//           vehWindscreenwiping?.Wiping_System?.properties?.Possible_date_of_submission_of_required_approval?.value?.trim() ||
-//           "";
-
-//         // let supplierName = vehWindscreenwiping?.supplier?.nameOfSupplier || "";
-//         // if (supplierName && !supplierName.startsWith("M/")) {
-//         //   supplierName = `M/s. ${supplierName}`;
-//         // }
-//         let supplierName = makePrefix(vehWindscreenwiping?.supplier?.nameOfSupplier);
-
-//         const isTacMissing = tacRaw === "";
-//         const isPossibleDatePresent = possibleDate !== "";
-
-//         let finalTAC = tacRaw;
-//         if (isTacMissing && isPossibleDatePresent) {
-//           finalTAC = "NA";
-//         }
-
-//         WindscreenwipingDataList.suppNameList.push(supplierName);
-//         WindscreenwipingDataList.MakeList.push(supplierName); // if Make = Supplier name
-//         WindscreenwipingDataList.tacNumberList.push(finalTAC);
-
-//         const { cop, possible } = TACvalidationcheck(
-//           tacRaw,
-//           copCert,
-//           possibleDate
-//         );
-//         WindscreenwipingDataList.copCertList.push(cop);
-//         WindscreenwipingDataList.possibleDateList.push(possible);
-//       }
-//     });
-//   }
+  
+ 
 
 
 const WindscreenwipingList = form8Data?.Windscreen_wiping?.Windscreenwiping || [];
@@ -8883,60 +2740,7 @@ if (twoWheeler) {
 }
 
 
-  // const SpraySuppressionList = form8Data?.Spray_Suppression?.SpraySuppression || [];
-  // let SpraySuppressionDataList = mainData();
-
-  // // Ensure suppNameList and MakeList are initialized as arrays
-  // SpraySuppressionDataList.suppNameList = Array.isArray(SpraySuppressionDataList.suppNameList) ? SpraySuppressionDataList.suppNameList : [];
-  // SpraySuppressionDataList.MakeList = Array.isArray(SpraySuppressionDataList.MakeList) ? SpraySuppressionDataList.MakeList : [];
-
-  // SpraySuppressionList.map(vehSpraySuppression => {
-  //     if (vehSpraySuppression?.supplier?.active === true) {
-  //         // Push the supplier name and Make value to the respective lists
-  //         SpraySuppressionDataList.suppNameList.push(vehSpraySuppression?.supplier?.nameOfSupplier || "NA");
-  //         SpraySuppressionDataList.MakeList.push(vehSpraySuppression?.Spray_Suppression_System?.properties?.Make?.value || "NA");
-  //     }
-  // });
-
-  // const SpraySuppressionList = form8Data?.Spray_Suppression?.SpraySuppression || [];
-  // let SpraySuppressionDataList = mainData();
-
-  // // Ensure suppNameList and MakeList are initialized as arrays
-  // SpraySuppressionDataList.suppNameList = Array.isArray(SpraySuppressionDataList.suppNameList) ? SpraySuppressionDataList.suppNameList : [];
-  // SpraySuppressionDataList.MakeList = Array.isArray(SpraySuppressionDataList.MakeList) ? SpraySuppressionDataList.MakeList : [];
-
-  // SpraySuppressionList.map(vehSpraySuppression => {
-  //     if (vehSpraySuppression?.supplier?.active === true) {
-  //         let supplierName = vehSpraySuppression?.supplier?.nameOfSupplier || "NA";
-  //         let makeValue = vehSpraySuppression?.Spray_Suppression_System?.properties?.Make?.value || "NA";
-
-  //         // Modify supplierName if it does not start with "M/s."
-  //         if (supplierName !== "NA" && !supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // Modify makeValue if it does not start with "M/s."
-  //         if (makeValue !== "NA" && !makeValue.startsWith("M/")) {
-  //             makeValue = `M/s. ${makeValue}`;
-  //         }
-
-  //         // SpraySuppressionDataList.suppNameList.push(supplierName);
-  //         // SpraySuppressionDataList.MakeList.push(makeValue);
-  //         if (twoWheeler) {
-  //             SpraySuppressionDataList.suppNameList.push(supplierName);
-  //             SpraySuppressionDataList.MakeList.push(makeValue);
-  //             SpraySuppressionDataList.tacNumberList.push(vehSpraySuppression?.Spray_Suppression_System?.properties?.TAC_Number?.value);
-  //             SpraySuppressionDataList.possibleDateList.push(vehSpraySuppression?.Spray_Suppression_System?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //             SpraySuppressionDataList.copCertList.push(vehSpraySuppression?.Spray_Suppression_System?.properties?.CoP_Cert_No_with_validity_date?.value);
-  //         } else {
-  //             SpraySuppressionDataList.suppNameList.push("NA");
-  //             SpraySuppressionDataList.MakeList.push("NA");
-  //             SpraySuppressionDataList.tacNumberList.push("NA");
-  //             SpraySuppressionDataList.possibleDateList.push("NA");
-  //             SpraySuppressionDataList.copCertList.push("NA");
-  //         }
-  //     }
-  // });
+  
 
   const SpraySuppressionList =
     form8Data?.Spray_Suppression?.SpraySuppression || [];
@@ -9021,96 +2825,28 @@ if (twoWheeler) {
     }
   });
 
-  console.log(
-    "spraysuppressiondatalist.suppNameList",
-    SpraySuppressionDataList.suppNameList
-  );
-  console.log(
-    "spraysuppressiondatalist.MakeList",
-    SpraySuppressionDataList.MakeList
-  );
-  console.log(
-    "spraysuppressiondatalist.tacNumberList",
-    SpraySuppressionDataList.tacNumberList
-  );
-  console.log(
-    "spraysuppressiondatalist.possibleDateList",
-    SpraySuppressionDataList.possibleDateList
-  );
-  console.log(
-    "spraysuppressiondatalist.copCertList",
-    SpraySuppressionDataList.copCertList
-  );
+  // console.log(
+  //   "spraysuppressiondatalist.suppNameList",
+  //   SpraySuppressionDataList.suppNameList
+  // );
+  // console.log(
+  //   "spraysuppressiondatalist.MakeList",
+  //   SpraySuppressionDataList.MakeList
+  // );
+  // console.log(
+  //   "spraysuppressiondatalist.tacNumberList",
+  //   SpraySuppressionDataList.tacNumberList
+  // );
+  // console.log(
+  //   "spraysuppressiondatalist.possibleDateList",
+  //   SpraySuppressionDataList.possibleDateList
+  // );
+  // console.log(
+  //   "spraysuppressiondatalist.copCertList",
+  //   SpraySuppressionDataList.copCertList
+  // );
 
-  // const HandleLockList = form8Data?.Handle_Lock?.HandleLock || [];
-  // // console.log("SpraySuppressionList:", SpraySuppressionList);
-  // let HandleLockDataList = mainData();
-  // // Ensure suppNameList and MakeList are initialized
-  // HandleLockDataList.suppNameList = HandleLockDataList.suppNameList || [];
-  // HandleLockDataList.MakeList = HandleLockDataList.MakeList || [];
-  // HandleLockList.map(vehHandleLock => {
-  //     if (vehHandleLock?.supplier?.active === true) {
-  //         HandleLockDataList.suppNameList.push(vehHandleLock?.supplier?.nameOfSupplier);
-  //         HandleLockDataList.MakeList.push(vehHandleLock?.Protective_Device_Handle_Lock?.properties?.Make?.value);
-  //     }
-  // });
 
-  // const HandleLockList = form8Data?.Handle_Lock?.HandleLock || [];
-  // let HandleLockDataList = mainData();
-
-  // // Ensure suppNameList and MakeList are initialized
-  // HandleLockDataList.suppNameList = HandleLockDataList.suppNameList || [];
-  // HandleLockDataList.MakeList = HandleLockDataList.MakeList || [];
-
-  // HandleLockList.map(vehHandleLock => {
-  //     if (vehHandleLock?.supplier?.active === true) {
-  //         let supplierName = vehHandleLock?.supplier?.nameOfSupplier || "NA";
-  //         let makeValue = vehHandleLock?.Protective_Device_Handle_Lock?.properties?.Make?.value || "NA";
-
-  //         // Modify supplierName if it does not start with "M/s."
-  //         if (supplierName !== "NA" && !supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         // Modify makeValue if it does not start with "M/s."
-  //         if (makeValue !== "NA" && !makeValue.startsWith("M/")) {
-  //             makeValue = `M/s. ${makeValue}`;
-  //         }
-
-  //         HandleLockDataList.suppNameList.push(supplierName);
-  //         HandleLockDataList.MakeList.push(makeValue);
-  //     }
-  // });
-
-  // HandleLockList.map(vehHandleLock => {
-  //     if (twoWheeler && vehHandleLock?.supplier?.active === true) {
-  //         let supplierName = vehHandleLock?.supplier?.nameOfSupplier || "NA";
-  //         let makeValue = vehHandleLock?.Protective_Device_Handle_Lock?.properties?.Make?.value || "NA";
-
-  //         // Add "M/s." prefix if not already present
-  //         if (supplierName !== "NA" && !supplierName.startsWith("M/")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         if (makeValue !== "NA" && !makeValue.startsWith("M/")) {
-  //             makeValue = `M/s. ${makeValue}`;
-  //         }
-
-  //         HandleLockDataList.suppNameList.push(supplierName);
-  //         HandleLockDataList.MakeList.push(makeValue);
-  //         HandleLockDataList.tacNumberList.push(vehHandleLock?.Protective_Device_Handle_Lock?.properties?.TAC_Number?.value);
-  //         HandleLockDataList.possibleDateList.push(vehHandleLock?.Protective_Device_Handle_Lock?.properties?.Possible_date_of_submission_of_required_approval?.value);
-  //         HandleLockDataList.copCertList.push(vehHandleLock?.Protective_Device_Handle_Lock?.properties?.CoP_Cert_No_with_validity_date?.value);
-
-  //     } else {
-  //         // Push "NA" if not a two-wheeler or supplier not active
-  //         HandleLockDataList.suppNameList.push("NA");
-  //         HandleLockDataList.MakeList.push("NA");
-  //         HandleLockDataList.tacNumberList.push("NA");
-  //         HandleLockDataList.possibleDateList.push("NA");
-  //         HandleLockDataList.copCertList.push("NA");
-  //     }
-  // });
 
   const GrabHandleList = form8Data?.Grab_handle?.Grabhandle || [];
   let GrabHandleDataList = mainData();
@@ -9135,51 +2871,13 @@ if (twoWheeler) {
       GrabHandleDataList.MakeList.push(makeValue);
     }
   });
-  console.log(
-    "grabhandle datallist.MakesList:",
-    GrabHandleDataList.MakeLampList
-  );
-  // ///////////////
-
-  // const BrakeFluidList = form8Data?.Brake_Fluid?.BrakeFluid || [];
-  // let BrakeFluidDataList = mainData();
-  // // Ensure suppNameList and MakeList are initialized
-  // BrakeFluidDataList.suppNameList = BrakeFluidDataList.suppNameList || [];
-  // BrakeFluidDataList.MakeList = BrakeFluidDataList.Brake_fluid_Test_Report_No || [];
-  // BrakeFluidList.map(vehBrakeFluid => {
-  //     if (vehBrakeFluid?.supplier?.active === true) {
-  //         BrakeFluidDataList.suppNameList.push(vehBrakeFluid?.supplier?.nameOfSupplier);
-  //         BrakeFluidDataList.tacNumberList.push(vehBrakeFluid?.Hydraulic_Brake_Fluid?.properties?.Brake_fluid_Test_Report_No?.value);
-  //     }
-  // });
-  // const BrakeFluidList = form8Data?.Brake_Fluid?.BrakeFluid || [];
-  // let BrakeFluidDataList = mainData();
-
-  // // Ensure suppNameList is initialized
-  // BrakeFluidDataList.suppNameList = BrakeFluidDataList.suppNameList || [];
-  // BrakeFluidDataList.tacNumberList = BrakeFluidDataList.tacNumberList || [];
-
-  // BrakeFluidList.map(vehBrakeFluid => {
-  //     if (vehBrakeFluid?.supplier?.active === true) {
-  //         let supplierName = vehBrakeFluid?.supplier?.nameOfSupplier || "NA";
-
-  //         // Modify supplierName if it does not start with "M/s."
-  //         if (supplierName !== "NA" && !supplierName.startsWith("M/s")) {
-  //             supplierName = `M/s. ${supplierName}`;
-  //         }
-
-  //         BrakeFluidDataList.suppNameList.push(supplierName);
-  //         BrakeFluidDataList.tacNumberList.push(
-  //             vehBrakeFluid?.Hydraulic_Brake_Fluid?.properties?.Brake_fluid_Test_Report_No?.value
-  //         );
-  //         BrakeFluidDataList.MakeList.push(
-  //             vehBrakeFluid?.Hydraulic_Brake_Fluid?.properties?.Make?.value
-  //         );
-  //     }
-  // });
-
-  // console.log('BrakeFluidDataList.suppNameList', BrakeFluidDataList.suppNameList);
-  // console.log('BrakeFluidDataList.tacNumberList', BrakeFluidDataList.tacNumberList);
+  // console.log(
+  //   "grabhandle datallist.MakesList:",
+  //   GrabHandleDataList.MakeLampList
+  // );
+  
+  
+  
 
   const BrakeFluidList = form8Data?.Brake_Fluid?.BrakeFluid || [];
   let BrakeFluidDataList = mainData();
@@ -9214,15 +2912,15 @@ if (twoWheeler) {
     }
   });
 
-  console.log(
-    "BrakeFluidDataList.suppNameList",
-    BrakeFluidDataList.suppNameList
-  );
-  console.log(
-    "BrakeFluidDataList.tacNumberList",
-    BrakeFluidDataList.tacNumberList
-  );
-  console.log("BrakeFluidDataList.MakeList", BrakeFluidDataList.MakeList);
+  // console.log(
+  //   "BrakeFluidDataList.suppNameList",
+  //   BrakeFluidDataList.suppNameList
+  // );
+  // console.log(
+  //   "BrakeFluidDataList.tacNumberList",
+  //   BrakeFluidDataList.tacNumberList
+  // );
+  // console.log("BrakeFluidDataList.MakeList", BrakeFluidDataList.MakeList);
      const today = new Date();
 const formattedDate = today.toLocaleDateString("en-GB");
   const form8Document = new Document({
@@ -9586,228 +3284,11 @@ const formattedDate = today.toLocaleDateString("en-GB");
                       }),
                     ],
                   }),
-                  //         new TableCell(
-                  //             {
-                  //                 width: {
-                  //                     size: 3000,
-                  //                     type: WidthType.DXA
-                  //                 },
-                  //                 children: [
-                  //                     new Paragraph(
-                  //                         {
-                  //                             children: [
-                  //                                 new TextRun({
-                  //                                     text: "Front",
-                  //                                     size: "12pt",
-                  //                                     bold: true
-                  //                                 })
-                  //                             ]
-                  //                         }
-                  //                     )
-                  //                 ]
-                  //             }
-                  //         ),
-                  //         new TableCell(
-                  //             {
-                  //                 width: {
-                  //                     size: 3000,
-                  //                     type: WidthType.DXA
-                  //                 },
-                  //                 children: [
-                  //                     new Paragraph(
-                  //                         {
-                  //                             style: "paragrapgBold",
-                  //                             children: [
-                  //                                 new TextRun({
-                  //                                     size: "12pt",
-                  //                                     bold: true,
-                  //                                     text: ""
-                  //                                 }),
-                  //                             ]
-                  //                         }
-                  //                     )
-                  //                 ]
-                  //             }
-                  //         ),
-                  //         new TableCell(
-                  //             {
-                  //                 width: {
-                  //                     size: 3000,
-                  //                     type: WidthType.DXA
-                  //                 },
-                  //                 children: [
-                  //                     new Paragraph(
-                  //                         {
-                  //                             style: "table1Header",
-                  //                             children: [
-                  //                                 new TextRun({
-                  //                                     size: "12pt",
-                  //                                     bold: true,
-                  //                                     text: ""
-                  //                                 })
-                  //                             ]
-                  //                         }
-                  //                     )
-                  //                 ]
-                  //             }
-                  //         ),
-                  //         new TableCell(
-                  //             {
-                  //                 width: {
-                  //                     size: 3000,
-                  //                     type: WidthType.DXA
-                  //                 },
-                  //                 children: [
-                  //                     new Paragraph(
-                  //                         {
-                  //                             style: "table1Header",
-                  //                             children: [
-                  //                                 new TextRun({
-                  //                                     size: "12pt",
-                  //                                     bold: true,
-                  //                                     text: ""
-                  //                                 })
-                  //                             ]
-                  //                         }
-                  //                     )
-                  //                 ]
-                  //             }
-                  //         ),
-                  //         new TableCell(
-                  //             {
-                  //                 width: {
-                  //                     size: 3000,
-                  //                     type: WidthType.DXA
-                  //                 },
-                  //                 children: [
-                  //                     new Paragraph(
-                  //                         {
-                  //                             style: "table1Header",
-                  //                             children: [
-                  //                                 new TextRun({
-                  //                                     size: "12pt",
-                  //                                     bold: true,
-                  //                                     text: ""
-                  //                                 })
-                  //                             ]
-                  //                         }
-                  //                     )
-                  //                 ]
-                  //             }
-                  //         )
-                  //     ]
-                  // }),
-                  // new TableRow({
-                  //     children: [
-                  //         new TableCell(
-                  //             {
-                  //                 width: {
-                  //                     size: 1000,
-                  //                     type: WidthType.DXA
-                  //                 },
-                  //                 children: [
-                  //                     new Paragraph(
-                  //                         {
-                  //                             children: [
-                  //                                 new TextRun({
-                  //                                     bold: true,
-                  //                                     text: "",
-                  //                                     size: "12pt"
-                  //                                 })
-                  //                             ]
-                  //                         }
-                  //                     )
-                  //                 ]
-                  //             }
-                  //         ),
-                  //         new TableCell(
-                  //             {
-                  //                 width: {
-                  //                     size: 3000,
-                  //                     type: WidthType.DXA
-                  //                 },
-                  //                 children: [
-                  //                     new Paragraph(
-                  //                         {
-                  //                             children: [
-                  //                                 new TextRun({
-                  //                                     text: "Rear",
-                  //                                     size: "12pt",
-                  //                                     bold: true
-                  //                                 })
-                  //                             ]
-                  //                         }
-                  //                     )
-                  //                 ]
-                  //             }
-                  //         ),
-                  //         new TableCell(
-                  //             {
-                  //                 width: {
-                  //                     size: 3000,
-                  //                     type: WidthType.DXA
-                  //                 },
-                  //                 children: [
-                  //                     new Paragraph(
-                  //                         {
-                  //                             style: "paragrapgBold",
-                  //                             children: [
-                  //                                 new TextRun({
-                  //                                     size: "12pt",
-                  //                                     bold: true,
-                  //                                     text: ""
-                  //                                 }),
-                  //                             ]
-                  //                         }
-                  //                     )
-                  //                 ]
-                  //             }
-                  //         ),
-                  //         new TableCell(
-                  //             {
-                  //                 width: {
-                  //                     size: 3000,
-                  //                     type: WidthType.DXA
-                  //                 },
-                  //                 children: [
-                  //                     new Paragraph(
-                  //                         {
-                  //                             style: "table1Header",
-                  //                             children: [
-                  //                                 new TextRun({
-                  //                                     size: "12pt",
-                  //                                     bold: true,
-                  //                                     text: ""
-                  //                                 })
-                  //                             ]
-                  //                         }
-                  //                     )
-                  //                 ]
-                  //             }
-                  //         ),
-                  //         new TableCell(
-                  //             {
-                  //                 width: {
-                  //                     size: 3000,
-                  //                     type: WidthType.DXA
-                  //                 },
-                  //                 children: [
-                  //                     new Paragraph(
-                  //                         {
-                  //                             style: "table1Header",
-                  //                             children: [
-                  //                                 new TextRun({
-                  //                                     size: "12pt",
-                  //                                     bold: true,
-                  //                                     text: ""
-                  //                                 })
-                  //                             ]
-                  //                         }
-                  //                     )
-                  //                 ]
-                  //             }
-                  //         ),
-                  new TableCell({
+                  
+                 
+                 
+                 
+              new TableCell({
                     width: {
                       size: 3000,
                       type: WidthType.DXA,
@@ -9928,20 +3409,7 @@ const formattedDate = today.toLocaleDateString("en-GB");
                       size: 3000,
                       type: WidthType.DXA,
                     },
-                    // children: [
-                    //     new Paragraph(
-                    //         {
-                    //             style: "table1Header",
-                    //             children: [
-                    //                 new TextRun({
-                    //                     size: "12pt",
-                    //                     bold: true,
-                    //                     text: ftyreDataList.possibleDateList.join(",")
-                    //                 })
-                    //             ]
-                    //         }
-                    //     )
-                    // ]
+                   
                     children: [
                         ...(getPossibleDateHeader(ftyreDataList.possibleDateList)
                         ? [
@@ -10489,36 +3957,8 @@ const formattedDate = today.toLocaleDateString("en-GB");
                       }),
                     ],
                   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           new TextRun({
-                //             size: "12pt",
-                //             bold: true,
-                //             text: WindscreenDataList.tacNumberList.join(","),
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             size: "12pt",
-                //             bold: true,
-                //             text: SideglassDataList.tacNumberList.join(","),
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             size: "12pt",
-                //             bold: true,
-                //             text: RearglassDataList.tacNumberList.join(","),
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+                
+                
                 new TableCell({
                     width: { size: 3000, type: WidthType.DXA },
                     children: [
@@ -10562,28 +4002,8 @@ const formattedDate = today.toLocaleDateString("en-GB");
                             }),
                           ]
                         : []),
-                      // new Paragraph({
-                      //   style: "table1Header",
-                      //   children: [
-                      //     new TextRun({
-                      //       size: "12pt",
-                      //       bold: true,
-                      //       text: WindscreenDataList.tacNumberList.join(","),
-                      //     }),
-                      //     new TextRun({
-                      //       break: 1,
-                      //       size: "12pt",
-                      //       bold: true,
-                      //       text: SideglassDataList.tacNumberList.join(","),
-                      //     }),
-                      //     new TextRun({
-                      //       break: 1,
-                      //       size: "12pt",
-                      //       bold: true,
-                      //       text: RearglassDataList.tacNumberList.join(","),
-                      //     }),
-                      //   ],
-                      // }),
+                      
+                     
                       new Paragraph({
                         style: "table1Header",
                         children: [
@@ -10653,36 +4073,8 @@ const formattedDate = today.toLocaleDateString("en-GB");
                   }),
                   
 
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           new TextRun({
-                //             size: "12pt",
-                //             bold: true,
-                //             text: WindscreenDataList.possibleDateList.join(","),
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             size: "12pt",
-                //             bold: true,
-                //             text: SideglassDataList.possibleDateList.join(","),
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             size: "12pt",
-                //             bold: true,
-                //             text: RearglassDataList.possibleDateList.join(","),
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+               
+              
 
                 new TableCell({
                     width: { size: 3000, type: WidthType.DXA },
@@ -10752,37 +4144,8 @@ const formattedDate = today.toLocaleDateString("en-GB");
                     ],
                   }),
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           new TextRun({
-                //             size: "12pt",
-                //             bold: true,
-                //             text: WindscreenDataList.copCertList.join(","),
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             size: "12pt",
-                //             bold: true,
-                //             text: SideglassDataList.copCertList.join(","),
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             size: "12pt",
-                //             bold: true,
-                //             text: RearglassDataList.copCertList.join(","),
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-
+               
+               
 
                 new TableCell({
                     width: { size: 3000, type: WidthType.DXA },
@@ -11363,344 +4726,9 @@ const formattedDate = today.toLocaleDateString("en-GB");
                       }),
                     ],
                   }),
-                  // new TableCell(
-                  //     {
-                  //         width:{
-                  //             size: 3000,
-                  //             type: WidthType.DXA
-                  //         },
-                  //         children:[
-                  //             new Paragraph(
-                  //                 {
-                  //                     style: "table1Header",
-                  //                     children: [
-                  //                         new TextRun({
-                  //                             size: "12pt",
-                  //                             bold: true,
-                  //                             text: reflDataList.frontWhiteList.tacNumberList.join(",")
-                  //                         }),
-                  //                         new TextRun({
-                  //                             break: 1,
-                  //                             size: "12pt",
-                  //                             bold: true,
-                  //                             text: reflDataList.rearRedList.tacNumberList.join(",")
-                  //                         }),
-                  //                         new TextRun({
-                  //                             break: 1,
-                  //                             size: "12pt",
-                  //                             bold: true,
-                  //                             text: reflDataList.frontWhiteList.tacNumberList.join(",")
-                  //                         }),
-                  //                     ]
-                  //                 }
-                  //             )
-                  //         ]
-                  //     }
-                  // ),
-
-                  // new TableCell({
-                  //     width: {
-                  //         size: 3000,
-                  //         type: WidthType.DXA,
-                  //     },
-                  //     children: [
-                  //         new Paragraph({
-                  //             style: "table1Header",
-                  //             children: [
-                  //                 // Create an array of TextRun for each supplier
-                  //                 ...[
-                  //                     reflDataList.frontWhiteList,
-                  //                     reflDataList.rearRedList,
-                  //                     reflDataList.sideAmberList,
-                  //                 ].map((supplier) => {
-                  //                     // Generate a formatted string for the supplier
-                  //                     const formattedData = supplier.tacNumberList.map((tacNumber, index) => {
-                  //                         const validity = supplier.validityList[index] || '';
-                  //                         return `${tacNumber} ${validity}  `; // Use backticks for string interpolation
-                  //                     }).join(', ');
-
-                  //                     return new TextRun({
-                  //                         size: 24, // Adjust size to the correct point value if needed
-                  //                         bold: true,
-                  //                         text: formattedData,
-                  //                     });
-                  //                 }),
-                  //             ],
-                  //         }),
-                  //     ],
-                  // }),
+                  
 
 
-
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           // Process frontWhiteList (first one)
-                //           ...reflDataList.frontWhiteList.tacNumberList.map(
-                //             (tacNumber, index) => {
-                //               const validity =
-                //                 reflDataList.frontWhiteList.validityList[
-                //                   index
-                //                 ] || "";
-                //               return new TextRun({
-                //                 size: 24,
-                //                 bold: true,
-                //                 text: `${tacNumber} ${validity} `,
-                //               });
-                //             }
-                //           ),
-
-                //           // Add a line break
-                //           new TextRun({ break: 1 }),
-
-                //           // Process rearRedList (second one in new line)
-                //           ...reflDataList.rearRedList.tacNumberList.map(
-                //             (tacNumber, index) => {
-                //               const validity =
-                //                 reflDataList.rearRedList.validityList[index] ||
-                //                 "";
-                //               return new TextRun({
-                //                 size: 24,
-                //                 bold: true,
-                //                 text: `${tacNumber} ${validity} `,
-                //               });
-                //             }
-                //           ),
-                //           // Add a line break
-                //           new TextRun({ break: 1 }),
-                //           // Process sideAmberList (continues on the same line as rearRedList)
-                //           ...reflDataList.sideAmberList.tacNumberList.map(
-                //             (tacNumber, index) => {
-                //               const validity =
-                //                 reflDataList.sideAmberList.validityList[
-                //                   index
-                //                 ] || "";
-                //               return new TextRun({
-                //                 size: 24,
-                //                 bold: true,
-                //                 text: `${tacNumber} ${validity} `,
-                //               });
-                //             }
-                //           ),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-//////////
-//                 new TableCell({
-//   width: { size: 3000, type: WidthType.DXA },
-//   children: [
-//     // Add header if any list has a valid TAC/BIS header
-//     ...(getTACorBISHeader(reflDataList.frontWhiteList.tacNumberList)
-//       ? [
-//           new Paragraph({
-//             style: "table1Header",
-//             children: [
-//               new TextRun({
-//                 size: "12pt",
-//                 bold: true,
-//                 text: getTACorBISHeader(reflDataList.frontWhiteList.tacNumberList),
-//               }),
-//             ],
-//           }),
-//         ]
-//       : getTACorBISHeader(reflDataList.rearRedList.tacNumberList)
-//       ? [
-//           new Paragraph({
-//             style: "table1Header",
-//             children: [
-//               new TextRun({
-//                 size: "12pt",
-//                 bold: true,
-//                 text: getTACorBISHeader(reflDataList.rearRedList.tacNumberList),
-//               }),
-//             ],
-//           }),
-//         ]
-//       : getTACorBISHeader(reflDataList.sideAmberList.tacNumberList)
-//       ? [
-//           new Paragraph({
-//             style: "table1Header",
-//             children: [
-//               new TextRun({
-//                 size: "12pt",
-//                 bold: true,
-//                 text: getTACorBISHeader(reflDataList.sideAmberList.tacNumberList),
-//               }),
-//             ],
-//           }),
-//         ]
-//       : []),
-
-//     // Main paragraph with TAC numbers and validities
-//     new Paragraph({
-//       style: "table1Header",
-//       children: [
-//         // Front White List
-//         ...reflDataList.frontWhiteList.tacNumberList.map((tacNumber, index) => {
-//           const validity = reflDataList.frontWhiteList.validityList[index] || "";
-//           return new TextRun({
-//             size: 24,
-//             bold: true,
-//             text: `${tacNumber} ${validity} `,
-//           });
-//         }),
-
-//         // Line break before rearRedList
-//         new TextRun({ break: 1 }),
-
-//         // Rear Red List
-//         ...reflDataList.rearRedList.tacNumberList.map((tacNumber, index) => {
-//           const validity = reflDataList.rearRedList.validityList[index] || "";
-//           return new TextRun({
-//             size: 24,
-//             bold: true,
-//             text: `${tacNumber} ${validity} `,
-//           });
-//         }),
-
-//         // Line break before sideAmberList
-//         new TextRun({ break: 1 }),
-
-//         // Side Amber List
-//         ...reflDataList.sideAmberList.tacNumberList.map((tacNumber, index) => {
-//           const validity = reflDataList.sideAmberList.validityList[index] || "";
-//           return new TextRun({
-//             size: 24,
-//             bold: true,
-//             text: `${tacNumber} ${validity} `,
-//           });
-//         }),
-//       ],
-//     }),
-//   ],
-// }),
-/////////
-
-
-// new TableCell({
-//     width: { size: 3000, type: WidthType.DXA },
-//     children: [
-//       // ✅ Conditional header (only first valid one used)
-//       ...(
-//         (() => {
-//           const headerSources = [
-//             reflDataList.frontWhiteList.tacNumberList,
-//             reflDataList.rearRedList.tacNumberList,
-//             reflDataList.sideAmberList.tacNumberList,
-//           ];
-  
-//           for (const source of headerSources) {
-//             const header = getTACorBISHeader(source);
-//             if (header) {
-//               return [
-//                 new Paragraph({
-//                   style: "table1Header",
-//                   children: [
-//                     new TextRun({
-//                       size: "12pt",
-//                       bold: true,
-//                       text: header,
-//                     }),
-//                   ],
-//                 }),
-//               ];
-//             }
-//           }
-//           return [];
-//         })()
-//       ),
-////////////////////////////
-// new TableCell({
-//     width: { size: 3000, type: WidthType.DXA },
-//     children: [
-//       // ✅ Conditional header from the first non-empty list only
-//       ...(() => {
-//         let selectedList = null;
-  
-//         if (reflDataList.frontWhiteList.tacNumberList.length > 0) {
-//           selectedList = reflDataList.frontWhiteList;
-//         } else if (reflDataList.rearRedList.tacNumberList.length > 0) {
-//           selectedList = reflDataList.rearRedList;
-//         } else if (reflDataList.sideAmberList.tacNumberList.length > 0) {
-//           selectedList = reflDataList.sideAmberList;
-//         }
-  
-//         if (!selectedList) return [];
-  
-//         const combined = selectedList.tacNumberList.map((tac, idx) =>
-//           `${tac} ${selectedList.validityList[idx] || ""}`
-//         );
-  
-//         const headerText = getTACorBISHeader(combined);
-  
-//         return headerText
-//           ? [
-//               new Paragraph({
-//                 style: "table1Header",
-//                 children: [
-//                   new TextRun({
-//                     size: "12pt",
-//                     bold: true,
-//                     text: headerText,
-//                   }),
-//                 ],
-//               }),
-//             ]
-//           : [];
-//       })(),
-  
-//       // ✅ Main TAC/Validity paragraph
-//       new Paragraph({
-//         style: "table1Header",
-//         children: [
-//           // Front White List
-//           ...reflDataList.frontWhiteList.tacNumberList.map((tacNumber, index) => {
-//             const validity = reflDataList.frontWhiteList.validityList[index] || "";
-//             return new TextRun({
-//               size: 24,
-//               bold: true,
-//               text: `${tacNumber} ${validity} `,
-//             });
-//           }),
-  
-//           // Line break before rearRedList
-//           new TextRun({ break: 1 }),
-  
-//           // Rear Red List
-//           ...reflDataList.rearRedList.tacNumberList.map((tacNumber, index) => {
-//             const validity = reflDataList.rearRedList.validityList[index] || "";
-//             return new TextRun({
-//               size: 24,
-//               bold: true,
-//               text: `${tacNumber} ${validity} `,
-//             });
-//           }),
-  
-//           // Line break before sideAmberList
-//           new TextRun({ break: 1 }),
-  
-//           // Side Amber List
-//           ...reflDataList.sideAmberList.tacNumberList.map((tacNumber, index) => {
-//             const validity = reflDataList.sideAmberList.validityList[index] || "";
-//             return new TextRun({
-//               size: 24,
-//               bold: true,
-//               text: `${tacNumber} ${validity} `,
-//             });
-//           }),
-//         ],
-//       }),
-//     ],
-//   }),
-  
-////////////////////////
 new TableCell({
   width: { size: 3000, type: WidthType.DXA },
   children: [
@@ -11796,114 +4824,6 @@ new TableCell({
 }),
 
 
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           new TextRun({
-                //             size: "12pt",
-                //             bold: true,
-                //             text: reflDataList.frontWhiteList.possibleDateList.join(
-                //               ","
-                //             ),
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             size: "12pt",
-                //             bold: true,
-                //             text: reflDataList.rearRedList.possibleDateList.join(
-                //               ","
-                //             ),
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             size: "12pt",
-                //             bold: true,
-                //             text: reflDataList.sideAmberList.possibleDateList.join(
-                //               ","
-                //             ),
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-
-
-
-                ///////////
-//                 new TableCell({
-//   width: { size: 3000, type: WidthType.DXA },
-//   children: [
-//     ...(getPossibleDateHeader(reflDataList.frontWhiteList.possibleDateList)
-//       ? [
-//           new Paragraph({
-//             style: "table1Header",
-//             children: [
-//               new TextRun({
-//                 size: "12pt",
-//                 bold: true,
-//                 text: getPossibleDateHeader(reflDataList.frontWhiteList.possibleDateList),
-//               }),
-//             ],
-//           }),
-//         ]
-//       : getPossibleDateHeader(reflDataList.rearRedList.possibleDateList)
-//       ? [
-//           new Paragraph({
-//             style: "table1Header",
-//             children: [
-//               new TextRun({
-//                 size: "12pt",
-//                 bold: true,
-//                 text: getPossibleDateHeader(reflDataList.rearRedList.possibleDateList),
-//               }),
-//             ],
-//           }),
-//         ]
-//       : getPossibleDateHeader(reflDataList.sideAmberList.possibleDateList)
-//       ? [
-//           new Paragraph({
-//             style: "table1Header",
-//             children: [
-//               new TextRun({
-//                 size: "12pt",
-//                 bold: true,
-//                 text: getPossibleDateHeader(reflDataList.sideAmberList.possibleDateList),
-//               }),
-//             ],
-//           }),
-//         ]
-//       : []),
-//     new Paragraph({
-//       style: "table1Header",
-//       children: [
-//         new TextRun({
-//           size: "12pt",
-//           bold: true,
-//           text: reflDataList.frontWhiteList.possibleDateList.join(","),
-//         }),
-//         new TextRun({
-//           break: 1,
-//           size: "12pt",
-//           bold: true,
-//           text: reflDataList.rearRedList.possibleDateList.join(","),
-//         }),
-//         new TextRun({
-//           break: 1,
-//           size: "12pt",
-//           bold: true,
-//           text: reflDataList.sideAmberList.possibleDateList.join(","),
-//         }),
-//       ],
-//     }),
-//   ],
-// }),
-////////
 new TableCell({
     width: { size: 3000, type: WidthType.DXA },
     children: [
@@ -11964,111 +4884,9 @@ new TableCell({
   }),
   
 
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           new TextRun({
-                //             size: "12pt",
-                //             bold: true,
-                //             text: reflDataList.frontWhiteList.copCertList.join(
-                //               ","
-                //             ),
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             size: "12pt",
-                //             bold: true,
-                //             text: reflDataList.rearRedList.copCertList.join(
-                //               ","
-                //             ),
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             size: "12pt",
-                //             bold: true,
-                //             text: reflDataList.sideAmberList.copCertList.join(
-                //               ","
-                //             ),
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-/////////
-// new TableCell({
-//   width: { size: 3000, type: WidthType.DXA },
-//   children: [
-//     ...(getCOPHeader(reflDataList.frontWhiteList.copCertList)
-//       ? [
-//           new Paragraph({
-//             style: "table1Header",
-//             children: [
-//               new TextRun({
-//                 size: "12pt",
-//                 bold: true,
-//                 text: getCOPHeader(reflDataList.frontWhiteList.copCertList),
-//               }),
-//             ],
-//           }),
-//         ]
-//       : getCOPHeader(reflDataList.rearRedList.copCertList)
-//       ? [
-//           new Paragraph({
-//             style: "table1Header",
-//             children: [
-//               new TextRun({
-//                 size: "12pt",
-//                 bold: true,
-//                 text: getCOPHeader(reflDataList.rearRedList.copCertList),
-//               }),
-//             ],
-//           }),
-//         ]
-//       : getCOPHeader(reflDataList.sideAmberList.copCertList)
-//       ? [
-//           new Paragraph({
-//             style: "table1Header",
-//             children: [
-//               new TextRun({
-//                 size: "12pt",
-//                 bold: true,
-//                 text: getCOPHeader(reflDataList.sideAmberList.copCertList),
-//               }),
-//             ],
-//           }),
-//         ]
-//       : []),
-//     new Paragraph({
-//       style: "table1Header",
-//       children: [
-//         new TextRun({
-//           size: "12pt",
-//           bold: true,
-//           text: reflDataList.frontWhiteList.copCertList.join(","),
-//         }),
-//         new TextRun({
-//           break: 1,
-//           size: "12pt",
-//           bold: true,
-//           text: reflDataList.rearRedList.copCertList.join(","),
-//         }),
-//         new TextRun({
-//           break: 1,
-//           size: "12pt",
-//           bold: true,
-//           text: reflDataList.sideAmberList.copCertList.join(","),
-//         }),
-//       ],
-//     }),
-//   ],
-// }),
-////////
+            
+        
+
 new TableCell({
     width: { size: 3000, type: WidthType.DXA },
     children: [
@@ -13787,155 +6605,8 @@ new TableCell({
                     ],
                   }),
 
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           // Process frontWhiteList (first one)
-                //           ...reflDataList.frontWhiteListt.tacNumberList.map(
-                //             (tacNumber, index) => {
-                //               const validity =
-                //                 reflDataList.frontWhiteListt.validityList[
-                //                   index
-                //                 ] || "";
-                //               return new TextRun({
-                //                 size: 24,
-                //                 bold: true,
-                //                 text: `${tacNumber} ${validity} `,
-                //               });
-                //             }
-                //           ),
-
-                //           // Add a line break
-                //           new TextRun({ break: 1 }),
-
-                //           // Process rearRedList (second one in new line)
-                //           ...reflDataList.rearRedListt.tacNumberList.map(
-                //             (tacNumber, index) => {
-                //               const validity =
-                //                 reflDataList.rearRedListt.validityList[index] ||
-                //                 "";
-                //               return new TextRun({
-                //                 size: 24,
-                //                 bold: true,
-                //                 text: `${tacNumber} ${validity} `,
-                //               });
-                //             }
-                //           ),
-                //           // Add a line break
-                //           new TextRun({ break: 1 }),
-                //           // Process sideAmberList (continues on the same line as rearRedList)
-                //           ...reflDataList.sideAmberListt.tacNumberList.map(
-                //             (tacNumber, index) => {
-                //               const validity =
-                //                 reflDataList.sideAmberListt.validityList[
-                //                   index
-                //                 ] || "";
-                //               return new TextRun({
-                //                 size: 24,
-                //                 bold: true,
-                //                 text: `${tacNumber} ${validity} `,
-                //               });
-                //             }
-                //           ),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-
-                // new TableCell({
-                //     width: { size: 3000, type: WidthType.DXA },
-                //     children: [
-                //       // Conditionally add the header for the first list that has one
-                //       ...(getTACorBISHeader(reflDataList.frontWhiteList.tacNumberList)
-                //         ? [
-                //             new Paragraph({
-                //               style: "table1Header",
-                //               children: [
-                //                 new TextRun({
-                //                   size: "12pt",
-                //                   bold: true,
-                //                   text: getTACorBISHeader(reflDataList.frontWhiteList.tacNumberList),
-                //                 }),
-                //               ],
-                //             }),
-                //           ]
-                //         : getTACorBISHeader(reflDataList.rearRedList.tacNumberList)
-                //         ? [
-                //             new Paragraph({
-                //               style: "table1Header",
-                //               children: [
-                //                 new TextRun({
-                //                   size: "12pt",
-                //                   bold: true,
-                //                   text: getTACorBISHeader(reflDataList.rearRedList.tacNumberList),
-                //                 }),
-                //               ],
-                //             }),
-                //           ]
-                //         : getTACorBISHeader(reflDataList.sideAmberList.tacNumberList)
-                //         ? [
-                //             new Paragraph({
-                //               style: "table1Header",
-                //               children: [
-                //                 new TextRun({
-                //                   size: "12pt",
-                //                   bold: true,
-                //                   text: getTACorBISHeader(reflDataList.sideAmberList.tacNumberList),
-                //                 }),
-                //               ],
-                //             }),
-                //           ]
-                //         : []),
-                  
-                //       // Paragraph with TAC numbers and validity from all three lists
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           // frontWhiteList TAC numbers + validity
-                //           ...reflDataList.frontWhiteList.tacNumberList.map((tacNumber, index) => {
-                //             const validity = reflDataList.frontWhiteList.validityList[index] || "";
-                //             return new TextRun({
-                //               size: 24,
-                //               bold: true,
-                //               text: `${tacNumber} ${validity} `,
-                //             });
-                //           }),
-                  
-                //           // Line break
-                //           new TextRun({ break: 1 }),
-                  
-                //           // rearRedList TAC numbers + validity
-                //           ...reflDataList.rearRedList.tacNumberList.map((tacNumber, index) => {
-                //             const validity = reflDataList.rearRedList.validityList[index] || "";
-                //             return new TextRun({
-                //               size: 24,
-                //               bold: true,
-                //               text: `${tacNumber} ${validity} `,
-                //             });
-                //           }),
-                  
-                //           // Line break
-                //           new TextRun({ break: 1 }),
-                  
-                //           // sideAmberList TAC numbers + validity
-                //           ...reflDataList.sideAmberList.tacNumberList.map((tacNumber, index) => {
-                //             const validity = reflDataList.sideAmberList.validityList[index] || "";
-                //             return new TextRun({
-                //               size: 24,
-                //               bold: true,
-                //               text: `${tacNumber} ${validity} `,
-                //             });
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+               
+                
 
                 new TableCell({
                     width: { size: 3000, type: WidthType.DXA },
@@ -14132,42 +6803,7 @@ new TableCell({
                   }),
 
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           new TextRun({
-                //             size: "12pt",
-                //             bold: true,
-                //             text: reflDataList.frontWhiteListt.copCertList.join(
-                //               ","
-                //             ),
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             size: "12pt",
-                //             bold: true,
-                //             text: reflDataList.rearRedListt.copCertList.join(
-                //               ","
-                //             ),
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             size: "12pt",
-                //             bold: true,
-                //             text: reflDataList.sideAmberListt.copCertList.join(
-                //               ","
-                //             ),
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+               
 
                 new TableCell({
                     width: {
@@ -14989,32 +7625,8 @@ new TableCell({
                       }),
                     ],
                   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: hlMainBeamDataList.tacNumberLampList.join(
-                //               ","
-                //             ),
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: " ",
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: hlMainBeamDataList.validityLampList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+               
+                
 
                 new TableCell({
                     width: {
@@ -15494,58 +8106,9 @@ new TableCell({
                       }),
                     ],
                   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: dtRunnLampDataList.validityList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: dtRunnLampDataList.possibleDateList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: dtRunnLampDataList.copCertList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
 
 
 
-                // Validity Cell
 new TableCell({
     width: {
       size: 3000,
@@ -15566,40 +8129,7 @@ new TableCell({
             }),
           ]
         : []),
-      // new Paragraph({
-      //   children: [
-      //     new TextRun({
-      //       text: dtRunnLampDataList.validityList.join(","),
-      //       size: "12pt",
-      //     }),
-      //   ],
-      // }),
-
-
-
-    //   new Paragraph({
-    //     children: [
-    //       new TextRun({
-    //         size: "12pt",
-    //         text: (() => {
-    //           const combinedList = dtRunnLampDataList.tacNumberList.map((tac, idx) =>
-    //             `${tac} ${dtRunnLampDataList.validityList[idx] || ""}`
-    //           );
-      
-    //           const isBIS = getTACorBISHeader(combinedList).startsWith("BIS");
-      
-    //           return combinedList
-    //             .map(item => {
-    //               const match = item.match(validDateRegex);
-    //               const numberPart = match ? item.slice(0, match.index).trim() : item.trim();
-    //               const datePart = match ? item.slice(match.index).trim() : "";
-    //               return `${isBIS ? "CM/L-" : ""}${numberPart}${datePart ? " " + datePart : ""}`;
-    //             })
-    //             .join(", ");
-    //         })(),
-    //       }),
-    //     ],
-    //   }),
+     
 
 
 
@@ -15834,34 +8364,8 @@ new TableCell({
                       }),
                     ],
                   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: frontPosLampDataList.tacNumberLampList.join(
-                //               ","
-                //             ),
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: " ",
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: frontPosLampDataList.validityLampList.join(
-                //               ","
-                //             ),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+               
+               
                 new TableCell({
                     width: {
                       size: 3000,
@@ -15892,23 +8396,7 @@ new TableCell({
                             ]
                           : []
                       ),
-                      // new Paragraph({
-                      //   children: [
-                      //     new TextRun({
-                      //       text: frontPosLampDataList.tacNumberLampList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: " ",
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: frontPosLampDataList.validityLampList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //   ],
-                      // }),
-
+                      
                       new Paragraph({
                         children: [
                           new TextRun({
@@ -15936,42 +8424,8 @@ new TableCell({
                     ],
                   }),
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: frontPosLampDataList.possibleDateLampList.join(
-                //               ","
-                //             ),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: frontPosLampDataList.copCertLampList.join(
-                //               ","
-                //             ),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+                
+                
 
 
 
@@ -18949,82 +11403,13 @@ new TableCell({
                       }),
                     ],
                   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           new TextRun({
-                //             size: "12pt",
-                //             bold: true,
-                //             text: hydrBrkHoseDataList.validityList.join(","),
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+                
 
-                // new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       ...(
-                //         getTACorBISHeader(hydrBrkHoseDataList.validityList)
-                //           ? [
-                //               new Paragraph({
-                //                 style: "table1Header",
-                //                 children: [
-                //                   new TextRun({
-                //                     size: "12pt",
-                //                     bold: true,
-                //                     text: getTACorBISHeader(hydrBrkHoseDataList.validityList),
-                //                   }),
-                //                 ],
-                //               }),
-                //             ]
-                //           : []
-                //       ),
-                //       // new Paragraph({
-                //       //   children: [
-                //       //     new TextRun({
-                //       //       text: hydrBrkHoseDataList.validityList.join(","),
-                //       //       size: "12pt",
-                //       //     }),
-                //       //   ],
-                //       // }),
-
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             size: "12pt",
-                //             text: (() => {
-                //               const combinedList = hydrBrkHoseDataList.tacNumberList.map((tac, idx) =>
-                //                 `${tac} ${hydrBrkHoseDataList.validityList[idx] || ""}`
-                //               );
-                      
-                //               const isBIS = getTACorBISHeader(combinedList).startsWith("BIS");
-                      
-                //               return combinedList
-                //                 .map(item => {
-                //                   const match = item.match(validDateRegex);
-                //                   const numberPart = match ? item.slice(0, match.index).trim() : item.trim();
-                //                   const datePart = match ? item.slice(match.index).trim() : "";
-                //                   return `${isBIS ? "CM/L-" : ""}${numberPart}${datePart ? " " + datePart : ""}`;
-                //                 })
-                //                 .join(", ");
-                //             })(),
-                //           }),
-                //         ],
-                //       }),
-                      
-                //     ],
-                //   }),
+                
+                
+               
+               
+               
 
                 new TableCell({
                     width: {
@@ -19235,59 +11620,11 @@ new TableCell({
                     ],
                   }),
                 //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: BrakeFluidDataList.tacNumberList.join("\n\r"),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+                
 
 
-                // new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       ...(getTACorBISHeader(BrakeFluidDataList.tacNumberList)
-                //         ? [
-                //             new Paragraph({
-                //               style: "table1Header",
-                //               children: [
-                //                 new TextRun({
-                //                   size: "12pt",
-                //                   bold: true,
-                //                 //   text: getTACorBISHeader(BrakeFluidDataList.tacNumberList),
-                //                 text: "Test Report No",
-                                  
-                //                 }),
-                //               ],
-                //             }),
-                //           ]
-                //         : []),
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: BrakeFluidDataList.tacNumberList.join("\n\r"),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-
-
-
-                new TableCell({
+                
+          new TableCell({
                   width: { size: 3000, type: WidthType.DXA },
                   children: [
                     // ---------------- Header ----------------
@@ -22177,96 +14514,10 @@ new TableCell({
                       }),
                     ],
                   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: hlMainBeamDataList.tacNumberList.join(","),
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: " ",
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: hlMainBeamDataList.validityList.join(","),
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: " ",
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             text: hlDipBeamDataList.tacNumberList.join(","),
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: " ",
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: hlDipBeamDataList.validityList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+                
+               
+                
 
-                // new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       ...(() => {
-                //         const mainBeamHeader = getTACorBISHeader(
-                //           hlMainBeamDataList.tacNumberList.map(
-                //             (tac, idx) => `${tac} ${hlMainBeamDataList.validityList[idx] || ""}`
-                //           )
-                //         );
-                  
-                //         const dipBeamHeader = getTACorBISHeader(
-                //           hlDipBeamDataList.tacNumberList.map(
-                //             (tac, idx) => `${tac} ${hlDipBeamDataList.validityList[idx] || ""}`
-                //           )
-                //         );
-                  
-                //         if (mainBeamHeader) {
-                //           return [
-                //             new Paragraph({
-                //               style: "table1Header",
-                //               children: [
-                //                 new TextRun({
-                //                   size: "12pt",
-                //                   bold: true,
-                //                   text: mainBeamHeader,
-                //                 }),
-                //               ],
-                //             }),
-                //           ];
-                //         } else if (dipBeamHeader) {
-                //           return [
-                //             new Paragraph({
-                //               style: "table1Header",
-                //               children: [
-                //                 new TextRun({
-                //                   size: "12pt",
-                //                   bold: true,
-                //                   text: dipBeamHeader,
-                //                 }),
-                //               ],
-                //             }),
-                //           ];
-                //         }
-                //         return [];
-                //       })(),
 
 
                 new TableCell({
@@ -22309,69 +14560,9 @@ new TableCell({
                           : [];
                       })(),
                   
-                //       // ✅ Paragraph with TAC + validity from both hlMain and hlDip
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           // hlMainBeamDataList
-                //           ...hlMainBeamDataList.tacNumberList.map((tacNumber, index) => {
-                //             const validity = hlMainBeamDataList.validityList[index] || "";
-                //             return new TextRun({
-                //               size: 24,
-                //               bold: true,
-                //               text: `${tacNumber} ${validity} `,
-                //             });
-                //           }),
-                  
-                //           new TextRun({ break: 1 }),
-                  
-                //           // hlDipBeamDataList
-                //           ...hlDipBeamDataList.tacNumberList.map((tacNumber, index) => {
-                //             const validity = hlDipBeamDataList.validityList[index] || "";
-                //             return new TextRun({
-                //               size: 24,
-                //               bold: true,
-                //               text: `${tacNumber} ${validity} `,
-                //             });
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-                  
-                      // new Paragraph({
-                      //   children: [
-                      //     new TextRun({
-                      //       text: hlMainBeamDataList.tacNumberList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: " ",
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: hlMainBeamDataList.validityList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: " ",
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       break: 1,
-                      //       text: hlDipBeamDataList.tacNumberList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: " ",
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: hlDipBeamDataList.validityList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //   ],
-                      // }),
+               
+                
+            
                       new Paragraph({
                         children: [
                           // Main Beam
@@ -22421,29 +14612,9 @@ new TableCell({
                     ],
                   }),
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: hlMainBeamDataList.possibleDateList.join(","),
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             text: hlDipBeamDataList.possibleDateList.join(
-                //               "\n\r"
-                //             ),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+               
+                
+        
 
                 new TableCell({
                     width: {
@@ -22501,27 +14672,7 @@ new TableCell({
                   }),
 
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: hlMainBeamDataList.copCertList.join(","),
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             break: 1,
-                //             text: hlDipBeamDataList.copCertList.join("\n\r"),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+               
 
 
                 new TableCell({
@@ -22633,30 +14784,8 @@ new TableCell({
                       }),
                     ],
                   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: frontPosLampDataList.tacNumberList.join(","),
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: " ",
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: frontPosLampDataList.validityList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+               
+              
 
                 new TableCell({
                     width: {
@@ -22684,22 +14813,7 @@ new TableCell({
                           ]
                         : []
                       ),
-                      // new Paragraph({
-                      //   children: [
-                      //     new TextRun({
-                      //       text: frontPosLampDataList.tacNumberList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: " ",
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: frontPosLampDataList.validityList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //   ],
-                      // }),
+                     
                       new Paragraph({
                         children: [
                           new TextRun({
@@ -22720,24 +14834,8 @@ new TableCell({
                     ],
                   }),
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: frontPosLampDataList.possibleDateList.join(
-                //               ","
-                //             ),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+                
+                
                 new TableCell({
                     width: {
                       size: 3000,
@@ -22771,23 +14869,7 @@ new TableCell({
                     ],
                   }),
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: frontPosLampDataList.copCertList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-
+                
                 new TableCell({
                     width: {
                       size: 3000,
@@ -22874,30 +14956,7 @@ new TableCell({
                       }),
                     ],
                   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: fdIndLampDataList.tacNumberList.join(","),
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: " ",
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: fdIndLampDataList.validityList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+                
 
                 new TableCell({
                     width: {
@@ -22925,22 +14984,7 @@ new TableCell({
                             ]
                           : []
                       ),
-                      // new Paragraph({
-                      //   children: [
-                      //     new TextRun({
-                      //       text: fdIndLampDataList.tacNumberList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: " ",
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: fdIndLampDataList.validityList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //   ],
-                      // }),
+                      
 
                       new Paragraph({
                         children: [
@@ -22962,22 +15006,8 @@ new TableCell({
                     ],
                   }),
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: fdIndLampDataList.possibleDateList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+                
+              
 
                 new TableCell({
                     width: {
@@ -23012,22 +15042,7 @@ new TableCell({
                     ],
                   }),
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: fdIndLampDataList.copCertList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+               
 
                 new TableCell({
                     width: {
@@ -23117,31 +15132,8 @@ new TableCell({
                       }),
                     ],
                   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           new TextRun({
-                //             size: "12pt",
-                //             text: stopLampDataList.tacNumberList.join(","),
-                //           }),
-                //           new TextRun({
-                //             text: " ",
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             size: "12pt",
-                //             text: stopLampDataList.validityList.join(","),
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+                
+              
 
                 new TableCell({
                     width: {
@@ -23173,23 +15165,7 @@ new TableCell({
                             ]
                           : []
                       ),
-                      // new Paragraph({
-                      //   style: "table1Header",
-                      //   children: [
-                      //     new TextRun({
-                      //       size: "12pt",
-                      //       text: stopLampDataList.tacNumberList.join(","),
-                      //     }),
-                      //     new TextRun({
-                      //       text: " ",
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       size: "12pt",
-                      //       text: stopLampDataList.validityList.join(","),
-                      //     }),
-                      //   ],
-                      // }),
+                      
                       new Paragraph({
                         style: "table1Header",
                         children: [
@@ -23211,23 +15187,7 @@ new TableCell({
                     ],
                   }),
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           new TextRun({
-                //             size: "12pt",
-                //             text: stopLampDataList.possibleDateList.join(","),
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+                
 
                 new TableCell({
                     width: {
@@ -23263,23 +15223,7 @@ new TableCell({
                     ],
                   }),
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         style: "table1Header",
-                //         children: [
-                //           new TextRun({
-                //             size: "12pt",
-                //             text: stopLampDataList.copCertList.join(","),
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+               
 
                 new TableCell({
                     width: {
@@ -23366,45 +15310,12 @@ new TableCell({
                             size: "12pt",
                           }),
                         ],
-                        // children: [
-                        //     new TextRun({
-                        //         text: "",
-                        //         size: "12pt"
-                        //     })
-                        // ]
+                        
                       }),
                     ],
                   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: rearPosLampDataList.tacNumberList.join(","),
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: " ",
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: rearPosLampDataList.validityList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //         // children: [
-                //         //     new TextRun({
-                //         //         text: "",
-                //         //         size: "12pt"
-                //         //     })
-                //         // ]
-                //       }),
-                //     ],
-                //   }),
+                
+                
 
                 new TableCell({
                     width: {
@@ -23436,22 +15347,7 @@ new TableCell({
                             ]
                           : []
                       ),
-                      // new Paragraph({
-                      //   children: [
-                      //     new TextRun({
-                      //       text: rearPosLampDataList.tacNumberList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: " ",
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: rearPosLampDataList.validityList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //   ],
-                      // }),
+                     
                       new Paragraph({
                         children: [
                           new TextRun({
@@ -23472,30 +15368,8 @@ new TableCell({
                     ],
                   }),
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: rearPosLampDataList.possibleDateList.join(
-                //               ","
-                //             ),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //         // children: [
-                //         //     new TextRun({
-                //         //         text: "",
-                //         //         size: "12pt"
-                //         //     })
-                //         // ]
-                //       }),
-                //     ],
-                //   }),
+               
+                
 
                 new TableCell({
                     width: {
@@ -23530,28 +15404,7 @@ new TableCell({
                     ],
                   }),
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: rearPosLampDataList.copCertList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //         // children: [
-                //         //     new TextRun({
-                //         //         text: "",
-                //         //         size: "12pt"
-                //         //     })
-                //         // ]
-                //       }),
-                //     ],
-                //   }),
+               
 
                 new TableCell({
                     width: {
@@ -23881,30 +15734,7 @@ new TableCell({
                       }),
                     ],
                   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: revLampDataList.tacNumberList.join(","),
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: " ",
-                //             size: "12pt",
-                //           }),
-                //           new TextRun({
-                //             text: revLampDataList.validityList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+                
                 new TableCell({
                     width: {
                       size: 3000,
@@ -23933,22 +15763,7 @@ new TableCell({
                             }),
                           ]
                         : []),
-                      // new Paragraph({
-                      //   children: [
-                      //     new TextRun({
-                      //       text: revLampDataList.tacNumberList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: " ",
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: revLampDataList.validityList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //   ],
-                      // }),
+                      
                       new Paragraph({
                         children: [
                           new TextRun({
@@ -23969,22 +15784,7 @@ new TableCell({
                     ],
                   }),
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: revLampDataList.possibleDateList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+               
 
                 new TableCell({
                     width: {
@@ -24017,22 +15817,7 @@ new TableCell({
                     ],
                   }),
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         children: [
-                //           new TextRun({
-                //             text: revLampDataList.copCertList.join(","),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
+                
 
                 new TableCell({
                     width: {
@@ -24170,22 +15955,7 @@ new TableCell({
                             }),
                           ]
                         : []),
-                      // new Paragraph({
-                      //   children: [
-                      //     new TextRun({
-                      //       text: rrpLampDataList.tacNumberList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: " ",
-                      //       size: "12pt",
-                      //     }),
-                      //     new TextRun({
-                      //       text: rrpLampDataList.validityList.join(", "),
-                      //       size: "12pt",
-                      //     }),
-                      //   ],
-                      // }),
+                      
                       new Paragraph({
                         children: [
                           new TextRun({
@@ -25427,43 +17197,8 @@ new TableCell({
                     },
                     children: [
                       new Paragraph({
-                        // children: [
-                        //     new TextRun({
-                        //         text: FWheelRimDataList.MakeList.join(","),
-
-                        //         size: "12pt"
-                        //     }),
-                        //     new TextRun({
-                        //         break: 1,
-                        //         text: RWheelRimDataList.MakeList.join("\n\r"),
-                        //         size: "12pt"
-                        //     })
-
-                        // ]
-
-                        // children: [
-                        //     new TextRun({
-                        //         text: "Front Wheel Rim",
-                        //         bold: true,
-                        //         size: "12pt",
-                        //     }),
-                        //     new TextRun({
-                        //         break: 1,
-                        //         text: FWheelRimDataList.MakeList.join(", "),
-                        //         size: "12pt",
-                        //     }),
-                        //     new TextRun({
-                        //         break: 1,
-                        //         text: "Rear Wheel Rim",
-                        //         bold: true,
-                        //         size: "12pt",
-                        //     }),
-                        //     new TextRun({
-                        //         break: 1,
-                        //         text: RWheelRimDataList.MakeList.join(", "),
-                        //         size: "12pt",
-                        //     }),
-                        // ]
+                        
+                       
 
                         children: [
                           // Front Wheel Rim
@@ -25506,169 +17241,14 @@ new TableCell({
                       }),
                     ],
                   }),
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         // children: [
-                //         //     new TextRun({
-                //         //         text: FWheelRimDataList.tacNumberList.join(","),
-                //         //         size: "12pt"
-                //         //     }),
-                //         //     new TextRun({
-                //         //         break: 1,
-                //         //         text: RWheelRimDataList.tacNumberList.join("\n\r"),
-                //         //         size: "12pt"
-                //         //     })
-                //         // ]
+               
+                
 
-                //         // children: [
-                //         //     new TextRun({
-                //         //         text: "Front Wheel Rim TAC Number:",
-                //         //         bold: true,
-                //         //         size: "12pt"
-                //         //     }),
-                //         //     new TextRun({
-                //         //         break: 1,
-                //         //         text: FWheelRimDataList.tacNumberList.join(", "),
-                //         //         size: "12pt"
-                //         //     }),
-                //         //     new TextRun({
-                //         //         break: 1,
-                //         //         text: "Rear Wheel Rim TAC Number:",
-                //         //         bold: true,
-                //         //         size: "12pt"
-                //         //     }),
-                //         //     new TextRun({
-                //         //         break: 1,
-                //         //         text: RWheelRimDataList.tacNumberList.join(", "),
-                //         //         size: "12pt"
-                //         //     })
-                //         // ]
-
-                //         children: [
-                //           // Front Wheel Rim TAC Number
-                //           ...(FWheelRimDataList.tacNumberList.some(
-                //             (val) => val && val.trim() !== ""
-                //           )
-                //             ? [
-                //                 new TextRun({
-                //                   text: "Front Wheel Rim TAC Number:",
-                //                   bold: true,
-                //                   size: "12pt",
-                //                 }),
-                //               ]
-                //             : []),
-                //           new TextRun({
-                //             break: 1,
-                //             text: FWheelRimDataList.tacNumberList.join(", "),
-                //             size: "12pt",
-                //           }),
-
-                //           // Rear Wheel Rim TAC Number (separate paragraph)
-                //           new TextRun({ break: 2 }),
-                //           ...(RWheelRimDataList.tacNumberList.some(
-                //             (val) => val && val.trim() !== ""
-                //           )
-                //             ? [
-                //                 new TextRun({
-                //                   text: "Rear Wheel Rim TAC Number:",
-                //                   bold: true,
-                //                   size: "12pt",
-                //                 }),
-                //               ]
-                //             : []),
-                //           new TextRun({
-                //             break: 1,
-                //             text: RWheelRimDataList.tacNumberList.join(", "),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-
-
-
-                // new TableCell({
-                //     width: { size: 3000, type: WidthType.DXA },
-                //     children: [
-                //       // Front Wheel Rim section
-                //       ...(getTACorBISHeader(
-                //         FWheelRimDataList.tacNumberList.map((tac) => `${tac}`)
-                //       )
-                //         ? [
-                //             new Paragraph({
-                //               style: "table1Header",
-                //               children: [
-                //                 new TextRun({
-                //                   size: "12pt",
-                //                   bold: true,
-                //                   text:
-                //                     "Front Wheel Rim " +
-                //                     getTACorBISHeader(
-                //                       FWheelRimDataList.tacNumberList.map((tac) => `${tac}`)
-                //                     ),
-                //                 }),
-                //               ],
-                //             }),
-                //             new Paragraph({
-                //               children: [
-                //                 ...FWheelRimDataList.tacNumberList.map((tac, idx) => {
-                //                   const isBIS = getTACorBISHeader(
-                //                     FWheelRimDataList.tacNumberList
-                //                   ).startsWith("BIS");
-                //                   return new TextRun({
-                //                     text: `${isBIS ? "CM/L-" : ""}${tac}`,
-                //                     break: idx < FWheelRimDataList.tacNumberList.length - 1 ? 1 : 0,
-                //                     size: 24,
-                //                   });
-                //                 }),
-                //               ],
-                //             }),
-                //           ]
-                //         : []),
-                  
-                //       // Rear Wheel Rim section
-                //       ...(getTACorBISHeader(
-                //         RWheelRimDataList.tacNumberList.map((tac) => `${tac}`)
-                //       )
-                //         ? [
-                //             new Paragraph({
-                //               style: "table1Header",
-                //               children: [
-                //                 new TextRun({
-                //                   size: "12pt",
-                //                   bold: true,
-                //                   text:
-                //                     "Rear Wheel Rim " +
-                //                     getTACorBISHeader(
-                //                       RWheelRimDataList.tacNumberList.map((tac) => `${tac}`)
-                //                     ),
-                //                 }),
-                //               ],
-                //             }),
-                //             new Paragraph({
-                //               children: [
-                //                 ...RWheelRimDataList.tacNumberList.map((tac, idx) => {
-                //                   const isBIS = getTACorBISHeader(
-                //                     RWheelRimDataList.tacNumberList
-                //                   ).startsWith("BIS");
-                //                   return new TextRun({
-                //                     text: `${isBIS ? "CM/L-" : ""}${tac}`,
-                //                     break: idx < RWheelRimDataList.tacNumberList.length - 1 ? 1 : 0,
-                //                     size: 24,
-                //                   });
-                //                 }),
-                //               ],
-                //             }),
-                //           ]
-                //         : []),
-                //     ],
-                //   }),
+               
+               
+               
+                
+               
 
 
                 new TableCell({
@@ -25765,152 +17345,7 @@ new TableCell({
                 }),
 
                 
-                  
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         // children: [
-                //         //     new TextRun({
-                //         //         text: FWheelRimDataList.possibleDateList.join(","),
-                //         //         size: "12pt"
-                //         //     }),
-                //         //     new TextRun({
-                //         //         break: 1,
-                //         //         text: RWheelRimDataList.possibleDateList.join("\n\r"),
-                //         //         size: "12pt"
-                //         //     })
-                //         // ]
-
-                //         // children: [
-                //         //     new TextRun({
-                //         //         text: "Front Wheel Rim Possible Date:",
-                //         //         bold: true,
-                //         //         size: "12pt"
-                //         //     }),
-                //         //     new TextRun({
-                //         //         break: 1,
-                //         //         text: FWheelRimDataList.possibleDateList.join(", "),
-                //         //         size: "12pt"
-                //         //     }),
-                //         //     new TextRun({
-                //         //         break: 1,
-                //         //         text: "Rear Wheel Rim Possible Date:",
-                //         //         bold: true,
-                //         //         size: "12pt"
-                //         //     }),
-                //         //     new TextRun({
-                //         //         break: 1,
-                //         //         text: RWheelRimDataList.possibleDateList.join(", "),
-                //         //         size: "12pt"
-                //         //     })
-                //         // ]
-
-                //         children: [
-                //           // Front Wheel Rim Possible Date
-                //           ...(FWheelRimDataList.possibleDateList.some(
-                //             (val) => val && val.trim() !== ""
-                //           )
-                //             ? [
-                //                 new TextRun({
-                //                   text: "Front Wheel Rim Possible Date:",
-                //                   bold: true,
-                //                   size: "12pt",
-                //                 }),
-                //               ]
-                //             : []),
-                //           new TextRun({
-                //             break: 1,
-                //             text: FWheelRimDataList.possibleDateList.join(", "),
-                //             size: "12pt",
-                //           }),
-
-                //           // Rear Wheel Rim Possible Date (separate paragraph)
-                //           new TextRun({ break: 2 }),
-                //           ...(RWheelRimDataList.possibleDateList.some(
-                //             (val) => val && val.trim() !== ""
-                //           )
-                //             ? [
-                //                 new TextRun({
-                //                   text: "Rear Wheel Rim Possible Date:",
-                //                   bold: true,
-                //                   size: "12pt",
-                //                 }),
-                //               ]
-                //             : []),
-                //           new TextRun({
-                //             break: 1,
-                //             text: RWheelRimDataList.possibleDateList.join(", "),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-
-
-                // new TableCell({
-                //     width: { size: 3000, type: WidthType.DXA },
-                //     children: [
-                //       // Front Wheel Rim section
-                //       ...(getPossibleDateHeader(FWheelRimDataList.possibleDateList)
-                //         ? [
-                //             new Paragraph({
-                //               style: "table1Header",
-                //               children: [
-                //                 new TextRun({
-                //                   size: "12pt",
-                //                   bold: true,
-                //                   text:
-                //                     "Front Wheel Rim " +
-                //                     getPossibleDateHeader(FWheelRimDataList.possibleDateList),
-                //                 }),
-                //               ],
-                //             }),
-                //             new Paragraph({
-                //               children: [
-                //                 new TextRun({
-                //                   text: FWheelRimDataList.possibleDateList.join(", "),
-                //                   size: "12pt",
-                //                 }),
-                //               ],
-                //             }),
-                //           ]
-                //         : []),
-                  
-                //       // Rear Wheel Rim section
-                //       ...(getPossibleDateHeader(RWheelRimDataList.possibleDateList)
-                //         ? [
-                //             new Paragraph({
-                //               style: "table1Header",
-                //               children: [
-                //                 new TextRun({
-                //                   size: "12pt",
-                //                   bold: true,
-                //                   text:
-                //                     "Rear Wheel Rim " +
-                //                     getPossibleDateHeader(RWheelRimDataList.possibleDateList),
-                //                 }),
-                //               ],
-                //             }),
-                //             new Paragraph({
-                //               children: [
-                //                 new TextRun({
-                //                   text: RWheelRimDataList.possibleDateList.join(", "),
-                //                   size: "12pt",
-                //                 }),
-                //               ],
-                //             }),
-                //           ]
-                //         : []),
-                //     ],
-                //   }),
-
-
-                new TableCell({
+         new TableCell({
                   width: { size: 3000, type: WidthType.DXA },
                   children: [
                     // ---------------- Front Wheel Rim ----------------
@@ -25983,149 +17418,9 @@ new TableCell({
                 
 
                   
-                //   new TableCell({
-                //     width: {
-                //       size: 3000,
-                //       type: WidthType.DXA,
-                //     },
-                //     children: [
-                //       new Paragraph({
-                //         // children: [
-                //         //     new TextRun({
-                //         //         text: FWheelRimDataList.copCertList.join(","),
-                //         //         size: "12pt"
-                //         //     }),
-                //         //     new TextRun({
-                //         //         break: 1,
-                //         //         text: RWheelRimDataList.copCertList.join("\n\r"),
-                //         //         size: "12pt"
-                //         //     })
-                //         // ]
-
-                //         // children: [
-                //         //     new TextRun({
-                //         //         text: "Front Wheel Rim CoP Certificate:",
-                //         //         bold: true,
-                //         //         size: "12pt"
-                //         //     }),
-                //         //     new TextRun({
-                //         //         break: 1,
-                //         //         text: FWheelRimDataList.copCertList.join(", "),
-                //         //         size: "12pt"
-                //         //     }),
-                //         //     new TextRun({
-                //         //         break: 1,
-                //         //         text: "Rear Wheel Rim CoP Certificate:",
-                //         //         bold: true,
-                //         //         size: "12pt"
-                //         //     }),
-                //         //     new TextRun({
-                //         //         break: 1,
-                //         //         text: RWheelRimDataList.copCertList.join(", "),
-                //         //         size: "12pt"
-                //         //     })
-                //         // ]
-
-                //         children: [
-                //           // Front Wheel Rim CoP Certificate
-                //           ...(FWheelRimDataList.copCertList.some(
-                //             (val) => val && val.trim() !== ""
-                //           )
-                //             ? [
-                //                 new TextRun({
-                //                   text: "Front Wheel Rim CoP Certificate:",
-                //                   bold: true,
-                //                   size: "12pt",
-                //                 }),
-                //               ]
-                //             : []),
-                //           new TextRun({
-                //             break: 1,
-                //             text: FWheelRimDataList.copCertList.join(", "),
-                //             size: "12pt",
-                //           }),
-
-                //           // Rear Wheel Rim CoP Certificate (separate paragraph)
-                //           new TextRun({ break: 2 }),
-                //           ...(RWheelRimDataList.copCertList.some(
-                //             (val) => val && val.trim() !== ""
-                //           )
-                //             ? [
-                //                 new TextRun({
-                //                   text: "Rear Wheel Rim CoP Certificate:",
-                //                   bold: true,
-                //                   size: "12pt",
-                //                 }),
-                //               ]
-                //             : []),
-                //           new TextRun({
-                //             break: 1,
-                //             text: RWheelRimDataList.copCertList.join(", "),
-                //             size: "12pt",
-                //           }),
-                //         ],
-                //       }),
-                //     ],
-                //   }),
-
-
-                // new TableCell({
-                //     width: { size: 3000, type: WidthType.DXA },
-                //     children: [
-                //       // Front Wheel Rim CoP Certificates
-                //       ...(getCOPHeader(FWheelRimDataList.copCertList)
-                //         ? [
-                //             new Paragraph({
-                //               style: "table1Header",
-                //               children: [
-                //                 new TextRun({
-                //                   size: "12pt",
-                //                   bold: true,
-                //                   text: "Front Wheel Rim " + getCOPHeader(FWheelRimDataList.copCertList),
-                //                 }),
-                //               ],
-                //             }),
-                //             new Paragraph({
-                //               children: [
-                //                 new TextRun({
-                //                   text: FWheelRimDataList.copCertList.join(", "),
-                //                   size: "12pt",
-                //                 }),
-                //               ],
-                //             }),
-                //           ]
-                //         : []),
-                  
-                //       // Rear Wheel Rim CoP Certificates
-                //       ...(getCOPHeader(RWheelRimDataList.copCertList)
-                //         ? [
-                //             new Paragraph({
-                //               style: "table1Header",
-                //               children: [
-                //                 new TextRun({
-                //                   size: "12pt",
-                //                   bold: true,
-                //                   text: "Rear Wheel Rim " + getCOPHeader(RWheelRimDataList.copCertList),
-                //                 }),
-                //               ],
-                //             }),
-                //             new Paragraph({
-                //               children: [
-                //                 new TextRun({
-                //                   text: RWheelRimDataList.copCertList.join(", "),
-                //                   size: "12pt",
-                //                 }),
-                //               ],
-                //             }),
-                //           ]
-                //         : []),
-                //     ],
-                //   }),
-                  
-
-
-
-                new TableCell({
+                
+      
+         new TableCell({
                   width: { size: 3000, type: WidthType.DXA },
                   children: [
                     // ---------------- Front Wheel Rim ----------------

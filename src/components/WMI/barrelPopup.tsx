@@ -54,7 +54,7 @@ const Popup: React.FC<PopupProps> = ({ onClose, onSubmit ,imageName,barrelDataPo
     image1 = require(`../../../src/assets/barrelImages/${imageName1}.jpg`);
   } catch (error) {
     console.error(`Error loading image: ${error}`);
-    console.log(`cannot fined the image ${imageName1}`);
+    // console.log(`cannot fined the image ${imageName1}`);
     // image1 = image; // Fallback to default image
   }
   const [imageBase64, setImageBase64] = useState<string>('');
@@ -208,7 +208,7 @@ formattedData['!cols'] = wscols;
       alert('Please ensure all fields are correctly filled (12 digits for Part Number).');
       return;
     }
-    console.log('barreldatapopup in popup:',barrelDataPop);
+    // console.log('barreldatapopup in popup:',barrelDataPop);
     exportToExcel(); // Export to Excel only when the form is valid
     onSubmit(formData,barrelDataPop); // Send data to the parent
     onClose(); // Close the popup

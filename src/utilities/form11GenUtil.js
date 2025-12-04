@@ -3,49 +3,6 @@ import { Document, Header, Paragraph, TextRun, AlignmentType, Table, TableRow, T
 
 let docSealImage;
 
-// function generateTableData(dataList) {
-//     let dataRows = [];
-//     if (dataList && dataList.length > 0) {
-//         dataList.map(currentData => {
-//             const rimRow = new TableRow({
-//                 children: [
-//                     new TableCell({
-//                         width: {
-//                             size: 3000,
-//                             WidthType: WidthType.DXA
-//                         },
-//                         children: [
-//                             new Paragraph({
-//                                 style: "TableRowContent",
-//                                 children: [
-//                                     new TextRun({
-//                                         text: currentData?.value
-//                                     })
-//                                 ]
-//                             })
-//                         ]
-//                     })
-//                 ]
-//             });
-//             dataRows.push(rimRow);
-//         });
-//     }
-//     return dataRows;
-// }
-/////
-// function generateTableData(dataList) {
-//     if (Array.isArray(dataList) && dataList.length > 0) {
-//         // Extract 'Wheel_rim_size' or 'value' from each wheelRim and join them into a single string
-//         return dataList.map(wheelRim =>
-//             wheelRim?.Wheel_Rim_Size?.properties?.Wheel_rim_size?.value ||
-//             wheelRim?.value ||
-//             ""
-//         ).join(" ");
-//     } else {
-//         return ""; // Return an empty string if no data is available
-//     }
-// }
-/////
 const prefixPattern = /^(M\/s\.?|m\/s\.?)\s*/i;
 function normalizeMsPrefix(rowString) {
     return rowString
@@ -113,7 +70,7 @@ async function fetchAndProcessImage(footerData) {
             },
         });
 
-        console.log("ImageRun instance created:", docSealImage);
+        // console.log("ImageRun instance created:", docSealImage);
 
         return docSealImage; // Return the docSealImage after it's ready
     } catch (error) {
@@ -124,7 +81,7 @@ async function fetchAndProcessImage(footerData) {
 async function generateForm11(form11Data, footerData) {
     const docSealImage = await fetchAndProcessImage(footerData);
 
-    console.log('form11Data:', form11Data);
+    // console.log('form11Data:', form11Data);
     const dataOfFooter = footerData.footerData.footer.properties;
     const dataOfFooterr = footerData.footerData.SealSign.properties;
 
@@ -149,33 +106,7 @@ if (typeof manufacturer_Name === 'string' && manufacturer_Name.trim().length > 0
 
 
 
-    // // Fetch the image as a Blob
-    // fetch(imageUrl)
-    //     .then(response => response.blob())
-    //     .then(blob => {
-    //         // Create a FileReader to convert the blob into Base64
-    //         const reader = new FileReader();
-
-    //         // Define the onload event handler for FileReader
-    //         reader.onloadend = () => {
-    //             const base64Data = reader.result; // This will be the Base64 encoded string
-    //             // Optionally, create an ImageRun object with the Base64 data
-    //             docSealImage = new ImageRun({
-    //                 data: base64Data, // Use the Base64 data here
-    //                 transformation: {
-    //                     width: 90,
-    //                     height: 50,
-    //                 }
-    //             });
-    //         };
-
-    //         // Read the blob as a data URL (Base64)
-    //         reader.readAsDataURL(blob);
-    //     })
-    //     .catch(error => {
-    //         console.error("Error loading image:", error);
-    //     });
-
+    
     const drawing1 = footerData.form11Data.diagrams.properties.Upload_drawing1.file_name;
     const drawing2 = footerData.form11Data.diagrams.properties.Upload_drawing2.file_name;
     const drawing3 = footerData.form11Data.diagrams.properties.Upload_drawing3.file_name;
@@ -1139,32 +1070,9 @@ if (typeof manufacturer_Name === 'string' && manufacturer_Name.trim().length > 0
     WMI_Extension_Code_List_Rows = generateTableData(WMI_Extension_Code_List);
     Serial_Number_List_Rows = generateTableData(Serial_Number_List);
 
-///////////////////////////////////////
 
 
-// function checkVdsType(variableName, vdsType) {
-//     switch (vdsType) {
-//       case "Month":
-//         console.log(`${variableName} consists the Month`);
-//         break;
-//       case "Year":
-//         console.log(`${variableName} consists the Year`);
-//         break;
-//       default:
-//         break; // Do nothing for other values
-//     }
-//   }
-  
-//   // Checking each VDS type separately
-//   checkVdsType("VDS_fourth_type_List_Rows", VDS_fourth_type_List_Rows);
-//   checkVdsType("VDS_fifth_type_List_Rows", VDS_fifth_type_List_Rows);
-//   checkVdsType("VDS_sixth_type_List_Rows", VDS_sixth_type_List_Rows);
-//   checkVdsType("VDS_seventh_type_List_Rows", VDS_seventh_type_List_Rows);
-//   checkVdsType("VDS_eighth_type_List_Rows", VDS_eighth_type_List_Rows);
-//   checkVdsType("VDS_ninth_type_List_Rows", VDS_ninth_type_List_Rows);
-//   checkVdsType("VDS_tenth_type_List_Rows", VDS_tenth_type_List_Rows);
-//   checkVdsType("VDS_eleventh_type_List_Rows", VDS_eleventh_type_List_Rows);
-// Store the first "Month" and "Year" occurrences
+
 let firstMonth = "";
 let firstYear = "";
 
@@ -1173,10 +1081,10 @@ function checkVdsType(valueData, typeData, valueLabel) {
     const lowerCaseTypeData = typeData.toLowerCase(); // Convert to lowercase
   
     if (lowerCaseTypeData.includes("month") && firstMonth === "") {
-      console.log(`${valueLabel} contains the Month`);
+    //   console.log(`${valueLabel} contains the Month`);
       firstMonth = valueLabel;
     } else if (lowerCaseTypeData.includes("year") && firstYear === "") {
-      console.log(`${valueLabel} contains the Year`);
+    //   console.log(`${valueLabel} contains the Year`);
       firstYear = valueLabel;
     }
   }
@@ -1193,8 +1101,8 @@ checkVdsType(VDS_value_ninth_List_Rows, VDS_ninth_type_List_Rows, "9");
 checkVdsType(VDS_value_tenth_List_Rows, VDS_tenth_type_List_Rows, "10");
 checkVdsType(VDS_eleventh_type_List_Rows, VDS_eleventh_type_List_Rows,"11");
 // Output stored first occurrences
-console.log("First Month stored:", firstMonth);
-console.log("First Year stored:", firstYear);
+// console.log("First Month stored:", firstMonth);
+// console.log("First Year stored:", firstYear);
 //////////////////////////////////////
 
     const concatenatedResult = `#${WMI_Code_List_Rows}${VDS_value_fourth_List_Rows}${VDS_value_fifth_List_Rows}${VDS_value_sixth_List_Rows}` +
@@ -3261,192 +3169,7 @@ const formattedDate = today.toLocaleDateString("en-GB");
                     ),
 
                 ],
-                // footers: {
-                //     default: new Footer({
-                //         children: [
-                //             new Table({
-                //                 width: {
-                //                     size: 10000,
-                //                     type: WidthType.DXA
-                //                 },
-                //                 rows: [
-                //                     new TableRow({
-                //                         children: [
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 3300,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children: [
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Manufacturer :" + dataOfFooter.Manufacture_Name.value
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             }),
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 3300,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children: [
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Sheet No : "
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             }),
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 3300,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children: [
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Test Agency : "
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             })
-                //                         ]
-                //                     }),
-                //                     new TableRow({
-                //                         children: [
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 3300,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children: [
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: ""
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             }),
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 3300,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children: [
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Document No: " + dataOfFooter.Document_No.value
-                //                                             }),                                                           
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             }),
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 3300,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children: [
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: ""
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             })
-                //                         ]
-                //                     }),
-                //                     new TableRow({
-                //                         children: [
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 3300,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children: [
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Name: " + dataOfFooter.Homologation_Engineer_Name.value
-                //                                             }),
-                //                                             new TextRun({
-                //                                                 text: "Designation:" + dataOfFooter.Engineer_Designation.value,
-                //                                                 break: 1
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             }),
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 3300,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children: [
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Date : "
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             }),
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 3300,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children: [
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Name: "
-                //                                             }),
-                //                                             new TextRun({
-                //                                                 text: "Designation: ",
-                //                                                 break: 1
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             })
-                //                         ]
-                //                     })
-                //                 ]
-                //             }),
-                //             new Paragraph({
-                //                 children: [
-                //                     new TextRun({
-                //                         children: ["Page | ", PageNumber.CURRENT]
-                //                     })
-                //                 ],
-                //                 alignment: AlignmentType.RIGHT
-                //             })
-                //         ]
-                //     })
-                // }
+               
                 footers: {
                     default: new Footer({
                         children: [

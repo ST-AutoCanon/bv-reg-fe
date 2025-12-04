@@ -218,7 +218,7 @@ const BarrelDataForm: React.FC = (BarrelData: any) => {
     const handleBarrel3Change = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>) => {
         const selectedValue = e.target.value;
         setSelectedBarrel3(selectedValue);
-        console.log('sd:', selectedValue)
+        // console.log('sd:', selectedValue)
         const { id, value } = e.target;
         setFormData((prev) => ({
             ...prev,
@@ -230,7 +230,7 @@ const BarrelDataForm: React.FC = (BarrelData: any) => {
         e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement | HTMLSelectElement>
     ) => {
         setSelectedBarrel(e.target.value);
-        console.log('event of handlechange4:', e.target.value);
+        // console.log('event of handlechange4:', e.target.value);
 
         const { id, value } = e.target;
         setFormData((prev) => ({
@@ -311,7 +311,7 @@ const BarrelDataForm: React.FC = (BarrelData: any) => {
 
     // Log updated formData when it changes using useEffect
     useEffect(() => {
-        console.log('Updatedd formData:', formData);
+        // console.log('Updatedd formData:', formData);
     }, [formData]); // This will run every time formData is updated
 
     //     const handleSubmitPopup = (data: { serialNumber: string; partNumber: string; description: string }[]) => {
@@ -378,10 +378,10 @@ const BarrelDataForm: React.FC = (BarrelData: any) => {
 
         // Log the extracted data if they are not empty
         if (partNumbers.length > 0) {
-            console.log('partNumbers:', partNumbers);
+            // console.log('partNumbers:', partNumbers);
         }
         if (descriptions.length > 0) {
-            console.log('descriptions:', descriptions);
+            // console.log('descriptions:', descriptions);
         }
 
 
@@ -448,7 +448,7 @@ const BarrelDataForm: React.FC = (BarrelData: any) => {
         }
 
         if (isPopupVisible) {
-            console.log("Popup is still open. Triggering handleSubmitPopup.");
+            // console.log("Popup is still open. Triggering handleSubmitPopup.");
 
 
         }
@@ -479,7 +479,7 @@ const BarrelDataForm: React.FC = (BarrelData: any) => {
         //     return;
         // }
 
-        console.log('before dataTOSubmit');
+        // console.log('before dataTOSubmit');
         dataToSubmit = {
             ...formData,
             finalOutput,
@@ -489,17 +489,17 @@ const BarrelDataForm: React.FC = (BarrelData: any) => {
         };
 
         // console.log('Retrieved token:', token);
-        console.log('dataToSubmit:', dataToSubmit);
+        // console.log('dataToSubmit:', dataToSubmit);
         try {
             const barrelAPI = `barrels`;
             const response = await Post(barrelAPI, dataToSubmit, config);
             const barrelResponse = response.data;
             if (response.status === 200) {
                 setResult({ message: `PART/ASSY Number: ${response.data.finalOutput}`, className: "success" });
-                console.log(`PART/ASSY Number: ${response.data.finalOutput}`);
+                // console.log(`PART/ASSY Number: ${response.data.finalOutput}`);
             } else {
                 setResult({ message: response.data.message, className: "error" });
-                console.log(response.data.message);
+                // console.log(response.data.message);
             }
 
         } catch (error) {
@@ -545,11 +545,11 @@ const BarrelDataForm: React.FC = (BarrelData: any) => {
                 },
             });
 
-            console.log("Full API Response:", response);
+            // console.log("Full API Response:", response);
 
             if (response.status === 200 && response.data?.barrels && Array.isArray(response.data.barrels)) {
                 const data = response.data.barrels;
-                console.log("Barrel Data:", data);
+                // console.log("Barrel Data:", data);
 
                 setBarrelData(data);
                 setBarrelDataPop(data);
@@ -560,13 +560,13 @@ const BarrelDataForm: React.FC = (BarrelData: any) => {
         } catch (error: any) {
             console.error("Error fetching all barrel data:", error);
             setResultMessage(error?.response?.data?.message || "Error: Unable to fetch barrel data.");
-            console.log(error?.response?.data?.message || "Error: Unable to fetch barrel data.")
+            // console.log(error?.response?.data?.message || "Error: Unable to fetch barrel data.")
         }
     };
     ///////////
 
 
-    console.log('barrelData:', barrelData);
+    // console.log('barrelData:', barrelData);
 
     const fetchSingleBarrelData = async () => {
 
@@ -582,11 +582,11 @@ const BarrelDataForm: React.FC = (BarrelData: any) => {
                 },
             });
 
-            console.log("API Response:", response);
+            // console.log("API Response:", response);
 
             if (response.status === 200 && response.data) {
                 const data = response.data;
-                console.log("Fetched Barrel Data:", data);
+                // console.log("Fetched Barrel Data:", data);
                 setBarrelData(data);
             } else {
                 setResultMessage("No data found for the provided Final Output.");
@@ -594,7 +594,7 @@ const BarrelDataForm: React.FC = (BarrelData: any) => {
         } catch (error: any) {
             console.error("Error fetching all barrel data:", error);
             setResultMessage(error?.response?.data?.message || "Error: Unable to fetch barrel data.");
-            console.log(error?.response?.data?.message || "Error: Unable to fetch barrel data.")
+            // console.log(error?.response?.data?.message || "Error: Unable to fetch barrel data.")
         }
     };
 

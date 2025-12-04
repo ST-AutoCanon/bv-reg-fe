@@ -510,7 +510,7 @@ const Homologation: FC = () => {
   const handleDropdownChange = (event: any) => {
     const selectedValue = event.target.value; // Get the selected value
     setSelectedOption(selectedValue); // Update state
-    console.log("Selected static option:", selectedValue); // Log the selected option
+    // console.log("Selected static option:", selectedValue); // Log the selected option
   };
   
 
@@ -784,7 +784,7 @@ const Homologation: FC = () => {
   };
 
   const handleReset = (formKey: any, formName: any) => {
-    console.log("formKey43535", formName);
+    // console.log("formKey43535", formName);
     if (formName === "notApplicabale") {
       switch (formKey) {
         case 0:
@@ -846,7 +846,7 @@ const Homologation: FC = () => {
         activeComponentName = resp.data;
       })
       .catch((error) => {
-        console.log("error");
+        // console.log("error");
       });
   };
 
@@ -883,7 +883,7 @@ const Homologation: FC = () => {
       let uploadFileUrl = "files/upload/" + formId;
       await Post(uploadFileUrl, formData, config)
         .then((resp) => {
-          console.log("resp", resp);
+          // console.log("resp", resp);
           setTimeout(function () {
             setDataSaved(false);
           }, 1000);
@@ -897,7 +897,7 @@ const Homologation: FC = () => {
           getHomologationFormData(pageName, "", "");
         })
         .catch((error) => {
-          console.log("error");
+          // console.log("error");
         });
     }
   };
@@ -958,11 +958,11 @@ const Homologation: FC = () => {
             getHomologationFormData(pageName, activeComponent, activeSuppliers);
           })
           .catch((error) => {
-            console.log("error");
+            // console.log("error");
           });
       })
       .catch((error) => {
-        console.log("error");
+        // console.log("error");
       });
   };
 
@@ -978,7 +978,7 @@ const Homologation: FC = () => {
         if (resp.data.status === "success") {
           let active: string = "";
           let checkArraydata: any[];
-          console.log("resp.data.body", resp.data.body);
+          // console.log("resp.data.body", resp.data.body);
 
           checkArraydata = activeComponentName
             ? activeComponentName
@@ -1346,9 +1346,9 @@ const Homologation: FC = () => {
             handleReset(formKey, "notApplicabale");
           });
 
-          console.log("formsData", formsData);
-          console.log("formsfeild", formsfeild);
-          console.log("suppliData", suppliData);
+          // console.log("formsData", formsData);
+          // console.log("formsfeild", formsfeild);
+          // console.log("suppliData", suppliData);
 
           reset1(homologationAllData);
           reset2(homologationAllData);
@@ -1380,7 +1380,7 @@ const Homologation: FC = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 
@@ -1410,14 +1410,14 @@ const Homologation: FC = () => {
 
     await Post(footerUrl, allFooterdata, config)
       .then((resp) => {
-        console.log("resp", resp);
+        // console.log("resp", resp);
         setTimeout(function () {
           setDataSaved(false);
         }, 5000);
         getHomologationFormData(pageName, "", "");
       })
       .catch((error) => {
-        console.log("error", error);
+        // console.log("error", error);
       });
   };
 
@@ -1432,7 +1432,7 @@ const Homologation: FC = () => {
         }
       })
       .catch((error) => {
-        console.log("error");
+        // console.log("error");
       });
   };
 
@@ -1585,7 +1585,7 @@ const Homologation: FC = () => {
       : str;
 
   const constructFormData = (formsData: any, resetId?: number) => {
-    console.log("formData", formsData);
+    // console.log("formData", formsData);
     let activeSupplierData = suppliersData.filter(
       (value: any, key: any) => value._id === activeSuppliers
     );
@@ -1650,10 +1650,10 @@ const Homologation: FC = () => {
                 formsData[fieldName] === "Km/h" ||
                 formsData[fieldName] === "Degrees"
               ) {
-                console.log(
-                  "Wheel_base&&&General_arrangement_vehicle",
-                  formsData[fieldName]
-                );
+                // console.log(
+                //   "Wheel_base&&&General_arrangement_vehicle",
+                //   formsData[fieldName]
+                // );
               } else {
                 let units: string = "";
                 for (const el of unitsName) {
@@ -1701,14 +1701,14 @@ const Homologation: FC = () => {
                 const isDateField = knownDateLabels.some(dateLabel => rawLabel.includes(dateLabel));
                 
                 if (isDateField && typeof value === "string") {
-                  console.log('this is date before condition logic', value);
+                  // console.log('this is date before condition logic', value);
                   value = formatDateToDDMMYYYY(value);
-                  console.log('this is date after condition logic', value);
+                  // console.log('this is date after condition logic', value);
                 }
                 
 
                 if (units) {
-                    console.log('unitsData', units);
+                    // console.log('unitsData', units);
                     display = {
                         value,
                         label,
@@ -1759,10 +1759,10 @@ const Homologation: FC = () => {
       {}
     );
 
-    console.log("constructData", {
-      data: formsLabelObjects,
-      formType: formType,
-    });
+    // console.log("constructData", {
+    //   data: formsLabelObjects,
+    //   formType: formType,
+    // });
     storeFormsfieldDat(
       { data: formsLabelObjects, formType: formType },
       resetId
@@ -1776,7 +1776,7 @@ const Homologation: FC = () => {
     await Post(formApiURL, formsFieldData, config)
       .then((resp) => {
         if (resp.data.status === "success") {
-          console.log("resp.data.body", resp.data);
+          // console.log("resp.data.body", resp.data);
           let resetButton = document.getElementById("resetId" + resetId);
           resetButton?.click();
           setDataSaved(true);
@@ -1784,7 +1784,7 @@ const Homologation: FC = () => {
         }
       })
       .catch((error) => {
-        console.log("error");
+        // console.log("error");
       });
   };
 
@@ -3113,9 +3113,9 @@ const Homologation: FC = () => {
                                             ].label === "VDS 4th" ? (
                                               <div className="form-input-group">
                                                 <>
-                                                  {console.log(
+                                                  {/* {console.log(
                                                     "Condition matched: 'VDS 4th'"
-                                                  )}
+                                                  )} */}
 
                                                   {/* Input Field (text or date) */}
 
@@ -3153,10 +3153,10 @@ const Homologation: FC = () => {
                                                     )}
                                                   />
 
-                                                  {console.log(
+                                                  {/* {console.log(
                                                     "feildProperty.properties[feildValue].value",
                                                     feildProperty.label
-                                                  )}
+                                                  )} */}
                                                   {/* Static Dropdown */}
                                                   <div className="form-dropdown-item">
                                                     <select
@@ -3198,13 +3198,13 @@ const Homologation: FC = () => {
                                                       }}
                                                     >
                                                       <>
-                                                        {console.log(
+                                                        {/* {console.log(
                                                           "feildProperty.properties[feildValue].value",
                                                           feildProperty
                                                             .properties[
                                                             feildValue
                                                           ].value
-                                                        )}
+                                                        )} */}
                                                       </>
                                                       <option value=" ">
                                                         Select Option
@@ -3235,9 +3235,9 @@ const Homologation: FC = () => {
                                               ].label === "VDS 5th" ? (
                                               <div className="form-input-group">
                                                 <>
-                                                  {console.log(
+                                                  {/* {console.log(
                                                     "Condition matched: 'VDS 5th'"
-                                                  )}
+                                                  )} */}
 
                                                   {/* Hidden Input for Label */}
                                                   <Input

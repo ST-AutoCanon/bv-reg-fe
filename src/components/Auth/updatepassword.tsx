@@ -63,13 +63,13 @@ const NewSignin: FC = () => {
                 if (resp.data.status === 'success') {
                     setpasswordCahnge(true)
                     dispatch(setUserData({}));
-                    console.log('resp.data', resp.data)
+                    // console.log('resp.data', resp.data)
                     // navigate(`/Dashboard`);
                 }
                 if (resp.data.status === 'failure') { }
             })
             .catch((error) => {
-                console.log('error');
+                // console.log('error');
             });
     };
     const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {

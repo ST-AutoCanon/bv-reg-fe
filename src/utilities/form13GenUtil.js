@@ -6,26 +6,7 @@ import { ms } from 'date-fns/locale';
 // Converts data into row format for table generation and Removed the Supplier Name from the document
 
 let docSealImage;
-// function generateTableData(dataList) {
-//     let dataRows = [];
-//     if (dataList && dataList.length > 0) {
-//         dataList.map(currentData => {
-//             const rimRow = new TableRow({
-//                 children: [                   
-//                     new TableCell({
-//                         width: {
-//                             size: 3000,
-//                             WidthType: WidthType.DXA
-//                         },
-//                         children: [
-//                             new Paragraph({
-//                                 style: "TableRowContent",
-//                                 children: [
-//                                     new TextRun({
-//                                         text: currentData.value
-//                                     })      ]                            })                        ]
-//                     })                ]            });            dataRows.push(rimRow);        });    }    return dataRows;
-// }
+
 const prefixPattern = /^(M\/s\.?|m\/s\.?)\s*/i;
 function normalizeMsPrefix(rowString) {
     return rowString
@@ -156,26 +137,7 @@ function normalizeWithTwoUnits(value, unit1, unit2) {
   const HOURS = 'Hours';
   const MINUTES = 'Minutes';
 
-// function generateTableData(dataList) {
-//     if (Array.isArray(dataList) && dataList.length > 0) {
-//         // Extract 'Wheel_rim_size' or 'value' from each wheelRim
-//         const values = dataList.map(wheelRim => 
-//             wheelRim?.Wheel_Rim_Size?.properties?.Wheel_rim_size?.value || 
-//             wheelRim?.value || 
-//             ""
-//         );
-        
-//         // If there's more than one value, join them with a hyphen
-//         if (values.length > 1) {
-//             return values.join(" | ");
-//         } else {
-//             return values[0] || ""; // Return the single value if there's only one
-//         }
 
-//     } else {
-//         return ""; // Return an empty string if no data is available
-//     }
-// }
 async function fetchAndProcessImage(footerData) {
     const dataOfFooterr = footerData.footerData.SealSign.properties;
 
@@ -208,7 +170,7 @@ async function fetchAndProcessImage(footerData) {
         },
       });
   
-      console.log("ImageRun instance created:", docSealImage);
+    //   console.log("ImageRun instance created:", docSealImage);
   
       return docSealImage; // Return the docSealImage after it's ready
     } catch (error) {
@@ -219,7 +181,7 @@ async function fetchAndProcessImage(footerData) {
   async function generateForm13(form13Data, footerData) {
     const docSealImage = await fetchAndProcessImage(footerData);
 
-    console.log('form13Data:',form13Data);
+    // console.log('form13Data:',form13Data);
    // General Description of Vehicle
 const generalDescriptionFile = footerData.form13Data.General_description_of_vehicle.properties.upload_drawing_showing_Different_views_of_the_vehicle.file_name;
 
@@ -281,46 +243,6 @@ let exposedConductivePartsModel=[];
  schematicHighlightingModel = [{ value: extractFileName(schematicHighlightingFile) }];
  exposedConductivePartsModel = [{ value: extractFileName(exposedConductivePartsFile) }];
 
-// // General Description Model
-// const generalDescriptionModel = { value: generalDescriptionFile };
-
-// // Battery Ventilation Model
-// const batteryVentilationModel = { value: batteryVentilationFile };
-
-// // Motor Power Model
-// const motorPowerCurveModel = { value: motorPowerCurveFile };
-
-// // Radiator Drawing Model
-// const radiatorDrawingModel = { value: radiatorDrawingFile };
-
-// // Charging Profile Model
-// const chargingProfileModel = { value: chargingProfileFile };
-
-// // Electrical Details Models
-// const schematicDrawingModel = { value: schematicDrawingFile };
-// const schematicHighlightingModel = { value: schematicHighlightingFile };
-// const exposedConductivePartsModel = { value: exposedConductivePartsFile };
-
-// Initialize Arrays
-// let generalDescriptionRows = [];
-// let batteryVentilationRows = [];
-// let motorPowerCurveRows = [];
-// let radiatorDrawingRows = [];
-// let chargingProfileRows = [];
-// let electricalDetailsRows = [];
-// let electricalDetails1Rows = [];
-// let electricalDetails2Rows = [];
-// // Push Models into Arrays
-// generalDescriptionRows.push(generalDescriptionModel);
-// batteryVentilationRows.push(batteryVentilationModel);
-// motorPowerCurveRows.push(motorPowerCurveModel);
-// radiatorDrawingRows.push(radiatorDrawingModel);
-// chargingProfileRows.push(chargingProfileModel);
-
-// // Electrical Details Rows
-// electricalDetailsRows.push(schematicDrawingModel);
-// electricalDetails1Rows.push(schematicHighlightingModel);
-// electricalDetails2Rows.push(exposedConductivePartsModel);
 
 // Generate Rows
 const drawingUploadRows = generateTableData(generalDescriptionModel);
@@ -347,45 +269,6 @@ if (typeof manufacturer_Name === 'string' && manufacturer_Name.trim().length > 0
     let trimmedManu = manufacturer_Name.trim();
     manufacturer_Name = `M/s. ${trimmedManu[0].toUpperCase()}${trimmedManu.slice(1)}`;
 }
-    // let imageUrl;
-
-    // const fileName = dataOfFooterr.Upload_Seal.file_name;
-    // imageUrl = `https://bv-reg.com/api/files/downloads/${fileName}`;  // Use the correct backend port
-    // // console.log("Image loaded successfully:", fileName);
-    
-    
-    // // Fetch the image as a Blob
-    // fetch(imageUrl)
-    //   .then(response => response.blob())
-    //   .then(blob => {
-    //     // Create a FileReader to convert the blob into Base64
-    //     const reader = new FileReader();
-    
-    //     // Define the onload event handler for FileReader
-    //     reader.onloadend = () => {
-    //       const base64Data = reader.result; // This will be the Base64 encoded string
-    
-    //       // Log the Base64 encoded data
-    //     //   console.log("Base64 Image Data:", base64Data);
-    
-    //       // Optionally, create an ImageRun object with the Base64 data
-    //       docSealImage = new ImageRun({
-    //         data: base64Data, // Use the Base64 data here
-    //         transformation: {
-    //           width: 90,
-    //           height: 50,
-    //         }
-    //       });
-    
-    //     //   console.log("ImageRun instance created:", docSealImage);
-    //     };
-    
-    //     // Read the blob as a data URL (Base64)
-    //     reader.readAsDataURL(blob);
-    //   })
-    //   .catch(error => {
-    //     console.error("Error loading image:", error);
-    //   });
 
     const generalDescOfVehicleList = form13Data?.General_arrangement_of_the_vehicle?.generalArrangementOfTheVehicle;
     const tractionBatteryPackList = form13Data?.Traction_Battery_Pack?.TractionBatterypack;
@@ -9741,197 +9624,8 @@ const formattedDate = today.toLocaleDateString("en-GB");
                         ]
                     })
                 ],
-                // footers: {
-                //     default: new Footer({
-                //         children:[
-                //             new Table({
-                //                 width: {
-                //                     size: 9000,
-                //                     type: WidthType.DXA
-                //                 },
-                //                 columnWidths: [3300,3300,3300],
-                //                 rows: [
-                //                     new TableRow({
-                //                         children: [
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 4000,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children:[
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Manufacturer:"+dataOfFooter.Manufacture_Name.value
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             }),
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 4000,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children:[
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Sheet No : "
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             }),
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 4000,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children:[
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Test Agency : "
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             })
-                //                         ]
-                //                     }),
-                //                     new TableRow({
-                //                         children: [
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 4000,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children:[
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: ""
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             }),
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 4000,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children:[
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Document No: "+dataOfFooter.Document_No.value
-                //                                             }),
-                //                                             new TextRun({
-                //                                                 text: "",
-                //                                                 break: 1
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             }),
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 4000,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children:[
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Test Agency : "
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             })
-                //                         ]
-                //                     }),
-                //                     new TableRow({
-                //                         children: [
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 4000,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children:[
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Name: "+dataOfFooter.Homologation_Engineer_Name.value
-                //                                             }),
-                //                                             new TextRun({
-                //                                                 text: "Designation: "+dataOfFooter.Engineer_Designation.value,
-                //                                                 break: 1
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             }),
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 4000,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children:[
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Date : "
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             }),
-                //                             new TableCell({
-                //                                 width: {
-                //                                     size: 4000,
-                //                                     WidthType: WidthType.DXA
-                //                                 },
-                //                                 children:[
-                //                                     new Paragraph({
-                //                                         style: "redColorText",
-                //                                         children: [
-                //                                             new TextRun({
-                //                                                 text: "Name: "
-                //                                             }),
-                //                                             new TextRun({
-                //                                                 text: "Designation: ",
-                //                                                 break: 1
-                //                                             })
-                //                                         ]
-                //                                     })
-                //                                 ]
-                //                             })
-                //                         ]
-                //                     })
-                //                 ]
-                //             }),
-                //             new Paragraph({
-                //                 children:[
-                //                     new TextRun({
-                //                         children: ["Page | ", PageNumber.CURRENT]
-                //                     })
-                //                 ],
-                //                 alignment: AlignmentType.RIGHT
-                //             })
-                //         ]
-                //     })
-                // }
+                                        style: "redColorText",
+
                 footers: {
                     default: new Footer({
                         children: [

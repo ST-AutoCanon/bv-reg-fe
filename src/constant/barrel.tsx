@@ -265,7 +265,7 @@ export const barrel3Alternate77 = [
 export function getBarrel3Options(selectedBarrel1Value: string): { value: string; name: string }[] {
     // If the selected value in barrel1A is "77", return barrel3Alternate77
     if (selectedBarrel1Value === "77") {
-        console.log('selected barrel:77:',barrel3Alternate77)
+        // console.log('selected barrel:77:',barrel3Alternate77)
         return barrel3Alternate77;
     }
 
@@ -291,7 +291,7 @@ export const barrel4Alternate77 = [
 export function getBarrel4Options(selectedBarrel1Value: string): { value: string; name: string }[] {
     // If the selected value in barrel1A is "77", return barrel3Alternate77
     if (selectedBarrel1Value === "77") {
-        console.log('selected barrel:77:',barrel4Alternate77)
+        // console.log('selected barrel:77:',barrel4Alternate77)
         return barrel4Alternate77;
     }
 
