@@ -721,7 +721,7 @@ async function generateForm7(form7Data, footerData) {
         supplier: supplierName,
         value:
           vehDesc?.Front_Suspension?.properties
-            ?.Type_of_Shock_absorbers_provided_at_the_front_and_Rear?.value,
+            ?.Type_of_Shock_absorbers_provided_at_the_Front?.value,
       };
       Type_of_Shock_absorbers_front_list.push(Type_of_Shock_absorbers_front);
       // console.log(
@@ -732,7 +732,7 @@ async function generateForm7(form7Data, footerData) {
         supplier: supplierName,
         value:
           vehDesc?.Rear_Suspension?.properties
-            ?.Type_of_Shock_absorbers_provided_at_the_front_and_Rear?.value,
+            ?.Type_of_Shock_absorbers_provided_at_the_Rear?.value,
       };
       Type_of_Shock_absorbers_rear_list.push(Type_of_Shock_absorbers_rear);
 
@@ -740,7 +740,7 @@ async function generateForm7(form7Data, footerData) {
         supplier: supplierName,
         value:
           vehDesc?.Front_Suspension?.properties
-            ?.Type_of_springs_provided_at_front_and_Rear?.value,
+            ?.Type_of_springs_provided_at_Front?.value,
       };
       Type_of_springs_front_list.push(Type_of_springs_front);
 
@@ -748,7 +748,7 @@ async function generateForm7(form7Data, footerData) {
         supplier: supplierName,
         value:
           vehDesc?.Rear_Suspension?.properties
-            ?.Type_of_springs_provided_at_front_and_Rear?.value,
+            ?.Type_of_springs_provided_at_Rear?.value,
       };
       Type_of_springs_rear_list.push(Type_of_springs_rear);
 
