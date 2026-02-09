@@ -1116,9 +1116,13 @@ async function generateForm7(form7Data, footerData) {
       );
     }
   });
-  const Working_voltage_Operating_Voltage_Rows = getWheelRimsTableData(
+ const Working_voltage_Operating_Voltage_Rows1 = getWheelRimsTableData(
     Working_voltage_Operating_Voltage_List
   );
+  let Working_voltage_Operating_Voltage_Rows  = normalizeWithUnit(Working_voltage_Operating_Voltage_Rows1, V);
+  // const Working_voltage_Operating_Voltage_Rows = getWheelRimsTableData(
+  //   Working_voltage_Operating_Voltage_List
+  // );
   // Updated code: Mapping General arrangement of the vehicle data and pushing to table
   let Number_of_seating_positions_List = [];
   GeneralarrangementofthevehicleList.map((vehDesc) => {
