@@ -271,7 +271,7 @@ if (typeof manufacturer_Name === 'string' && manufacturer_Name.trim().length > 0
      const Height_of_VIN_characters_Rows1 = generateTableData(
     Height_of_VIN_characters_List
   );
-  let Height_of_VIN_characters_Rows  = normalizeWithUnit(Height_of_VIN_characters_Rows1,V);
+  let Height_of_VIN_characters_Rows  = normalizeWithUnit(Height_of_VIN_characters_Rows1,MM);
     const Example_of_Engine_Motor_No_Rows = generateTableData(Example_of_Engine_Motor_No_List);
     const Example_of_Chassis_No_with_Month_Year_of_Manufacture_Rows = generateTableData(Example_of_Chassis_No_with_Month_Year_of_Manufacture_List);
 
