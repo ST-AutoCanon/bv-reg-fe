@@ -313,7 +313,7 @@ const Home: FC = () => {
                                 <ListItem>Documentation Process</ListItem>
                                 <ListItem>Product Data Table Preparation</ListItem>
                                 <ListItem>Certification Initiation</ListItem>
-                                <ListItem>Execution of Approval Proces</ListItem>
+                                <ListItem>Execution of Approval Process</ListItem>
                                 <ListItem>Certification Grant</ListItem>
                             </UnorderedList>
                             <Button mt={6} bg='color.200' color='color.500' _hover={{ bg: 'color.200', borderColor: 'color.300' }}>

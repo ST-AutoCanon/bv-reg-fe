@@ -268,7 +268,7 @@ import {
 } from "@chakra-ui/react";
 import jwt_decode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
-import logo from '../../assets/images/logo-lg.png';
+import logo from '../../assets/images/sukalpa_logo.png';
 import { ArrowBackIcon,ViewIcon, ViewOffIcon} from '@chakra-ui/icons';
 import { Post } from "../../utilities/service";
 import { useDispatch,useSelector } from 'react-redux'
