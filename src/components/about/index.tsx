@@ -169,7 +169,7 @@ const About: FC = () => {
                             <ListItem>Documentation Process</ListItem>
                             <ListItem>Product Data Table Preparation</ListItem>
                             <ListItem>Certification Initiation</ListItem>
-                            <ListItem>Execution of Approval Proces</ListItem>
+                            <ListItem>Execution of Approval Process</ListItem>
                             <ListItem>Certification Grant</ListItem>
                         </UnorderedList>
 
