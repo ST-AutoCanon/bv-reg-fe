@@ -6,12 +6,12 @@ import autoBanner from '../../assets/images/auto-banner.png';
 import autoluggage from '../../assets/images/autoluggage.png';
 import autopassenger from '../../assets/images/autopassenger.png';
 import bikeBanner from '../../assets/images/bike-banner.png';
-import auto from '../../assets/images/auto.png';
-import bike from '../../assets/images/bike.png';
-import car from '../../assets/images/car.png';
+import car from '../../assets/images/car1.jpeg';
+import auto from '../../assets/images/auot1.jpeg';
+import truck from '../../assets/images/truck.jpeg';
 
 
-import cycle from '../../assets/images/cycle.png';
+import bike from '../../assets/images/bike1.jpeg'
 import banner_aboutabout_baner from '../../assets/images/banner_aboutabout_baner.png';
 
 import { useEffect, useState } from "react";
@@ -411,27 +411,27 @@ const Home: FC = () => {
                     </Heading>
                     <Slider {...threeSlideBanner}>
                         <Box width={["100%", "100%",]}>
-                            <Image src={cycle} alt='car' />
-                        </Box>
-
-                        <Box width={["100%", "100%",]}>
                             <Image src={bike} alt='car' />
                         </Box>
+
                         <Box width={["100%", "100%",]}>
                             <Image src={auto} alt='car' />
                         </Box>
                         <Box width={["100%", "100%",]}>
                             <Image src={car} alt='car' />
                         </Box>
+                        <Box width={["100%", "100%",]}>
+                            <Image src={truck} alt='car' />
+                        </Box>
 
+                        <Box width={["100%", "100%",]}>
+                            <Image src={car} alt='car' />
+                        </Box>
                         <Box width={["100%", "100%",]}>
                             <Image src={auto} alt='car' />
                         </Box>
                         <Box width={["100%", "100%",]}>
                             <Image src={bike} alt='car' />
-                        </Box>
-                        <Box width={["100%", "100%",]}>
-                            <Image src={cycle} alt='car' />
                         </Box>
                     </Slider>
                 </Box>
