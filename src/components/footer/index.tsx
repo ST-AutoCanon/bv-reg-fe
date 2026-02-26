@@ -9,7 +9,7 @@ import {
     Link
   } from '@chakra-ui/react';
   import Facebook from '../../assets/images/facebook.svg';
-  import Twitter from '../../assets/images/twitter.svg';
+  import Twitter from '../../assets/images/twitternew.svg';
   import Linkedin from '../../assets/images/LinkedIn.svg';
 
 const Footer : FC = () =>{
