@@ -400,6 +400,8 @@ const Register: FC = () => {
                                         >
                                             <option value="2-Wheeler">2-Wheeler</option>
                                             <option value="3-Wheeler">3-Wheeler</option>
+                                            <option value="Bus">BUS</option>
+                                            
                                         </Select>                                      
                                         <FormHelperText color="red">
                                             <>

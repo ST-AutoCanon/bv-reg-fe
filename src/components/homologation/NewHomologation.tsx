@@ -600,9 +600,12 @@ const Newhomologation: FC<ChildProps> = ({ onClose }) => {
     };
 
     const changeHandler = (event: any) => {
-        if (event.target.value === '2-Wheeler' || event.target.value === '3-Wheeler') {
-            setcheckVehicleType(event.target.value);
-        }
+        // if (event.target.value === '2-Wheeler' || event.target.value === '3-Wheeler') {
+        //     setcheckVehicleType(event.target.value);
+        // }
+        if (event.target.name === "vehicle_type") {
+    setcheckVehicleType(event.target.value);
+}
         if (event.target.name === 'vehicle_max_speed') {
             setspeedValue(event.target.value)
         }
@@ -630,6 +633,7 @@ const Newhomologation: FC<ChildProps> = ({ onClose }) => {
     const onSubmit = (data: any) => {
         storeHomologationData(data);
     };
+    console.log("vehicleType1 =", vehicleType1);
 
     return (
         <>

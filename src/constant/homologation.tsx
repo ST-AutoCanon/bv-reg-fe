@@ -17,13 +17,13 @@ export const typeOfVehicle = [
     {
         name: "Bus",
         value: "Bus",
-        disabled: true
+        disabled: false
     },
     {
         name: "Truck",
         value: "Truck",
         disabled: true
-    }
+    },
 ]
 
 export const fuelType = [
@@ -92,7 +92,19 @@ export const VehicleMaxspeed = [
         value: "Greater than  25 kmph",
         disabled: false,
         typeOfVehicle: '3-Wheeler'
-    }
+    },
+    {
+    name: "Less than 70 kmph",
+    value: "Less than 70 kmph",
+    disabled: false,
+    typeOfVehicle: "Bus"
+},
+{
+    name: "Greater than 70 kmph",
+    value: "Greater than 70 kmph",
+    disabled: false,
+    typeOfVehicle: "Bus"
+},
 ]
 
 export const NominalPowerofMotor = [
@@ -125,7 +137,19 @@ export const NominalPowerofMotor = [
         value: "Greater than 2KWatt",
         disabled: false,
         typeOfVehicle: '3-Wheeler'
-    }
+    },
+    {
+    name: "Less than 100 KW",
+    value: "Less than 100 KW",
+    disabled: false,
+    typeOfVehicle: "Bus"
+},
+{
+    name: "Greater than 100 KW",
+    value: "Greater than 100 KW",
+    disabled: false,
+    typeOfVehicle: "Bus"
+},
 ]
 
 export const PeakPowerofMotor = [
@@ -158,7 +182,19 @@ export const PeakPowerofMotor = [
         value: "Greater than 2KWatt",
         disabled: false,
         typeOfVehicle: '3-Wheeler'
-    }
+    },
+    {
+    name: "Less than 150 KW",
+    value: "Less than 150 KW",
+    disabled: false,
+    typeOfVehicle: "Bus"
+},
+{
+    name: "Greater than 150 KW",
+    value: "Greater than 150 KW",
+    disabled: false,
+    typeOfVehicle: "Bus"
+},
 ]
 
 export const Length = [
@@ -179,7 +215,13 @@ export const Length = [
         value: "Less than 4m",
         disabled: false,
         typeOfVehicle: '3-Wheeler'
-    }
+    },
+    {
+    name: "Greater than 4m",
+    value: "Greater than 4m",
+    disabled: false,
+    typeOfVehicle: "Bus"
+}
 
 ]
 
@@ -207,7 +249,13 @@ export const Width = [
         value: "Less than 1.6m",
         disabled: false,
         typeOfVehicle: '3-Wheeler'
-    }
+    },
+    {
+    name: "Greater than 4m",
+    value: "Greater than 4m",
+    disabled: false,
+    typeOfVehicle: "Bus"
+}
 
 
 ]
@@ -230,7 +278,13 @@ export const Height = [
         value: "Less than 2.5m",
         disabled: false,
         typeOfVehicle: '3-Wheeler'
-    }
+    },
+    {
+    name: "Greater than 2m",
+    value: "Greater than 2m",
+    disabled: false,
+    typeOfVehicle: "Bus"
+}
 ]
 
 
