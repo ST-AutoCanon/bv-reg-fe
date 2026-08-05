@@ -346,6 +346,8 @@ const Login: FC = () => {
                 } else if (resp.data.status === 'success') {
 // console.log('login success')
 // console.log('Vehicle Type:', resp.data.vehicleType); // ✅ log here
+console.log("Login API Response:", resp.data);
+console.log("Vehicle Type from API:", resp.data.vehicleType);
 
                     dispatch(setToken(resp.data.accessToken));
                     const decoded: any = jwt_decode(resp.data.accessToken);

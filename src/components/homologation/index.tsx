@@ -71,6 +71,10 @@ let threeColumnHelper: any;
 let threeColumns: any;
 let twoWheelerData: any = [];
 let threeWheelerData: any = [];
+let busData:any=[];
+let bus: any;
+let busColumnHelper: any;
+let busColumns: any;
 let circlestate: string = '';
 
 const Dashboard: FC = () => {
@@ -103,9 +107,16 @@ const Dashboard: FC = () => {
 
 
     const getHomologationData = async () => {
+        console.log("API URL:", searchApiURL);
         await Get(searchApiURL, config)
             .then(resp => {
                 if (resp.data.status === 'success') {
+                     console.log("API Response:", resp.data.body);
+
+    console.log(
+        "Vehicle Types:",
+        resp.data.body.map((item: any) => item.vehicle_type.value)
+    );
                     setHomologationData(resp.data.body);
                     // console.log('resp.data.bodyresp.data.bodyresp.data.body', resp.data.body)
 
@@ -118,10 +129,14 @@ const Dashboard: FC = () => {
                         return arr.indexOf(c) === index;
                     });
                     setTypeOfVehicleSelected(removedDuplicateValue);
+                    console.log("Available Vehicle Types:", removedDuplicateValue);
                     const twoWheelerDatas = resp.data.body.filter((item: any) => item.vehicle_type.value === '2-Wheeler');
                     const threeWheelerDatas = resp.data.body.filter((item: any) => item.vehicle_type.value === '3-Wheeler');
+                    const busDatas = resp.data.body.filter((item:any) => item.vehicle_type.value === "Bus"); 
+                    console.log("Bus Data:", busDatas);
                     twoWheelerData = twoWheelerDatas
                     threeWheelerData = threeWheelerDatas
+                    busData = busDatas;
                     dataPagination();
 
                 }
@@ -524,6 +539,101 @@ const Dashboard: FC = () => {
             })
         ];
 
+        // Bus pagination starts
+        let busRquestId: string = '';
+        // circlestates ? threeWheelerRquestId = circlestates : threeWheelerData.filter((item: any, key: number) => key === 0 ? threeWheelerRquestId = item._id : null)
+        // Determine the three-wheeler request ID
+        if (circlestates && busData.some((item: any) => item._id === circlestates)) {
+            busRquestId = circlestates;
+        } else {
+            // If circlestate is not provided or invalid, set it to the first entry in three-wheeler data
+            busRquestId = busData.length > 0 ? busData[0]._id : null;
+        }
+         bus = busData.map((homoData: any) => ({
+            homoID: (
+                <Text onClick={() => getAllFormsData(homoData._id)}>
+                    {busRquestId === homoData._id || circlestate === homoData._id ?
+                        <Text as={'span'} display={'block'} w={"24px"} h={"24px"} bg={"#7FBD2C"} borderRadius={"24px"}></Text> :
+                        <Text as={'span'} display={'block'} w={"24px"} h={"24px"} bg={"#ccc"} borderRadius={"24px"}></Text>}
+                </Text>
+
+            ),
+            RequestNumber: (
+                <Text onClick={() => getAllFormsData(homoData._id)}>
+                    {homoData.request_number}
+                </Text>
+
+            ),
+            CompanyName: (
+                <Text onClick={() => getAllFormsData(homoData._id)}>
+                    {userData.businessName}
+                </Text>
+
+            ),
+            VehicleType: (
+                <Text onClick={() => getAllFormsData(homoData._id)}>
+                    {homoData.vehicle_type.value}
+                </Text>
+
+            ),
+            version: homoData.version ?? 0,
+            // passRequestId: (
+            //     <Text>
+            //         <EditIcon cursor={'pointer'} w={4} h={4} onClick={() => homologationRequestId(homoData._id, homoData)} />
+            //     </Text>
+
+            // ),
+            passRequestId: (
+                <HStack spacing={3}>
+                  <EditIcon 
+                    cursor="pointer" 
+                    w={4} 
+                    h={4} 
+                    onClick={() => homologationRequestId(homoData._id, homoData)} 
+                  />
+                  <CloneIcon 
+                    cursor="pointer" 
+                    w={4} 
+                    h={4} 
+                    onClick={() => handleCloneRequest(homoData._id)} 
+                  />
+                </HStack>
+              ),
+        }));
+
+        // Need pass type of `tableDate` for ts autocomplete
+        busColumnHelper = createColumn<typeof bus[0]>();
+
+        busColumns = [
+            busColumnHelper.accessor("homoID", {
+                cell: (info: any) => info.getValue(),
+                header: ""
+            }),
+            busColumnHelper.accessor("RequestNumber", {
+                cell: (info: any) => info.getValue(),
+                header: "Request Number"
+            }),
+            busColumnHelper.accessor("CompanyName", {
+                cell: (info: any) => info.getValue(),
+                header: "Company Name"
+            }),
+            busColumnHelper.accessor("VehicleType", {
+                cell: (info: any) => info.getValue(),
+                header: "Vehicle Type"
+            }),
+            busColumnHelper.accessor("version", {
+                cell: (info: any) => `v${info.getValue() ?? 0}`,
+                header: "version"
+              }),
+            busColumnHelper.accessor("passRequestId", {
+                cell: (info: any) => info.getValue(),
+                header: "Action"
+            })
+        ];  
+        
+
+
+
         // getAllFormsData(twoWheelerRquestId);
         // setThreeCirclestate(threeWheelerRquestId)
 
@@ -546,6 +656,10 @@ const Dashboard: FC = () => {
             getAllFormsData(threeWheelerRquestId); // For 3-wheeler
             setThreeCirclestate(threeWheelerRquestId);
         }
+          else if (tabIndex === 2) {
+         getAllFormsData(busRquestId);
+          setThreeCirclestate(busRquestId);
+          }
     }
 
 
@@ -608,6 +722,18 @@ const Dashboard: FC = () => {
                             color={"rgba(0,0,0,0.4)"}
                             onClick={resetPercentageData}
                         >3-Wheeler</Tab>
+                        <Tab
+                            _selected={{
+                                color: 'rgba(0,0,0,1)',
+                                borderBottom: '5px solid #7FBD2C'
+                            }}
+                            borderBottom="5px solid #fff"
+                            maxW={"175px"}
+                            mr={"40px"}
+                            fontWeight={"800"}
+                            color={"rgba(0,0,0,0.4)"}
+                            onClick={resetPercentageData}
+                        >BUS</Tab>
 
 
                         <Spacer />
@@ -1152,6 +1278,298 @@ const Dashboard: FC = () => {
                                 </>
                             </TableContainer>
                         </TabPanel>
+                        <TabPanel p={0}>
+
+    <TableContainer className="table-container">
+
+        <>
+
+            {busData.length > 0 && (
+
+                <Table
+
+                    colorScheme="blue"
+
+                    emptyData={{
+
+                        text: "Nobody is registered here."
+
+                    }}
+
+                    totalRegisters={busData.length}
+
+                    onPageChange={(page) => setPage(page)}
+
+                    columns={busColumns}
+
+                    data={bus}
+
+                />
+
+            )}
+
+
+
+            <Flex
+
+                mt={"100px"}
+
+                mb={"50px"}
+
+                gap={14}
+
+                p={"30px 25px"}
+
+                overflow={["scroll", "scroll", "visible"]}
+
+                flexWrap={['nowrap', 'nowrap', 'wrap', 'wrap']}
+
+                justifyContent={'flex-start'}
+
+                columnGap={'15px'}
+
+            >
+
+                {
+
+                    // Bus
+
+                    PercentileData &&
+
+                    Object.keys(PercentileData).sort().map((item: any, key: number) => {
+if (item !== 'fileUploadData') {
+                                                    let checkDownLoad = process.env.REACT_APP_CHECK_DOWNLOAD
+                                                    let percentageFilled = Math.round(PercentileData[item] && PercentileData[item].percentageFilled);
+                                                    if (checkDownLoad === 'true') {
+                                                        percentageFilled = 100;
+                                                    }
+                                                    // if (item === 'form1AData' && percentageFilled>89 ) {
+                                                    //     percentageFilled = 100;
+                                                    //     // percentageFilled += 10;                                                 
+                                                    // //   console.log('form1AData:',item);
+                                                        
+                                                    // }
+                                                    if (item === 'form1AData') {
+                                                        percentageFilled = percentageFilled >= 89 ? 100 : Math.round((percentageFilled / 89) * 100);
+                                                        // console.log('form1AData:', item);
+                                                    }
+                                                    
+                                                    // if (item === 'form7Data' && percentageFilled>78 ) {
+                                                    //     percentageFilled = 100;
+                                                    //     // percentageFilled += 16;     
+                                                    //     // console.log('form7Data:',item);
+                                                    // }
+                                                    if (item === 'form7Data') {
+                                                        percentageFilled = percentageFilled >= 78 ? 100 : Math.round((percentageFilled / 78) * 100);
+                                                        // console.log('form7Data:', item);
+                                                    }
+                                                    
+                                                    // if (item === 'form8Data' && percentageFilled>50 ) {
+                                                    //     percentageFilled +=5;     
+                                                    // }
+                                                    // if (item === 'form8Data' && percentageFilled>84 ) {                                                       
+                                                    //         percentageFilled=100;
+                                                    //         // console.log('form8Data:',item);
+                                                       
+                                                    // }
+                                                    if (item === 'form8Data') {
+                                                        percentageFilled = percentageFilled >= 84 ? 100 : Math.round((percentageFilled / 84) * 100);
+                                                        // console.log('form8Data:', item);
+                                                    }
+                                                    
+                                                    let filledValue: any = percentageFilled;
+                                                    let integer: number = 0;
+                                                    let decimal: number = 0;
+                                                    let pushPercentageValue: any = []
+                                                    let handredPercentData = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
+                                                    let getPercentageLength: number = 0;
+                                                    if (filledValue >= 10) {
+                                                        filledValue = percentageFilled >= 10 ? Math.round(Math.round(percentageFilled / 100 * 100) / 10) : Math.round(Math.round(percentageFilled / 100 * 100));
+                                                        filledValue = filledValue.toString().split('.')
+                                                        integer = filledValue[0];
+                                                        if (filledValue[1] > 0) {
+                                                            decimal = filledValue[1];
+                                                        }
+                                                    } else {
+                                                        decimal = filledValue;
+                                                    }
+
+                                                    const bgColor = percentageFilled < 100 && percentageFilled > 1 ? '#05637D' : percentageFilled >= 95 ? '#7FBD2C' : '#E1E1E1';
+                                                    for (let i = 1; i <= integer; i++) {
+                                                        pushPercentageValue.push({ 'integer': 10 })
+                                                    }
+                                                    decimal > 0 && pushPercentageValue.push({ 'integer': decimal })
+                                                    return (
+                                                        <Box key={key} position={'relative'}>
+                                                            <Text fontSize={"16px"} color="#000000"
+                                                                textAlign={"center"}
+                                                                textTransform={'capitalize'}
+                                                                fontFamily={'Open Sans'}
+                                                                mb={'10px'}
+                                                                fontWeight={"700"}>{item.replace("Data", "")}</Text>
+
+                                                            <Text
+                                                                fontSize={"20px"}
+                                                                color="#000000"
+                                                                textAlign={"center"}
+                                                                position={'absolute'}
+                                                                top={'74px'}
+                                                                left={'40%'}
+                                                                zIndex={'1'}
+                                                                fontWeight={"700"}>{percentageFilled} %</Text>
+
+                                                            <Box
+                                                                bg={"#D9D9D9"}
+                                                                borderRadius={"10px"}
+                                                                w={"210px"}
+                                                                h={"103px"}
+                                                                p={"10px"}
+                                                                display={"flex"}
+                                                                position={"relative"}
+                                                            >
+                                                                {
+                                                                    (percentageFilled >= 95 || percentageFilled >= 0 && checkDownLoad === 'false') &&
+                                                                    <Box bg={"#EE7623"}
+                                                                        w={"42px"}
+                                                                        h={"42px"}
+                                                                        borderRadius="45px"
+                                                                        position={"absolute"}
+                                                                        top={"-17px"}
+                                                                        left={"-11px"}
+                                                                        border={"6px solid #fff"}
+                                                                        textAlign={"center"}
+                                                                        cursor={'pointer'}
+                                                                    >
+                                                                        <ArrowDownIcon onClick={() => downloadDocument(item)} mt={"5px"} boxSize={4} color={"#fff"} />
+                                                                    </Box>
+                                                                }
+
+
+                                                                {
+                                                                    pushPercentageValue.map((value: any, key: number) => {
+                                                                        getPercentageLength = pushPercentageValue.length;
+                                                                        return (
+                                                                            value.integer >= 5 &&
+                                                                            <Box bg={bgColor} w={"10%"}
+                                                                                h={Math.round(value.integer) >= 5 ? "85px" : (value.integer * 8.5) + 'px'}
+                                                                                ml={"3px"}
+                                                                                mr={'3px'}
+                                                                            >
+                                                                            </Box>
+                                                                        )
+                                                                    })
+
+                                                                }
+                                                                {
+                                                                    handredPercentData.map((value: any, key: number) => {
+                                                                        return (
+                                                                            key > getPercentageLength - 1 &&
+                                                                            <>
+                                                                                <Box bg={'#E1E1E1'} w={"10%"} h={"85px"} m={"0px 3px"} />
+                                                                            </>
+                                                                        )
+
+                                                                    })
+                                                                }
+
+                                                            </Box>
+
+
+
+                                                            <Text
+                                                                fontSize={"16px"}
+                                                                mt={'20px'}
+                                                                color="#000000"
+                                                                textAlign={"center"}
+                                                                fontFamily={'Open Sans'}
+                                                                fontWeight={"700"}>Uploaded Design Docs</Text>
+
+                                                            {
+                                                                fileData.sort().map((formsdata: any, key: number) => {
+                                                                    if (formsdata.formName === item) {
+                                                                        return (
+                                                                            <>
+                                                                                {
+
+                                                                                    formsdata.filseField.map((formValue: any, key: number) => {
+
+
+                                                                                        return (
+                                                                                            <>
+                                                                                                {
+                                                                                                    formValue.file_name !== '' ?
+
+                                                                                                        <Text
+                                                                                                            display={'flex'}
+                                                                                                            flexWrap={'nowrap'}
+                                                                                                            alignItems='center'
+                                                                                                            gap={'5px'}
+                                                                                                            fontSize={"12px"}
+                                                                                                            justifyContent={'center'}
+                                                                                                            pb={'5px'}
+                                                                                                            pt={'5px'}
+                                                                                                            cursor={'pointer'}
+                                                                                                            onClick={() => downloadFile(formValue.file_name)}
+                                                                                                        >
+                                                                                                            <Image src={ok} alt="brand" h={'13px'} w={'13px'} />
+                                                                                                            <Text as={'span'}
+                                                                                                                color={'#2373C2'}
+                                                                                                                className={'filename'}
+                                                                                                                display={'block'}
+                                                                                                                fontFamily={'sans-serif'}
+                                                                                                                title={formValue.lable}
+                                                                                                            >{formValue.lable}</Text>
+
+                                                                                                        </Text>
+
+                                                                                                        :
+                                                                                                        <Text
+
+                                                                                                            display={'flex'}
+                                                                                                            flexWrap={'nowrap'}
+                                                                                                            alignItems='center'
+                                                                                                            gap={'5px'}
+                                                                                                            fontSize={"12px"}
+                                                                                                            justifyContent={'center'}
+                                                                                                            pb={'5px'}
+                                                                                                            pt={'5px'}>
+                                                                                                            <Image src={cancel} alt="brand" h={'13px'} w={'13px'} />
+                                                                                                            <Text as={'span'}
+                                                                                                                color={'#2373C2'}
+                                                                                                                className={'filename'}
+                                                                                                                display={'block'}
+                                                                                                                fontFamily={'sans-serif'}
+                                                                                                                title={formValue.lable}
+                                                                                                            >{formValue.lable}</Text>
+
+                                                                                                        </Text>
+                                                                                                }
+                                                                                            </>
+                                                                                        )
+
+                                                                                    })
+                                                                                }
+                                                                            </>
+                                                                        )
+                                                                    }
+
+                                                                })
+
+                                                            }
+
+
+                                                        </Box>
+                                                    )
+                                                }
+                                            })
+                                        }
+
+
+                                    </Flex>
+                                </>
+                            </TableContainer>
+                        </TabPanel>
+
 
                     </TabPanels>
                 </Tabs>
