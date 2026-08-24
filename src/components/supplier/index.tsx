@@ -9,6 +9,7 @@ import {
   Button,
   Stack,
   Text,
+  HStack,
   Show,
   Menu,
   MenuButton,
@@ -36,12 +37,19 @@ import {
   ModalBody,
   ModalCloseButton,
   Modal,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
   useDisclosure,
   FormHelperText,
 } from "@chakra-ui/react";
 import { InfoIcon } from "@chakra-ui/icons";
 import Sbike from "../../assets/images/s-bike.png";
 import threeWheeler from "../../assets/images/three-wheeler.png";
+import BusImage from "../../assets/images/Busimage.png";
 import download from "../../assets/images/download.jpeg";
 import SealSign from "../../assets/images/SealSign.jpeg";
 import downloadIcon from "../../assets/images/downloadIcon.png";
@@ -53,7 +61,18 @@ import { Post, Get, PATCH } from "../../utilities/service";
 import AddSupplier from "./addSupplier";
 import ApproveSuccess from "../Auth/approveSuccess";
 import { format } from "date-fns";
-
+import ManufacturerDetails from "../homologation/BusPages/pages/Manufacturerdetails";
+import Manufacturerplantdetails from "../homologation/BusPages/pages/Manufacturerplantdetails";
+import VehicleBasicDetails from "../homologation/BusPages/pages/vehiclebasicdetails";
+import WeighmentDetails from "../homologation/BusPages/pages/weighmentdetails";
+import TyreAndWheelRim from "../homologation/BusPages/pages/tyresandwheelrim";
+import Document from "../homologation/BusPages/pages/Document";
+import Notification from "../homologation/BusPages/pages/Notification";
+import Setting from "../homologation/BusPages/pages/setting";
+import {
+  BusFormData,
+  initialBusFormData,
+} from "../homologation/BusPages/formData/BusFormData";
 /* Form Validation */
 import { useForm } from "react-hook-form";
 
@@ -176,6 +195,19 @@ import {
   VentilationOptions,
   MonthYear,
 } from "../../constant/supplier";
+import {
+  Building2,
+  Landmark,
+  BusFront,
+  Scale,
+  CircleGauge,
+  FileText,
+  Bell,
+  Settings,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+
 
 let formfeilds1: any = [];
 let formfeilds2: any = [];
@@ -203,6 +235,40 @@ interface AllFormsDataData {
   _id: string;
 }
 
+const busMenuItems = [
+  {
+    page: "Manufacturer Details",
+    icon: Building2,
+  },
+  {
+    page: "Manufacturer Plant Details",
+    icon: Landmark,
+  },
+  {
+    page: "Vehicle Basic Details",
+    icon: BusFront,
+  },
+  {
+    page: "Weighment Details",
+    icon: Scale,
+  },
+  {
+    page: "Tyre and wheel rim",
+    icon: CircleGauge,
+  },
+  {
+    page: "Documents",
+    icon: FileText,
+  },
+  {
+    page: "Notification",
+    icon: Bell,
+  },
+  {
+    page: "setting",
+    icon: Settings,
+  },
+];
 // Initialize with an empty state or appropriate default values
 const initialFooterData: AllFormsDataData = {
   footer: {
@@ -234,6 +300,7 @@ const initialFooterData: AllFormsDataData = {
 };
 
 const Homologation: FC = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const homologationDatas: any = useSelector(
     (state: RootState) => state.homologation.homologationData
   );
@@ -247,12 +314,44 @@ const Homologation: FC = () => {
     (state: RootState) => state.loginCredential.token
   );
   const searchApiURL = "getModelData/homologationRequestComponents";
-  const supplierURL = "supplier/";
-  const [homologationsData, sethomologationsData] = useState([]);
-  const [footerData, setFooterData] =
-    useState<AllFormsDataData>(initialFooterData);
-  const [pageName, setPageName] = useState<string | undefined>("");
-  const [activeTabs, setActiveTabs] = useState<string | undefined>("");
+const supplierURL = "supplier/";
+
+const [homologationsData, sethomologationsData] = useState([]);
+
+const [footerData, setFooterData] =
+  useState<AllFormsDataData>(initialFooterData);
+
+  const [busFormData, setBusFormData] =
+  useState<BusFormData>(initialBusFormData);
+  const updateBusFormData = <K extends keyof BusFormData>(
+  section: K,
+  data: BusFormData[K]
+) => {
+  setBusFormData((prev) => ({
+    ...prev,
+    [section]: data,
+  }));
+};
+
+const [pageName, setPageName] = useState<string | undefined>("");
+const {
+  isOpen: isBusMenuOpen,
+  onOpen: onBusMenuOpen,
+  onClose: onBusMenuClose,
+} = useDisclosure();
+
+
+useEffect(() => {
+  if (!homologationDatas?.vehicle_type) return;
+
+  if (homologationDatas.vehicle_type === "Bus") {
+    setPageName("Manufacturer Details");
+  } else {
+    setPageName("safety-component-1");
+  }
+}, [homologationDatas?.vehicle_type]);
+
+const [activeTabs, setActiveTabs] = useState<string | undefined>("");
   const [activeComponent, setActiveComponent] = useState<string | undefined>(
     ""
   );
@@ -839,16 +938,21 @@ const Homologation: FC = () => {
   };
 
   const getHomologationData = async (homologationData: {}) => {
-    await Post(searchApiURL, homologationData, config)
-      .then((resp) => {
-        sethomologationsData(resp.data);
+  await Post(searchApiURL, homologationData, config)
+    .then((resp) => {
+      sethomologationsData(resp.data);
+      activeComponentName = resp.data;
+
+      // Only 2W / 3W should use safety-component-1
+      if (homologationDatas?.vehicle_type !== "Bus") {
         setPageName("safety-component-1");
-        activeComponentName = resp.data;
-      })
-      .catch((error) => {
-        // console.log("error");
-      });
-  };
+      }
+    })
+    .catch((error) => {
+      // console.log("error");
+    });
+};
+  
 
   const termsAndCondition = (event: any) => {
     setIsChecked(event.target.checked);
@@ -973,6 +1077,8 @@ const Homologation: FC = () => {
     activeSupplier?: any,
     pageOrComponent?: string
   ) => {
+    const isBus = homologationDatas?.vehicle_type === "Bus";
+    
     await Get(formApiURL, config)
       .then((resp) => {
         if (resp.data.status === "success") {
@@ -1643,7 +1749,7 @@ const Homologation: FC = () => {
               } else if (
                 formsData[fieldName] === "mm" ||
                 formsData[fieldName] === "Kg" ||
-                formsData[fieldName] === "% or °(Degree)" ||
+                formsData[fieldName] === "% or �(Degree)" ||
                 formsData[fieldName] === "Amps" ||
                 formsData[fieldName] === "Volts" ||
                 formsData[fieldName] === "W/Km" ||
@@ -1681,13 +1787,13 @@ const Homologation: FC = () => {
 
                 // if (units) {
                 //   display = {
-                //     value: capitalizeFirstLetter(formsData[fieldName]), // ✅ Capitalized here
+                //     value: capitalizeFirstLetter(formsData[fieldName]), //  Capitalized here
                 //     label: formsData[fieldlabel],
                 //     units: units,
                 //   };
                 // } else {
                 //   display = {
-                //     value: capitalizeFirstLetter(formsData[fieldName]), // ✅ Capitalized here
+                //     value: capitalizeFirstLetter(formsData[fieldName]), //  Capitalized here
                 //     label: formsData[fieldlabel],
                 //   };
                 // }
@@ -1695,7 +1801,7 @@ const Homologation: FC = () => {
                 let value = capitalizeFirstLetter(formsData[fieldName]);
                 const label = formsData[fieldlabel];
 
-                // ✅ Use actual label text to check if it's a date field
+                //  Use actual label text to check if it's a date field
                 const rawLabel = (formsData[fieldlabel] || "").toLowerCase();
                 const knownDateLabels = ["tac validity", "date of submission"];
                 const isDateField = knownDateLabels.some(dateLabel => rawLabel.includes(dateLabel));
@@ -1890,18 +1996,18 @@ const Homologation: FC = () => {
     "Wire Diameter of Spring (mm)",
     "Free length of the spring (mm)",
     "Outer Coil diameter (mm)",
-    "Assembled length in “in-use position” (mm)",
-    "Assembled length in “not-in-use position” (mm)",
+    "Assembled length in in-use position (mm)",
+    "Assembled length in not-in-use position (mm)",
     "Test Voltage of motor",
     "Nominal speed of motor",
-    "Motor Maximum Speed, Min –1 or by default  reducer outlet shaft / gear box speed (specify gear engaged)",
-    "Maximum Power Speed  (min –1) and (km/h)",
+    "Motor Maximum Speed, Min 1 or by default  reducer outlet shaft / gear box speed (specify gear engaged)",
+    "Maximum Power Speed  (min 1) and (km/h)",
     "Maximum Power (kW)",
     "Maximum Thirty Minutes Power (kW)",
     "Maximum Thirty Minutes speed km/h (Reference in AIS-039 (Rev.1) and AIS-040 (Rev.2)",
     "Range as per AIS 040 (Rev.1) (km)",
-    "Speed at the beginning of the range (min –1)",
-    "Speed at the end of the range (min –1 )",
+    "Speed at the beginning of the range (min 1)",
+    "Speed at the end of the range (min 1 )",
     "Maximum Design speed of the vehicle",
     // "Input Voltage range of DC-DC Converter",
     // "Output Voltage range of DC-DC Converter",
@@ -1977,6 +2083,7 @@ const Homologation: FC = () => {
   }, []);
 
   const successMsg = "Data Saved Successfully";
+  const isBus = homologationDatas?.vehicle_type === "Bus";
   return (
     <>
       <Container maxWidth="100%" bg="#fff" p={0}>
@@ -1996,31 +2103,36 @@ const Homologation: FC = () => {
               "11%", // 62em+
             ]}
           >
-            <Menu>
-              <MenuButton
-                as={Button}
-                ml={["0", "30", "30%"]}
-                bg={"transparent"}
-                _hover={{ bg: "transparent" }}
-                _active={{ bg: "transparent" }}
-                rightIcon={<HamburgerIcon />}
-                color={"color.500"}
-              ></MenuButton>
-              <MenuList p={"0"}>
-                {homologationsData.map((value: any, key) => (
-                  <MenuItem
-                    key={key}
-                    onClick={() => getPageName(value.page)}
-                    _hover={{ bg: "#edf2f7" }}
-                    backgroundColor={
-                      value.page === pageName ? "#edf2f7" : "#fff"
-                    }
-                  >
-                    {value.page}
-                  </MenuItem>
-                ))}
-              </MenuList>
-            </Menu>
+            {!isBus && (
+  <Menu>
+    <MenuButton
+      as={Button}
+      ml={["0", "30", "30%"]}
+      bg="transparent"
+      _hover={{ bg: "transparent" }}
+      _active={{ bg: "transparent" }}
+      rightIcon={<HamburgerIcon />}
+      color="color.500"
+    />
+
+    <MenuList p="0">
+      {homologationsData
+        .filter((value: any) => value.components?.length > 0)
+        .map((value: any, key) => (
+          <MenuItem
+            key={key}
+            onClick={() => getPageName(value.page)}
+            _hover={{ bg: "#edf2f7" }}
+            backgroundColor={
+              value.page === pageName ? "#edf2f7" : "#fff"
+            }
+          >
+            {value.page}
+          </MenuItem>
+        ))}
+    </MenuList>
+  </Menu>
+)}
           </Box>
           <Show breakpoint="(min-width: 1024px)">
             <Box
@@ -2045,23 +2157,32 @@ const Homologation: FC = () => {
                   "16%", // 62em+
                 ]}
               >
-                {homologationDatas.vehicle_type === "3-Wheeler" ? (
-                  <Image
-                    src={threeWheeler}
-                    alt="brand"
-                    h={"72px"}
-                    w={"72px"}
-                    borderRadius={"50%"}
-                  />
-                ) : (
-                  <Image
-                    src={Sbike}
-                    alt="brand"
-                    h={"72px"}
-                    w={"72px"}
-                    borderRadius={"50%"}
-                  />
-                )}
+                {homologationDatas.vehicle_type === "Bus" ? (
+  <Image
+    src={BusImage}
+    alt="Bus"
+    boxSize="72px"
+    ml="30px"
+    borderRadius="50%"
+    objectFit="cover"
+  />
+) : homologationDatas.vehicle_type === "3-Wheeler" ? (
+  <Image
+    src={threeWheeler}
+    alt="3 Wheeler"
+    h="72px"
+    w="72px"
+    borderRadius="50%"
+  />
+) : (
+  <Image
+    src={Sbike}
+    alt="2 Wheeler"
+    h="72px"
+    w="72px"
+    borderRadius="50%"
+  />
+)}
               </Box>
               <Box
                 alignItems="center"
@@ -2193,22 +2314,31 @@ const Homologation: FC = () => {
                     "15%", // 62em+
                   ]}
                 >
-                  {homologationDatas.vehicle_type === "3-Wheeler" ? (
-                    <Image
-                      src={threeWheeler}
-                      alt="brand"
-                      h={"72px"}
-                      w={"72px"}
-                      borderRadius={"50%"}
-                    />
-                  ) : (
-                    <Image
-                      src={Sbike}
-                      alt="brand"
-                      h={"72px"}
-                      w={"72px"}
-                      borderRadius={"50%"}
-                    />
+                  {homologationDatas.vehicle_type === "Bus" ? (
+  <Image
+    src={BusImage}
+    alt="Bus"
+    boxSize="72px"
+    ml="30px"
+    borderRadius="50%"
+    objectFit="cover"
+  />
+) : homologationDatas.vehicle_type === "3-Wheeler" ? (
+  <Image
+    src={threeWheeler}
+    alt="3 Wheeler"
+    h="72px"
+    w="72px"
+    borderRadius="50%"
+  />
+) : (
+  <Image
+    src={Sbike}
+    alt="2 Wheeler"
+    h="72px"
+    w="72px"
+    borderRadius="50%"
+  />
                   )}
                 </Box>
                 <Box
@@ -2332,12 +2462,13 @@ const Homologation: FC = () => {
           justifyContent={"flex-start"}
           className="component-container"
         >
-          {homologationsData.map((value: any, key) => {
-            return (
-              pageName === value.page &&
-              pageName !== "File Uploads" && (
-                <>
-                  {value.components.map((value: any, key: any) => {
+          {!isBus &&
+  homologationsData.map((value: any, key) => {
+    return (
+      pageName === value.page &&
+      pageName !== "File Uploads" && (
+        <>
+          {value.components?.map((value: any, key: any) => {
                     return (
                       <Box
                         alignItems="center"
@@ -2399,11 +2530,387 @@ const Homologation: FC = () => {
           })}
         </Flex>
       </Container>
+
+
+{/* ================= BUS UI ================= */}
+
+{isBus && (
+  <Box width="100%">
+    
+    {/* ================= MOBILE MENU BUTTON ================= */}
+    <Box
+      display={{ base: "block", md: "none" }}
+      px={4}
+      py={3}
+      bg="#063D2E"
+    >
+      <Button
+        onClick={onBusMenuOpen}
+        bg="#0B5A44"
+        color="white"
+        _hover={{
+          bg: "#0D6B50",
+        }}
+      >
+        ☰
+      </Button>
+    </Box>
+
+    {/* ================= MOBILE DRAWER ================= */}
+
+    <Drawer
+      isOpen={isBusMenuOpen}
+      placement="left"
+      onClose={onBusMenuClose}
+    >
+      <DrawerOverlay />
+
+      <DrawerContent bg="#063D2E" color="white">
+        <DrawerCloseButton />
+
+        <DrawerHeader>
+          Bus Menu
+        </DrawerHeader>
+
+        <DrawerBody p={0}>
+          {busMenuItems.map((item) => (
+            <Box
+              key={item.page}
+              px="20px"
+              py="14px"
+              cursor="pointer"
+              bg={
+                pageName === item.page
+                  ? "#0B5A44"
+                  : "transparent"
+              }
+              _hover={{
+                bg: "#0B5A44",
+              }}
+              onClick={() => {
+                getPageName(item.page);
+                onBusMenuClose();
+              }}
+            >
+             <HStack spacing="12px">
+  <Box
+    w="22px"
+    h="22px"
+    minW="22px"
+    display="flex"
+    alignItems="center"
+    justifyContent="center"
+    flexShrink={0}
+  >
+    <item.icon
+      width={22}
+      height={22}
+      strokeWidth={2}
+    />
+  </Box>
+
+  <Text
+    fontSize="14px"
+    whiteSpace="nowrap"
+  >
+    {item.page}
+  </Text>
+</HStack>
+            </Box>
+          ))}
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
+
+    {/* ================= DESKTOP BUS LAYOUT ================= */}
+
+    <Flex
+      minH="calc(100vh - 60px)"
+      position="relative"
+      display={{ base: "none", md: "flex" }}
+    >
+
+      {/* ================= DESKTOP SIDEBAR ================= */}
+
+      <Box
+        w="245px"
+        minW="245px"
+        bg="#063D2E"
+        color="white"
+        position="sticky"
+        top="0"
+        mt="-92px"
+        h="calc(100vh - 20px)"
+        alignSelf="flex-start"
+        zIndex={20}
+        overflowY="auto"
+        overflowX="hidden"
+        flexShrink={0}
+      >
+        {busMenuItems.map((item) => (
+          <Box
+            key={item.page}
+            px="20px"
+            py="14px"
+            cursor="pointer"
+            bg={
+              pageName === item.page
+                ? "#0B5A44"
+                : "transparent"
+            }
+            _hover={{
+              bg: "#0B5A44",
+            }}
+            onClick={() =>
+              getPageName(item.page)
+            }
+          >
+            <HStack spacing="12px">
+  <Box
+    w="22px"
+    h="22px"
+    minW="22px"
+    display="flex"
+    alignItems="center"
+    justifyContent="center"
+    flexShrink={0}
+  >
+    <item.icon
+      width={22}
+      height={22}
+      strokeWidth={2}
+    />
+  </Box>
+
+  <Text
+    fontSize="14px"
+    whiteSpace="nowrap"
+  >
+    {item.page}
+  </Text>
+</HStack>
+          </Box>
+        ))}
+      </Box>
+
+      {/* ================= DESKTOP BUS CONTENT ================= */}
+
+      <Box
+        ml="205px"
+        w="calc(100% - 205px)"
+        minH="calc(100vh - 60px)"
+        p={{ base: 3, sm: 4, md: 6 }}
+        overflow="hidden"
+      >
+        {pageName === "Manufacturer Details" && (
+          <ManufacturerDetails
+            data={busFormData.manufacturerDetails}
+            onSave={(data) =>
+              updateBusFormData(
+                "manufacturerDetails",
+                data
+              )
+            }
+          />
+        )}
+
+        {pageName === "Manufacturer Plant Details" && (
+          <Manufacturerplantdetails
+            data={busFormData.manufacturerPlantDetails}
+            onSave={(data) =>
+              updateBusFormData(
+                "manufacturerPlantDetails",
+                data
+              )
+            }
+          />
+        )}
+
+        {pageName === "Vehicle Basic Details" && (
+          <VehicleBasicDetails
+            data={busFormData.vehicleBasicDetails}
+            onSave={(data) =>
+              updateBusFormData(
+                "vehicleBasicDetails",
+                data
+              )
+            }
+          />
+        )}
+
+        {pageName === "Weighment Details" && (
+          <WeighmentDetails
+            data={busFormData.weighmentDetails}
+            onSave={(data) =>
+              updateBusFormData(
+                "weighmentDetails",
+                data
+              )
+            }
+          />
+        )}
+
+        {pageName === "Tyre and wheel rim" && (
+          <TyreAndWheelRim
+            data={busFormData.tyreAndWheelRim}
+            onSave={(data) =>
+              updateBusFormData(
+                "tyreAndWheelRim",
+                data
+              )
+            }
+          />
+        )}
+
+        {pageName === "Documents" && (
+          <Document
+            data={busFormData.documents}
+            onSave={(data) =>
+              updateBusFormData(
+                "documents",
+                data
+              )
+            }
+          />
+        )}
+
+        {pageName === "Notification" && (
+          <Notification
+            data={busFormData.notification}
+            onSave={(data) =>
+              updateBusFormData(
+                "notification",
+                data
+              )
+            }
+          />
+        )}
+
+        {pageName === "setting" && (
+          <Setting
+            data={busFormData.setting}
+            onSave={(data) =>
+              updateBusFormData(
+                "setting",
+                data
+              )
+            }
+          />
+        )}
+      </Box>
+    </Flex>
+
+    {/* ================= MOBILE CONTENT ================= */}
+
+    <Box
+      display={{ base: "block", md: "none" }}
+      width="100%"
+      p={3}
+    >
+      {pageName === "Manufacturer Details" && (
+        <ManufacturerDetails
+          data={busFormData.manufacturerDetails}
+          onSave={(data) =>
+            updateBusFormData(
+              "manufacturerDetails",
+              data
+            )
+          }
+        />
+      )}
+
+      {pageName === "Manufacturer Plant Details" && (
+        <Manufacturerplantdetails
+          data={busFormData.manufacturerPlantDetails}
+          onSave={(data) =>
+            updateBusFormData(
+              "manufacturerPlantDetails",
+              data
+            )
+          }
+        />
+      )}
+
+      {pageName === "Vehicle Basic Details" && (
+        <VehicleBasicDetails
+          data={busFormData.vehicleBasicDetails}
+          onSave={(data) =>
+            updateBusFormData(
+              "vehicleBasicDetails",
+              data
+            )
+          }
+        />
+      )}
+
+      {pageName === "Weighment Details" && (
+        <WeighmentDetails
+          data={busFormData.weighmentDetails}
+          onSave={(data) =>
+            updateBusFormData(
+              "weighmentDetails",
+              data
+            )
+          }
+        />
+      )}
+
+      {pageName === "Tyre and wheel rim" && (
+        <TyreAndWheelRim
+          data={busFormData.tyreAndWheelRim}
+          onSave={(data) =>
+            updateBusFormData(
+              "tyreAndWheelRim",
+              data
+            )
+          }
+        />
+      )}
+
+      {pageName === "Documents" && (
+        <Document
+          data={busFormData.documents}
+          onSave={(data) =>
+            updateBusFormData(
+              "documents",
+              data
+            )
+          }
+        />
+      )}
+
+      {pageName === "Notification" && (
+        <Notification
+          data={busFormData.notification}
+          onSave={(data) =>
+            updateBusFormData(
+              "notification",
+              data
+            )
+          }
+        />
+      )}
+
+      {pageName === "setting" && (
+        <Setting
+          data={busFormData.setting}
+          onSave={(data) =>
+            updateBusFormData(
+              "setting",
+              data
+            )
+          }
+        />
+      )}
+    </Box>
+
+  </Box>
+)}
       {/** ============== COMPONENT SECTION  STARTS =================*/}
 
       {/** ============== SUPPLIER SECTION  STARTS =================*/}
 
-      {pageName !== "File Uploads" && (
+      {!isBus && pageName !== "File Uploads" && (
         <Container maxWidth="100%" bg={"color.800"} p={0}>
           <Container
             maxWidth="100%"
