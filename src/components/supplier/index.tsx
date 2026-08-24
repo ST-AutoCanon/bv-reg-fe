@@ -2319,7 +2319,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
     src={BusImage}
     alt="Bus"
     boxSize="72px"
-    ml="30px"
+    ml="45px"
     borderRadius="50%"
     objectFit="cover"
   />
@@ -2625,28 +2625,44 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
     {/* ================= DESKTOP BUS LAYOUT ================= */}
 
     <Flex
-      minH="calc(100vh - 60px)"
-      position="relative"
-      display={{ base: "none", md: "flex" }}
-    >
+  minH="calc(100vh - 60px)"
+  position="relative"
+  display={{ base: "none", md: "flex" }}
+>
 
       {/* ================= DESKTOP SIDEBAR ================= */}
 
-      <Box
-        w="245px"
-        minW="245px"
-        bg="#063D2E"
-        color="white"
-        position="sticky"
-        top="0"
-        mt="-92px"
-        h="calc(100vh - 20px)"
-        alignSelf="flex-start"
-        zIndex={20}
-        overflowY="auto"
-        overflowX="hidden"
-        flexShrink={0}
-      >
+       <Box
+    w="245px"
+    minW="245px"
+    bg="#063D2E"
+    color="white"
+    position="sticky"
+    top="0"
+    mt="-92px"
+    h="calc(100vh - 20px)"
+    alignSelf="flex-start"
+    zIndex={20}
+    overflowY="auto"
+    overflowX="hidden"
+    flexShrink={0}
+    sx={{
+      "@media screen and (min-width: 768px) and (max-width: 1100px)": {
+        position: "relative",
+        top: "auto",
+        marginTop: "0px",
+        height: "auto",
+        maxHeight: "none",
+      },
+
+      "@media screen and (min-width: 1101px)": {
+        position: "sticky",
+        top: "0",
+        marginTop: "-92px",
+        height: "calc(100vh - 20px)",
+      },
+    }}
+  >
         {busMenuItems.map((item) => (
           <Box
             key={item.page}
@@ -2695,13 +2711,14 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
 
       {/* ================= DESKTOP BUS CONTENT ================= */}
 
-      <Box
-        ml="205px"
-        w="calc(100% - 205px)"
-        minH="calc(100vh - 60px)"
-        p={{ base: 3, sm: 4, md: 6 }}
-        overflow="hidden"
-      >
+       <Box
+    ml="0"
+    flex="1"
+    minW="0"
+    minH="calc(100vh - 60px)"
+    p={{ base: 3, sm: 4, md: 6 }}
+    overflow="hidden"
+  >
         {pageName === "Manufacturer Details" && (
           <ManufacturerDetails
             data={busFormData.manufacturerDetails}
