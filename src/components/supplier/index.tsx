@@ -2162,7 +2162,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
     src={BusImage}
     alt="Bus"
     boxSize="72px"
-    ml="45px"
+    ml="30px"
     borderRadius="50%"
     objectFit="cover"
   />
@@ -2319,7 +2319,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
     src={BusImage}
     alt="Bus"
     boxSize="72px"
-    ml="30px"
+    ml="45px"
     borderRadius="50%"
     objectFit="cover"
   />
