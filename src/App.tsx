@@ -30,37 +30,55 @@ const emotionCache = createCache({
 //////
 
 export const App = () => {
-  const userData: any = useSelector((state: RootState) => state.loginCredential.userData);
+  const userData: any = useSelector(
+    (state: RootState) => state.loginCredential.userData
+  );
+
   return (
     <CacheProvider value={emotionCache}>
       <ChakraProvider theme={theme}>
-        <Box>
-          <Header />
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/Login' element={<Login />} />          
-            {userData.role === 'user' ?
-              <Route element={<AuthGaurd />}>
-                <Route path="/Dashboard" element={<Dashboard />} />
-                <Route path="/Homologation" element={<Homologation />} />                
-                <Route path="/SearchUserOrHomologation" element={<SearchUserOrHomologation />} />
-                <Route path="/WMI" element={<WMI />} />
-              </Route>
-              : <Route element={<AuthGaurd />}>
-                <Route path="/Homologation" element={<Homologation />} />
-                <Route path="/SearchUserOrHomologation" element={<SearchUserOrHomologation />} />
-              </Route>
-            }
-            <Route path="/NewSignin/*" element={<NewSignin />} />
-            <Route path="/ResetPassword/*" element={<ResetPassword />} />
-            <Route path="/About" element={<About />} />
-            
-            
+        <Box minH="100vh" display="flex" flexDirection="column">
 
-          </Routes>          
+          {/* Header */}
+          <Header />
+
+          {/* Main Content */}
+          <Box flex="1">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/Login" element={<Login />} />
+
+              {userData.role === "user" ? (
+                <Route element={<AuthGaurd />}>
+                  <Route path="/Dashboard" element={<Dashboard />} />
+                  <Route path="/Homologation" element={<Homologation />} />
+                  <Route
+                    path="/SearchUserOrHomologation"
+                    element={<SearchUserOrHomologation />}
+                  />
+                  <Route path="/WMI" element={<WMI />} />
+                </Route>
+              ) : (
+                <Route element={<AuthGaurd />}>
+                  <Route path="/Homologation" element={<Homologation />} />
+                  <Route
+                    path="/SearchUserOrHomologation"
+                    element={<SearchUserOrHomologation />}
+                  />
+                </Route>
+              )}
+
+              <Route path="/NewSignin/*" element={<NewSignin />} />
+              <Route path="/ResetPassword/*" element={<ResetPassword />} />
+              <Route path="/About" element={<About />} />
+            </Routes>
+          </Box>
+
+          {/* Footer */}
           <Footer />
+
         </Box>
       </ChakraProvider>
     </CacheProvider>
-  )
-}
+  );
+};
