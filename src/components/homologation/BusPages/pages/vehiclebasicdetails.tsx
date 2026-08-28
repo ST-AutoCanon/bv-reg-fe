@@ -87,8 +87,16 @@ const VehicleBasicDetails = ({
   data,
   onSave,
 }: VehicleBasicDetailsProps) => {
-  const [formData, setFormData] =
-    useState<VehicleBasicDetailsData>(data);
+  const [activeVBD, setActiveVBD] = useState(1);
+
+const [vehicleData, setVehicleData] =
+  useState<Record<number, VehicleBasicDetailsData>>(data);
+
+const currentData = vehicleData[activeVBD];
+
+useEffect(() => {
+  setVehicleData(data);
+}, [data]);
 
   /* ================= SUCCESS POPUP ================= */
 
@@ -98,45 +106,45 @@ const VehicleBasicDetails = ({
     onClose: onSuccessClose,
   } = useDisclosure();
 
-  /* ================= LOAD DATA FROM PARENT ================= */
 
-  useEffect(() => {
-    setFormData(data);
-  }, [data]);
+  
 
   /* ================= HANDLE CHANGE ================= */
 
   const handleChange = (
-    field: keyof VehicleBasicDetailsData,
-    value: string
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
+  field: keyof VehicleBasicDetailsData,
+  value: string
+) => {
+  setVehicleData((prev) => ({
+    ...prev,
+    [activeVBD]: {
+      ...prev[activeVBD],
       [field]: value,
-    }));
-  };
+    },
+  }));
+};
 
   /* ================= SAVE ================= */
 
-  const handleSave = () => {
-    console.log(
-      "Vehicle Basic Details:",
-      formData
-    );
+const handleSave = () => {
+  console.log(
+    `VBD ${activeVBD} data:`,
+    currentData
+  );
 
-    // Send data to parent
-    onSave(formData);
-
-    // Show success popup
-    onSuccessOpen();
-  };
+  onSave(vehicleData);
+};
 
   /* ================= CANCEL ================= */
 
   const handleCancel = () => {
-    // Restore last saved data from parent
-    setFormData(data);
-  };
+  setVehicleData((prev) => ({
+    ...prev,
+    [activeVBD]: {
+      ...data[activeVBD],
+    },
+  }));
+};
 
   return (
     <Box
@@ -144,6 +152,48 @@ const VehicleBasicDetails = ({
       pl={{ base: 0, md: 0 }}
       pr={{ base: 5, md: 5 }}
     >
+
+      <Box
+  display="flex"
+  justifyContent="flex-start"
+  width="100%"
+  mb={6}
+>
+  <HStack spacing={2}>
+    {[1, 2, 3].map((vbd) => (
+      <Button
+        key={vbd}
+        size="md"
+        borderRadius="4px"
+        px={7}
+        py={6}
+        bg={
+          activeVBD === vbd
+            ? "#3375BA"
+            : "white"
+        }
+        color={
+          activeVBD === vbd
+            ? "white"
+            : "#4A5568"
+        }
+        border="1px solid #E2E8F0"
+        fontSize="15px"
+        fontWeight="600"
+        isDisabled={vbd === 2 || vbd === 3}
+        _hover={{
+          bg:
+            activeVBD === vbd
+              ? "#2865A5"
+              : "#F7FAFC",
+        }}
+        onClick={() => setActiveVBD(vbd)}
+      >
+        VBD {vbd}
+      </Button>
+    ))}
+  </HStack>
+</Box>
       {/* ================= CARD ================= */}
 
       <Box
@@ -163,7 +213,7 @@ const VehicleBasicDetails = ({
           mb={6}
           textAlign="left"
         >
-          Vehicle Basic Details
+          Vehicle Basic Details — VBD {activeVBD}
         </Text>
 
         <Box
@@ -174,171 +224,338 @@ const VehicleBasicDetails = ({
         {/* ================= FORM ================= */}
 
         <SimpleGrid
-          columns={{
-            base: 1,
-            md: 2,
-            lg: 3,
-          }}
-          spacingX={8}
-          spacingY={7}
-        >
-          {/* Manufacturer */}
+  columns={{
+    base: 1,
+    md: 2,
+    lg: 3,
+  }}
+  spacingX={8}
+  spacingY={7}
+>
+  {/* Overall Length */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Overall Length mm
+    </FormLabel>
 
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Details of Vehicle Manufacturer
-            </FormLabel>
+    <InputWithInfo
+      value={currentData.overallLength}
+      onChange={(value) =>
+        handleChange("overallLength", value)
+      }
+    />
+  </FormControl>
 
-            <InputWithInfo
-              value={formData.manufacturer}
-              onChange={(value) =>
-                handleChange(
-                  "manufacturer",
-                  value
-                )
-              }
-            />
-          </FormControl>
+  {/* Total Length */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Total length (mm) (for articulated/combination vehicles)
+    </FormLabel>
 
-          {/* Address */}
+    <InputWithInfo
+      value={currentData.totalLength}
+      onChange={(value) =>
+        handleChange("totalLength", value)
+      }
+    />
+  </FormControl>
 
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Name and address of the Manufacturer
-            </FormLabel>
+  {/* Overall Width */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Overall Width mm
+    </FormLabel>
 
-            <InputWithInfo
-              value={
-                formData.manufacturerAddress
-              }
-              onChange={(value) =>
-                handleChange(
-                  "manufacturerAddress",
-                  value
-                )
-              }
-            />
-          </FormControl>
+    <InputWithInfo
+      value={currentData.overallWidth}
+      onChange={(value) =>
+        handleChange("overallWidth", value)
+      }
+    />
+  </FormControl>
 
-          {/* Telephone */}
+  {/* Overall Height */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Overall, Height (Unladen) (mm)
+    </FormLabel>
 
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Telephone Number
-            </FormLabel>
+    <InputWithInfo
+      value={currentData.overallHeightUnladen}
+      onChange={(value) =>
+        handleChange("overallHeightUnladen", value)
+      }
+    />
+  </FormControl>
 
-            <InputWithInfo
-              value={formData.telephone}
-              onChange={(value) =>
-                handleChange(
-                  "telephone",
-                  value
-                )
-              }
-            />
-          </FormControl>
+  {/* Wheel Base */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Wheel base (mm)
+    </FormLabel>
 
-          {/* Fax */}
+    <InputWithInfo
+      value={currentData.wheelBase}
+      onChange={(value) =>
+        handleChange("wheelBase", value)
+      }
+    />
+  </FormControl>
 
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Fax No
-            </FormLabel>
+  {/* Axle Spacing */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Axle spacing in case of multi axle vehicles.
+    </FormLabel>
 
-            <InputWithInfo
-              value={formData.fax}
-              onChange={(value) =>
-                handleChange(
-                  "fax",
-                  value
-                )
-              }
-            />
-          </FormControl>
+    <InputWithInfo
+      value={currentData.axleSpacing}
+      onChange={(value) =>
+        handleChange("axleSpacing", value)
+      }
+    />
+  </FormControl>
 
-          {/* Email */}
+  {/* Wheel Track - Front */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Front
+    </FormLabel>
 
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Email ID
-            </FormLabel>
+    <InputWithInfo
+      value={currentData.wheelTrackFront}
+      onChange={(value) =>
+        handleChange("wheelTrackFront", value)
+      }
+    />
+  </FormControl>
 
-            <InputWithInfo
-              type="email"
-              value={formData.email}
-              onChange={(value) =>
-                handleChange(
-                  "email",
-                  value
-                )
-              }
-            />
-          </FormControl>
+  {/* Wheel Track - Rear */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Rear
+    </FormLabel>
 
-          {/* Contact Person */}
+    <InputWithInfo
+      value={currentData.wheelTrackRear}
+      onChange={(value) =>
+        handleChange("wheelTrackRear", value)
+      }
+    />
+  </FormControl>
 
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Contact Person
-            </FormLabel>
+  {/* Wheel Track - Other Axles */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Other axles (for articulated/combination vehicles)
+    </FormLabel>
 
-            <InputWithInfo
-              value={formData.contactPerson}
-              onChange={(value) =>
-                handleChange(
-                  "contactPerson",
-                  value
-                )
-              }
-            />
-          </FormControl>
+    <InputWithInfo
+      value={currentData.wheelTrackOtherAxles}
+      onChange={(value) =>
+        handleChange("wheelTrackOtherAxles", value)
+      }
+    />
+  </FormControl>
 
-          {/* Model Variant */}
+  {/* Body Overhang - Front */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Front end
+    </FormLabel>
 
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Name of model and variant
-            </FormLabel>
+    <InputWithInfo
+      value={currentData.bodyOverhangFrontEnd}
+      onChange={(value) =>
+        handleChange("bodyOverhangFrontEnd", value)
+      }
+    />
+  </FormControl>
 
-            <InputWithInfo
-              value={formData.modelVariant}
-              onChange={(value) =>
-                handleChange(
-                  "modelVariant",
-                  value
-                )
-              }
-            />
-          </FormControl>
-        </SimpleGrid>
+  {/* Body Overhang - Rear */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Rear end
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.bodyOverhangRearEnd}
+      onChange={(value) =>
+        handleChange("bodyOverhangRearEnd", value)
+      }
+    />
+  </FormControl>
+
+  {/* Frame Overhang - Front */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Front end
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.frameOverhangFrontEnd}
+      onChange={(value) =>
+        handleChange("frameOverhangFrontEnd", value)
+      }
+    />
+  </FormControl>
+
+  {/* Frame Overhang - Rear */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Rear end
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.frameOverhangRearEnd}
+      onChange={(value) =>
+        handleChange("frameOverhangRearEnd", value)
+      }
+    />
+  </FormControl>
+
+  {/* Load Body Dimensions */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Load Body dimensions (L X B X H) (mm)
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.loadBodyDimensions}
+      onChange={(value) =>
+        handleChange("loadBodyDimensions", value)
+      }
+    />
+  </FormControl>
+
+  {/* Lateral Projection */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Lateral projection
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.lateralProjection}
+      onChange={(value) =>
+        handleChange("lateralProjection", value)
+      }
+    />
+  </FormControl>
+
+  {/* Cargo Box - Length */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Length
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.cargoBoxLength}
+      onChange={(value) =>
+        handleChange("cargoBoxLength", value)
+      }
+    />
+  </FormControl>
+
+  {/* Cargo Box - Width */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Width
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.cargoBoxWidth}
+      onChange={(value) =>
+        handleChange("cargoBoxWidth", value)
+      }
+    />
+  </FormControl>
+
+  {/* Cargo Box - Height */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Height
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.cargoBoxHeight}
+      onChange={(value) =>
+        handleChange("cargoBoxHeight", value)
+      }
+    />
+  </FormControl>
+</SimpleGrid>
 
         {/* ================= BUTTONS ================= */}
 
@@ -361,7 +578,7 @@ const VehicleBasicDetails = ({
               }}
               onClick={handleSave}
             >
-              Save
+              Submit
             </Button>
 
             {/* CANCEL */}
@@ -380,61 +597,6 @@ const VehicleBasicDetails = ({
         </Box>
       </Box>
 
-      {/* ================= SUCCESS POPUP ================= */}
-
-      <Modal
-        isOpen={isSuccessOpen}
-        onClose={onSuccessClose}
-        isCentered
-      >
-        <ModalOverlay bg="blackAlpha.500" />
-
-        <ModalContent
-          width="390px"
-          borderRadius="6px"
-          boxShadow="0 4px 20px rgba(0,0,0,0.25)"
-        >
-          <ModalCloseButton
-            fontSize="18px"
-            top="12px"
-            right="12px"
-          />
-
-          <ModalBody py={7}>
-            <VStack spacing={5}>
-              <HStack spacing={5}>
-                <Icon
-                  as={CheckCircle}
-                  boxSize={32}
-                  color="#7AC323"
-                />
-
-                <Text
-                  fontSize="18px"
-                  fontWeight="700"
-                  color="#1A202C"
-                >
-                  Data Saved Successfully
-                </Text>
-              </HStack>
-
-              <Button
-                width="180px"
-                bg="#7AC323"
-                color="white"
-                borderRadius="5px"
-                fontSize="16px"
-                _hover={{
-                  bg: "#68AD1D",
-                }}
-                onClick={onSuccessClose}
-              >
-                Close
-              </Button>
-            </VStack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
     </Box>
   );
 };

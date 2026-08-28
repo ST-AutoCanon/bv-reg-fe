@@ -324,7 +324,7 @@ const Notification = ({
               }}
               onClick={handleSave}
             >
-              Save
+              Submit
             </Button>
 
             {/* CANCEL */}
@@ -342,61 +342,7 @@ const Notification = ({
         </Box>
       </Box>
 
-      {/* ================= SUCCESS POPUP ================= */}
-
-      <Modal
-        isOpen={isSuccessOpen}
-        onClose={onSuccessClose}
-        isCentered
-      >
-        <ModalOverlay bg="blackAlpha.500" />
-
-        <ModalContent
-          width="390px"
-          borderRadius="6px"
-          boxShadow="0 4px 20px rgba(0,0,0,0.25)"
-        >
-          <ModalCloseButton
-            fontSize="18px"
-            top="12px"
-            right="12px"
-          />
-
-          <ModalBody py={7}>
-            <VStack spacing={5}>
-              <HStack spacing={5}>
-                <Icon
-                  as={CheckCircle}
-                  boxSize={32}
-                  color="#7AC323"
-                />
-
-                <Text
-                  fontSize="18px"
-                  fontWeight="700"
-                  color="#1A202C"
-                >
-                  Data Saved Successfully
-                </Text>
-              </HStack>
-
-              <Button
-                width="180px"
-                bg="#7AC323"
-                color="white"
-                borderRadius="5px"
-                fontSize="16px"
-                _hover={{
-                  bg: "#68AD1D",
-                }}
-                onClick={onSuccessClose}
-              >
-                Close
-              </Button>
-            </VStack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      
     </Box>
   );
 };
