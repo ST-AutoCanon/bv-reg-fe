@@ -5,17 +5,10 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Select,
   SimpleGrid,
   HStack,
   Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  VStack,
-  Icon,
 } from "@chakra-ui/react";
 import { CheckCircle, Info } from "lucide-react";
 import {
@@ -39,6 +32,7 @@ const emptyManufacturerData: ManufacturerData = {
   email: "",
   contactPerson: "",
   modelVariant: "",
+  baseFuelType: "",
 };
 const InputWithInfo = ({
   value,
@@ -82,20 +76,69 @@ const InputWithInfo = ({
   );
 };
 
+const SelectWithInfo = ({
+  value,
+  onChange,
+  options,
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  options: {
+    label: string;
+    value: string;
+  }[];
+}) => {
+  return (
+    <HStack spacing={2} width="100%" align="center">
+      <Select
+        size="md"
+        height="42px"
+        fontSize="15px"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="Select fuel type"
+        flex="1"
+      >
+        {options.map((option) => (
+          <option
+            key={option.value}
+            value={option.value}
+          >
+            {option.label}
+          </option>
+        ))}
+      </Select>
+
+      {/* Info Icon */}
+      <Box
+        width="24px"
+        height="24px"
+        minW="24px"
+        borderRadius="50%"
+        bg="#3375BA"
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Info
+          size={14}
+          color="white"
+          strokeWidth={3}
+        />
+      </Box>
+    </HStack>
+  );
+};
+
 const ManufacturerDetails = ({
   data,
   onSave,
-}: ManufacturerDetailsProps) => {  
+}: ManufacturerDetailsProps) => {
   const [activeMD, setActiveMD] = useState(1);
 
-  const {
-    isOpen: isSuccessOpen,
-    onOpen: onSuccessOpen,
-    onClose: onSuccessClose,
-  } = useDisclosure();
 
   const [manufacturerData, setManufacturerData] =
-  useState<Record<number, ManufacturerData>>(data);
+    useState<Record<number, ManufacturerData>>(data);
 
   const currentData = manufacturerData[activeMD];
 
@@ -113,14 +156,11 @@ const ManufacturerDetails = ({
   };
 
   const handleSave = () => {
-  console.log(`MD ${activeMD} data:`, currentData);
+    console.log(`MD ${activeMD} data:`, currentData);
 
-  // Send all MD1, MD2 and MD3 data to parent
-  onSave(manufacturerData);
-
-  // Show success popup
-  onSuccessOpen();
-};
+    // Send data to parent
+    onSave(manufacturerData);
+  };
   return (
     <Box
       width="100%"
@@ -147,6 +187,7 @@ const ManufacturerDetails = ({
               border="1px solid #E2E8F0"
               fontSize="15px"
               fontWeight="600"
+              isDisabled={md === 2 || md === 3}
               _hover={{
                 bg:
                   activeMD === md
@@ -201,23 +242,6 @@ const ManufacturerDetails = ({
             spacingX={8}
             spacingY={7}
           >
-            {/* Manufacturer */}
-            <FormControl>
-              <FormLabel
-                fontSize="15px"
-                fontWeight="500"
-                color="#4A5568"
-              >
-                Details of Vehicle Manufacturer
-              </FormLabel>
-
-              <InputWithInfo
-                value={currentData.manufacturer}
-                onChange={(value) =>
-                  handleChange("manufacturer", value)
-                }
-              />
-            </FormControl>
 
             {/* Address */}
             <FormControl>
@@ -327,6 +351,68 @@ const ManufacturerDetails = ({
                 }
               />
             </FormControl>
+            <FormControl>
+  <FormLabel
+    fontSize="15px"
+    fontWeight="500"
+    color="#4A5568"
+  >
+    Base fuel type used for vehicle Type approval
+  </FormLabel>
+
+  <SelectWithInfo
+    value={currentData.baseFuelType}
+    onChange={(value) =>
+      handleChange("baseFuelType", value)
+    }
+    options={[
+      {
+        label: "Ethanol",
+        value: "Ethanol",
+      },
+      {
+        label: "Bio-diesel",
+        value: "Bio-diesel",
+      },
+      {
+        label: "Petrol",
+        value: "Petrol",
+      },
+      {
+        label: "Diesel",
+        value: "Diesel",
+      },
+      {
+        label: "CNG",
+        value: "CNG",
+      },
+      {
+        label: "LNG",
+        value: "LNG",
+      },
+      {
+        label: "LPG",
+        value: "LPG",
+      },
+      {
+        label: "Electric",
+        value: "Electric",
+      },
+      {
+        label: "Hydrogen",
+        value: "Hydrogen",
+      },
+      {
+        label: "Methanol",
+        value: "Methanol",
+      },
+      {
+        label: "Hybrid",
+        value: "Hybrid",
+      },
+    ]}
+  />
+</FormControl>
           </SimpleGrid>
 
           {/* Bottom buttons */}
@@ -369,59 +455,7 @@ const ManufacturerDetails = ({
             </HStack>
           </Box>
         </Box>
-        <Modal
-          isOpen={isSuccessOpen}
-          onClose={onSuccessClose}
-          isCentered
-        >
-          <ModalOverlay bg="blackAlpha.500" />
 
-          <ModalContent
-            width="390px"
-            borderRadius="6px"
-            boxShadow="0 4px 20px rgba(0,0,0,0.25)"
-          >
-            <ModalCloseButton
-              fontSize="18px"
-              top="12px"
-              right="12px"
-            />
-
-            <ModalBody py={7}>
-              <VStack spacing={5}>
-                <HStack spacing={5}>
-                  <Icon
-                    as={CheckCircle}
-                    boxSize={32}
-                    color="#7AC323"
-                  />
-
-                  <Text
-                    fontSize="18px"
-                    fontWeight="700"
-                    color="#1A202C"
-                  >
-                    Data Saved Successfully
-                  </Text>
-                </HStack>
-
-                <Button
-                  width="180px"
-                  bg="#7AC323"
-                  color="white"
-                  borderRadius="5px"
-                  fontSize="16px"
-                  _hover={{
-                    bg: "#68AD1D",
-                  }}
-                  onClick={onSuccessClose}
-                >
-                  Close
-                </Button>
-              </VStack>
-            </ModalBody>
-          </ModalContent>
-        </Modal>
       </Box>
     </Box>
   );

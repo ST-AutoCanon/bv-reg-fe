@@ -37,6 +37,8 @@ import {
   ModalBody,
   ModalCloseButton,
   Modal,
+  VStack,
+  Icon,
   Drawer,
   DrawerOverlay,
   DrawerContent,
@@ -46,6 +48,7 @@ import {
   useDisclosure,
   FormHelperText,
 } from "@chakra-ui/react";
+import { CheckCircle } from "lucide-react";
 import { InfoIcon } from "@chakra-ui/icons";
 import Sbike from "../../assets/images/s-bike.png";
 import threeWheeler from "../../assets/images/three-wheeler.png";
@@ -73,6 +76,11 @@ import {
   BusFormData,
   initialBusFormData,
 } from "../homologation/BusPages/formData/BusFormData";
+
+import {
+  saveBusForms,
+  getBusForms,
+} from "../../services/busformService";
 /* Form Validation */
 import { useForm } from "react-hook-form";
 
@@ -265,7 +273,7 @@ const busMenuItems = [
     icon: Bell,
   },
   {
-    page: "setting",
+    page: "Setting",
     icon: Settings,
   },
 ];
@@ -323,15 +331,63 @@ const [footerData, setFooterData] =
 
   const [busFormData, setBusFormData] =
   useState<BusFormData>(initialBusFormData);
-  const updateBusFormData = <K extends keyof BusFormData>(
+  const updateBusFormData = async <K extends keyof BusFormData>(
   section: K,
   data: BusFormData[K]
 ) => {
+  console.log("updatebusform data called");
+  console.log("section:",section);
+  console.log("request id",requestId);
+  console.log("Data",data);
   setBusFormData((prev) => ({
     ...prev,
     [section]: data,
   }));
+try{
+  console.log("calling savebusform api");
+  const responce= await saveBusForms(
+    requestId,
+    {
+      [section]:data,
+    }
+  );
+  console.log("API Responce:",responce);
+}catch(error){
+  console.log("Api error:",error);
+}
 };
+
+
+
+useEffect(() => {
+  const loadBusForms = async () => {
+    try {
+      const result = await getBusForms(
+        requestId
+      );
+
+      console.log(
+        "Bus forms loaded:",
+        result
+      );
+
+      if (result?.formData) {
+        setBusFormData(
+          result.formData
+        );
+      }
+    } catch (error) {
+      console.error(
+        "Failed to load Bus forms:",
+        error
+      );
+    }
+  };
+
+  if (requestId) {
+    loadBusForms();
+  }
+}, [requestId]);
 
 const [pageName, setPageName] = useState<string | undefined>("");
 const {
@@ -2083,6 +2139,15 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
   }, []);
 
   const successMsg = "Data Saved Successfully";
+  const [showSuccess, setShowSuccess] = useState(false);
+
+const handleFormSave = <K extends keyof BusFormData>(
+  section: K,
+  data: BusFormData[K]
+) => {
+  updateBusFormData(section, data);
+  setShowSuccess(true);
+};
   const isBus = homologationDatas?.vehicle_type === "Bus";
   return (
     <>
@@ -2158,14 +2223,20 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
                 ]}
               >
                 {homologationDatas.vehicle_type === "Bus" ? (
+  <Box
+  display="flex"
+  justifyContent="flex-end"
+  width="100%"
+  pr="20px"
+>
   <Image
     src={BusImage}
     alt="Bus"
     boxSize="72px"
-    ml="30px"
     borderRadius="50%"
     objectFit="cover"
   />
+</Box>
 ) : homologationDatas.vehicle_type === "3-Wheeler" ? (
   <Image
     src={threeWheeler}
@@ -2304,43 +2375,68 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
                 flexDirection={"row"}
                 pl={["10%", "10%", "2%", "2%"]}
               >
-                <Box
-                  alignItems="center"
-                  pl={"5"}
-                  width={[
-                    "50%", // 0-30em
-                    "50%", // 30em-48em
-                    "20%", // 48em-62em
-                    "15%", // 62em+
-                  ]}
-                >
-                  {homologationDatas.vehicle_type === "Bus" ? (
-  <Image
-    src={BusImage}
-    alt="Bus"
-    boxSize="72px"
-    ml="45px"
-    borderRadius="50%"
-    objectFit="cover"
-  />
-) : homologationDatas.vehicle_type === "3-Wheeler" ? (
-  <Image
-    src={threeWheeler}
-    alt="3 Wheeler"
-    h="72px"
-    w="72px"
-    borderRadius="50%"
-  />
-) : (
-  <Image
-    src={Sbike}
-    alt="2 Wheeler"
-    h="72px"
-    w="72px"
-    borderRadius="50%"
-  />
-                  )}
-                </Box>
+               <Box
+  alignItems="center"
+  pl={0}
+  width={[
+    "50%",
+    "50%",
+    "20%",
+    "15%",
+  ]}
+>
+  {homologationDatas.vehicle_type === "Bus" ? (
+    <HStack
+      spacing={2}
+      alignItems="center"
+    >
+      {/* Hamburger */}
+      <Button
+  onClick={onBusMenuOpen}
+  minW="44px"
+  w="44px"
+  h="44px"
+  p={0}
+  ml="10"
+  bg="transparent"
+  color="white"
+  _hover={{
+    bg: "transparent",
+  }}
+  _active={{
+    bg: "transparent",
+  }}
+>
+  <HamburgerIcon boxSize={7} />
+</Button>
+
+      {/* Bus Image */}
+      <Image
+        src={BusImage}
+        alt="Bus"
+        boxSize="72px"
+        borderRadius="50%"
+        objectFit="cover"
+      />
+    </HStack>
+  ) : homologationDatas.vehicle_type === "3-Wheeler" ? (
+    <Image
+      src={threeWheeler}
+      alt="3 Wheeler"
+      h="72px"
+      w="72px"
+      borderRadius="50%"
+    />
+  ) : (
+    <Image
+      src={Sbike}
+      alt="2 Wheeler"
+      h="72px"
+      w="72px"
+      borderRadius="50%"
+    />
+  )}
+</Box>
                 <Box
                   alignItems="center"
                   pl={"5"}
@@ -2388,7 +2484,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
                     fontSize={"14"}
                     color={"color.500"}
                   >
-                    {homologationDatas.vehicle_category}
+                    {Category}
                   </Text>
                 </Box>
                 <Box
@@ -2537,24 +2633,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
 {isBus && (
   <Box width="100%">
     
-    {/* ================= MOBILE MENU BUTTON ================= */}
-    <Box
-      display={{ base: "block", md: "none" }}
-      px={4}
-      py={3}
-      bg="#063D2E"
-    >
-      <Button
-        onClick={onBusMenuOpen}
-        bg="#0B5A44"
-        color="white"
-        _hover={{
-          bg: "#0D6B50",
-        }}
-      >
-        ☰
-      </Button>
-    </Box>
+    
 
     {/* ================= MOBILE DRAWER ================= */}
 
@@ -2625,117 +2704,103 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
     {/* ================= DESKTOP BUS LAYOUT ================= */}
 
     <Flex
-  minH="calc(100vh - 60px)"
+  width="100%"
+  minH="calc(100vh - 92px)"
   position="relative"
   display={{ base: "none", md: "flex" }}
+  alignItems="flex-start"
 >
 
       {/* ================= DESKTOP SIDEBAR ================= */}
 
-       <Box
-    w="245px"
-    minW="245px"
-    bg="#063D2E"
-    color="white"
-    position="sticky"
-    top="0"
-    mt="-92px"
-    h="calc(100vh - 20px)"
-    alignSelf="flex-start"
-    zIndex={20}
-    overflowY="auto"
-    overflowX="hidden"
-    flexShrink={0}
-    sx={{
-      "@media screen and (min-width: 768px) and (max-width: 1100px)": {
-        position: "relative",
-        top: "auto",
-        marginTop: "0px",
-        height: "auto",
-        maxHeight: "none",
-      },
+<Box
+  w="245px"
+  minW="245px"
+  bg="#063D2E"
+  color="white"
+  position="sticky"
+  top="0"
+  mt="-92px"
+  h="calc(100vh - 60px)"
+  alignSelf="flex-start"
+  zIndex={10}
+  overflowY="auto"
+  overflowX="hidden"
+  flexShrink={0}
+>
+  {busMenuItems.map((item) => (
+    <Box
+      key={item.page}
+      px="20px"
+      py="14px"
+      cursor="pointer"
+      bg={
+        pageName === item.page
+          ? "#0B5A44"
+          : "transparent"
+      }
+      _hover={{
+        bg: "#0B5A44",
+      }}
+      onClick={() => getPageName(item.page)}
+    >
+      <HStack spacing="12px">
+        <Box
+          w="22px"
+          h="22px"
+          minW="22px"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          flexShrink={0}
+        >
+          <item.icon
+            width={22}
+            height={22}
+            strokeWidth={2}
+          />
+        </Box>
 
-      "@media screen and (min-width: 1101px)": {
-        position: "sticky",
-        top: "0",
-        marginTop: "-92px",
-        height: "calc(100vh - 20px)",
-      },
-    }}
-  >
-        {busMenuItems.map((item) => (
-          <Box
-            key={item.page}
-            px="20px"
-            py="14px"
-            cursor="pointer"
-            bg={
-              pageName === item.page
-                ? "#0B5A44"
-                : "transparent"
-            }
-            _hover={{
-              bg: "#0B5A44",
-            }}
-            onClick={() =>
-              getPageName(item.page)
-            }
-          >
-            <HStack spacing="12px">
-  <Box
-    w="22px"
-    h="22px"
-    minW="22px"
-    display="flex"
-    alignItems="center"
-    justifyContent="center"
-    flexShrink={0}
-  >
-    <item.icon
-      width={22}
-      height={22}
-      strokeWidth={2}
-    />
-  </Box>
-
-  <Text
-    fontSize="14px"
-    whiteSpace="nowrap"
-  >
-    {item.page}
-  </Text>
-</HStack>
-          </Box>
-        ))}
-      </Box>
+        <Text
+          fontSize="14px"
+          whiteSpace="nowrap"
+        >
+          {item.page}
+        </Text>
+      </HStack>
+    </Box>
+  ))}
+</Box>
 
       {/* ================= DESKTOP BUS CONTENT ================= */}
 
-       <Box
-    ml="0"
-    flex="1"
-    minW="0"
-    minH="calc(100vh - 60px)"
-    p={{ base: 3, sm: 4, md: 6 }}
-    overflow="hidden"
-  >
+     <Box
+  flex="1"
+  minW="0"
+  minH="calc(100vh - 92px)"
+  pt={{ base: 3, sm: 4, md: 4 }}
+  pr={{ base: 3, sm: 4, md: 6 }}
+  pb={{ base: 3, sm: 4, md: 6 }}
+  pl={{ base: 3, sm: 4, md: 24 }}
+  overflow="visible"
+>
         {pageName === "Manufacturer Details" && (
           <ManufacturerDetails
-            data={busFormData.manufacturerDetails}
-            onSave={(data) =>
-              updateBusFormData(
-                "manufacturerDetails",
-                data
-              )
-            }
-          />
+  data={busFormData.manufacturerDetails}
+  onSave={(data) =>
+    handleFormSave(
+      "manufacturerDetails",
+      data
+    )
+  }
+/>
         )}
 
         {pageName === "Manufacturer Plant Details" && (
           <Manufacturerplantdetails
             data={busFormData.manufacturerPlantDetails}
             onSave={(data) =>
-              updateBusFormData(
+              handleFormSave(
                 "manufacturerPlantDetails",
                 data
               )
@@ -2747,7 +2812,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
           <VehicleBasicDetails
             data={busFormData.vehicleBasicDetails}
             onSave={(data) =>
-              updateBusFormData(
+              handleFormSave(
                 "vehicleBasicDetails",
                 data
               )
@@ -2759,7 +2824,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
           <WeighmentDetails
             data={busFormData.weighmentDetails}
             onSave={(data) =>
-              updateBusFormData(
+              handleFormSave(
                 "weighmentDetails",
                 data
               )
@@ -2771,7 +2836,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
           <TyreAndWheelRim
             data={busFormData.tyreAndWheelRim}
             onSave={(data) =>
-              updateBusFormData(
+              handleFormSave(
                 "tyreAndWheelRim",
                 data
               )
@@ -2783,7 +2848,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
           <Document
             data={busFormData.documents}
             onSave={(data) =>
-              updateBusFormData(
+              handleFormSave(
                 "documents",
                 data
               )
@@ -2795,7 +2860,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
           <Notification
             data={busFormData.notification}
             onSave={(data) =>
-              updateBusFormData(
+              handleFormSave(
                 "notification",
                 data
               )
@@ -2803,11 +2868,11 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
           />
         )}
 
-        {pageName === "setting" && (
+        {pageName === "Setting" && (
           <Setting
             data={busFormData.setting}
             onSave={(data) =>
-              updateBusFormData(
+              handleFormSave(
                 "setting",
                 data
               )
@@ -2828,7 +2893,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
         <ManufacturerDetails
           data={busFormData.manufacturerDetails}
           onSave={(data) =>
-            updateBusFormData(
+            handleFormSave(
               "manufacturerDetails",
               data
             )
@@ -2840,7 +2905,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
         <Manufacturerplantdetails
           data={busFormData.manufacturerPlantDetails}
           onSave={(data) =>
-            updateBusFormData(
+            handleFormSave(
               "manufacturerPlantDetails",
               data
             )
@@ -2852,7 +2917,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
         <VehicleBasicDetails
           data={busFormData.vehicleBasicDetails}
           onSave={(data) =>
-            updateBusFormData(
+            handleFormSave(
               "vehicleBasicDetails",
               data
             )
@@ -2864,7 +2929,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
         <WeighmentDetails
           data={busFormData.weighmentDetails}
           onSave={(data) =>
-            updateBusFormData(
+            handleFormSave(
               "weighmentDetails",
               data
             )
@@ -2876,7 +2941,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
         <TyreAndWheelRim
           data={busFormData.tyreAndWheelRim}
           onSave={(data) =>
-            updateBusFormData(
+            handleFormSave(
               "tyreAndWheelRim",
               data
             )
@@ -2888,7 +2953,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
         <Document
           data={busFormData.documents}
           onSave={(data) =>
-            updateBusFormData(
+            handleFormSave(
               "documents",
               data
             )
@@ -2900,7 +2965,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
         <Notification
           data={busFormData.notification}
           onSave={(data) =>
-            updateBusFormData(
+            handleFormSave(
               "notification",
               data
             )
@@ -2908,11 +2973,11 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
         />
       )}
 
-      {pageName === "setting" && (
+      {pageName === "Setting" && (
         <Setting
           data={busFormData.setting}
           onSave={(data) =>
-            updateBusFormData(
+            handleFormSave(
               "setting",
               data
             )
@@ -2920,7 +2985,75 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
         />
       )}
     </Box>
+    <Modal
+  isOpen={showSuccess}
+  onClose={() => setShowSuccess(false)}
+  isCentered
+>
+  <ModalOverlay bg="blackAlpha.600" />
 
+  <ModalContent
+    maxW="430px"
+    borderRadius="8px"
+    boxShadow="0 4px 20px rgba(0,0,0,0.3)"
+  >
+    <ModalCloseButton
+      top="14px"
+      right="14px"
+      fontSize="18px"
+      fontWeight="400"
+    />
+
+    <ModalBody
+      px={7}
+      py={6}
+    >
+      <VStack spacing={5}>
+        
+        {/* Success icon + message */}
+        <HStack
+          spacing={5}
+          width="100%"
+          justifyContent="center"
+          pt={1}
+        >
+          <Icon
+            as={CheckCircle}
+            boxSize="32px"
+            color="#7AC323"
+            strokeWidth={2}
+          />
+
+          <Text
+            fontSize="19px"
+            fontWeight="700"
+            color="#1A202C"
+          >
+            {successMsg}
+          </Text>
+        </HStack>
+
+        {/* Close button */}
+        <Button
+          width="200px"
+          height="36px"
+          bg="#7AC323"
+          color="white"
+          borderRadius="5px"
+          fontSize="16px"
+          fontWeight="500"
+          _hover={{
+            bg: "#68AD1D",
+          }}
+          onClick={() => setShowSuccess(false)}
+        >
+          Close
+        </Button>
+
+      </VStack>
+    </ModalBody>
+  </ModalContent>
+</Modal>
   </Box>
 )}
       {/** ============== COMPONENT SECTION  STARTS =================*/}

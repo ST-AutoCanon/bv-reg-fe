@@ -17,11 +17,12 @@ import {
   Icon,
   useDisclosure,
 } from "@chakra-ui/react";
-import { CheckCircle, Info } from "lucide-react";
+import {  Info } from "lucide-react";
 import {
   BusFormData,
   ManufacturerPlantData,
 } from "../formData/BusFormData";
+import { current } from "@reduxjs/toolkit";
 
 type ManufacturerPlantDetailsProps = {
   data: BusFormData["manufacturerPlantDetails"];
@@ -76,23 +77,37 @@ const Manufacturerplantdetails = ({
     onClose: onSuccessClose,
   } = useDisclosure();
 
- const [formData, setFormData] =
-  useState<ManufacturerPlantData>(data);
-  useEffect(() => {
+const [activeMPD, setActiveMPD] = useState(1);
+
+const [formData, setFormData] =
+  useState<Record<number, ManufacturerPlantData>>(data);
+
+useEffect(() => {
   setFormData(data);
 }, [data]);
 
+const currentData = formData[activeMPD];
+
   const handleChange = (
-    field: keyof typeof formData,
-    value: string
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
+  field: keyof ManufacturerPlantData,
+  value: string
+) => {
+  setFormData((prev) => ({
+    ...prev,
+    [activeMPD]: {
+      ...prev[activeMPD],
       [field]: value,
-    }));
-  };
+    },
+  }));
+};
+
   const handleCancel = () => {
-  setFormData(data);
+  setFormData((prev) => ({
+    ...prev,
+    [activeMPD]: {
+      ...data[activeMPD],
+    },
+  }));
 };
 
   const handleSave = () => {
@@ -112,6 +127,49 @@ const Manufacturerplantdetails = ({
       pl={{ base: 0, md: 0 }}
       pr={{ base: 5, md: 5 }}
     >
+
+      {/* MPD 1 / MPD 2 / MPD 3 */}
+<Box
+  display="flex"
+  justifyContent="flex-start"
+  width="100%"
+  mb={6}
+>
+  <HStack spacing={2}>
+    {[1, 2, 3].map((mpd) => (
+      <Button
+        key={mpd}
+        size="md"
+        borderRadius="4px"
+        px={7}
+        py={6}
+        bg={
+          activeMPD === mpd
+            ? "#3375BA"
+            : "white"
+        }
+        color={
+          activeMPD === mpd
+            ? "white"
+            : "#4A5568"
+        }
+        border="1px solid #E2E8F0"
+        fontSize="15px"
+        fontWeight="600"
+        isDisabled={mpd === 2 || mpd === 3}
+        _hover={{
+          bg:
+            activeMPD === mpd
+              ? "#2865A5"
+              : "#F7FAFC",
+        }}
+        onClick={() => setActiveMPD(mpd)}
+      >
+        MPD {mpd}
+      </Button>
+    ))}
+  </HStack>
+</Box>
       {/* Manufacturer Plant Details Card */}
       <Box
         bg="white"
@@ -129,151 +187,232 @@ const Manufacturerplantdetails = ({
           mb={6}
           textAlign="left"
         >
-          Manufacturer Plant Details
+          Manufacturer Plant Details — MPD {activeMPD}
         </Text>
 
         <Box
           borderTop="1px solid #E5E7EB"
           mb={7}
+
+          
         />
 
         {/* Form */}
-        <SimpleGrid
-          columns={{
-            base: 1,
-            md: 2,
-            lg: 3,
-          }}
-          spacingX={8}
-          spacingY={7}
-        >
-          {/* Manufacturer */}
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Details of Vehicle Manufacturer
-            </FormLabel>
+       <SimpleGrid
+  columns={{
+    base: 1,
+    md: 2,
+    lg: 3,
+  }}
+  spacingX={8}
+  spacingY={7}
+>
+  {/* Vehicle Manufacturing Plant */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Name and address of vehicle manufacturing plant
+    </FormLabel>
 
-            <InputWithInfo
-              value={formData.manufacturer}
-              onChange={(value) =>
-                handleChange("manufacturer", value)
-              }
-            />
-          </FormControl>
+    <InputWithInfo
+      value={currentData.vehicleManufacturingPlant}
+      onChange={(value) =>
+        handleChange(
+          "vehicleManufacturingPlant",
+          value
+        )
+      }
+    />
+  </FormControl>
 
-          {/* Address */}
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Name and address of the Manufacturer
-            </FormLabel>
+  {/* Engine Manufacturing Plant */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Name and address of engine manufacturing plant
+    </FormLabel>
 
-            <InputWithInfo
-              value={formData.manufacturerAddress}
-              onChange={(value) =>
-                handleChange("manufacturerAddress", value)
-              }
-            />
-          </FormControl>
+    <InputWithInfo
+      value={currentData.engineManufacturingPlant}
+      onChange={(value) =>
+        handleChange(
+          "engineManufacturingPlant",
+          value
+        )
+      }
+    />
+  </FormControl>
 
-          {/* Telephone */}
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Telephone Number
-            </FormLabel>
+  {/* Importer */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Importer's Name and address
+    </FormLabel>
 
-            <InputWithInfo
-              value={formData.telephone}
-              onChange={(value) =>
-                handleChange("telephone", value)
-              }
-            />
-          </FormControl>
 
-          {/* Fax */}
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Fax No
-            </FormLabel>
+    <InputWithInfo
+      value={currentData.importerNameAddress}
+      onChange={(value) =>
+        handleChange(
+          "importerNameAddress",
+          value
+        )
+      }
+    />
+  </FormControl>
 
-            <InputWithInfo
-              value={formData.fax}
-              onChange={(value) =>
-                handleChange("fax", value)
-              }
-            />
-          </FormControl>
+  {/* Telephone */}
 
-          {/* Email */}
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Email ID
-            </FormLabel>
 
-            <InputWithInfo
-              type="email"
-              value={formData.email}
-              onChange={(value) =>
-                handleChange("email", value)
-              }
-            />
-          </FormControl>
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Telephone No.
+    </FormLabel>
 
-          {/* Contact Person */}
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Contact Person
-            </FormLabel>
+    <InputWithInfo
+      value={currentData.telephone}
+      onChange={(value) =>
+        handleChange("telephone", value)
+      }
+    />
+  </FormControl>
 
-            <InputWithInfo
-              value={formData.contactPerson}
-              onChange={(value) =>
-                handleChange("contactPerson", value)
-              }
-            />
-          </FormControl>
+  {/* Email */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      E-mail address
+    </FormLabel>
 
-          {/* Model Variant */}
-          <FormControl>
-            <FormLabel
-              fontSize="15px"
-              fontWeight="500"
-              color="#4A5568"
-            >
-              Name of model and variant
-            </FormLabel>
+    <InputWithInfo
+      type="email"
+      value={currentData.email}
+      onChange={(value) =>
+        handleChange("email", value)
+      }
+    />
+  </FormControl>
 
-            <InputWithInfo
-              value={formData.modelVariant}
-              onChange={(value) =>
-                handleChange("modelVariant", value)
-              }
-            />
-          </FormControl>
-        </SimpleGrid>
+  {/* Contact Person */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Contact person
+    </FormLabel>
+
+    <InputWithInfo
+      value={
+        currentData.contactPerson}
+      onChange={(value) =>
+        handleChange("contactPerson", value)
+      }
+    />
+  </FormControl>
+
+  {/* Bus Body Builder Category */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Category of Bus Body Builder
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.busBodyBuilderCategory}
+      onChange={(value) =>
+        handleChange(
+          "busBodyBuilderCategory",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* ZAB Certificate */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      ZAB Certificate Number and Date
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.zabCertificate}
+      onChange={(value) =>
+        handleChange(
+          "zabCertificate",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* NAB Certificate */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      NAB Certificate Number and Date
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.nabCertificate}
+      onChange={(value) =>
+        handleChange(
+          "nabCertificate",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* CMVR Compliance Certificate */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Base CMVR Compliance Certificate Number and Date
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.cmvrComplianceCertificate}
+      onChange={(value) =>
+        handleChange(
+          "cmvrComplianceCertificate",
+          value
+        )
+      }
+    />
+  </FormControl>
+</SimpleGrid>
 
         {/* Bottom buttons */}
         <Box
@@ -293,7 +432,7 @@ const Manufacturerplantdetails = ({
               }}
               onClick={handleSave}
             >
-              Save
+              Submit
             </Button>
 
             <Button
@@ -309,60 +448,7 @@ const Manufacturerplantdetails = ({
         </Box>
       </Box>
 
-      {/* ================= SUCCESS POPUP ================= */}
-      <Modal
-        isOpen={isSuccessOpen}
-        onClose={onSuccessClose}
-        isCentered
-      >
-        <ModalOverlay bg="blackAlpha.500" />
-
-        <ModalContent
-          width="390px"
-          borderRadius="6px"
-          boxShadow="0 4px 20px rgba(0,0,0,0.25)"
-        >
-          <ModalCloseButton
-            fontSize="18px"
-            top="12px"
-            right="12px"
-          />
-
-          <ModalBody py={7}>
-            <VStack spacing={5}>
-              <HStack spacing={5}>
-                <Icon
-                  as={CheckCircle}
-                  boxSize={32}
-                  color="#7AC323"
-                />
-
-                <Text
-                  fontSize="18px"
-                  fontWeight="700"
-                  color="#1A202C"
-                >
-                  Data Saved Successfully
-                </Text>
-              </HStack>
-
-              <Button
-                width="180px"
-                bg="#7AC323"
-                color="white"
-                borderRadius="5px"
-                fontSize="16px"
-                _hover={{
-                  bg: "#68AD1D",
-                }}
-                onClick={onSuccessClose}
-              >
-                Close
-              </Button>
-            </VStack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+      
     </Box>
   );
 };

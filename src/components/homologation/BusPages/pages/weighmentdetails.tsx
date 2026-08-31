@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
   Box,
@@ -20,7 +21,10 @@ import {
 
 import { Info, CheckCircle } from "lucide-react";
 
-import { BusFormData } from "../formData/BusFormData";
+import {
+  BusFormData,
+  WeighmentData,
+} from "../formData/BusFormData";
 
 /* ================= PROPS ================= */
 
@@ -56,7 +60,9 @@ const InputWithInfo = ({
         type={type}
         flex="1"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) =>
+          onChange(e.target.value)
+        }
       />
 
       <Box
@@ -81,14 +87,21 @@ const InputWithInfo = ({
 
 /* ================= EMPTY DATA ================= */
 
-const emptyWeighmentData: BusFormData["weighmentDetails"] = {
-  manufacturer: "",
-  manufacturerAddress: "",
-  telephone: "",
-  fax: "",
-  email: "",
-  contactPerson: "",
-  modelVariant: "",
+const emptyWeighmentData: WeighmentData = {
+  vehicleKerbWeight: "",
+
+  frontAxle1: "",
+  frontAxle2: "",
+  rearAxle: "",
+
+  trailerAxle: "",
+  total: "",
+
+  grossVehicleWeight: "",
+
+  maximumPermissibleAxleWeightsFront: "",
+  maximumPermissibleAxleWeightsRear: "",
+  maximumPermissibleAxleWeightsOther: "",
 };
 
 /* ================= COMPONENT ================= */
@@ -97,34 +110,50 @@ const WeighmentDetails = ({
   data,
   onSave,
 }: WeighmentDetailsProps) => {
+  /* ================= ACTIVE WD ================= */
+
+  const [activeWD, setActiveWD] = useState(1);
+
+  /* ================= LOCAL FORM DATA ================= */
+
+  const [formData, setFormData] =
+    useState<BusFormData["weighmentDetails"]>(
+      data
+    );
+
+  /* ================= SUCCESS POPUP ================= */
+
   const {
     isOpen: isSuccessOpen,
     onOpen: onSuccessOpen,
     onClose: onSuccessClose,
   } = useDisclosure();
 
-  /* ================= LOCAL FORM DATA ================= */
-
-  const [formData, setFormData] =
-    useState<BusFormData["weighmentDetails"]>(
-      data || emptyWeighmentData
-    );
-
   /* ================= SYNC WITH PARENT ================= */
 
   useEffect(() => {
-    setFormData(data || emptyWeighmentData);
+    setFormData(data);
   }, [data]);
+
+  /* ================= CURRENT DATA ================= */
+
+  const currentData =
+    formData[activeWD] ||
+    emptyWeighmentData;
 
   /* ================= HANDLE CHANGE ================= */
 
   const handleChange = (
-    field: keyof BusFormData["weighmentDetails"],
+    field: keyof WeighmentData,
     value: string
   ) => {
     setFormData((prev) => ({
       ...prev,
-      [field]: value,
+      [activeWD]: {
+        ...(prev[activeWD] ||
+          emptyWeighmentData),
+        [field]: value,
+      },
     }));
   };
 
@@ -132,23 +161,25 @@ const WeighmentDetails = ({
 
   const handleSave = () => {
     console.log(
-      "Weighment Details:",
-      formData
+      `WD${activeWD} data:`,
+      currentData
     );
 
-    // Send data to parent
     onSave(formData);
 
-    // Show success popup
     onSuccessOpen();
   };
 
   /* ================= CANCEL ================= */
 
   const handleCancel = () => {
-    setFormData({
-      ...emptyWeighmentData,
-    });
+    setFormData((prev) => ({
+      ...prev,
+      [activeWD]: {
+        ...(data[activeWD] ||
+          emptyWeighmentData),
+      },
+    }));
   };
 
   return (
@@ -157,6 +188,51 @@ const WeighmentDetails = ({
       pl={{ base: 0, md: 0 }}
       pr={{ base: 5, md: 5 }}
     >
+      {/* ================= WD TABS ================= */}
+
+      <Box
+        display="flex"
+        justifyContent="flex-start"
+        width="100%"
+        mb={6}
+      >
+        <HStack spacing={2}>
+        {[1, 2, 3, 4, 5].map((wd) => (
+  <Button
+    key={wd}
+    size="md"
+    borderRadius="4px"
+    px={7}
+    py={6}
+    bg={
+      activeWD === wd
+        ? "#3375BA"
+        : "white"
+    }
+    color={
+      activeWD === wd
+        ? "white"
+        : "#4A5568"
+    }
+    border="1px solid #E2E8F0"
+    fontSize="15px"
+    fontWeight="600"
+    _hover={{
+      bg:
+        activeWD === wd
+          ? "#2865A5"
+          : "#F7FAFC",
+    }}
+    onClick={() => setActiveWD(wd)}
+  >
+    {wd === 1
+      ? "Base"
+      : `Variant ${wd - 1}`}
+  </Button>
+))}
+        </HStack>
+      </Box>
+
       {/* ================= CARD ================= */}
 
       <Box
@@ -170,13 +246,16 @@ const WeighmentDetails = ({
         {/* ================= HEADING ================= */}
 
         <Text
-          fontSize={{ base: "18px", md: "21px" }}
+          fontSize={{
+            base: "18px",
+            md: "21px",
+          }}
           fontWeight="700"
           color="#17365D"
           mb={6}
           textAlign="left"
         >
-          Weighment Details
+          Weights — WD {activeWD}
         </Text>
 
         <Box
@@ -195,7 +274,7 @@ const WeighmentDetails = ({
           spacingX={8}
           spacingY={7}
         >
-          {/* Manufacturer */}
+          {/* Vehicle Kerb Weight */}
 
           <FormControl>
             <FormLabel
@@ -203,21 +282,23 @@ const WeighmentDetails = ({
               fontWeight="500"
               color="#4A5568"
             >
-              Details of Vehicle Manufacturer
+              Vehicle kerb weight kg
             </FormLabel>
 
             <InputWithInfo
-              value={formData.manufacturer}
+              value={
+                currentData.vehicleKerbWeight
+              }
               onChange={(value) =>
                 handleChange(
-                  "manufacturer",
+                  "vehicleKerbWeight",
                   value
                 )
               }
             />
           </FormControl>
 
-          {/* Address */}
+          {/* Front Axle 1 */}
 
           <FormControl>
             <FormLabel
@@ -225,21 +306,21 @@ const WeighmentDetails = ({
               fontWeight="500"
               color="#4A5568"
             >
-              Name and address of the Manufacturer
+              Front axle 1
             </FormLabel>
 
             <InputWithInfo
-              value={formData.manufacturerAddress}
+              value={currentData.frontAxle1}
               onChange={(value) =>
                 handleChange(
-                  "manufacturerAddress",
+                  "frontAxle1",
                   value
                 )
               }
             />
           </FormControl>
 
-          {/* Telephone */}
+          {/* Front Axle 2 */}
 
           <FormControl>
             <FormLabel
@@ -247,21 +328,21 @@ const WeighmentDetails = ({
               fontWeight="500"
               color="#4A5568"
             >
-              Telephone Number
+              Front axle 2
             </FormLabel>
 
             <InputWithInfo
-              value={formData.telephone}
+              value={currentData.frontAxle2}
               onChange={(value) =>
                 handleChange(
-                  "telephone",
+                  "frontAxle2",
                   value
                 )
               }
             />
           </FormControl>
 
-          {/* Fax */}
+          {/* Rear Axle */}
 
           <FormControl>
             <FormLabel
@@ -269,21 +350,21 @@ const WeighmentDetails = ({
               fontWeight="500"
               color="#4A5568"
             >
-              Fax No
+              Rear Axle
             </FormLabel>
 
             <InputWithInfo
-              value={formData.fax}
+              value={currentData.rearAxle}
               onChange={(value) =>
                 handleChange(
-                  "fax",
+                  "rearAxle",
                   value
                 )
               }
             />
           </FormControl>
 
-          {/* Email */}
+          {/* Trailer Axle */}
 
           <FormControl>
             <FormLabel
@@ -291,22 +372,21 @@ const WeighmentDetails = ({
               fontWeight="500"
               color="#4A5568"
             >
-              Email ID
+              Trailer axle (applicable for articulated/combination vehicles)
             </FormLabel>
 
             <InputWithInfo
-              type="email"
-              value={formData.email}
+              value={currentData.trailerAxle}
               onChange={(value) =>
                 handleChange(
-                  "email",
+                  "trailerAxle",
                   value
                 )
               }
             />
           </FormControl>
 
-          {/* Contact Person */}
+          {/* Total */}
 
           <FormControl>
             <FormLabel
@@ -314,21 +394,21 @@ const WeighmentDetails = ({
               fontWeight="500"
               color="#4A5568"
             >
-              Contact Person
+              Total
             </FormLabel>
 
             <InputWithInfo
-              value={formData.contactPerson}
+              value={currentData.total}
               onChange={(value) =>
                 handleChange(
-                  "contactPerson",
+                  "total",
                   value
                 )
               }
             />
           </FormControl>
 
-          {/* Model Variant */}
+          {/* Gross Vehicle Weight */}
 
           <FormControl>
             <FormLabel
@@ -336,14 +416,107 @@ const WeighmentDetails = ({
               fontWeight="500"
               color="#4A5568"
             >
-              Name of model and variant
+              Gross vehicle weight kg ( for rigid vehicles ) (Front, Rear & Total)
             </FormLabel>
 
             <InputWithInfo
-              value={formData.modelVariant}
+              value={
+                currentData.grossVehicleWeight
+              }
               onChange={(value) =>
                 handleChange(
-                  "modelVariant",
+                  "grossVehicleWeight",
+                  value
+                )
+              }
+            />
+          </FormControl>
+
+          {/* ================= SECTION HEADING ================= */}
+
+          <Box
+            gridColumn={{
+              base: "auto",
+              md: "1 / -1",
+            }}
+            mt={2}
+            mb={-2}
+          >
+            <Text
+              fontSize="16px"
+              fontWeight="600"
+              color="#17365D"
+            >
+              Maximum permissible axle weights (kg)
+            </Text>
+          </Box>
+
+          {/* Maximum Permissible Front Axle */}
+
+          <FormControl>
+            <FormLabel
+              fontSize="15px"
+              fontWeight="500"
+              color="#4A5568"
+            >
+              Front axle
+            </FormLabel>
+
+            <InputWithInfo
+              value={
+                currentData.maximumPermissibleAxleWeightsFront
+              }
+              onChange={(value) =>
+                handleChange(
+                  "maximumPermissibleAxleWeightsFront",
+                  value
+                )
+              }
+            />
+          </FormControl>
+
+          {/* Maximum Permissible Rear Axle */}
+
+          <FormControl>
+            <FormLabel
+              fontSize="15px"
+              fontWeight="500"
+              color="#4A5568"
+            >
+              Rear axle
+            </FormLabel>
+
+            <InputWithInfo
+              value={
+                currentData.maximumPermissibleAxleWeightsRear
+              }
+              onChange={(value) =>
+                handleChange(
+                  "maximumPermissibleAxleWeightsRear",
+                  value
+                )
+              }
+            />
+          </FormControl>
+
+          {/* Maximum Permissible Other Axle */}
+
+          <FormControl>
+            <FormLabel
+              fontSize="15px"
+              fontWeight="500"
+              color="#4A5568"
+            >
+              Other axle
+            </FormLabel>
+
+            <InputWithInfo
+              value={
+                currentData.maximumPermissibleAxleWeightsOther
+              }
+              onChange={(value) =>
+                handleChange(
+                  "maximumPermissibleAxleWeightsOther",
                   value
                 )
               }
@@ -370,7 +543,7 @@ const WeighmentDetails = ({
               }}
               onClick={handleSave}
             >
-              Save
+              Submit
             </Button>
 
             <Button
@@ -387,63 +560,10 @@ const WeighmentDetails = ({
         </Box>
       </Box>
 
-      {/* ================= SUCCESS POPUP ================= */}
-
-      <Modal
-        isOpen={isSuccessOpen}
-        onClose={onSuccessClose}
-        isCentered
-      >
-        <ModalOverlay bg="blackAlpha.500" />
-
-        <ModalContent
-          width="390px"
-          borderRadius="6px"
-          boxShadow="0 4px 20px rgba(0,0,0,0.25)"
-        >
-          <ModalCloseButton
-            fontSize="18px"
-            top="12px"
-            right="12px"
-          />
-
-          <ModalBody py={7}>
-            <VStack spacing={5}>
-              <HStack spacing={5}>
-                <Icon
-                  as={CheckCircle}
-                  boxSize={32}
-                  color="#7AC323"
-                />
-
-                <Text
-                  fontSize="18px"
-                  fontWeight="700"
-                  color="#1A202C"
-                >
-                  Data Saved Successfully
-                </Text>
-              </HStack>
-
-              <Button
-                width="180px"
-                bg="#7AC323"
-                color="white"
-                borderRadius="5px"
-                fontSize="16px"
-                _hover={{
-                  bg: "#68AD1D",
-                }}
-                onClick={onSuccessClose}
-              >
-                Close
-              </Button>
-            </VStack>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+  
     </Box>
   );
 };
 
 export default WeighmentDetails;
+
