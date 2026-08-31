@@ -25,6 +25,37 @@ export type ManufacturerPlantData = {
 };
 
 export type VehicleBasicDetailsData = {
+  // ================= VEHICLE TYPE =================
+  vehicleType: string;
+  typeOfVehicle: string;
+  usage: string;
+  control: string;
+  drive: string;
+  cabType: string;
+  loadBody: string;
+  vehicleCategoryIS14272: string;
+  vehicleAvailableModes: string;
+  vehicleDefaultMode: string;
+  vehicleDefaultModeDetails: string;
+
+  // ================= VEHICLE PERFORMANCE =================
+  maxRecommendedGradeability: string;
+  maxDesignSpeed: string;
+  maxSpeedUnladen: string;
+  maxSpeedLaden: string;
+
+  // ================= CO2 REDUCING TECHNOLOGIES =================
+  co2ReducingTechnologiesAvailable: string;
+  regenerativeBraking: string;
+  startStopSystem: string;
+  tyrePressureMonitoringSystem: string;
+  sixOrMoreSpeedTransmission: string;
+  otherTechnology: string;
+
+  // ================= VEHICLE CLASS =================
+  vehicleClass: string;
+
+  // ================= VEHICLE DIMENSIONS =================
   overallLength: string;
   totalLength: string;
   overallWidth: string;
@@ -32,19 +63,24 @@ export type VehicleBasicDetailsData = {
   wheelBase: string;
   axleSpacing: string;
 
+  // ================= WHEEL TRACK =================
   wheelTrackFront: string;
   wheelTrackRear: string;
   wheelTrackOtherAxles: string;
 
+  // ================= BODY OVERHANG =================
   bodyOverhangFrontEnd: string;
   bodyOverhangRearEnd: string;
 
+  // ================= FRAME OVERHANG =================
   frameOverhangFrontEnd: string;
   frameOverhangRearEnd: string;
 
+  // ================= LOAD BODY =================
   loadBodyDimensions: string;
   lateralProjection: string;
 
+  // ================= CARGO BOX =================
   cargoBoxLength: string;
   cargoBoxWidth: string;
   cargoBoxHeight: string;
@@ -310,6 +346,37 @@ export const initialBusFormData: BusFormData = {
 
   vehicleBasicDetails: {
   1: {
+    // ================= VEHICLE TYPE =================
+    vehicleType: "",
+    typeOfVehicle: "",
+    usage: "",
+    control: "",
+    drive: "",
+    cabType: "",
+    loadBody: "",
+    vehicleCategoryIS14272: "",
+    vehicleAvailableModes: "",
+    vehicleDefaultMode: "",
+    vehicleDefaultModeDetails: "",
+
+    // ================= VEHICLE PERFORMANCE =================
+    maxRecommendedGradeability: "",
+    maxDesignSpeed: "",
+    maxSpeedUnladen: "",
+    maxSpeedLaden: "",
+
+    // ================= CO2 REDUCING TECHNOLOGIES =================
+    co2ReducingTechnologiesAvailable: "",
+    regenerativeBraking: "",
+    startStopSystem: "",
+    tyrePressureMonitoringSystem: "",
+    sixOrMoreSpeedTransmission: "",
+    otherTechnology: "",
+
+    // ================= VEHICLE CLASS =================
+    vehicleClass: "",
+
+    // ================= VEHICLE DIMENSIONS =================
     overallLength: "",
     totalLength: "",
     overallWidth: "",
@@ -317,25 +384,61 @@ export const initialBusFormData: BusFormData = {
     wheelBase: "",
     axleSpacing: "",
 
+    // ================= WHEEL TRACK =================
     wheelTrackFront: "",
     wheelTrackRear: "",
     wheelTrackOtherAxles: "",
 
+    // ================= BODY OVERHANG =================
     bodyOverhangFrontEnd: "",
     bodyOverhangRearEnd: "",
 
+    // ================= FRAME OVERHANG =================
     frameOverhangFrontEnd: "",
     frameOverhangRearEnd: "",
 
+    // ================= LOAD BODY =================
     loadBodyDimensions: "",
     lateralProjection: "",
 
+    // ================= CARGO BOX =================
     cargoBoxLength: "",
     cargoBoxWidth: "",
     cargoBoxHeight: "",
   },
 
   2: {
+    // ================= VEHICLE TYPE =================
+    vehicleType: "",
+    typeOfVehicle: "",
+    usage: "",
+    control: "",
+    drive: "",
+    cabType: "",
+    loadBody: "",
+    vehicleCategoryIS14272: "",
+    vehicleAvailableModes: "",
+    vehicleDefaultMode: "",
+    vehicleDefaultModeDetails: "",
+
+    // ================= VEHICLE PERFORMANCE =================
+    maxRecommendedGradeability: "",
+    maxDesignSpeed: "",
+    maxSpeedUnladen: "",
+    maxSpeedLaden: "",
+
+    // ================= CO2 REDUCING TECHNOLOGIES =================
+    co2ReducingTechnologiesAvailable: "",
+    regenerativeBraking: "",
+    startStopSystem: "",
+    tyrePressureMonitoringSystem: "",
+    sixOrMoreSpeedTransmission: "",
+    otherTechnology: "",
+
+    // ================= VEHICLE CLASS =================
+    vehicleClass: "",
+
+    // ================= VEHICLE DIMENSIONS =================
     overallLength: "",
     totalLength: "",
     overallWidth: "",
@@ -343,25 +446,61 @@ export const initialBusFormData: BusFormData = {
     wheelBase: "",
     axleSpacing: "",
 
+    // ================= WHEEL TRACK =================
     wheelTrackFront: "",
     wheelTrackRear: "",
     wheelTrackOtherAxles: "",
 
+    // ================= BODY OVERHANG =================
     bodyOverhangFrontEnd: "",
     bodyOverhangRearEnd: "",
 
+    // ================= FRAME OVERHANG =================
     frameOverhangFrontEnd: "",
     frameOverhangRearEnd: "",
 
+    // ================= LOAD BODY =================
     loadBodyDimensions: "",
     lateralProjection: "",
 
+    // ================= CARGO BOX =================
     cargoBoxLength: "",
     cargoBoxWidth: "",
     cargoBoxHeight: "",
   },
 
   3: {
+    // ================= VEHICLE TYPE =================
+    vehicleType: "",
+    typeOfVehicle: "",
+    usage: "",
+    control: "",
+    drive: "",
+    cabType: "",
+    loadBody: "",
+    vehicleCategoryIS14272: "",
+    vehicleAvailableModes: "",
+    vehicleDefaultMode: "",
+    vehicleDefaultModeDetails: "",
+
+    // ================= VEHICLE PERFORMANCE =================
+    maxRecommendedGradeability: "",
+    maxDesignSpeed: "",
+    maxSpeedUnladen: "",
+    maxSpeedLaden: "",
+
+    // ================= CO2 REDUCING TECHNOLOGIES =================
+    co2ReducingTechnologiesAvailable: "",
+    regenerativeBraking: "",
+    startStopSystem: "",
+    tyrePressureMonitoringSystem: "",
+    sixOrMoreSpeedTransmission: "",
+    otherTechnology: "",
+
+    // ================= VEHICLE CLASS =================
+    vehicleClass: "",
+
+    // ================= VEHICLE DIMENSIONS =================
     overallLength: "",
     totalLength: "",
     overallWidth: "",
@@ -369,19 +508,24 @@ export const initialBusFormData: BusFormData = {
     wheelBase: "",
     axleSpacing: "",
 
+    // ================= WHEEL TRACK =================
     wheelTrackFront: "",
     wheelTrackRear: "",
     wheelTrackOtherAxles: "",
 
+    // ================= BODY OVERHANG =================
     bodyOverhangFrontEnd: "",
     bodyOverhangRearEnd: "",
 
+    // ================= FRAME OVERHANG =================
     frameOverhangFrontEnd: "",
     frameOverhangRearEnd: "",
 
+    // ================= LOAD BODY =================
     loadBodyDimensions: "",
     lateralProjection: "",
 
+    // ================= CARGO BOX =================
     cargoBoxLength: "",
     cargoBoxWidth: "",
     cargoBoxHeight: "",

@@ -2375,43 +2375,68 @@ const handleFormSave = <K extends keyof BusFormData>(
                 flexDirection={"row"}
                 pl={["10%", "10%", "2%", "2%"]}
               >
-                <Box
-                  alignItems="center"
-                  pl={"5"}
-                  width={[
-                    "50%", // 0-30em
-                    "50%", // 30em-48em
-                    "20%", // 48em-62em
-                    "15%", // 62em+
-                  ]}
-                >
-                  {homologationDatas.vehicle_type === "Bus" ? (
-  <Image
-    src={BusImage}
-    alt="Bus"
-    boxSize="72px"
-    ml="45px"
-    borderRadius="50%"
-    objectFit="cover"
-  />
-) : homologationDatas.vehicle_type === "3-Wheeler" ? (
-  <Image
-    src={threeWheeler}
-    alt="3 Wheeler"
-    h="72px"
-    w="72px"
-    borderRadius="50%"
-  />
-) : (
-  <Image
-    src={Sbike}
-    alt="2 Wheeler"
-    h="72px"
-    w="72px"
-    borderRadius="50%"
-  />
-                  )}
-                </Box>
+               <Box
+  alignItems="center"
+  pl={0}
+  width={[
+    "50%",
+    "50%",
+    "20%",
+    "15%",
+  ]}
+>
+  {homologationDatas.vehicle_type === "Bus" ? (
+    <HStack
+      spacing={2}
+      alignItems="center"
+    >
+      {/* Hamburger */}
+      <Button
+  onClick={onBusMenuOpen}
+  minW="44px"
+  w="44px"
+  h="44px"
+  p={0}
+  ml="10"
+  bg="transparent"
+  color="white"
+  _hover={{
+    bg: "transparent",
+  }}
+  _active={{
+    bg: "transparent",
+  }}
+>
+  <HamburgerIcon boxSize={7} />
+</Button>
+
+      {/* Bus Image */}
+      <Image
+        src={BusImage}
+        alt="Bus"
+        boxSize="72px"
+        borderRadius="50%"
+        objectFit="cover"
+      />
+    </HStack>
+  ) : homologationDatas.vehicle_type === "3-Wheeler" ? (
+    <Image
+      src={threeWheeler}
+      alt="3 Wheeler"
+      h="72px"
+      w="72px"
+      borderRadius="50%"
+    />
+  ) : (
+    <Image
+      src={Sbike}
+      alt="2 Wheeler"
+      h="72px"
+      w="72px"
+      borderRadius="50%"
+    />
+  )}
+</Box>
                 <Box
                   alignItems="center"
                   pl={"5"}
@@ -2459,7 +2484,7 @@ const handleFormSave = <K extends keyof BusFormData>(
                     fontSize={"14"}
                     color={"color.500"}
                   >
-                    {homologationDatas.vehicle_category}
+                    {Category}
                   </Text>
                 </Box>
                 <Box
@@ -2608,24 +2633,7 @@ const handleFormSave = <K extends keyof BusFormData>(
 {isBus && (
   <Box width="100%">
     
-    {/* ================= MOBILE MENU BUTTON ================= */}
-    <Box
-      display={{ base: "block", md: "none" }}
-      px={4}
-      py={3}
-      bg="#063D2E"
-    >
-      <Button
-        onClick={onBusMenuOpen}
-        bg="#0B5A44"
-        color="white"
-        _hover={{
-          bg: "#0D6B50",
-        }}
-      >
-        ☰
-      </Button>
-    </Box>
+    
 
     {/* ================= MOBILE DRAWER ================= */}
 

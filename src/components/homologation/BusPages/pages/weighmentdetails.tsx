@@ -197,7 +197,7 @@ const WeighmentDetails = ({
         mb={6}
       >
         <HStack spacing={2}>
-         {[1, 2, 3].map((wd) => (
+        {[1, 2, 3, 4, 5].map((wd) => (
   <Button
     key={wd}
     size="md"
@@ -217,20 +217,17 @@ const WeighmentDetails = ({
     border="1px solid #E2E8F0"
     fontSize="15px"
     fontWeight="600"
-
-    // Hide/disable WD 2 and WD 3
-    isDisabled={wd === 2 || wd === 3}
-
     _hover={{
       bg:
         activeWD === wd
           ? "#2865A5"
           : "#F7FAFC",
     }}
-
     onClick={() => setActiveWD(wd)}
   >
-    WD {wd}
+    {wd === 1
+      ? "Base"
+      : `Variant ${wd - 1}`}
   </Button>
 ))}
         </HStack>

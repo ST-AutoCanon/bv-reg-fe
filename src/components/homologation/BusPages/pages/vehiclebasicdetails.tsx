@@ -223,7 +223,7 @@ const handleSave = () => {
 
         {/* ================= FORM ================= */}
 
-        <SimpleGrid
+       <SimpleGrid
   columns={{
     base: 1,
     md: 2,
@@ -232,6 +232,508 @@ const handleSave = () => {
   spacingX={8}
   spacingY={7}
 >
+  {/* ================= VEHICLE TYPE ================= */}
+
+  {/* Type of Vehicle */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Type of vehicle (Rigid / articulated / Tractor-Trailer combination / others)
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.typeOfVehicle}
+      onChange={(value) =>
+        handleChange("typeOfVehicle", value)
+      }
+    />
+  </FormControl>
+
+  {/* Usage */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Usage (goods / passenger / others)
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.usage}
+      onChange={(value) =>
+        handleChange("usage", value)
+      }
+    />
+  </FormControl>
+
+  {/* Control */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Control (Forward / semi-forward / normal / others)
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.control}
+      onChange={(value) =>
+        handleChange("control", value)
+      }
+    />
+  </FormControl>
+
+  {/* Drive */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Drive (4x2 / 4x4 / 6x2 / 6x4 / others)
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.drive}
+      onChange={(value) =>
+        handleChange("drive", value)
+      }
+    />
+  </FormControl>
+
+  {/* Cab Type */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Cab type
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.cabType}
+      onChange={(value) =>
+        handleChange("cabType", value)
+      }
+    />
+  </FormControl>
+
+  {/* Load Body */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Load body (fitted / not fitted)
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.loadBody}
+      onChange={(value) =>
+        handleChange("loadBody", value)
+      }
+    />
+  </FormControl>
+
+  {/* Category */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Category of vehicle as per IS 14272:2011
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.vehicleCategoryIS14272}
+      onChange={(value) =>
+        handleChange(
+          "vehicleCategoryIS14272",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* Vehicle Available Modes */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Vehicle available modes
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.vehicleAvailableModes}
+      onChange={(value) =>
+        handleChange(
+          "vehicleAvailableModes",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* Vehicle Default Mode */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Vehicle Default mode Yes / No
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.vehicleDefaultMode}
+      onChange={(value) =>
+        handleChange(
+          "vehicleDefaultMode",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* Default Mode Details */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Default mode details (if Yes)
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.vehicleDefaultModeDetails}
+      onChange={(value) =>
+        handleChange(
+          "vehicleDefaultModeDetails",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* ================= VEHICLE PERFORMANCE ================= */}
+
+  <Box
+    gridColumn={{
+      base: "auto",
+      md: "1 / -1",
+    }}
+    mt={2}
+  >
+    <Text
+      fontSize="18px"
+      fontWeight="700"
+      color="#17365D"
+      mb={2}
+    >
+      Vehicle Performance
+    </Text>
+
+    <Box borderTop="1px solid #E5E7EB" />
+  </Box>
+
+  {/* Max Gradeability */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Max. recommended gradeability (Stand-start)  in degrees
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.maxRecommendedGradeability}
+      onChange={(value) =>
+        handleChange(
+          "maxRecommendedGradeability",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* Max Design Speed */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Max. Design speed (km/h)
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.maxDesignSpeed}
+      onChange={(value) =>
+        handleChange("maxDesignSpeed", value)
+      }
+    />
+  </FormControl>
+
+  {/* Max Speed Unladen */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Vehicle Max Speed in unladen condition (km/h)
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.maxSpeedUnladen}
+      onChange={(value) =>
+        handleChange("maxSpeedUnladen", value)
+      }
+    />
+  </FormControl>
+
+  {/* Max Speed Laden */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Vehicle Max Speed in laden condition (km/h)
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.maxSpeedLaden}
+      onChange={(value) =>
+        handleChange("maxSpeedLaden", value)
+      }
+    />
+  </FormControl>
+
+  {/* ================= CO2 TECHNOLOGIES ================= */}
+
+  <Box
+    gridColumn={{
+      base: "auto",
+      md: "1 / -1",
+    }}
+    mt={2}
+  >
+    <Text
+      fontSize="18px"
+      fontWeight="700"
+      color="#17365D"
+      mb={2}
+    >
+      CO2 Reducing Technologies
+    </Text>
+
+    <Box borderTop="1px solid #E5E7EB" />
+  </Box>
+
+  {/* CO2 Available */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      CO2 Reducing technologies available (Yes / No)
+    </FormLabel>
+
+    <InputWithInfo
+      value={
+        currentData.co2ReducingTechnologiesAvailable
+      }
+      onChange={(value) =>
+        handleChange(
+          "co2ReducingTechnologiesAvailable",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* Regenerative Braking */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Regenerative braking
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.regenerativeBraking}
+      onChange={(value) =>
+        handleChange(
+          "regenerativeBraking",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* Start Stop */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Start-Stop System
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.startStopSystem}
+      onChange={(value) =>
+        handleChange(
+          "startStopSystem",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* TPMS */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Tyre pressure monitoring system
+    </FormLabel>
+
+    <InputWithInfo
+      value={
+        currentData.tyrePressureMonitoringSystem
+      }
+      onChange={(value) =>
+        handleChange(
+          "tyrePressureMonitoringSystem",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* 6 Speed Transmission */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      6 or more Speed Transmission
+    </FormLabel>
+
+    <InputWithInfo
+      value={
+        currentData.sixOrMoreSpeedTransmission
+      }
+      onChange={(value) =>
+        handleChange(
+          "sixOrMoreSpeedTransmission",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* Other Technology */}
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Any other technology
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.otherTechnology}
+      onChange={(value) =>
+        handleChange(
+          "otherTechnology",
+          value
+        )
+      }
+    />
+  </FormControl>
+
+  {/* ================= VEHICLE CLASS ================= */}
+
+  <Box
+    gridColumn={{
+      base: "auto",
+      md: "1 / -1",
+    }}
+    mt={2}
+  >
+    <Text
+      fontSize="18px"
+      fontWeight="700"
+      color="#17365D"
+      mb={2}
+    >
+      Vehicle Class
+    </Text>
+
+    <Box borderTop="1px solid #E5E7EB" />
+  </Box>
+
+  <FormControl>
+    <FormLabel
+      fontSize="15px"
+      fontWeight="500"
+      color="#4A5568"
+    >
+      Vehicle Class (Class 1 / Class 2 / Class 3a / Class 3b)
+    </FormLabel>
+
+    <InputWithInfo
+      value={currentData.vehicleClass}
+      onChange={(value) =>
+        handleChange("vehicleClass", value)
+      }
+    />
+  </FormControl>
+
+  {/* ================= VEHICLE DIMENSIONS ================= */}
+
+  <Box
+    gridColumn={{
+      base: "auto",
+      md: "1 / -1",
+    }}
+    mt={2}
+  >
+    <Text
+      fontSize="18px"
+      fontWeight="700"
+      color="#17365D"
+      mb={2}
+    >
+      Vehicle Dimensions
+    </Text>
+
+    <Box borderTop="1px solid #E5E7EB" />
+  </Box>
+
   {/* Overall Length */}
   <FormControl>
     <FormLabel
@@ -293,13 +795,16 @@ const handleSave = () => {
       fontWeight="500"
       color="#4A5568"
     >
-      Overall, Height (Unladen) (mm)
+      Overall Height (Unladen) (mm)
     </FormLabel>
 
     <InputWithInfo
       value={currentData.overallHeightUnladen}
       onChange={(value) =>
-        handleChange("overallHeightUnladen", value)
+        handleChange(
+          "overallHeightUnladen",
+          value
+        )
       }
     />
   </FormControl>
@@ -329,7 +834,7 @@ const handleSave = () => {
       fontWeight="500"
       color="#4A5568"
     >
-      Axle spacing in case of multi axle vehicles.
+      Axle spacing in case of multi axle vehicles
     </FormLabel>
 
     <InputWithInfo
@@ -340,7 +845,28 @@ const handleSave = () => {
     />
   </FormControl>
 
-  {/* Wheel Track - Front */}
+  {/* ================= WHEEL TRACK ================= */}
+
+  <Box
+    gridColumn={{
+      base: "auto",
+      md: "1 / -1",
+    }}
+    mt={2}
+  >
+    <Text
+      fontSize="17px"
+      fontWeight="600"
+      color="#17365D"
+      mb={2}
+    >
+      Wheel Track (mm)
+    </Text>
+
+    <Box borderTop="1px solid #E5E7EB" />
+  </Box>
+
+  {/* Front */}
   <FormControl>
     <FormLabel
       fontSize="15px"
@@ -353,12 +879,15 @@ const handleSave = () => {
     <InputWithInfo
       value={currentData.wheelTrackFront}
       onChange={(value) =>
-        handleChange("wheelTrackFront", value)
+        handleChange(
+          "wheelTrackFront",
+          value
+        )
       }
     />
   </FormControl>
 
-  {/* Wheel Track - Rear */}
+  {/* Rear */}
   <FormControl>
     <FormLabel
       fontSize="15px"
@@ -371,12 +900,15 @@ const handleSave = () => {
     <InputWithInfo
       value={currentData.wheelTrackRear}
       onChange={(value) =>
-        handleChange("wheelTrackRear", value)
+        handleChange(
+          "wheelTrackRear",
+          value
+        )
       }
     />
   </FormControl>
 
-  {/* Wheel Track - Other Axles */}
+  {/* Other Axles */}
   <FormControl>
     <FormLabel
       fontSize="15px"
@@ -387,14 +919,40 @@ const handleSave = () => {
     </FormLabel>
 
     <InputWithInfo
-      value={currentData.wheelTrackOtherAxles}
+      value={
+        currentData.wheelTrackOtherAxles
+      }
       onChange={(value) =>
-        handleChange("wheelTrackOtherAxles", value)
+        handleChange(
+          "wheelTrackOtherAxles",
+          value
+        )
       }
     />
   </FormControl>
 
-  {/* Body Overhang - Front */}
+  {/* ================= BODY OVERHANG ================= */}
+
+  <Box
+    gridColumn={{
+      base: "auto",
+      md: "1 / -1",
+    }}
+    mt={2}
+  >
+    <Text
+      fontSize="17px"
+      fontWeight="600"
+      color="#17365D"
+      mb={2}
+    >
+      Body Overhang (mm)
+    </Text>
+
+    <Box borderTop="1px solid #E5E7EB" />
+  </Box>
+
+  {/* Front End */}
   <FormControl>
     <FormLabel
       fontSize="15px"
@@ -407,12 +965,15 @@ const handleSave = () => {
     <InputWithInfo
       value={currentData.bodyOverhangFrontEnd}
       onChange={(value) =>
-        handleChange("bodyOverhangFrontEnd", value)
+        handleChange(
+          "bodyOverhangFrontEnd",
+          value
+        )
       }
     />
   </FormControl>
 
-  {/* Body Overhang - Rear */}
+  {/* Rear End */}
   <FormControl>
     <FormLabel
       fontSize="15px"
@@ -425,12 +986,36 @@ const handleSave = () => {
     <InputWithInfo
       value={currentData.bodyOverhangRearEnd}
       onChange={(value) =>
-        handleChange("bodyOverhangRearEnd", value)
+        handleChange(
+          "bodyOverhangRearEnd",
+          value
+        )
       }
     />
   </FormControl>
 
-  {/* Frame Overhang - Front */}
+  {/* ================= FRAME OVERHANG ================= */}
+
+  <Box
+    gridColumn={{
+      base: "auto",
+      md: "1 / -1",
+    }}
+    mt={2}
+  >
+    <Text
+      fontSize="17px"
+      fontWeight="600"
+      color="#17365D"
+      mb={2}
+    >
+      Frame Overhang (mm)
+    </Text>
+
+    <Box borderTop="1px solid #E5E7EB" />
+  </Box>
+
+  {/* Front End */}
   <FormControl>
     <FormLabel
       fontSize="15px"
@@ -441,14 +1026,19 @@ const handleSave = () => {
     </FormLabel>
 
     <InputWithInfo
-      value={currentData.frameOverhangFrontEnd}
+      value={
+        currentData.frameOverhangFrontEnd
+      }
       onChange={(value) =>
-        handleChange("frameOverhangFrontEnd", value)
+        handleChange(
+          "frameOverhangFrontEnd",
+          value
+        )
       }
     />
   </FormControl>
 
-  {/* Frame Overhang - Rear */}
+  {/* Rear End */}
   <FormControl>
     <FormLabel
       fontSize="15px"
@@ -459,12 +1049,38 @@ const handleSave = () => {
     </FormLabel>
 
     <InputWithInfo
-      value={currentData.frameOverhangRearEnd}
+      value={
+        currentData.frameOverhangRearEnd
+      }
       onChange={(value) =>
-        handleChange("frameOverhangRearEnd", value)
+        handleChange(
+          "frameOverhangRearEnd",
+          value
+        )
       }
     />
   </FormControl>
+
+  {/* ================= LOAD BODY ================= */}
+
+  <Box
+    gridColumn={{
+      base: "auto",
+      md: "1 / -1",
+    }}
+    mt={2}
+  >
+    <Text
+      fontSize="17px"
+      fontWeight="600"
+      color="#17365D"
+      mb={2}
+    >
+      Load Body
+    </Text>
+
+    <Box borderTop="1px solid #E5E7EB" />
+  </Box>
 
   {/* Load Body Dimensions */}
   <FormControl>
@@ -479,7 +1095,10 @@ const handleSave = () => {
     <InputWithInfo
       value={currentData.loadBodyDimensions}
       onChange={(value) =>
-        handleChange("loadBodyDimensions", value)
+        handleChange(
+          "loadBodyDimensions",
+          value
+        )
       }
     />
   </FormControl>
@@ -497,12 +1116,36 @@ const handleSave = () => {
     <InputWithInfo
       value={currentData.lateralProjection}
       onChange={(value) =>
-        handleChange("lateralProjection", value)
+        handleChange(
+          "lateralProjection",
+          value
+        )
       }
     />
   </FormControl>
 
-  {/* Cargo Box - Length */}
+  {/* ================= CARGO BOX ================= */}
+
+  <Box
+    gridColumn={{
+      base: "auto",
+      md: "1 / -1",
+    }}
+    mt={2}
+  >
+    <Text
+      fontSize="17px"
+      fontWeight="600"
+      color="#17365D"
+      mb={2}
+    >
+      Cargo Box Dimensions (mm)
+    </Text>
+
+    <Box borderTop="1px solid #E5E7EB" />
+  </Box>
+
+  {/* Cargo Length */}
   <FormControl>
     <FormLabel
       fontSize="15px"
@@ -515,12 +1158,15 @@ const handleSave = () => {
     <InputWithInfo
       value={currentData.cargoBoxLength}
       onChange={(value) =>
-        handleChange("cargoBoxLength", value)
+        handleChange(
+          "cargoBoxLength",
+          value
+        )
       }
     />
   </FormControl>
 
-  {/* Cargo Box - Width */}
+  {/* Cargo Width */}
   <FormControl>
     <FormLabel
       fontSize="15px"
@@ -533,12 +1179,15 @@ const handleSave = () => {
     <InputWithInfo
       value={currentData.cargoBoxWidth}
       onChange={(value) =>
-        handleChange("cargoBoxWidth", value)
+        handleChange(
+          "cargoBoxWidth",
+          value
+        )
       }
     />
   </FormControl>
 
-  {/* Cargo Box - Height */}
+  {/* Cargo Height */}
   <FormControl>
     <FormLabel
       fontSize="15px"
@@ -551,12 +1200,14 @@ const handleSave = () => {
     <InputWithInfo
       value={currentData.cargoBoxHeight}
       onChange={(value) =>
-        handleChange("cargoBoxHeight", value)
+        handleChange(
+          "cargoBoxHeight",
+          value
+        )
       }
     />
   </FormControl>
 </SimpleGrid>
-
         {/* ================= BUTTONS ================= */}
 
         <Box
