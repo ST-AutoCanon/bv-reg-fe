@@ -580,24 +580,39 @@ const Newhomologation: FC<ChildProps> = ({ onClose }) => {
     const dispatch = useDispatch()
 
     const storeHomologationData = async (homologationData: any) => {
-        await Post(searchApiURL, homologationData, config)
-            .then((resp) => {
-                if (resp.data.status === 'success') {
-                    // console.log('vehicleType1: inside homologaion request success', vehicleType1);
-                    let requestType = { 'fuel_type': homologationData.fuel_type, 'vehicle_type': homologationData.vehicle_type }
-                    dispatch(setHomologationDatas(requestType));
-                    dispatch(setCategory(homologationData.vehicle_category));
-                    dispatch(setRequestId(resp.data.body.homologationRequest._id));
-                    navigate("/Homologation")
+    await Post(searchApiURL, homologationData, config)
+        .then((resp) => {
+            if (resp.data.status === 'success') {
+
+                const requestType = {
+                    fuel_type: homologationData.fuel_type,
+                    vehicle_type: homologationData.vehicle_type
+                };
+
+                dispatch(setHomologationDatas(requestType));
+                dispatch(setCategory(homologationData.vehicle_category));
+                dispatch(
+                    setRequestId(
+                        resp.data.body.homologationRequest._id
+                    )
+                );
+
+                // Navigate based on vehicle type
+                if (homologationData.vehicle_type === "Bus") {
+                    navigate("/BusHomologation");
+                } else {
+                    navigate("/Homologation");
                 }
-                if (resp.data.status === 'failure') {
-                    // console.log(resp.data.body.split('key: '));                    
-                }
-            })
-            .catch((error) => {
-                // console.log('error');
-            });
-    };
+            }
+
+            if (resp.data.status === 'failure') {
+                // handle failure
+            }
+        })
+        .catch((error) => {
+            console.error("Error storing homologation data:", error);
+        });
+};
 
     const changeHandler = (event: any) => {
         // if (event.target.value === '2-Wheeler' || event.target.value === '3-Wheeler') {

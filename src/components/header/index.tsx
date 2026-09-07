@@ -531,7 +531,12 @@ const Header: FC = () => {
   const navigate = useNavigate();
   const token: any = useSelector((state: RootState) => state.loginCredential.token);
   const userData: any = useSelector((state: RootState) => state.loginCredential.userData);
-  const { username, role } = userData;
+  const { username, role,vehicleType } = userData;
+  console.log("========== HEADER DEBUG ==========");
+console.log("userData:", userData);
+console.log("vehicleType:", vehicleType);
+console.log("role:", role);
+console.log("==================================");
   const dispatch = useDispatch();
   // const [timer, setTimer] = useState<any>(null);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
@@ -874,9 +879,22 @@ const Header: FC = () => {
               }
 
 
-              {role === 'user' && role !== undefined ? <Button variant='link' pl={5} pr={5} pt={2} pb={2} color='#000' _hover={{ bg: '#7FBD2C' }}><Link to='/Dashboard'>Homologation</Link></Button> :
-                ""
-              }
+              {role === 'user' && role !== undefined ?
+  <Button
+    variant='link'
+    pl={5}
+    pr={5}
+    pt={2}
+    pb={2}
+    color='#000'
+    _hover={{ bg: '#7FBD2C' }}
+  >
+    <Link to={vehicleType === "Bus" ? "/BusHomologation" : "/Dashboard"}>
+      Homologation
+    </Link>
+  </Button>
+  : ""
+}
               {role === 'user' && role !== undefined ? <Button variant='link' pl={5} pr={5} pt={2} pb={2} color='#000' _hover={{ bg: '#7FBD2C' }}><Link to='/WMI'>WMI</Link></Button> :
                 ""
               }
@@ -894,8 +912,9 @@ const Header: FC = () => {
             <Box width='100%' overflow='scroll'>
               <Stack direction='row' width='800px' spacing={4} alignItems='center' height={20} pt={4} fontSize={16}>
                 <Button variant='link' pl={5} pr={5} pt={2} pb={2} color='#000' _hover={{ bg: '#7FBD2C' }}><Link to='/'>Home</Link></Button>
-                {role === 'user' && role !== undefined ? <Button variant='link' pl={5} pr={5} pt={2} pb={2} color='#000' _hover={{ bg: '#7FBD2C' }}><Link to='/Dashboard'>HomoLogation</Link></Button> :
-                  ""}
+                <Link to={vehicleType === "Bus" ? "/BusHomologation" : "/Dashboard"}>
+  HomoLogation
+</Link>
                 {role === 'user' && role !== undefined ? <Button variant='link' pl={5} pr={5} pt={2} pb={2} color='#000' _hover={{ bg: '#7FBD2C' }}><Link to='/WMI'>WMI</Link></Button> :
                   ""}
                 {role === 'admin' && role !== undefined ? <Button variant='link' pl={5} pr={5} pt={2} pb={2} color='#000' _hover={{ bg: '#7FBD2C' }}><Link to='/SearchUserOrHomologation'>Dashboard</Link></Button>

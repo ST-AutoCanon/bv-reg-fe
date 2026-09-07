@@ -50,6 +50,7 @@ const InputWithInfo = ({
       spacing={2}
       width="100%"
       align="center"
+      minW={0}
     >
       <Input
         size="md"
@@ -57,6 +58,7 @@ const InputWithInfo = ({
         fontSize="15px"
         type={type}
         flex="1"
+        minW={0}
         value={value}
         onChange={(e) => onChange(e.target.value)}
       />
@@ -224,13 +226,14 @@ const handleSave = () => {
         {/* ================= FORM ================= */}
 
        <SimpleGrid
-  columns={{
-    base: 1,
-    md: 2,
-    lg: 3,
+  templateColumns={{
+    base: "1fr",
+    md: "repeat(2, minmax(0, 1fr))",
+    lg: "repeat(3, minmax(0, 1fr))",
   }}
   spacingX={8}
   spacingY={7}
+  width="100%"
 >
   {/* ================= VEHICLE TYPE ================= */}
 
@@ -240,6 +243,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Type of vehicle (Rigid / articulated / Tractor-Trailer combination / others)
     </FormLabel>
@@ -258,6 +262,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Usage (goods / passenger / others)
     </FormLabel>
@@ -276,6 +281,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Control (Forward / semi-forward / normal / others)
     </FormLabel>
@@ -294,6 +300,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Drive (4x2 / 4x4 / 6x2 / 6x4 / others)
     </FormLabel>
@@ -312,6 +319,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Cab type
     </FormLabel>
@@ -330,6 +338,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Load body (fitted / not fitted)
     </FormLabel>
@@ -348,6 +357,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Category of vehicle as per IS 14272:2011
     </FormLabel>
@@ -369,6 +379,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Vehicle available modes
     </FormLabel>
@@ -390,6 +401,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Vehicle Default mode Yes / No
     </FormLabel>
@@ -411,6 +423,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Default mode details (if Yes)
     </FormLabel>
@@ -453,6 +466,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Max. recommended gradeability (Stand-start)  in degrees
     </FormLabel>
@@ -474,6 +488,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Max. Design speed (km/h)
     </FormLabel>
@@ -492,6 +507,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Vehicle Max Speed in unladen condition (km/h)
     </FormLabel>
@@ -510,6 +526,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Vehicle Max Speed in laden condition (km/h)
     </FormLabel>
@@ -549,6 +566,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       CO2 Reducing technologies available (Yes / No)
     </FormLabel>
@@ -572,6 +590,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Regenerative braking
     </FormLabel>
@@ -593,6 +612,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Start-Stop System
     </FormLabel>
@@ -614,6 +634,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Tyre pressure monitoring system
     </FormLabel>
@@ -637,6 +658,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       6 or more Speed Transmission
     </FormLabel>
@@ -660,6 +682,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Any other technology
     </FormLabel>
@@ -701,6 +724,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Vehicle Class (Class 1 / Class 2 / Class 3a / Class 3b)
     </FormLabel>
@@ -740,6 +764,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Overall Length mm
     </FormLabel>
@@ -758,6 +783,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Total length (mm) (for articulated/combination vehicles)
     </FormLabel>
@@ -776,6 +802,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Overall Width mm
     </FormLabel>
@@ -794,6 +821,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Overall Height (Unladen) (mm)
     </FormLabel>
@@ -815,6 +843,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Wheel base (mm)
     </FormLabel>
@@ -833,6 +862,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Axle spacing in case of multi axle vehicles
     </FormLabel>
@@ -872,6 +902,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Front
     </FormLabel>
@@ -893,6 +924,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Rear
     </FormLabel>
@@ -914,6 +946,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Other axles (for articulated/combination vehicles)
     </FormLabel>
@@ -958,6 +991,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Front end
     </FormLabel>
@@ -979,6 +1013,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Rear end
     </FormLabel>
@@ -1021,6 +1056,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Front end
     </FormLabel>
@@ -1044,6 +1080,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Rear end
     </FormLabel>
@@ -1088,6 +1125,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Load Body dimensions (L X B X H) (mm)
     </FormLabel>
@@ -1109,6 +1147,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Lateral projection
     </FormLabel>
@@ -1151,6 +1190,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Length
     </FormLabel>
@@ -1172,6 +1212,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Width
     </FormLabel>
@@ -1193,6 +1234,7 @@ const handleSave = () => {
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+       minH="48px"
     >
       Height
     </FormLabel>

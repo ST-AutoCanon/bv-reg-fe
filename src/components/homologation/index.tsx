@@ -71,10 +71,10 @@ let threeColumnHelper: any;
 let threeColumns: any;
 let twoWheelerData: any = [];
 let threeWheelerData: any = [];
-let busData:any=[];
-let bus: any;
-let busColumnHelper: any;
-let busColumns: any;
+// let busData:any=[];
+// let bus: any;
+// let busColumnHelper: any;
+// let busColumns: any;
 let circlestate: string = '';
 
 const Dashboard: FC = () => {
@@ -132,11 +132,11 @@ const Dashboard: FC = () => {
                     console.log("Available Vehicle Types:", removedDuplicateValue);
                     const twoWheelerDatas = resp.data.body.filter((item: any) => item.vehicle_type.value === '2-Wheeler');
                     const threeWheelerDatas = resp.data.body.filter((item: any) => item.vehicle_type.value === '3-Wheeler');
-                    const busDatas = resp.data.body.filter((item:any) => item.vehicle_type.value === "Bus"); 
-                    console.log("Bus Data:", busDatas);
-                    twoWheelerData = twoWheelerDatas
-                    threeWheelerData = threeWheelerDatas
-                    busData = busDatas;
+                    // const busDatas = resp.data.body.filter((item:any) => item.vehicle_type.value === "Bus"); 
+                    // console.log("Bus Data:", busDatas);
+                    // twoWheelerData = twoWheelerDatas
+                    // threeWheelerData = threeWheelerDatas
+                    // busData = busDatas;
                     dataPagination();
 
                 }
@@ -149,14 +149,27 @@ const Dashboard: FC = () => {
                 // console.log(error)
             })
     };
-    const homologationRequestId = (requestId: string, homoData: any) => {
-        let requestType = { 'fuel_type': homoData.fuel_type.value, 'vehicle_type': homoData.vehicle_type.value }
-        dispatch(setHomologationDatas(requestType));
-        dispatch(setCategory(homoData.vehicle_category.value));
-        dispatch(setRequestId(requestId));
-        navigate('/Homologation')
+    const homologationRequestId = (
+  requestId: string,
+  homoData: any
+) => {
+  const vehicleType = homoData.vehicle_type.value;
 
-    };
+  const requestType = {
+    fuel_type: homoData.fuel_type.value,
+    vehicle_type: vehicleType
+  };
+
+  dispatch(setHomologationDatas(requestType));
+  dispatch(setCategory(homoData.vehicle_category.value));
+  dispatch(setRequestId(requestId));
+
+  if (vehicleType === "Bus") {
+    navigate("/BusHomologation");
+  } else {
+    navigate("/Homologation");
+  }
+};
     const cloneApiURL = "homologationRequest/cloneHomologationRequest/";
     const handleCloneRequest = async (sourceRequestId: string) => {
         try {
@@ -540,96 +553,96 @@ const Dashboard: FC = () => {
         ];
 
         // Bus pagination starts
-        let busRquestId: string = '';
-        // circlestates ? threeWheelerRquestId = circlestates : threeWheelerData.filter((item: any, key: number) => key === 0 ? threeWheelerRquestId = item._id : null)
-        // Determine the three-wheeler request ID
-        if (circlestates && busData.some((item: any) => item._id === circlestates)) {
-            busRquestId = circlestates;
-        } else {
-            // If circlestate is not provided or invalid, set it to the first entry in three-wheeler data
-            busRquestId = busData.length > 0 ? busData[0]._id : null;
-        }
-         bus = busData.map((homoData: any) => ({
-            homoID: (
-                <Text onClick={() => getAllFormsData(homoData._id)}>
-                    {busRquestId === homoData._id || circlestate === homoData._id ?
-                        <Text as={'span'} display={'block'} w={"24px"} h={"24px"} bg={"#7FBD2C"} borderRadius={"24px"}></Text> :
-                        <Text as={'span'} display={'block'} w={"24px"} h={"24px"} bg={"#ccc"} borderRadius={"24px"}></Text>}
-                </Text>
+        // let busRquestId: string = '';
+        // // circlestates ? threeWheelerRquestId = circlestates : threeWheelerData.filter((item: any, key: number) => key === 0 ? threeWheelerRquestId = item._id : null)
+        // // Determine the three-wheeler request ID
+        // if (circlestates && busData.some((item: any) => item._id === circlestates)) {
+        //     busRquestId = circlestates;
+        // } else {
+        //     // If circlestate is not provided or invalid, set it to the first entry in three-wheeler data
+        //     busRquestId = busData.length > 0 ? busData[0]._id : null;
+        // }
+        //  bus = busData.map((homoData: any) => ({
+        //     homoID: (
+        //         <Text onClick={() => getAllFormsData(homoData._id)}>
+        //             {busRquestId === homoData._id || circlestate === homoData._id ?
+        //                 <Text as={'span'} display={'block'} w={"24px"} h={"24px"} bg={"#7FBD2C"} borderRadius={"24px"}></Text> :
+        //                 <Text as={'span'} display={'block'} w={"24px"} h={"24px"} bg={"#ccc"} borderRadius={"24px"}></Text>}
+        //         </Text>
 
-            ),
-            RequestNumber: (
-                <Text onClick={() => getAllFormsData(homoData._id)}>
-                    {homoData.request_number}
-                </Text>
+        //     ),
+        //     RequestNumber: (
+        //         <Text onClick={() => getAllFormsData(homoData._id)}>
+        //             {homoData.request_number}
+        //         </Text>
 
-            ),
-            CompanyName: (
-                <Text onClick={() => getAllFormsData(homoData._id)}>
-                    {userData.businessName}
-                </Text>
+        //     ),
+        //     CompanyName: (
+        //         <Text onClick={() => getAllFormsData(homoData._id)}>
+        //             {userData.businessName}
+        //         </Text>
 
-            ),
-            VehicleType: (
-                <Text onClick={() => getAllFormsData(homoData._id)}>
-                    {homoData.vehicle_type.value}
-                </Text>
+        //     ),
+        //     VehicleType: (
+        //         <Text onClick={() => getAllFormsData(homoData._id)}>
+        //             {homoData.vehicle_type.value}
+        //         </Text>
 
-            ),
-            version: homoData.version ?? 0,
-            // passRequestId: (
-            //     <Text>
-            //         <EditIcon cursor={'pointer'} w={4} h={4} onClick={() => homologationRequestId(homoData._id, homoData)} />
-            //     </Text>
+        //     ),
+        //     version: homoData.version ?? 0,
+        //     // passRequestId: (
+        //     //     <Text>
+        //     //         <EditIcon cursor={'pointer'} w={4} h={4} onClick={() => homologationRequestId(homoData._id, homoData)} />
+        //     //     </Text>
 
-            // ),
-            passRequestId: (
-                <HStack spacing={3}>
-                  <EditIcon 
-                    cursor="pointer" 
-                    w={4} 
-                    h={4} 
-                    onClick={() => homologationRequestId(homoData._id, homoData)} 
-                  />
-                  <CloneIcon 
-                    cursor="pointer" 
-                    w={4} 
-                    h={4} 
-                    onClick={() => handleCloneRequest(homoData._id)} 
-                  />
-                </HStack>
-              ),
-        }));
+        //     // ),
+        //     passRequestId: (
+        //         <HStack spacing={3}>
+        //           <EditIcon 
+        //             cursor="pointer" 
+        //             w={4} 
+        //             h={4} 
+        //             onClick={() => homologationRequestId(homoData._id, homoData)} 
+        //           />
+        //           <CloneIcon 
+        //             cursor="pointer" 
+        //             w={4} 
+        //             h={4} 
+        //             onClick={() => handleCloneRequest(homoData._id)} 
+        //           />
+        //         </HStack>
+        //       ),
+        // }));
 
-        // Need pass type of `tableDate` for ts autocomplete
-        busColumnHelper = createColumn<typeof bus[0]>();
+        // // Need pass type of `tableDate` for ts autocomplete
+        // busColumnHelper = createColumn<typeof bus[0]>();
 
-        busColumns = [
-            busColumnHelper.accessor("homoID", {
-                cell: (info: any) => info.getValue(),
-                header: ""
-            }),
-            busColumnHelper.accessor("RequestNumber", {
-                cell: (info: any) => info.getValue(),
-                header: "Request Number"
-            }),
-            busColumnHelper.accessor("CompanyName", {
-                cell: (info: any) => info.getValue(),
-                header: "Company Name"
-            }),
-            busColumnHelper.accessor("VehicleType", {
-                cell: (info: any) => info.getValue(),
-                header: "Vehicle Type"
-            }),
-            busColumnHelper.accessor("version", {
-                cell: (info: any) => `v${info.getValue() ?? 0}`,
-                header: "version"
-              }),
-            busColumnHelper.accessor("passRequestId", {
-                cell: (info: any) => info.getValue(),
-                header: "Action"
-            })
-        ];  
+        // busColumns = [
+        //     busColumnHelper.accessor("homoID", {
+        //         cell: (info: any) => info.getValue(),
+        //         header: ""
+        //     }),
+        //     busColumnHelper.accessor("RequestNumber", {
+        //         cell: (info: any) => info.getValue(),
+        //         header: "Request Number"
+        //     }),
+        //     busColumnHelper.accessor("CompanyName", {
+        //         cell: (info: any) => info.getValue(),
+        //         header: "Company Name"
+        //     }),
+        //     busColumnHelper.accessor("VehicleType", {
+        //         cell: (info: any) => info.getValue(),
+        //         header: "Vehicle Type"
+        //     }),
+        //     busColumnHelper.accessor("version", {
+        //         cell: (info: any) => `v${info.getValue() ?? 0}`,
+        //         header: "version"
+        //       }),
+        //     busColumnHelper.accessor("passRequestId", {
+        //         cell: (info: any) => info.getValue(),
+        //         header: "Action"
+        //     })
+        // ];  
         
 
 
@@ -656,10 +669,10 @@ const Dashboard: FC = () => {
             getAllFormsData(threeWheelerRquestId); // For 3-wheeler
             setThreeCirclestate(threeWheelerRquestId);
         }
-          else if (tabIndex === 2) {
-         getAllFormsData(busRquestId);
-          setThreeCirclestate(busRquestId);
-          }
+        //   else if (tabIndex === 2) {
+        //  getAllFormsData(busRquestId);
+        //   setThreeCirclestate(busRquestId);
+        //   }
     }
 
 
@@ -722,7 +735,7 @@ const Dashboard: FC = () => {
                             color={"rgba(0,0,0,0.4)"}
                             onClick={resetPercentageData}
                         >3-Wheeler</Tab>
-                        <Tab
+                        {/* <Tab
                             _selected={{
                                 color: 'rgba(0,0,0,1)',
                                 borderBottom: '5px solid #7FBD2C'
@@ -733,7 +746,7 @@ const Dashboard: FC = () => {
                             fontWeight={"800"}
                             color={"rgba(0,0,0,0.4)"}
                             onClick={resetPercentageData}
-                        >BUS</Tab>
+                        >BUS</Tab> */}
 
 
                         <Spacer />
@@ -1278,7 +1291,7 @@ const Dashboard: FC = () => {
                                 </>
                             </TableContainer>
                         </TabPanel>
-                        <TabPanel p={0}>
+                        {/* <TabPanel p={0}>
 
     <TableContainer className="table-container">
 
@@ -1568,7 +1581,7 @@ if (item !== 'fileUploadData') {
                                     </Flex>
                                 </>
                             </TableContainer>
-                        </TabPanel>
+                        </TabPanel> */}
 
 
                     </TabPanels>

@@ -44,16 +44,22 @@ const InputWithInfo = ({
   type?: string;
 }) => {
   return (
-    <HStack spacing={2} width="100%" align="center">
-      <Input
-        size="md"
-        fontSize="15px"
-        height="42px"
-        type={type}
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        flex="1"
-      />
+    <HStack
+  spacing={2}
+  width="100%"
+  align="center"
+  minW={0}
+>
+     <Input
+  size="md"
+  fontSize="15px"
+  height="42px"
+  type={type}
+  value={value}
+  onChange={(e) => onChange(e.target.value)}
+  flex="1"
+  minW={0}
+/>s
 
       {/* Info Icon */}
       <Box
@@ -89,16 +95,22 @@ const SelectWithInfo = ({
   }[];
 }) => {
   return (
-    <HStack spacing={2} width="100%" align="center">
+    <HStack
+  spacing={2}
+  width="100%"
+  align="center"
+  minW={0}
+>
       <Select
-        size="md"
-        height="42px"
-        fontSize="15px"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder="Select fuel type"
-        flex="1"
-      >
+  size="md"
+  height="42px"
+  fontSize="15px"
+  value={value}
+  onChange={(e) => onChange(e.target.value)}
+  placeholder="Select fuel type"
+  flex="1"
+  minW={0}
+>
         {options.map((option) => (
           <option
             key={option.value}
@@ -234,13 +246,14 @@ const ManufacturerDetails = ({
 
           {/* Form */}
           <SimpleGrid
-            columns={{
-              base: 1,
-              md: 2,
-              lg: 3,
+            templateColumns={{
+              base: "1fr",
+              md: "repeat(2, minmax(0, 1fr))",
+              lg: "repeat(3, minmax(0, 1fr))",
             }}
             spacingX={8}
             spacingY={7}
+            width="100%"
           >
 
             {/* Address */}

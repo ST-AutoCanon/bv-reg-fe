@@ -63,14 +63,20 @@ const InputWithInfo = ({
   onChange: (value: string) => void;
 }) => {
   return (
-    <HStack spacing={2} width="100%" align="center">
+    <HStack
+  spacing={2}
+  width="100%"
+  align="center"
+  minW={0}
+>
       <Input
-        height="42px"
-        fontSize="15px"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        flex="1"
-      />
+  height="42px"
+  fontSize="15px"
+  value={value}
+  onChange={(e) => onChange(e.target.value)}
+  flex="1"
+  minW={0}
+/>
 
       {/* Info Icon */}
       <Box
@@ -263,15 +269,15 @@ const DetailsForm: React.FC<DetailsFormProps> = ({
       {/* Form */}
 
       <Box
-        display="grid"
-        gridTemplateColumns={{
-          base: "1fr",
-          md: "repeat(2, 1fr)",
-          lg: "repeat(3, 1fr)",
-        }}
-        columnGap={8}
-        rowGap={7}
-      >
+  display="grid"
+  gridTemplateColumns={{
+    base: "1fr",
+    md: "repeat(2, minmax(0, 1fr))",
+    lg: "repeat(3, minmax(0, 1fr))",
+  }}
+  columnGap={8}
+  rowGap={7}
+>
         {fields.map((field) => {
           const fieldKey = field
             .replace(/\s+/g, "")
@@ -285,6 +291,7 @@ const DetailsForm: React.FC<DetailsFormProps> = ({
                 fontSize="15px"
                 fontWeight="500"
                 color="#4A5568"
+                minH="48px"
               >
                 {field}
               </FormLabel>
