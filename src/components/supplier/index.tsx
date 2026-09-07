@@ -52,7 +52,7 @@ import { CheckCircle } from "lucide-react";
 import { InfoIcon } from "@chakra-ui/icons";
 import Sbike from "../../assets/images/s-bike.png";
 import threeWheeler from "../../assets/images/three-wheeler.png";
-import BusImage from "../../assets/images/Busimage.png";
+import BusImage from "../../assets/images/Busimage1.png";
 import download from "../../assets/images/download.jpeg";
 import SealSign from "../../assets/images/SealSign.jpeg";
 import downloadIcon from "../../assets/images/downloadIcon.png";
@@ -2138,16 +2138,26 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
     getHomologationFormData(pageName, activeComponent, activeSuppliers);
   }, []);
 
-  const successMsg = "Data Saved Successfully";
+  // const successMsg = "Data Saved Successfully";
   const [showSuccess, setShowSuccess] = useState(false);
+  const [successMsg, setSuccessMsg] = useState("");
 
-const handleFormSave = <K extends keyof BusFormData>(
+const handleFormSave = async <K extends keyof BusFormData>(
   section: K,
   data: BusFormData[K]
 ) => {
-  updateBusFormData(section, data);
-  setShowSuccess(true);
+  try {
+    updateBusFormData(section, data);
+
+    setSuccessMsg("Data Saved Successfully");
+    setShowSuccess(true);
+
+  } catch (error) {
+    console.error("Error saving data:", error);
+  }
 };
+
+
   const isBus = homologationDatas?.vehicle_type === "Bus";
   return (
     <>
@@ -2232,9 +2242,10 @@ const handleFormSave = <K extends keyof BusFormData>(
   <Image
     src={BusImage}
     alt="Bus"
-    boxSize="72px"
+    w="86px"
+    h="86px"
+    objectFit="contain"
     borderRadius="50%"
-    objectFit="cover"
   />
 </Box>
 ) : homologationDatas.vehicle_type === "3-Wheeler" ? (
@@ -2705,84 +2716,73 @@ const handleFormSave = <K extends keyof BusFormData>(
 
     <Flex
   width="100%"
-  minH="calc(100vh - 92px)"
-  position="relative"
+  height="calc(100vh - 92px)"
+  overflow="visible"   // important
   display={{ base: "none", md: "flex" }}
-  alignItems="flex-start"
 >
 
-      {/* ================= DESKTOP SIDEBAR ================= */}
+{/* ================= DESKTOP SIDEBAR ================= */}
 
-<Box
-  w="245px"
-  minW="245px"
-  bg="#063D2E"
-  color="white"
-  position="sticky"
-  top="0"
-  mt="-92px"
-  h="calc(100vh - 60px)"
-  alignSelf="flex-start"
-  zIndex={10}
-  overflowY="auto"
-  overflowX="hidden"
-  flexShrink={0}
->
-  {busMenuItems.map((item) => (
-    <Box
-      key={item.page}
-      px="20px"
-      py="14px"
-      cursor="pointer"
-      bg={
-        pageName === item.page
-          ? "#0B5A44"
-          : "transparent"
-      }
-      _hover={{
-        bg: "#0B5A44",
-      }}
-      onClick={() => getPageName(item.page)}
-    >
-      <HStack spacing="12px">
-        <Box
-          w="22px"
-          h="22px"
-          minW="22px"
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          flexShrink={0}
-        >
-          <item.icon
-            width={22}
-            height={22}
-            strokeWidth={2}
-          />
-        </Box>
+ <Box
+    w="260px"
+    minW="260px"
+    h="calc(100% + 109px)"
+    mt="-109px"
+    bg="#063D2E"
+    color="white"
+    flexShrink={0}
+    overflowY="auto"
+    overflowX="hidden"
+    borderTop="2px solid #2878C4"
+  >
+    {busMenuItems.map((item) => (
+      <Box
+        key={item.page}
+        px="22px"
+        py="15px"
+        cursor="pointer"
+        bg={pageName === item.page ? "#0B5A44" : "transparent"}
+        _hover={{ bg: "#0B5A44" }}
+        onClick={() => getPageName(item.page)}
+      >
+        <HStack spacing="14px">
+          <Box
+            w="24px"
+            h="24px"
+            minW="24px"
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            flexShrink={0}
+          >
+            <item.icon width={22} height={22} strokeWidth={2} />
+          </Box>
 
-        <Text
-          fontSize="14px"
-          whiteSpace="nowrap"
-        >
-          {item.page}
-        </Text>
-      </HStack>
-    </Box>
-  ))}
-</Box>
+          <Text
+            fontSize="14px"
+            whiteSpace="nowrap"
+            lineHeight="20px"
+          >
+            {item.page}
+          </Text>
+        </HStack>
+      </Box>
+    ))}
+  </Box>
+
 
       {/* ================= DESKTOP BUS CONTENT ================= */}
 
      <Box
   flex="1"
   minW="0"
-  minH="calc(100vh - 92px)"
-  pt={{ base: 3, sm: 4, md: 4 }}
+  height="100%"
+  overflowY="auto"
+  overflowX="hidden"
+  pt={4}
   pr={{ base: 3, sm: 4, md: 6 }}
-  pb={{ base: 3, sm: 4, md: 6 }}
-  pl={{ base: 3, sm: 4, md: 24 }}
-  overflow="visible"
+  pb={6}
+  pl={{ base: 3, sm: 4, md: 28 }}
 >
         {pageName === "Manufacturer Details" && (
           <ManufacturerDetails
@@ -2985,75 +2985,11 @@ const handleFormSave = <K extends keyof BusFormData>(
         />
       )}
     </Box>
-    <Modal
-  isOpen={showSuccess}
+    <ApproveSuccess
+  successMsg={successMsg}
+  approved={showSuccess}
   onClose={() => setShowSuccess(false)}
-  isCentered
->
-  <ModalOverlay bg="blackAlpha.600" />
-
-  <ModalContent
-    maxW="430px"
-    borderRadius="8px"
-    boxShadow="0 4px 20px rgba(0,0,0,0.3)"
-  >
-    <ModalCloseButton
-      top="14px"
-      right="14px"
-      fontSize="18px"
-      fontWeight="400"
-    />
-
-    <ModalBody
-      px={7}
-      py={6}
-    >
-      <VStack spacing={5}>
-        
-        {/* Success icon + message */}
-        <HStack
-          spacing={5}
-          width="100%"
-          justifyContent="center"
-          pt={1}
-        >
-          <Icon
-            as={CheckCircle}
-            boxSize="32px"
-            color="#7AC323"
-            strokeWidth={2}
-          />
-
-          <Text
-            fontSize="19px"
-            fontWeight="700"
-            color="#1A202C"
-          >
-            {successMsg}
-          </Text>
-        </HStack>
-
-        {/* Close button */}
-        <Button
-          width="200px"
-          height="36px"
-          bg="#7AC323"
-          color="white"
-          borderRadius="5px"
-          fontSize="16px"
-          fontWeight="500"
-          _hover={{
-            bg: "#68AD1D",
-          }}
-          onClick={() => setShowSuccess(false)}
-        >
-          Close
-        </Button>
-
-      </VStack>
-    </ModalBody>
-  </ModalContent>
-</Modal>
+/>
   </Box>
 )}
       {/** ============== COMPONENT SECTION  STARTS =================*/}
@@ -23182,8 +23118,11 @@ const handleFormSave = <K extends keyof BusFormData>(
       ) : null}
 
       {dataSaved ? (
-        <ApproveSuccess successMsg={successMsg} approved={dataSaved} />
-      ) : null}
+<ApproveSuccess
+  successMsg={successMsg}
+  approved={dataSaved}
+  onClose={() => setDataSaved(false)}
+/>      ) : null}
 
       <Modal
         isOpen={visible}
@@ -23192,7 +23131,7 @@ const handleFormSave = <K extends keyof BusFormData>(
         closeOnOverlayClick={false}
       >
         <ModalOverlay onClick={() => closeModal()} />
-        <ModalContent>
+        <ModalContent transform="translateY(-100px) !important">
           <ModalHeader
             bg={"#fff"}
             fontFamily={"Open Sans"}

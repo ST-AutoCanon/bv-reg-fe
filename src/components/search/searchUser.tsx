@@ -250,7 +250,11 @@ const SearchUser: FC = () => {
                 </Container>
                 : null}
             {approved ?
-                <ApproveSuccess successMsg={successMsg} approved={approved} />
+                <ApproveSuccess
+  successMsg={successMsg}
+  approved={approved}
+  onClose={() => setApproved(false)}
+/>
                 : null}
         </>
     )

@@ -42,7 +42,12 @@ const InputWithInfo = ({
   type?: string;
 }) => {
   return (
-    <HStack spacing={2} align="center" width="100%">
+    <HStack
+      spacing={2}
+      align="center"
+      width="100%"
+      minW={0}
+    >
       <Input
         size="md"
         height="42px"
@@ -50,6 +55,8 @@ const InputWithInfo = ({
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        flex="1"
+        minW={0}
       />
 
       <Box
@@ -199,13 +206,14 @@ const currentData = formData[activeMPD];
 
         {/* Form */}
        <SimpleGrid
-  columns={{
-    base: 1,
-    md: 2,
-    lg: 3,
+  templateColumns={{
+    base: "1fr",
+    md: "repeat(2, minmax(0, 1fr))",
+    lg: "repeat(3, minmax(0, 1fr))",
   }}
   spacingX={8}
   spacingY={7}
+  width="100%"
 >
   {/* Vehicle Manufacturing Plant */}
   <FormControl>
@@ -213,6 +221,7 @@ const currentData = formData[activeMPD];
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+      minH="48px"
     >
       Name and address of vehicle manufacturing plant
     </FormLabel>
@@ -234,6 +243,7 @@ const currentData = formData[activeMPD];
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+      minH="48px"
     >
       Name and address of engine manufacturing plant
     </FormLabel>
@@ -255,6 +265,7 @@ const currentData = formData[activeMPD];
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+      minH="48px"
     >
       Importer's Name and address
     </FormLabel>
@@ -279,6 +290,7 @@ const currentData = formData[activeMPD];
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+      minH="48px"
     >
       Telephone No.
     </FormLabel>
@@ -297,6 +309,7 @@ const currentData = formData[activeMPD];
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+      minH="48px"
     >
       E-mail address
     </FormLabel>
@@ -316,6 +329,7 @@ const currentData = formData[activeMPD];
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+      minH="48px"
     >
       Contact person
     </FormLabel>
@@ -335,6 +349,7 @@ const currentData = formData[activeMPD];
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+      minH="48px"
     >
       Category of Bus Body Builder
     </FormLabel>
@@ -356,6 +371,7 @@ const currentData = formData[activeMPD];
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+      minH="48px"
     >
       ZAB Certificate Number and Date
     </FormLabel>
@@ -377,6 +393,7 @@ const currentData = formData[activeMPD];
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+      minH="48px"
     >
       NAB Certificate Number and Date
     </FormLabel>
@@ -398,6 +415,7 @@ const currentData = formData[activeMPD];
       fontSize="15px"
       fontWeight="500"
       color="#4A5568"
+      minH="48px"
     >
       Base CMVR Compliance Certificate Number and Date
     </FormLabel>

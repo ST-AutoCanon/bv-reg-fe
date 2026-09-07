@@ -49,21 +49,23 @@ const InputWithInfo = ({
 }) => {
   return (
     <HStack
-      spacing={2}
-      width="100%"
-      align="center"
-    >
+  spacing={2}
+  width="100%"
+  align="center"
+  minW={0}
+>
       <Input
-        size="md"
-        height="42px"
-        fontSize="15px"
-        type={type}
-        flex="1"
-        value={value}
-        onChange={(e) =>
-          onChange(e.target.value)
-        }
-      />
+  size="md"
+  height="42px"
+  fontSize="15px"
+  type={type}
+  flex="1"
+  minW={0}
+  value={value}
+  onChange={(e) =>
+    onChange(e.target.value)
+  }
+/>
 
       <Box
         minW="24px"
@@ -266,14 +268,14 @@ const WeighmentDetails = ({
         {/* ================= FORM ================= */}
 
         <SimpleGrid
-          columns={{
-            base: 1,
-            md: 2,
-            lg: 3,
-          }}
-          spacingX={8}
-          spacingY={7}
-        >
+  templateColumns={{
+    base: "1fr",
+    md: "repeat(2, minmax(0, 1fr))",
+    lg: "repeat(3, minmax(0, 1fr))",
+  }}
+  spacingX={8}
+  spacingY={7}
+>
           {/* Vehicle Kerb Weight */}
 
           <FormControl>
@@ -281,6 +283,8 @@ const WeighmentDetails = ({
               fontSize="15px"
               fontWeight="500"
               color="#4A5568"
+              minH="48px"
+
             >
               Vehicle kerb weight kg
             </FormLabel>
@@ -305,6 +309,8 @@ const WeighmentDetails = ({
               fontSize="15px"
               fontWeight="500"
               color="#4A5568"
+              minH="48px"
+
             >
               Front axle 1
             </FormLabel>
@@ -327,6 +333,8 @@ const WeighmentDetails = ({
               fontSize="15px"
               fontWeight="500"
               color="#4A5568"
+              minH="48px"
+
             >
               Front axle 2
             </FormLabel>
@@ -349,6 +357,8 @@ const WeighmentDetails = ({
               fontSize="15px"
               fontWeight="500"
               color="#4A5568"
+              minH="48px"
+
             >
               Rear Axle
             </FormLabel>
@@ -371,6 +381,8 @@ const WeighmentDetails = ({
               fontSize="15px"
               fontWeight="500"
               color="#4A5568"
+              minH="48px"
+
             >
               Trailer axle (applicable for articulated/combination vehicles)
             </FormLabel>
@@ -393,6 +405,8 @@ const WeighmentDetails = ({
               fontSize="15px"
               fontWeight="500"
               color="#4A5568"
+              minH="48px"
+
             >
               Total
             </FormLabel>
@@ -415,6 +429,8 @@ const WeighmentDetails = ({
               fontSize="15px"
               fontWeight="500"
               color="#4A5568"
+              minH="48px"
+
             >
               Gross vehicle weight kg ( for rigid vehicles ) (Front, Rear & Total)
             </FormLabel>
@@ -458,6 +474,8 @@ const WeighmentDetails = ({
               fontSize="15px"
               fontWeight="500"
               color="#4A5568"
+              minH="48px"
+
             >
               Front axle
             </FormLabel>
@@ -482,6 +500,8 @@ const WeighmentDetails = ({
               fontSize="15px"
               fontWeight="500"
               color="#4A5568"
+              minH="48px"
+
             >
               Rear axle
             </FormLabel>
@@ -506,6 +526,8 @@ const WeighmentDetails = ({
               fontSize="15px"
               fontWeight="500"
               color="#4A5568"
+              minH="48px"
+
             >
               Other axle
             </FormLabel>

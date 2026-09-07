@@ -13,6 +13,7 @@ import Prompt from "./components/Auth/prompt";
 import Home from "./components/home";
 import About from "./components/about";
 import Dashboard from "./components/homologation";
+import BusHomologation from "./components/homologation/BusHomologation"
 import Homologation from "./components/supplier";
 import WMI from "./components/WMI/barrelDataForm";
 import theme from "./theme";
@@ -52,6 +53,10 @@ export const App = () => {
                 <Route element={<AuthGaurd />}>
                   <Route path="/Dashboard" element={<Dashboard />} />
                   <Route path="/Homologation" element={<Homologation />} />
+                  <Route
+                    path="/BusHomologation"
+                    element={<BusHomologation />}
+                  />
                   <Route
                     path="/SearchUserOrHomologation"
                     element={<SearchUserOrHomologation />}

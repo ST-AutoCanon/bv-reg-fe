@@ -332,61 +332,94 @@ const Login: FC = () => {
         });
     }   
 
-    const setLogin = async () => {
-        let formData; 
-        if( form.username !== '' && form.password !== ''){
-            formData = form;          
-        }else{
-            formData = userCrediantial;
-        }
-        await Post(loginAPI, formData, config)
-            .then((resp) => {
-                if (resp.data.status === 'failure') {
-                    setError(resp.data.body);
-                } else if (resp.data.status === 'success') {
-// console.log('login success')
-// console.log('Vehicle Type:', resp.data.vehicleType); // ✅ log here
-console.log("Login API Response:", resp.data);
-console.log("Vehicle Type from API:", resp.data.vehicleType);
+   const setLogin = async () => {
+    let formData;
 
-                    dispatch(setToken(resp.data.accessToken));
-                    const decoded: any = jwt_decode(resp.data.accessToken);
-                    dispatch(setUserData(decoded.tokenBody));
-                    dispatch(setVehicleType(resp.data.vehicleType)); // ✅ dispatch it here
-                    if (decoded.tokenBody.role === 'admin') {                       
-                        navigate(`/SearchUserOrHomologation`);
-                    } else if (decoded.tokenBody.role === 'user' && decoded.tokenBody.status === 'inactive') {
-                        
-                        dispatch(setFirstTimeLogin(true));
-                        if(checkResetPassword){
-                            navigate(`/ResetPassword`);
-                        }else{
-                            navigate(`/NewSignin`);
-                        }
-                       
-                    } else if (decoded.tokenBody.role === 'user' && decoded.tokenBody.status === 'active') {
-                        navigate(`/Dashboard`);
-                    }              
+    if (form.username !== '' && form.password !== '') {
+        formData = form;
+    } else {
+        formData = userCrediantial;
+    }
+
+    await Post(loginAPI, formData, config)
+        .then((resp) => {
+
+            if (resp.data.status === 'failure') {
+                setError(resp.data.body);
+
+            } else if (resp.data.status === 'success') {
+
+                console.log("Login API Response:", resp.data);
+                console.log("Vehicle Type from API:", resp.data.vehicleType);
+
+                dispatch(setToken(resp.data.accessToken));
+
+                const decoded: any = jwt_decode(resp.data.accessToken);
+
+                dispatch(
+                    setUserData({
+                        ...decoded.tokenBody,
+                        vehicleType: resp.data.vehicleType,
+                    })
+                );
+                dispatch(setVehicleType(resp.data.vehicleType));
+
+                if (decoded.tokenBody.role === 'admin') {
+
+                    navigate(`/SearchUserOrHomologation`);
+
+                } else if (
+                    decoded.tokenBody.role === 'user' &&
+                    decoded.tokenBody.status === 'inactive'
+                ) {
+
+                    dispatch(setFirstTimeLogin(true));
+
+                    if (checkResetPassword) {
+                        navigate(`/ResetPassword`);
+                    } else {
+                        navigate(`/NewSignin`);
+                    }
+
+                } else if (
+                    decoded.tokenBody.role === 'user' &&
+                    decoded.tokenBody.status === 'active'
+                ) {
+
+                    if (resp.data.vehicleType === "Bus") {
+    console.log("========== BUS LOGIN REDIRECT ==========");
+    console.log("Vehicle Type:", resp.data.vehicleType);
+    console.log("Current Path Before:", window.location.pathname);
+
+    navigate("/BusHomologation", { replace: true });
+
+    console.log("Navigation called for Bus");
+} else {
+    console.log("========== NORMAL LOGIN REDIRECT ==========");
+    console.log("Vehicle Type:", resp.data.vehicleType);
+
+    navigate("/Dashboard", { replace: true });
+}
                 }
-            })
-            .catch((error: string) => {
-                // console.log('error');
-            });
-    };
+            }
+        })
+        .catch((error: string) => {
+            console.log('error');
+        });
+};
     const userLogin = () => {
         form.username !== '' && form.password !== '' ? setLogin() : setError("Please enter Username and Password");
     }
 
     useEffect(() => {
-        if(userCrediantial?.username && userCrediantial?.password ){
-            setLogin()
-         }
-         if (userData.role === 'admin'){
-            navigate(`/SearchUserOrHomologation`);
-         } else if (userData.role === 'user' && userData.status === 'active') {
-            navigate(`/Dashboard`);
-        }           
-    }, [])
+    if (userCrediantial?.username && userCrediantial?.password) {
+        setLogin();
+    }
+
+    if (userData.role === 'admin') {
+        navigate(`/SearchUserOrHomologation`);
+    }
+}, []);
     const redirectToLogin = () => { 
         setPassword(false);
         window.location.reload();
