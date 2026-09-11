@@ -2238,6 +2238,7 @@ const handleFormSave = async <K extends keyof BusFormData>(
   justifyContent="flex-end"
   width="100%"
   pr="20px"
+  transform="translateX(105px)"
 >
   <Image
     src={BusImage}
@@ -2266,6 +2267,13 @@ const handleFormSave = async <K extends keyof BusFormData>(
   />
 )}
               </Box>
+              <Box
+  position="relative"
+  left={homologationDatas.vehicle_type === "Bus" ? "100px" : "0"}
+  display="flex"
+  width="100%"
+>
+              
               <Box
                 alignItems="center"
                 pl={"5"}
@@ -2365,6 +2373,7 @@ const handleFormSave = async <K extends keyof BusFormData>(
                   {pageName}
                 </Text>
               </Box>
+            </Box>
             </Box>
           </Show>
 
