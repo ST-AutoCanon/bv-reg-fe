@@ -154,93 +154,81 @@ const BusHomologation: FC = () => {
   // GET BUS HOMOLOGATION DATA
   // ----------------------------------------------------
 
-  const getHomologationData = async () => {
-    try {
-      console.log("API URL:", searchApiURL);
+  const getHomologationData = async (
+  requestIdToSelect?: string
+) => {
+  try {
+    console.log("API URL:", searchApiURL);
 
-      const resp = await Get(
-        searchApiURL,
-        config
+    const resp = await Get(
+      searchApiURL,
+      config
+    );
+
+    if (resp?.data?.status === "success") {
+      const allData = resp?.data?.body || [];
+
+      console.log(
+        "All Homologation Data:",
+        allData
       );
 
-      if (resp?.data?.status === "success") {
+      const busDatas = allData.filter(
+        (item: any) =>
+          item?.vehicle_type?.value === "Bus"
+      );
 
-        const allData =
-          resp?.data?.body || [];
+      console.log(
+        "Bus Homologation Data:",
+        busDatas
+      );
 
-        console.log(
-          "All Homologation Data:",
-          allData
+      setHomologationData(allData);
+      setBusData(busDatas);
+
+      // Select newly created request if provided,
+      // otherwise select the first Bus request
+      if (busDatas.length > 0) {
+        const requestToSelect =
+          requestIdToSelect &&
+          busDatas.some(
+            (item: Homologation) =>
+              item._id === requestIdToSelect
+          )
+            ? requestIdToSelect
+            : busDatas[0]._id;
+
+        setSelectedRequestId(
+          requestToSelect
         );
 
-        const busDatas =
-          allData.filter(
-            (item: any) =>
-              item?.vehicle_type?.value === "Bus"
-          );
-
-        console.log(
-          "Bus Homologation Data:",
-          busDatas
+        await getAllFormsData(
+          requestToSelect
         );
-
-        setHomologationData(allData);
-
-        setBusData(busDatas);
-
-
-        // Select first Bus request
-        if (busDatas.length > 0) {
-
-          const firstRequestId =
-            busDatas[0]._id;
-
-          setSelectedRequestId(
-            (currentId) =>
-              currentId || firstRequestId
-          );
-
-          await getAllFormsData(
-            firstRequestId
-          );
-        } else {
-
-          setSelectedRequestId("");
-
-          setPercentileData({});
-
-          setFileData([]);
-        }
-
       } else {
-
-        setHomologationData([]);
-
-        setBusData([]);
-
-        setTableData([]);
-
+        setSelectedRequestId("");
         setPercentileData({});
-
         setFileData([]);
       }
-
-    } catch (error) {
-
-      console.error(
-        "Error getting homologation data:",
-        error
-      );
-
+    } else {
+      setHomologationData([]);
       setBusData([]);
-
       setTableData([]);
-
       setPercentileData({});
-
       setFileData([]);
     }
-  };
+  } catch (error) {
+    console.error(
+      "Error getting homologation data:",
+      error
+    );
+
+    setBusData([]);
+    setTableData([]);
+    setPercentileData({});
+    setFileData([]);
+  }
+};
 
 
   // ----------------------------------------------------
@@ -978,6 +966,15 @@ const BusHomologation: FC = () => {
         !previous
     );
   };
+  const handleRequestCreated = async (
+  requestId: string
+) => {
+  setVisible(false);
+
+  await getHomologationData(
+    requestId
+  );
+};
 
 
   // ----------------------------------------------------
@@ -1764,9 +1761,10 @@ const BusHomologation: FC = () => {
               ]}
             >
 
-              <Newhomologation
-                onClose={handleClose}
-              />
+             <Newhomologation
+  onClose={handleClose}
+  onSuccess={handleRequestCreated}
+/>
 
             </ModalBody>
 

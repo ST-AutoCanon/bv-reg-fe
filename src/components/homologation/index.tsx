@@ -1594,7 +1594,10 @@ if (item !== 'fileUploadData') {
                         <ModalHeader bg={"#05637D"} fontWeight={"700"} fontSize={"18px"} textAlign="center" color={"#fff"}>Homologation Registration Request</ModalHeader>
                         <ModalCloseButton color={"#fff"} onClick={() => handleClose()} />
                         <ModalBody bg="#F1F1F1" p={["5px", "45px"]}>
-                            <Newhomologation onClose={handleClose} />
+                           <Newhomologation
+  onClose={handleClose}
+  onSuccess={async () => {}}
+/>
                         </ModalBody>
                     </ModalContent>
                     <dialog>

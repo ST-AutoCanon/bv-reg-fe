@@ -31,9 +31,14 @@ const ApproveSuccess: FC<Props> = ({
       <ModalOverlay />
 
       <ModalContent maxW="400px">
-        <ModalCloseButton color="#000" />
+       <ModalCloseButton
+  color="#000"
+  top="10px"
+  right="10px"
+  zIndex={10}
+/>
 
-        <ModalBody bg="#fff">
+        <ModalBody bg="#fff" pt="45px" pr="50px">
           <HStack>
             <Box
               p={["15px", "20px"]}

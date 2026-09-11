@@ -533,6 +533,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setHomologationDatas, setRequestId, setCategory } from '../../features/homologation/homologationSlice';
 import { RootState } from "../../app/store";
 import { Post } from "../../utilities/service";
+import ApproveSuccess from "../Auth/approveSuccess";
+
 import {
     typeOfVehicle,
     fuelType,
@@ -553,10 +555,15 @@ import {
 } from "../../constant/homologation";
 /* Form Validation */
 interface ChildProps {
-    onClose: () => any;
+  onClose: () => void;
+  onSuccess: (requestId: string) => Promise<void>;
 }
 
-const Newhomologation: FC<ChildProps> = ({ onClose }) => {
+const Newhomologation: FC<ChildProps> = ({ onClose ,onSuccess}) => {
+
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [createdRequestId, setCreatedRequestId] = useState("");
+    const [createdVehicleType, setCreatedVehicleType] = useState("");
 
     const token: string = useSelector((state: RootState) => state.loginCredential.token);
     const vehicleType1 = useSelector((state: RootState) => state.loginCredential.vehicleType);
@@ -581,29 +588,33 @@ const Newhomologation: FC<ChildProps> = ({ onClose }) => {
 
     const storeHomologationData = async (homologationData: any) => {
     await Post(searchApiURL, homologationData, config)
-        .then((resp) => {
-            if (resp.data.status === 'success') {
+        .then(async (resp) => {
+            if (resp.data.status === "success") {
 
-                const requestType = {
-                    fuel_type: homologationData.fuel_type,
-                    vehicle_type: homologationData.vehicle_type
-                };
+    const newRequestId =
+        resp.data.body.homologationRequest._id;
 
-                dispatch(setHomologationDatas(requestType));
-                dispatch(setCategory(homologationData.vehicle_category));
-                dispatch(
-                    setRequestId(
-                        resp.data.body.homologationRequest._id
-                    )
-                );
+    const requestType = {
+        fuel_type: homologationData.fuel_type,
+        vehicle_type: homologationData.vehicle_type
+    };
 
-                // Navigate based on vehicle type
-                if (homologationData.vehicle_type === "Bus") {
-                    navigate("/BusHomologation");
-                } else {
-                    navigate("/Homologation");
-                }
-            }
+    dispatch(setHomologationDatas(requestType));
+    dispatch(setCategory(homologationData.vehicle_category));
+    dispatch(setRequestId(newRequestId));
+
+    // Store the newly created request ID
+    setCreatedRequestId(newRequestId);
+    setCreatedVehicleType(homologationData.vehicle_type);
+
+    // Show success popup
+    setShowSuccess(true);
+
+    // For Bus, refresh the Bus request list after success
+    if (homologationData.vehicle_type === "Bus") {
+        
+    }
+}
 
             if (resp.data.status === 'failure') {
                 // handle failure
@@ -1028,21 +1039,37 @@ const Newhomologation: FC<ChildProps> = ({ onClose }) => {
                                 Cancel
                             </Button>
                             <Button
-                                height='48px'
-                                bg="#7FBF28"
-                                w={"100px"}
-                                color='#fff'
-                                _hover={{ bg: '#7FBF28' }}
-                                _focus={{ bg: '#7FBF28' }} variant='solid'
-                                type="submit"
-                            >
-                                Next
-                            </Button>
+    height="48px"
+    bg="#7FBF28"
+    w="100px"
+    color="#fff"
+    _hover={{ bg: "#7FBF28" }}
+    _focus={{ bg: "#7FBF28" }}
+    variant="solid"
+    type="submit"
+    isLoading={isSubmitting}
+    isDisabled={isSubmitting}
+>
+    {isSubmitting ? "Saving..." : "Next"}
+</Button>
                         </Stack>
                     </FormControl>
 
                 </Flex>
             </form>
+            <ApproveSuccess
+    approved={showSuccess}
+    successMsg="Homologation request created successfully."
+    onClose={async () => {
+        setShowSuccess(false);
+
+        if (createdVehicleType === "Bus") {
+            await onSuccess(createdRequestId);
+        } else {
+            navigate("/Homologation");
+        }
+    }}
+/>
 
         </>
     )
