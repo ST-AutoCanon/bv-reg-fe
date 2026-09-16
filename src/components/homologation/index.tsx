@@ -134,8 +134,8 @@ const Dashboard: FC = () => {
                     const threeWheelerDatas = resp.data.body.filter((item: any) => item.vehicle_type.value === '3-Wheeler');
                     // const busDatas = resp.data.body.filter((item:any) => item.vehicle_type.value === "Bus"); 
                     // console.log("Bus Data:", busDatas);
-                    // twoWheelerData = twoWheelerDatas
-                    // threeWheelerData = threeWheelerDatas
+                    twoWheelerData = twoWheelerDatas
+                    threeWheelerData = threeWheelerDatas
                     // busData = busDatas;
                     dataPagination();
 
