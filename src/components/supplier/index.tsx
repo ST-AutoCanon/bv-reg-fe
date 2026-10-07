@@ -1046,7 +1046,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
           // console.log("resp", resp);
           setTimeout(function () {
             setDataSaved(false);
-          }, 1000);
+          }, 2000);
 
           const formElement = document.querySelector(
             "." + form
@@ -2138,24 +2138,24 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
     getHomologationFormData(pageName, activeComponent, activeSuppliers);
   }, []);
 
-  // const successMsg = "Data Saved Successfully";
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [successMsg, setSuccessMsg] = useState("");
+  const successMsg = "Data Saved Successfully";
+  // const [showSuccess, setShowSuccess] = useState(false);
+  // const [successMsg, setSuccessMsg] = useState("");
 
-const handleFormSave = async <K extends keyof BusFormData>(
-  section: K,
-  data: BusFormData[K]
-) => {
-  try {
-    updateBusFormData(section, data);
+// const handleFormSave = async <K extends keyof BusFormData>(
+//   section: K,
+//   data: BusFormData[K]
+// ) => {
+//   try {
+//     updateBusFormData(section, data);
 
-    setSuccessMsg("Data Saved Successfully");
-    setShowSuccess(true);
+//     setSuccessMsg("Data Saved Successfully");
+//     setShowSuccess(true);
 
-  } catch (error) {
-    console.error("Error saving data:", error);
-  }
-};
+//   } catch (error) {
+//     console.error("Error saving data:", error);
+//   }
+// };
 
 
   const isBus = homologationDatas?.vehicle_type === "Bus";
@@ -2736,7 +2736,7 @@ const handleFormSave = async <K extends keyof BusFormData>(
     w="260px"
     minW="260px"
     h="calc(100% + 109px)"
-    mt="-109px"
+    mt="-106px"
     bg="#063D2E"
     color="white"
     flexShrink={0}
@@ -2796,96 +2796,80 @@ const handleFormSave = async <K extends keyof BusFormData>(
         {pageName === "Manufacturer Details" && (
           <ManufacturerDetails
   data={busFormData.manufacturerDetails}
-  onSave={(data) =>
-    handleFormSave(
-      "manufacturerDetails",
-      data
-    )
-  }
+  onSave={(data) => {
+  updateBusFormData("manufacturerDetails", data);
+  setDataSaved(true);
+}}
 />
         )}
 
         {pageName === "Manufacturer Plant Details" && (
           <Manufacturerplantdetails
             data={busFormData.manufacturerPlantDetails}
-            onSave={(data) =>
-              handleFormSave(
-                "manufacturerPlantDetails",
-                data
-              )
-            }
+            onSave={(data) => {
+  updateBusFormData("manufacturerPlantDetails", data);
+  setDataSaved(true);
+}}
           />
         )}
 
         {pageName === "Vehicle Basic Details" && (
           <VehicleBasicDetails
             data={busFormData.vehicleBasicDetails}
-            onSave={(data) =>
-              handleFormSave(
-                "vehicleBasicDetails",
-                data
-              )
-            }
+           onSave={(data) => {
+  updateBusFormData("vehicleBasicDetails", data);
+  setDataSaved(true);
+}}
           />
         )}
 
         {pageName === "Weighment Details" && (
           <WeighmentDetails
             data={busFormData.weighmentDetails}
-            onSave={(data) =>
-              handleFormSave(
-                "weighmentDetails",
-                data
-              )
-            }
+            onSave={(data) => {
+  updateBusFormData("weighmentDetails", data);
+  setDataSaved(true);
+}}
           />
         )}
 
         {pageName === "Tyre and wheel rim" && (
           <TyreAndWheelRim
             data={busFormData.tyreAndWheelRim}
-            onSave={(data) =>
-              handleFormSave(
-                "tyreAndWheelRim",
-                data
-              )
-            }
+            onSave={(data) => {
+  updateBusFormData("tyreAndWheelRim", data);
+  setDataSaved(true);
+}}
           />
         )}
 
         {pageName === "Documents" && (
           <Document
             data={busFormData.documents}
-            onSave={(data) =>
-              handleFormSave(
-                "documents",
-                data
-              )
-            }
+            onSave={(data) => {
+  updateBusFormData("documents", data);
+  setDataSaved(true);
+}}
           />
         )}
 
         {pageName === "Notification" && (
           <Notification
             data={busFormData.notification}
-            onSave={(data) =>
-              handleFormSave(
-                "notification",
-                data
-              )
-            }
+            onSave={(data) => {
+  updateBusFormData("notification", data);
+  setDataSaved(true);
+}}
           />
         )}
 
         {pageName === "Setting" && (
           <Setting
             data={busFormData.setting}
-            onSave={(data) =>
-              handleFormSave(
-                "setting",
-                data
-              )
-            }
+           onSave={(data) => {
+  updateBusFormData("setting", data);
+  setDataSaved(true);
+}}
           />
         )}
       </Box>
@@ -2901,104 +2885,90 @@ const handleFormSave = async <K extends keyof BusFormData>(
       {pageName === "Manufacturer Details" && (
         <ManufacturerDetails
           data={busFormData.manufacturerDetails}
-          onSave={(data) =>
-            handleFormSave(
-              "manufacturerDetails",
-              data
-            )
-          }
+          onSave={(data) => {
+  updateBusFormData("manufacturerDetails", data);
+  setDataSaved(true);
+}}
         />
       )}
 
       {pageName === "Manufacturer Plant Details" && (
         <Manufacturerplantdetails
           data={busFormData.manufacturerPlantDetails}
-          onSave={(data) =>
-            handleFormSave(
-              "manufacturerPlantDetails",
-              data
-            )
-          }
+          onSave={(data) => {
+  updateBusFormData("manufacturerPlantDetails", data);
+  setDataSaved(true);
+}}
         />
       )}
 
       {pageName === "Vehicle Basic Details" && (
         <VehicleBasicDetails
           data={busFormData.vehicleBasicDetails}
-          onSave={(data) =>
-            handleFormSave(
-              "vehicleBasicDetails",
-              data
-            )
-          }
+          onSave={(data) => {
+  updateBusFormData("vehicleBasicDetails", data);
+  setDataSaved(true);
+}}
         />
       )}
 
       {pageName === "Weighment Details" && (
         <WeighmentDetails
           data={busFormData.weighmentDetails}
-          onSave={(data) =>
-            handleFormSave(
-              "weighmentDetails",
-              data
-            )
-          }
+         onSave={(data) => {
+  updateBusFormData("weighmentDetails", data);
+  setDataSaved(true);
+}}
         />
       )}
 
       {pageName === "Tyre and wheel rim" && (
         <TyreAndWheelRim
           data={busFormData.tyreAndWheelRim}
-          onSave={(data) =>
-            handleFormSave(
-              "tyreAndWheelRim",
-              data
-            )
-          }
+          onSave={(data) => {
+  updateBusFormData("tyreAndWheelRim", data);
+  setDataSaved(true);
+}}
         />
       )}
 
       {pageName === "Documents" && (
         <Document
           data={busFormData.documents}
-          onSave={(data) =>
-            handleFormSave(
-              "documents",
-              data
-            )
-          }
+         onSave={(data) => {
+  updateBusFormData("documents", data);
+  setDataSaved(true);
+}}
         />
       )}
 
       {pageName === "Notification" && (
         <Notification
           data={busFormData.notification}
-          onSave={(data) =>
-            handleFormSave(
-              "notification",
-              data
-            )
-          }
+          onSave={(data) => {
+  updateBusFormData("notification", data);
+  setDataSaved(true);
+}}
         />
       )}
 
       {pageName === "Setting" && (
         <Setting
           data={busFormData.setting}
-          onSave={(data) =>
-            handleFormSave(
-              "setting",
-              data
-            )
-          }
+          onSave={(data) => {
+  updateBusFormData("setting", data);
+  setDataSaved(true);
+}}
         />
       )}
     </Box>
-    <ApproveSuccess
-  successMsg={successMsg}
-  approved={showSuccess}
-  onClose={() => setShowSuccess(false)}
-/>
+    {dataSaved && (
+  <ApproveSuccess
+    successMsg={successMsg}
+    approved={dataSaved}
+    onClose={() => setDataSaved(false)}
+  />
+)}
   </Box>
 )}
       {/** ============== COMPONENT SECTION  STARTS =================*/}

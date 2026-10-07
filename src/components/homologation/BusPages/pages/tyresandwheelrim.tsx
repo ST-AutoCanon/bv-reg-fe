@@ -64,21 +64,22 @@ const InputWithInfo = ({
 }) => {
   return (
     <HStack
-  spacing={2}
-  width="100%"
-  align="center"
-  minW={0}
->
+      spacing={2}
+      width="100%"
+      align="center"
+      minW={0}
+      height="42px"
+    >
       <Input
-  height="42px"
-  fontSize="15px"
-  value={value}
-  onChange={(e) => onChange(e.target.value)}
-  flex="1"
-  minW={0}
-/>
+        height="42px"
+        minH="42px"
+        fontSize="15px"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        flex="1"
+        minW={0}
+      />
 
-      {/* Info Icon */}
       <Box
         width="24px"
         height="24px"
@@ -275,7 +276,7 @@ const DetailsForm: React.FC<DetailsFormProps> = ({
     md: "repeat(2, minmax(0, 1fr))",
     lg: "repeat(3, minmax(0, 1fr))",
   }}
-  columnGap={8}
+   columnGap={{ base: 4, md: 6, lg: 8 }}
   rowGap={7}
 >
         {fields.map((field) => {
@@ -286,23 +287,31 @@ const DetailsForm: React.FC<DetailsFormProps> = ({
             );
 
           return (
-            <FormControl key={field}>
-              <FormLabel
-                fontSize="15px"
-                fontWeight="500"
-                color="#4A5568"
-                minH="48px"
-              >
-                {field}
-              </FormLabel>
+           <FormControl
+  key={field}
+  display="flex"
+  flexDirection="column"
+>
+  <FormLabel
+    fontSize="15px"
+    fontWeight="500"
+    color="#4A5568"
+    lineHeight="22px"
+    height="63px"
+    mb={2}
+    display="flex"
+    alignItems="flex-start"
+  >
+    {field}
+  </FormLabel>
 
-              <InputWithInfo
-  value={formData[fieldKey] || ""}
-  onChange={(value) =>
-    onInputChange(fieldKey, value)
-  }
-/>
-            </FormControl>
+  <InputWithInfo
+    value={formData[fieldKey] || ""}
+    onChange={(value) =>
+      onInputChange(fieldKey, value)
+    }
+  />
+</FormControl>
           );
         })}
       </Box>

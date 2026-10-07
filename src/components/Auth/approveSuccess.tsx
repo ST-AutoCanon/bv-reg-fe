@@ -30,7 +30,10 @@ const ApproveSuccess: FC<Props> = ({
     <Modal isOpen={approved} onClose={onClose} isCentered>
       <ModalOverlay />
 
-      <ModalContent maxW="400px">
+      <ModalContent
+  maxW="400px"
+  transform="translateY(-60px)"
+>
        <ModalCloseButton
   color="#000"
   top="10px"
