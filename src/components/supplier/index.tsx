@@ -23103,14 +23103,14 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
   onClose={() => setDataSaved(false)}
 />      ) : null}
 
-      <Modal
+       <Modal
         isOpen={visible}
         onClose={onClose}
         size="2xl"
         closeOnOverlayClick={false}
       >
         <ModalOverlay onClick={() => closeModal()} />
-        <ModalContent transform="translateY(-100px) !important">
+        <ModalContent>
           <ModalHeader
             bg={"#fff"}
             fontFamily={"Open Sans"}
