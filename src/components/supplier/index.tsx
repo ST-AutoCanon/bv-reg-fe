@@ -322,92 +322,92 @@ const Homologation: FC = () => {
     (state: RootState) => state.loginCredential.token
   );
   const searchApiURL = "getModelData/homologationRequestComponents";
-const supplierURL = "supplier/";
+  const supplierURL = "supplier/";
 
-const [homologationsData, sethomologationsData] = useState([]);
+  const [homologationsData, sethomologationsData] = useState([]);
 
-const [footerData, setFooterData] =
-  useState<AllFormsDataData>(initialFooterData);
+  const [footerData, setFooterData] =
+    useState<AllFormsDataData>(initialFooterData);
 
   const [busFormData, setBusFormData] =
-  useState<BusFormData>(initialBusFormData);
+    useState<BusFormData>(initialBusFormData);
   const updateBusFormData = async <K extends keyof BusFormData>(
-  section: K,
-  data: BusFormData[K]
-) => {
-  console.log("updatebusform data called");
-  console.log("section:",section);
-  console.log("request id",requestId);
-  console.log("Data",data);
-  setBusFormData((prev) => ({
-    ...prev,
-    [section]: data,
-  }));
-try{
-  console.log("calling savebusform api");
-  const responce= await saveBusForms(
-    requestId,
-    {
-      [section]:data,
-    }
-  );
-  console.log("API Responce:",responce);
-}catch(error){
-  console.log("Api error:",error);
-}
-};
-
-
-
-useEffect(() => {
-  const loadBusForms = async () => {
+    section: K,
+    data: BusFormData[K]
+  ) => {
+    console.log("updatebusform data called");
+    console.log("section:", section);
+    console.log("request id", requestId);
+    console.log("Data", data);
+    setBusFormData((prev) => ({
+      ...prev,
+      [section]: data,
+    }));
     try {
-      const result = await getBusForms(
-        requestId
+      console.log("calling savebusform api");
+      const responce = await saveBusForms(
+        requestId,
+        {
+          [section]: data,
+        }
       );
-
-      console.log(
-        "Bus forms loaded:",
-        result
-      );
-
-      if (result?.formData) {
-        setBusFormData(
-          result.formData
-        );
-      }
+      console.log("API Responce:", responce);
     } catch (error) {
-      console.error(
-        "Failed to load Bus forms:",
-        error
-      );
+      console.log("Api error:", error);
     }
   };
 
-  if (requestId) {
-    loadBusForms();
-  }
-}, [requestId]);
-
-const [pageName, setPageName] = useState<string | undefined>("");
-const {
-  isOpen: isBusMenuOpen,
-  onOpen: onBusMenuOpen,
-  onClose: onBusMenuClose,
-} = useDisclosure();
 
 
-useEffect(() => {
-  if (!homologationDatas?.vehicle_type) return;
+  useEffect(() => {
+    const loadBusForms = async () => {
+      try {
+        const result = await getBusForms(
+          requestId
+        );
 
-  if (homologationDatas.vehicle_type === "Bus") {
-    setPageName("Manufacturer Details");
-  } else {
-    setPageName("safety-component-1");
-  }
-}, [homologationDatas?.vehicle_type]);
+        console.log(
+          "Bus forms loaded:",
+          result
+        );
 
-const [activeTabs, setActiveTabs] = useState<string | undefined>("");
+        if (result?.formData) {
+          setBusFormData(
+            result.formData
+          );
+        }
+      } catch (error) {
+        console.error(
+          "Failed to load Bus forms:",
+          error
+        );
+      }
+    };
+
+    if (requestId) {
+      loadBusForms();
+    }
+  }, [requestId]);
+
+  const [pageName, setPageName] = useState<string | undefined>("");
+  const {
+    isOpen: isBusMenuOpen,
+    onOpen: onBusMenuOpen,
+    onClose: onBusMenuClose,
+  } = useDisclosure();
+
+
+  useEffect(() => {
+    if (!homologationDatas?.vehicle_type) return;
+
+    if (homologationDatas.vehicle_type === "Bus") {
+      setPageName("Manufacturer Details");
+    } else {
+      setPageName("safety-component-1");
+    }
+  }, [homologationDatas?.vehicle_type]);
+
+  const [activeTabs, setActiveTabs] = useState<string | undefined>("");
   const [activeComponent, setActiveComponent] = useState<string | undefined>(
     ""
   );
@@ -994,21 +994,21 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
   };
 
   const getHomologationData = async (homologationData: {}) => {
-  await Post(searchApiURL, homologationData, config)
-    .then((resp) => {
-      sethomologationsData(resp.data);
-      activeComponentName = resp.data;
+    await Post(searchApiURL, homologationData, config)
+      .then((resp) => {
+        sethomologationsData(resp.data);
+        activeComponentName = resp.data;
 
-      // Only 2W / 3W should use safety-component-1
-      if (homologationDatas?.vehicle_type !== "Bus") {
-        setPageName("safety-component-1");
-      }
-    })
-    .catch((error) => {
-      // console.log("error");
-    });
-};
-  
+        // Only 2W / 3W should use safety-component-1
+        if (homologationDatas?.vehicle_type !== "Bus") {
+          setPageName("safety-component-1");
+        }
+      })
+      .catch((error) => {
+        // console.log("error");
+      });
+  };
+
 
   const termsAndCondition = (event: any) => {
     setIsChecked(event.target.checked);
@@ -1134,7 +1134,7 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
     pageOrComponent?: string
   ) => {
     const isBus = homologationDatas?.vehicle_type === "Bus";
-    
+
     await Get(formApiURL, config)
       .then((resp) => {
         if (resp.data.status === "success") {
@@ -2142,20 +2142,20 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
   // const [showSuccess, setShowSuccess] = useState(false);
   // const [successMsg, setSuccessMsg] = useState("");
 
-// const handleFormSave = async <K extends keyof BusFormData>(
-//   section: K,
-//   data: BusFormData[K]
-// ) => {
-//   try {
-//     updateBusFormData(section, data);
+  // const handleFormSave = async <K extends keyof BusFormData>(
+  //   section: K,
+  //   data: BusFormData[K]
+  // ) => {
+  //   try {
+  //     updateBusFormData(section, data);
 
-//     setSuccessMsg("Data Saved Successfully");
-//     setShowSuccess(true);
+  //     setSuccessMsg("Data Saved Successfully");
+  //     setShowSuccess(true);
 
-//   } catch (error) {
-//     console.error("Error saving data:", error);
-//   }
-// };
+  //   } catch (error) {
+  //     console.error("Error saving data:", error);
+  //   }
+  // };
 
 
   const isBus = homologationDatas?.vehicle_type === "Bus";
@@ -2179,35 +2179,35 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
             ]}
           >
             {!isBus && (
-  <Menu>
-    <MenuButton
-      as={Button}
-      ml={["0", "30", "30%"]}
-      bg="transparent"
-      _hover={{ bg: "transparent" }}
-      _active={{ bg: "transparent" }}
-      rightIcon={<HamburgerIcon />}
-      color="color.500"
-    />
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  ml={["0", "30", "30%"]}
+                  bg="transparent"
+                  _hover={{ bg: "transparent" }}
+                  _active={{ bg: "transparent" }}
+                  rightIcon={<HamburgerIcon />}
+                  color="color.500"
+                />
 
-    <MenuList p="0">
-      {homologationsData
-        .filter((value: any) => value.components?.length > 0)
-        .map((value: any, key) => (
-          <MenuItem
-            key={key}
-            onClick={() => getPageName(value.page)}
-            _hover={{ bg: "#edf2f7" }}
-            backgroundColor={
-              value.page === pageName ? "#edf2f7" : "#fff"
-            }
-          >
-            {value.page}
-          </MenuItem>
-        ))}
-    </MenuList>
-  </Menu>
-)}
+                <MenuList p="0">
+                  {homologationsData
+                    .filter((value: any) => value.components?.length > 0)
+                    .map((value: any, key) => (
+                      <MenuItem
+                        key={key}
+                        onClick={() => getPageName(value.page)}
+                        _hover={{ bg: "#edf2f7" }}
+                        backgroundColor={
+                          value.page === pageName ? "#edf2f7" : "#fff"
+                        }
+                      >
+                        {value.page}
+                      </MenuItem>
+                    ))}
+                </MenuList>
+              </Menu>
+            )}
           </Box>
           <Show breakpoint="(min-width: 1024px)">
             <Box
@@ -2233,147 +2233,147 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
                 ]}
               >
                 {homologationDatas.vehicle_type === "Bus" ? (
-  <Box
-  display="flex"
-  justifyContent="flex-end"
-  width="100%"
-  pr="20px"
-  transform="translateX(105px)"
->
-  <Image
-    src={BusImage}
-    alt="Bus"
-    w="86px"
-    h="86px"
-    objectFit="contain"
-    borderRadius="50%"
-  />
-</Box>
-) : homologationDatas.vehicle_type === "3-Wheeler" ? (
-  <Image
-    src={threeWheeler}
-    alt="3 Wheeler"
-    h="72px"
-    w="72px"
-    borderRadius="50%"
-  />
-) : (
-  <Image
-    src={Sbike}
-    alt="2 Wheeler"
-    h="72px"
-    w="72px"
-    borderRadius="50%"
-  />
-)}
+                  <Box
+                    display="flex"
+                    justifyContent="flex-end"
+                    width="100%"
+                    pr="20px"
+                    transform="translateX(105px)"
+                  >
+                    <Image
+                      src={BusImage}
+                      alt="Bus"
+                      w="86px"
+                      h="86px"
+                      objectFit="contain"
+                      borderRadius="50%"
+                    />
+                  </Box>
+                ) : homologationDatas.vehicle_type === "3-Wheeler" ? (
+                  <Image
+                    src={threeWheeler}
+                    alt="3 Wheeler"
+                    h="72px"
+                    w="72px"
+                    borderRadius="50%"
+                  />
+                ) : (
+                  <Image
+                    src={Sbike}
+                    alt="2 Wheeler"
+                    h="72px"
+                    w="72px"
+                    borderRadius="50%"
+                  />
+                )}
               </Box>
               <Box
-  position="relative"
-  left={homologationDatas.vehicle_type === "Bus" ? "100px" : "0"}
-  display="flex"
-  width="100%"
->
-              
-              <Box
-                alignItems="center"
-                pl={"5"}
-                width={[
-                  "40%", // 0-30em
-                  "40%", // 30em-48em
-                  "16%", // 48em-62em
-                  "16%", // 62em+
-                ]}
+                position="relative"
+                left={homologationDatas.vehicle_type === "Bus" ? "100px" : "0"}
+                display="flex"
+                width="100%"
               >
-                <Text
-                  fontFamily={"Open Sans"}
-                  fontSize={"12"}
-                  color={"color.500"}
+
+                <Box
+                  alignItems="center"
+                  pl={"5"}
+                  width={[
+                    "40%", // 0-30em
+                    "40%", // 30em-48em
+                    "16%", // 48em-62em
+                    "16%", // 62em+
+                  ]}
                 >
-                  Vehicle Type
-                </Text>
-                <Text
-                  fontFamily={"Open Sans"}
-                  fontSize={"14"}
-                  color={"color.500"}
+                  <Text
+                    fontFamily={"Open Sans"}
+                    fontSize={"12"}
+                    color={"color.500"}
+                  >
+                    Vehicle Type
+                  </Text>
+                  <Text
+                    fontFamily={"Open Sans"}
+                    fontSize={"14"}
+                    color={"color.500"}
+                  >
+                    {homologationDatas.vehicle_type}
+                  </Text>
+                </Box>
+                <Box
+                  alignItems="center"
+                  pl={"5"}
+                  width={[
+                    "60%", // 0-30em
+                    "60%", // 30em-48em
+                    "15%", // 48em-62em
+                    "15%", // 62em+
+                  ]}
                 >
-                  {homologationDatas.vehicle_type}
-                </Text>
+                  <Text
+                    fontFamily={"Open Sans"}
+                    fontSize={"12"}
+                    color={"color.500"}
+                  >
+                    Category
+                  </Text>
+                  <Text
+                    fontFamily={"Open Sans"}
+                    fontSize={"14"}
+                    color={"color.500"}
+                  >
+                    {Category}
+                  </Text>
+                </Box>
+                <Box
+                  alignItems="center"
+                  pl={"5"}
+                  width={[
+                    "40%", // 0-30em
+                    "40%", // 30em-48em
+                    "16%", // 48em-62em
+                    "16%", // 62em+
+                  ]}
+                >
+                  <Text
+                    fontFamily={"Open Sans"}
+                    fontSize={"12"}
+                    color={"color.500"}
+                  >
+                    Fuel
+                  </Text>
+                  <Text
+                    fontFamily={"Open Sans"}
+                    fontSize={"14"}
+                    color={"color.500"}
+                  >
+                    {homologationDatas.fuel_type}
+                  </Text>
+                </Box>
+                <Box
+                  alignItems="center"
+                  width={[
+                    "60%", // 0-30em
+                    "60%", // 30em-48em
+                    "20%", // 48em-62em
+                    "20%", // 62em+
+                  ]}
+                >
+                  <Text
+                    fontFamily={"Open Sans"}
+                    fontSize={"12"}
+                    color={"color.500"}
+                  >
+                    Page
+                  </Text>
+                  <Text
+                    fontFamily={"Open Sans"}
+                    fontSize={"14"}
+                    color={"color.500"}
+                  >
+                    {pageName}
+                  </Text>
+                </Box>
               </Box>
-              <Box
-                alignItems="center"
-                pl={"5"}
-                width={[
-                  "60%", // 0-30em
-                  "60%", // 30em-48em
-                  "15%", // 48em-62em
-                  "15%", // 62em+
-                ]}
-              >
-                <Text
-                  fontFamily={"Open Sans"}
-                  fontSize={"12"}
-                  color={"color.500"}
-                >
-                  Category
-                </Text>
-                <Text
-                  fontFamily={"Open Sans"}
-                  fontSize={"14"}
-                  color={"color.500"}
-                >
-                  {Category}
-                </Text>
-              </Box>
-              <Box
-                alignItems="center"
-                pl={"5"}
-                width={[
-                  "40%", // 0-30em
-                  "40%", // 30em-48em
-                  "16%", // 48em-62em
-                  "16%", // 62em+
-                ]}
-              >
-                <Text
-                  fontFamily={"Open Sans"}
-                  fontSize={"12"}
-                  color={"color.500"}
-                >
-                  Fuel
-                </Text>
-                <Text
-                  fontFamily={"Open Sans"}
-                  fontSize={"14"}
-                  color={"color.500"}
-                >
-                  {homologationDatas.fuel_type}
-                </Text>
-              </Box>
-              <Box
-                alignItems="center"
-                width={[
-                  "60%", // 0-30em
-                  "60%", // 30em-48em
-                  "20%", // 48em-62em
-                  "20%", // 62em+
-                ]}
-              >
-                <Text
-                  fontFamily={"Open Sans"}
-                  fontSize={"12"}
-                  color={"color.500"}
-                >
-                  Page
-                </Text>
-                <Text
-                  fontFamily={"Open Sans"}
-                  fontSize={"14"}
-                  color={"color.500"}
-                >
-                  {pageName}
-                </Text>
-              </Box>
-            </Box>
             </Box>
           </Show>
 
@@ -2395,68 +2395,68 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
                 flexDirection={"row"}
                 pl={["10%", "10%", "2%", "2%"]}
               >
-               <Box
-  alignItems="center"
-  pl={0}
-  width={[
-    "50%",
-    "50%",
-    "20%",
-    "15%",
-  ]}
->
-  {homologationDatas.vehicle_type === "Bus" ? (
-    <HStack
-      spacing={2}
-      alignItems="center"
-    >
-      {/* Hamburger */}
-      <Button
-  onClick={onBusMenuOpen}
-  minW="44px"
-  w="44px"
-  h="44px"
-  p={0}
-  ml="10"
-  bg="transparent"
-  color="white"
-  _hover={{
-    bg: "transparent",
-  }}
-  _active={{
-    bg: "transparent",
-  }}
->
-  <HamburgerIcon boxSize={7} />
-</Button>
+                <Box
+                  alignItems="center"
+                  pl={0}
+                  width={[
+                    "50%",
+                    "50%",
+                    "20%",
+                    "15%",
+                  ]}
+                >
+                  {homologationDatas.vehicle_type === "Bus" ? (
+                    <HStack
+                      spacing={2}
+                      alignItems="center"
+                    >
+                      {/* Hamburger */}
+                      <Button
+                        onClick={onBusMenuOpen}
+                        minW="44px"
+                        w="44px"
+                        h="44px"
+                        p={0}
+                        ml="10"
+                        bg="transparent"
+                        color="white"
+                        _hover={{
+                          bg: "transparent",
+                        }}
+                        _active={{
+                          bg: "transparent",
+                        }}
+                      >
+                        <HamburgerIcon boxSize={7} />
+                      </Button>
 
-      {/* Bus Image */}
-      <Image
-        src={BusImage}
-        alt="Bus"
-        boxSize="72px"
-        borderRadius="50%"
-        objectFit="cover"
-      />
-    </HStack>
-  ) : homologationDatas.vehicle_type === "3-Wheeler" ? (
-    <Image
-      src={threeWheeler}
-      alt="3 Wheeler"
-      h="72px"
-      w="72px"
-      borderRadius="50%"
-    />
-  ) : (
-    <Image
-      src={Sbike}
-      alt="2 Wheeler"
-      h="72px"
-      w="72px"
-      borderRadius="50%"
-    />
-  )}
-</Box>
+                      {/* Bus Image */}
+                      <Image
+                        src={BusImage}
+                        alt="Bus"
+                        boxSize="72px"
+                        borderRadius="50%"
+                        objectFit="cover"
+                      />
+                    </HStack>
+                  ) : homologationDatas.vehicle_type === "3-Wheeler" ? (
+                    <Image
+                      src={threeWheeler}
+                      alt="3 Wheeler"
+                      h="72px"
+                      w="72px"
+                      borderRadius="50%"
+                    />
+                  ) : (
+                    <Image
+                      src={Sbike}
+                      alt="2 Wheeler"
+                      h="72px"
+                      w="72px"
+                      borderRadius="50%"
+                    />
+                  )}
+                </Box>
                 <Box
                   alignItems="center"
                   pl={"5"}
@@ -2579,398 +2579,398 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
           className="component-container"
         >
           {!isBus &&
-  homologationsData.map((value: any, key) => {
-    return (
-      pageName === value.page &&
-      pageName !== "File Uploads" && (
-        <>
-          {value.components?.map((value: any, key: any) => {
-                    return (
-                      <Box
-                        alignItems="center"
-                        pl={"5"}
-                        key={value}
-                        color={"#949494"}
-                        title={value}
-                        display={"flex"}
-                        flexWrap={["wrap", "wrap", "nowrap"]}
-                        justifyContent={"start"}
-                        flexDirection={"column"}
-                        mb={["5", "5", "5", "5"]}
-                        onClick={() => active(value)}
-                        cursor={"pointer"}
-                        textAlign={"center"}
-                        width={"200px"}
-                      >
-                        <Stack h={"83px"}>
-                          <Image
-                            display={"block"}
-                            m={"auto"}
-                            src={
-                              activeComponent === value
-                                ? `/images/allcomponetimages/${value
-                                  .replace(/\s/g, "")
-                                  .replace(/\//g, "")}-active.png`
-                                : `/images/allcomponetimages/${value
-                                  .replace(/\s/g, "")
-                                  .replace(/\//g, "")}.png`
-                            }
+            homologationsData.map((value: any, key) => {
+              return (
+                pageName === value.page &&
+                pageName !== "File Uploads" && (
+                  <>
+                    {value.components?.map((value: any, key: any) => {
+                      return (
+                        <Box
+                          alignItems="center"
+                          pl={"5"}
+                          key={value}
+                          color={"#949494"}
+                          title={value}
+                          display={"flex"}
+                          flexWrap={["wrap", "wrap", "nowrap"]}
+                          justifyContent={"start"}
+                          flexDirection={"column"}
+                          mb={["5", "5", "5", "5"]}
+                          onClick={() => active(value)}
+                          cursor={"pointer"}
+                          textAlign={"center"}
+                          width={"200px"}
+                        >
+                          <Stack h={"83px"}>
+                            <Image
+                              display={"block"}
+                              m={"auto"}
+                              src={
+                                activeComponent === value
+                                  ? `/images/allcomponetimages/${value
+                                    .replace(/\s/g, "")
+                                    .replace(/\//g, "")}-active.png`
+                                  : `/images/allcomponetimages/${value
+                                    .replace(/\s/g, "")
+                                    .replace(/\//g, "")}.png`
+                              }
+                              className={
+                                activeComponent === value
+                                  ? "active-component"
+                                  : ""
+                              }
+                            />
+                          </Stack>
+                          <Text
                             className={
                               activeComponent === value
-                                ? "active-component"
-                                : ""
+                                ? "active-component component-name"
+                                : "component-name"
                             }
-                          />
-                        </Stack>
-                        <Text
-                          className={
-                            activeComponent === value
-                              ? "active-component component-name"
-                              : "component-name"
-                          }
-                          fontSize={"12"}
-                          mt={"3"}
-                          p={"0"}
-                        >
-                          {value}
-                        </Text>
-                        {activeComponent === value && (
-                          <Text as={"div"} mt={"2"} className="border"></Text>
-                        )}
-                      </Box>
-                    );
-                  })}
-                </>
-              )
-            );
-          })}
+                            fontSize={"12"}
+                            mt={"3"}
+                            p={"0"}
+                          >
+                            {value}
+                          </Text>
+                          {activeComponent === value && (
+                            <Text as={"div"} mt={"2"} className="border"></Text>
+                          )}
+                        </Box>
+                      );
+                    })}
+                  </>
+                )
+              );
+            })}
         </Flex>
       </Container>
 
 
-{/* ================= BUS UI ================= */}
+      {/* ================= BUS UI ================= */}
 
-{isBus && (
-  <Box width="100%">
-    
-    
+      {isBus && (
+        <Box width="100%">
 
-    {/* ================= MOBILE DRAWER ================= */}
 
-    <Drawer
-      isOpen={isBusMenuOpen}
-      placement="left"
-      onClose={onBusMenuClose}
-    >
-      <DrawerOverlay />
 
-      <DrawerContent bg="#063D2E" color="white">
-        <DrawerCloseButton />
+          {/* ================= MOBILE DRAWER ================= */}
 
-        <DrawerHeader>
-          Bus Menu
-        </DrawerHeader>
+          <Drawer
+            isOpen={isBusMenuOpen}
+            placement="left"
+            onClose={onBusMenuClose}
+          >
+            <DrawerOverlay />
 
-        <DrawerBody p={0}>
-          {busMenuItems.map((item) => (
+            <DrawerContent bg="#063D2E" color="white">
+              <DrawerCloseButton />
+
+              <DrawerHeader>
+                Bus Menu
+              </DrawerHeader>
+
+              <DrawerBody p={0}>
+                {busMenuItems.map((item) => (
+                  <Box
+                    key={item.page}
+                    px="20px"
+                    py="14px"
+                    cursor="pointer"
+                    bg={
+                      pageName === item.page
+                        ? "#0B5A44"
+                        : "transparent"
+                    }
+                    _hover={{
+                      bg: "#0B5A44",
+                    }}
+                    onClick={() => {
+                      getPageName(item.page);
+                      onBusMenuClose();
+                    }}
+                  >
+                    <HStack spacing="12px">
+                      <Box
+                        w="22px"
+                        h="22px"
+                        minW="22px"
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="center"
+                        flexShrink={0}
+                      >
+                        <item.icon
+                          width={22}
+                          height={22}
+                          strokeWidth={2}
+                        />
+                      </Box>
+
+                      <Text
+                        fontSize="14px"
+                        whiteSpace="nowrap"
+                      >
+                        {item.page}
+                      </Text>
+                    </HStack>
+                  </Box>
+                ))}
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>
+
+          {/* ================= DESKTOP BUS LAYOUT ================= */}
+
+          <Flex
+            width="100%"
+            height="calc(100vh - 92px)"
+            overflow="visible"   // important
+            display={{ base: "none", md: "flex" }}
+          >
+
+            {/* ================= DESKTOP SIDEBAR ================= */}
+
             <Box
-              key={item.page}
-              px="20px"
-              py="14px"
-              cursor="pointer"
-              bg={
-                pageName === item.page
-                  ? "#0B5A44"
-                  : "transparent"
-              }
-              _hover={{
-                bg: "#0B5A44",
-              }}
-              onClick={() => {
-                getPageName(item.page);
-                onBusMenuClose();
-              }}
+              w="260px"
+              minW="260px"
+              h="calc(100% + 109px)"
+              mt="-106px"
+              bg="#063D2E"
+              color="white"
+              flexShrink={0}
+              overflowY="auto"
+              overflowX="hidden"
+              borderTop="2px solid #2878C4"
             >
-             <HStack spacing="12px">
-  <Box
-    w="22px"
-    h="22px"
-    minW="22px"
-    display="flex"
-    alignItems="center"
-    justifyContent="center"
-    flexShrink={0}
-  >
-    <item.icon
-      width={22}
-      height={22}
-      strokeWidth={2}
-    />
-  </Box>
+              {busMenuItems.map((item) => (
+                <Box
+                  key={item.page}
+                  px="22px"
+                  py="15px"
+                  cursor="pointer"
+                  bg={pageName === item.page ? "#0B5A44" : "transparent"}
+                  _hover={{ bg: "#0B5A44" }}
+                  onClick={() => getPageName(item.page)}
+                >
+                  <HStack spacing="14px">
+                    <Box
+                      w="24px"
+                      h="24px"
+                      minW="24px"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      flexShrink={0}
+                    >
+                      <item.icon width={22} height={22} strokeWidth={2} />
+                    </Box>
 
-  <Text
-    fontSize="14px"
-    whiteSpace="nowrap"
-  >
-    {item.page}
-  </Text>
-</HStack>
+                    <Text
+                      fontSize="14px"
+                      whiteSpace="nowrap"
+                      lineHeight="20px"
+                    >
+                      {item.page}
+                    </Text>
+                  </HStack>
+                </Box>
+              ))}
             </Box>
-          ))}
-        </DrawerBody>
-      </DrawerContent>
-    </Drawer>
 
-    {/* ================= DESKTOP BUS LAYOUT ================= */}
 
-    <Flex
-  width="100%"
-  height="calc(100vh - 92px)"
-  overflow="visible"   // important
-  display={{ base: "none", md: "flex" }}
->
+            {/* ================= DESKTOP BUS CONTENT ================= */}
 
-{/* ================= DESKTOP SIDEBAR ================= */}
+            <Box
+              flex="1"
+              minW="0"
+              height="100%"
+              overflowY="auto"
+              overflowX="hidden"
+              pt={4}
+              pr={{ base: 3, sm: 4, md: 6 }}
+              pb={6}
+              pl={{ base: 3, sm: 4, md: 28 }}
+            >
+              {pageName === "Manufacturer Details" && (
+                <ManufacturerDetails
+                  data={busFormData.manufacturerDetails}
+                  onSave={(data) => {
+                    updateBusFormData("manufacturerDetails", data);
+                    setDataSaved(true);
+                  }}
+                />
+              )}
 
- <Box
-    w="260px"
-    minW="260px"
-    h="calc(100% + 109px)"
-    mt="-106px"
-    bg="#063D2E"
-    color="white"
-    flexShrink={0}
-    overflowY="auto"
-    overflowX="hidden"
-    borderTop="2px solid #2878C4"
-  >
-    {busMenuItems.map((item) => (
-      <Box
-        key={item.page}
-        px="22px"
-        py="15px"
-        cursor="pointer"
-        bg={pageName === item.page ? "#0B5A44" : "transparent"}
-        _hover={{ bg: "#0B5A44" }}
-        onClick={() => getPageName(item.page)}
-      >
-        <HStack spacing="14px">
+              {pageName === "Manufacturer Plant Details" && (
+                <Manufacturerplantdetails
+                  data={busFormData.manufacturerPlantDetails}
+                  onSave={(data) => {
+                    updateBusFormData("manufacturerPlantDetails", data);
+                    setDataSaved(true);
+                  }}
+                />
+              )}
+
+              {pageName === "Vehicle Basic Details" && (
+                <VehicleBasicDetails
+                  data={busFormData.vehicleBasicDetails}
+                  onSave={(data) => {
+                    updateBusFormData("vehicleBasicDetails", data);
+                    setDataSaved(true);
+                  }}
+                />
+              )}
+
+              {pageName === "Weighment Details" && (
+                <WeighmentDetails
+                  data={busFormData.weighmentDetails}
+                  onSave={(data) => {
+                    updateBusFormData("weighmentDetails", data);
+                    setDataSaved(true);
+                  }}
+                />
+              )}
+
+              {pageName === "Tyre and wheel rim" && (
+                <TyreAndWheelRim
+                  data={busFormData.tyreAndWheelRim}
+                  onSave={(data) => {
+                    updateBusFormData("tyreAndWheelRim", data);
+                    setDataSaved(true);
+                  }}
+                />
+              )}
+
+              {pageName === "Documents" && (
+                <Document
+                  data={busFormData.documents}
+                  onSave={(data) => {
+                    updateBusFormData("documents", data);
+                    setDataSaved(true);
+                  }}
+                />
+              )}
+
+              {pageName === "Notification" && (
+                <Notification
+                  data={busFormData.notification}
+                  onSave={(data) => {
+                    updateBusFormData("notification", data);
+                    setDataSaved(true);
+                  }}
+                />
+              )}
+
+              {pageName === "Setting" && (
+                <Setting
+                  data={busFormData.setting}
+                  onSave={(data) => {
+                    updateBusFormData("setting", data);
+                    setDataSaved(true);
+                  }}
+                />
+              )}
+            </Box>
+          </Flex>
+
+          {/* ================= MOBILE CONTENT ================= */}
+
           <Box
-            w="24px"
-            h="24px"
-            minW="24px"
-            display="flex"
-            alignItems="center"
-            justifyContent="center"
-            flexShrink={0}
+            display={{ base: "block", md: "none" }}
+            width="100%"
+            p={3}
           >
-            <item.icon width={22} height={22} strokeWidth={2} />
+            {pageName === "Manufacturer Details" && (
+              <ManufacturerDetails
+                data={busFormData.manufacturerDetails}
+                onSave={(data) => {
+                  updateBusFormData("manufacturerDetails", data);
+                  setDataSaved(true);
+                }}
+              />
+            )}
+
+            {pageName === "Manufacturer Plant Details" && (
+              <Manufacturerplantdetails
+                data={busFormData.manufacturerPlantDetails}
+                onSave={(data) => {
+                  updateBusFormData("manufacturerPlantDetails", data);
+                  setDataSaved(true);
+                }}
+              />
+            )}
+
+            {pageName === "Vehicle Basic Details" && (
+              <VehicleBasicDetails
+                data={busFormData.vehicleBasicDetails}
+                onSave={(data) => {
+                  updateBusFormData("vehicleBasicDetails", data);
+                  setDataSaved(true);
+                }}
+              />
+            )}
+
+            {pageName === "Weighment Details" && (
+              <WeighmentDetails
+                data={busFormData.weighmentDetails}
+                onSave={(data) => {
+                  updateBusFormData("weighmentDetails", data);
+                  setDataSaved(true);
+                }}
+              />
+            )}
+
+            {pageName === "Tyre and wheel rim" && (
+              <TyreAndWheelRim
+                data={busFormData.tyreAndWheelRim}
+                onSave={(data) => {
+                  updateBusFormData("tyreAndWheelRim", data);
+                  setDataSaved(true);
+                }}
+              />
+            )}
+
+            {pageName === "Documents" && (
+              <Document
+                data={busFormData.documents}
+                onSave={(data) => {
+                  updateBusFormData("documents", data);
+                  setDataSaved(true);
+                }}
+              />
+            )}
+
+            {pageName === "Notification" && (
+              <Notification
+                data={busFormData.notification}
+                onSave={(data) => {
+                  updateBusFormData("notification", data);
+                  setDataSaved(true);
+                }}
+              />
+            )}
+
+            {pageName === "Setting" && (
+              <Setting
+                data={busFormData.setting}
+                onSave={(data) => {
+                  updateBusFormData("setting", data);
+                  setDataSaved(true);
+                }}
+              />
+            )}
           </Box>
-
-          <Text
-            fontSize="14px"
-            whiteSpace="nowrap"
-            lineHeight="20px"
-          >
-            {item.page}
-          </Text>
-        </HStack>
-      </Box>
-    ))}
-  </Box>
-
-
-      {/* ================= DESKTOP BUS CONTENT ================= */}
-
-     <Box
-  flex="1"
-  minW="0"
-  height="100%"
-  overflowY="auto"
-  overflowX="hidden"
-  pt={4}
-  pr={{ base: 3, sm: 4, md: 6 }}
-  pb={6}
-  pl={{ base: 3, sm: 4, md: 28 }}
->
-        {pageName === "Manufacturer Details" && (
-          <ManufacturerDetails
-  data={busFormData.manufacturerDetails}
-  onSave={(data) => {
-  updateBusFormData("manufacturerDetails", data);
-  setDataSaved(true);
-}}
-/>
-        )}
-
-        {pageName === "Manufacturer Plant Details" && (
-          <Manufacturerplantdetails
-            data={busFormData.manufacturerPlantDetails}
-            onSave={(data) => {
-  updateBusFormData("manufacturerPlantDetails", data);
-  setDataSaved(true);
-}}
-          />
-        )}
-
-        {pageName === "Vehicle Basic Details" && (
-          <VehicleBasicDetails
-            data={busFormData.vehicleBasicDetails}
-           onSave={(data) => {
-  updateBusFormData("vehicleBasicDetails", data);
-  setDataSaved(true);
-}}
-          />
-        )}
-
-        {pageName === "Weighment Details" && (
-          <WeighmentDetails
-            data={busFormData.weighmentDetails}
-            onSave={(data) => {
-  updateBusFormData("weighmentDetails", data);
-  setDataSaved(true);
-}}
-          />
-        )}
-
-        {pageName === "Tyre and wheel rim" && (
-          <TyreAndWheelRim
-            data={busFormData.tyreAndWheelRim}
-            onSave={(data) => {
-  updateBusFormData("tyreAndWheelRim", data);
-  setDataSaved(true);
-}}
-          />
-        )}
-
-        {pageName === "Documents" && (
-          <Document
-            data={busFormData.documents}
-            onSave={(data) => {
-  updateBusFormData("documents", data);
-  setDataSaved(true);
-}}
-          />
-        )}
-
-        {pageName === "Notification" && (
-          <Notification
-            data={busFormData.notification}
-            onSave={(data) => {
-  updateBusFormData("notification", data);
-  setDataSaved(true);
-}}
-          />
-        )}
-
-        {pageName === "Setting" && (
-          <Setting
-            data={busFormData.setting}
-           onSave={(data) => {
-  updateBusFormData("setting", data);
-  setDataSaved(true);
-}}
-          />
-        )}
-      </Box>
-    </Flex>
-
-    {/* ================= MOBILE CONTENT ================= */}
-
-    <Box
-      display={{ base: "block", md: "none" }}
-      width="100%"
-      p={3}
-    >
-      {pageName === "Manufacturer Details" && (
-        <ManufacturerDetails
-          data={busFormData.manufacturerDetails}
-          onSave={(data) => {
-  updateBusFormData("manufacturerDetails", data);
-  setDataSaved(true);
-}}
-        />
+          {dataSaved && (
+            <ApproveSuccess
+              successMsg={successMsg}
+              approved={dataSaved}
+              onClose={() => setDataSaved(false)}
+            />
+          )}
+        </Box>
       )}
-
-      {pageName === "Manufacturer Plant Details" && (
-        <Manufacturerplantdetails
-          data={busFormData.manufacturerPlantDetails}
-          onSave={(data) => {
-  updateBusFormData("manufacturerPlantDetails", data);
-  setDataSaved(true);
-}}
-        />
-      )}
-
-      {pageName === "Vehicle Basic Details" && (
-        <VehicleBasicDetails
-          data={busFormData.vehicleBasicDetails}
-          onSave={(data) => {
-  updateBusFormData("vehicleBasicDetails", data);
-  setDataSaved(true);
-}}
-        />
-      )}
-
-      {pageName === "Weighment Details" && (
-        <WeighmentDetails
-          data={busFormData.weighmentDetails}
-         onSave={(data) => {
-  updateBusFormData("weighmentDetails", data);
-  setDataSaved(true);
-}}
-        />
-      )}
-
-      {pageName === "Tyre and wheel rim" && (
-        <TyreAndWheelRim
-          data={busFormData.tyreAndWheelRim}
-          onSave={(data) => {
-  updateBusFormData("tyreAndWheelRim", data);
-  setDataSaved(true);
-}}
-        />
-      )}
-
-      {pageName === "Documents" && (
-        <Document
-          data={busFormData.documents}
-         onSave={(data) => {
-  updateBusFormData("documents", data);
-  setDataSaved(true);
-}}
-        />
-      )}
-
-      {pageName === "Notification" && (
-        <Notification
-          data={busFormData.notification}
-          onSave={(data) => {
-  updateBusFormData("notification", data);
-  setDataSaved(true);
-}}
-        />
-      )}
-
-      {pageName === "Setting" && (
-        <Setting
-          data={busFormData.setting}
-          onSave={(data) => {
-  updateBusFormData("setting", data);
-  setDataSaved(true);
-}}
-        />
-      )}
-    </Box>
-    {dataSaved && (
-  <ApproveSuccess
-    successMsg={successMsg}
-    approved={dataSaved}
-    onClose={() => setDataSaved(false)}
-  />
-)}
-  </Box>
-)}
       {/** ============== COMPONENT SECTION  STARTS =================*/}
 
       {/** ============== SUPPLIER SECTION  STARTS =================*/}
@@ -21948,13 +21948,19 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
                                                   bg="transparent"
                                                   _hover={{ bg: "transparent" }}
                                                   _focus={{ bg: "transparent" }}
-                                                  position={"absolute"}
-                                                  right={"-45px"}
-                                                  top={"20px"}
+                                                  _active={{ bg: "transparent" }}
+                                                  position="absolute"
+                                                  right="-45px"
+                                                  top="20px"
+                                                  minW="auto"
+                                                  h="auto"
+                                                  p={0}
+                                                  cursor="default"
                                                 >
                                                   <InfoIcon
                                                     boxSize={6}
-                                                    color={"#C4C4C4"}
+                                                    color="#C4C4C4"
+                                                    cursor="pointer"
                                                   />
                                                 </Button>
                                               </PopoverTrigger>
@@ -22497,16 +22503,21 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
                                                     <PopoverTrigger>
                                                       <Button
                                                         bg="transparent"
-                                                        _hover={{
-                                                          bg: "transparent",
-                                                        }}
-                                                        _focus={{
-                                                          bg: "transparent",
-                                                        }}
+                                                        _hover={{ bg: "transparent" }}
+                                                        _focus={{ bg: "transparent" }}
+                                                        _active={{ bg: "transparent" }}
+                                                        position="absolute"
+                                                        right="-45px"
+                                                        top="20px"
+                                                        minW="auto"
+                                                        h="auto"
+                                                        p={0}
+                                                        cursor="default"
                                                       >
                                                         <InfoIcon
                                                           boxSize={6}
-                                                          color={"#3c7ea5"}
+                                                          color="#C4C4C4"
+                                                          cursor="pointer"
                                                         />
                                                       </Button>
                                                     </PopoverTrigger>
@@ -22554,33 +22565,6 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
                                                                     "Diagram_Stands_installation"
                                                                   ) {
                                                                     return `/images/popoverImages/file-uploads/${fieldLabel
-                                                                        .replace(
-                                                                          /\s/g,
-                                                                          "_"
-                                                                        ) // Replace spaces with underscores
-                                                                        .replace(
-                                                                          /\//g,
-                                                                          "_"
-                                                                        ) // Replace slashes with underscores
-                                                                        .replace(
-                                                                          /\?/g,
-                                                                          "%3F"
-                                                                        ) // Replace question marks
-                                                                        .replace(
-                                                                          /_+/g,
-                                                                          "_"
-                                                                        ) // Replace multiple underscores with a single underscore
-                                                                        .replace(
-                                                                          /(^_|_$)/g,
-                                                                          ""
-                                                                        ) // Remove leading or trailing underscores
-                                                                        .slice(
-                                                                          0,
-                                                                          50
-                                                                        ) // Shorten the name to 50 characters
-                                                                      }.png`;
-                                                                  }
-                                                                  return `/images/popoverImages/file-uploads/${fieldLabel
                                                                       .replace(
                                                                         /\s/g,
                                                                         "_"
@@ -22601,6 +22585,33 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
                                                                         /(^_|_$)/g,
                                                                         ""
                                                                       ) // Remove leading or trailing underscores
+                                                                      .slice(
+                                                                        0,
+                                                                        50
+                                                                      ) // Shorten the name to 50 characters
+                                                                      }.png`;
+                                                                  }
+                                                                  return `/images/popoverImages/file-uploads/${fieldLabel
+                                                                    .replace(
+                                                                      /\s/g,
+                                                                      "_"
+                                                                    ) // Replace spaces with underscores
+                                                                    .replace(
+                                                                      /\//g,
+                                                                      "_"
+                                                                    ) // Replace slashes with underscores
+                                                                    .replace(
+                                                                      /\?/g,
+                                                                      "%3F"
+                                                                    ) // Replace question marks
+                                                                    .replace(
+                                                                      /_+/g,
+                                                                      "_"
+                                                                    ) // Replace multiple underscores with a single underscore
+                                                                    .replace(
+                                                                      /(^_|_$)/g,
+                                                                      ""
+                                                                    ) // Remove leading or trailing underscores
                                                                     }.png`;
                                                                 })()
                                                                 : "" // Use an empty string if the label is missing
@@ -23097,13 +23108,13 @@ const [activeTabs, setActiveTabs] = useState<string | undefined>("");
       ) : null}
 
       {dataSaved ? (
-<ApproveSuccess
-  successMsg={successMsg}
-  approved={dataSaved}
-  onClose={() => setDataSaved(false)}
-/>      ) : null}
+        <ApproveSuccess
+          successMsg={successMsg}
+          approved={dataSaved}
+          onClose={() => setDataSaved(false)}
+        />) : null}
 
-       <Modal
+      <Modal
         isOpen={visible}
         onClose={onClose}
         size="2xl"
