@@ -11,55 +11,55 @@ let docSealImage;
 const prefixPattern = /^(M\/s\.?|m\/s\.?)\s*/i;
 function normalizeMsPrefix(rowString) {
     return rowString
-      .split("|")
-      .map(part => {
-        let trimmed = part.trim();
-        if (!trimmed || trimmed.toLowerCase() === "na") return trimmed;
-  
-        if (prefixPattern.test(trimmed)) {
-          const rest = trimmed.replace(prefixPattern, "").trim();
-          return `M/s. ${rest}`;
-        }
-  
-        return `M/s. ${trimmed}`;
-      })
-      .join(" | ");
-  }
-  function normalizeWithUnit(rowString, unit) {
+        .split("|")
+        .map(part => {
+            let trimmed = part.trim();
+            if (!trimmed || trimmed.toLowerCase() === "na") return trimmed;
+
+            if (prefixPattern.test(trimmed)) {
+                const rest = trimmed.replace(prefixPattern, "").trim();
+                return `M/s. ${rest}`;
+            }
+
+            return `M/s. ${trimmed}`;
+        })
+        .join(" | ");
+}
+function normalizeWithUnit(rowString, unit) {
     return String(rowString)
-      .split("|")
-      .map(part => {
-        let trimmed = part.trim();
-        if (!trimmed || trimmed.toLowerCase() === "na") return trimmed;
-        return `${trimmed} ${unit}`;
-      })
-      .join(" | ");
-  }
-  
-  const SQ_CM_MM = 'Square cm/mm';
-  const KG = 'kg';
-  const INCH_MM = 'Inch/mm';
-  const KG_CM2_KPA_PSI = 'kg/cm² /kPa /psi';
-  const V = 'V';
-  const MM = 'mm';
-  const MM_SQ = 'mm Sq';
-  const CM_SQ = 'Cm Sq.';
-  const PERCENT_OR_DEGREE = '% OR °(Degree)';
-  const VOLTS = 'Volts';
-  const RPM = 'RPM';
-  const RPM_KM_H = 'RPM & Km/h';
-  const KW = 'Kw';
-  const KM = 'Km';
-  const KM_H = 'Km/h';
-  const AH = 'Ah';
-  const KWH = 'kWh';
-  const VOLTS_HERTZ = 'Volts & Hertz';
-  const VOLTS_AMPS = 'Volts & Amps';
-  const MINUTES_HOURS = 'Minutes/Hours';
-  const AMPS = 'Amps';
-  const MS = 'ms';
-  const W_H_KM = 'W-H/Km';
-  const DEGREES = 'Degrees';
+        .split("|")
+        .map(part => {
+            let trimmed = part.trim();
+            if (!trimmed || trimmed.toLowerCase() === "na") return trimmed;
+            return `${trimmed} ${unit}`;
+        })
+        .join(" | ");
+}
+
+const SQ_CM_MM = 'Square cm/mm';
+const KG = 'kg';
+const INCH_MM = 'Inch/mm';
+const KG_CM2_KPA_PSI = 'kg/cm² /kPa /psi';
+const V = 'V';
+const MM = 'mm';
+const MM_SQ = 'mm Sq';
+const CM_SQ = 'Cm Sq.';
+const PERCENT_OR_DEGREE = '% OR °(Degree)';
+const VOLTS = 'Volts';
+const RPM = 'RPM';
+const RPM_KM_H = 'RPM & Km/h';
+const KW = 'Kw';
+const KM = 'Km';
+const KM_H = 'Km/h';
+const AH = 'Ah';
+const KWH = 'kWh';
+const VOLTS_HERTZ = 'Volts & Hertz';
+const VOLTS_AMPS = 'Volts & Amps';
+const MINUTES_HOURS = 'Minutes/Hours';
+const AMPS = 'Amps';
+const MS = 'ms';
+const W_H_KM = 'W-H/Km';
+const DEGREES = 'Degrees';
 function readList(itemsListName, form1Adata, footerData, tableNo = 1) {
 
     // if (dStrapRows) {
@@ -72,31 +72,31 @@ function readList(itemsListName, form1Adata, footerData, tableNo = 1) {
 
 
 
-//     const isTwoWheeler = !!dStrapRows;  // Truthy check for Two-Wheeler
-// const isThreeWheeler = !!handholdStrap3wheeler_Rows;  // Truthy check for Three-Wheeler
-const isTwoWheeler = dStrapRows && dStrapRows.toString().trim() !== "";
-const isThreeWheeler = handholdStrap3wheeler_Rows && handholdStrap3wheeler_Rows.toString().trim() !== "";
+    //     const isTwoWheeler = !!dStrapRows;  // Truthy check for Two-Wheeler
+    // const isThreeWheeler = !!handholdStrap3wheeler_Rows;  // Truthy check for Three-Wheeler
+    const isTwoWheeler = dStrapRows && dStrapRows.toString().trim() !== "";
+    const isThreeWheeler = handholdStrap3wheeler_Rows && handholdStrap3wheeler_Rows.toString().trim() !== "";
 
-if (isTwoWheeler && isThreeWheeler) {
-    vehicle_Type = 3;  // If both are present, create table
-    // console.log('If both are present, create table')
-} else if (isTwoWheeler) {
-    vehicle_Type = 2;  // Only Two-Wheeler, no table
-    // console.log('Only Two-Wheeler, no table')
-} else {
-    vehicle_Type = 3;  // Either Three-Wheeler is present or both are absent, create table
-    // console.log('3 Either Three-Wheeler is present or both are absent, create table')
-}
+    if (isTwoWheeler && isThreeWheeler) {
+        vehicle_Type = 3;  // If both are present, create table
+        // console.log('If both are present, create table')
+    } else if (isTwoWheeler) {
+        vehicle_Type = 2;  // Only Two-Wheeler, no table
+        // console.log('Only Two-Wheeler, no table')
+    } else {
+        vehicle_Type = 3;  // Either Three-Wheeler is present or both are absent, create table
+        // console.log('3 Either Three-Wheeler is present or both are absent, create table')
+    }
     const dataOfFooterr = footerData.footerData.SealSign.properties;
     let imageUrl;
 
 
     //updated once
     const fileName = dataOfFooterr.Upload_Seal.file_name;
- imageUrl = `https://bv-reg.com/api/files/downloads/${fileName}`; 
+    imageUrl = `https://bv-reg.com/api/files/downloads/${fileName}`;
     // console.log("Image loaded successfully:", fileName);
-    
-////
+
+    ////
 
     // Fetch the image as a Blob
     fetch(imageUrl)
@@ -134,32 +134,54 @@ if (isTwoWheeler && isThreeWheeler) {
     fetch(itemsListName).then(response => response.text()).then(responseText => {
         // console.log('dStrapRows:', dStrapRows);
         // console.log('handholdStrap3wheeler_Rows:', handholdStrap3wheeler_Rows);
+
         if (responseText) {
-            const lines = responseText.split("\n");
-            if (lines && lines.length > 0) {
+            const lines = responseText
+                .split(/\r?\n/)
+                .filter((line) => line.trim() !== "");
+
+            if (lines.length > 0) {
                 generateRows(lines, tableNo, itemsListName, form1Adata);
+
                 if (itemsListName.indexOf("_List1") > 0) {
-                    readList('./Form1A_List2.csv', form1Adata, footerData, tableNo);
-                }
-                else if (itemsListName.indexOf("_List2") > 0) {
-                    readList('./Form1A_List3.csv', form1Adata, footerData, 2);
-                }
-                else if (itemsListName.indexOf("_List3") > 0) {
-                    readList('./Form1A_List4.csv', form1Adata, footerData, 3);
-                }
-                else if (itemsListName.indexOf("_List4") > 0) {
-                    readList('./Form1A_List5.csv', form1Adata, footerData, 3);
-                }
-                else {
+                    readList(
+                        "./Form1A_List2.csv",
+                        form1Adata,
+                        footerData,
+                        tableNo
+                    );
+                } else if (itemsListName.indexOf("_List2") > 0) {
+                    readList(
+                        "./Form1A_List3.csv",
+                        form1Adata,
+                        footerData,
+                        2
+                    );
+                } else if (itemsListName.indexOf("_List3") > 0) {
+                    readList(
+                        "./Form1A_List4.csv",
+                        form1Adata,
+                        footerData,
+                        3
+                    );
+                } else if (itemsListName.indexOf("_List4") > 0) {
+                    readList(
+                        "./Form1A_List5.csv",
+                        form1Adata,
+                        footerData,
+                        3
+                    );
+                } else {
                     fillAndDownload(form1Adata, footerData);
                 }
             }
         }
+
     })
 }
 
 function generateRows(lines, tableNo = 1, itemsListName = "List", form1Adata) {
-   
+
 
     // Initialize lists for Front_Tyre  
     let frontTyreLadenList = [];
@@ -298,7 +320,7 @@ function generateRows(lines, tableNo = 1, itemsListName = "List", form1Adata) {
 
     let styleName = "table1Header";
 
-    
+
     if (itemsListName.indexOf("List2") > 0) {
         styleName = "paragrapgBold";
         const tyreVariantRow = new TableRow({
@@ -575,7 +597,7 @@ function generateRows(lines, tableNo = 1, itemsListName = "List", form1Adata) {
             ]
         });
 
-    
+
         const tyreVariantRow2 = new TableRow({
             children: [
                 new TableCell({
@@ -694,7 +716,7 @@ function generateRows(lines, tableNo = 1, itemsListName = "List", form1Adata) {
                 }),
             ]
         });
-    
+
         const tyreVariantRow3 = new TableRow({
             children: [
                 new TableCell({
@@ -1994,7 +2016,7 @@ function generateForm1A(form1Adata, footerData) {
             )
         ]
     });
-    form1ATable1RowsList=[];
+    form1ATable1RowsList = [];
     form1ATable1RowsList.push(headerRow);
 
     const headerRowTable2 = new TableRow({
@@ -2023,7 +2045,7 @@ function generateForm1A(form1Adata, footerData) {
             )
         ]
     });
-    form1ATable2RowsList=[];
+    form1ATable2RowsList = [];
     form1ATable2RowsList.push(headerRowTable2);
     // if (dStrapRows && dStrapRows.length > 0) {
     // if (
@@ -2058,7 +2080,7 @@ function generateForm1A(form1Adata, footerData) {
             )
         ]
     });
-    form1ATable3RowsList=[];
+    form1ATable3RowsList = [];
     form1ATable3RowsList.push(headerRowTable3);
     // }
     multiSupplierDataList = populateMultiSupData(form1Adata);
@@ -2071,15 +2093,15 @@ function fillAndDownload(form1Adata, footerData) {
     if (typeof homologation_Engg_Name === 'string' && homologation_Engg_Name.trim().length > 0) {
         let trimmedName = homologation_Engg_Name.trim();
         homologation_Engg_Name = `Mr/Mrs. ${trimmedName[0].toUpperCase()}${trimmedName.slice(1)}`;
-      }
-      // Manufacturer Name
-let manufacturer_Name = dataOfFooter.Manufacture_Name.value;
-if (typeof manufacturer_Name === 'string' && manufacturer_Name.trim().length > 0) {
-    let trimmedManu = manufacturer_Name.trim();
-    manufacturer_Name = `M/s. ${trimmedManu[0].toUpperCase()}${trimmedManu.slice(1)}`;
-}
- const today = new Date();
-const formattedDate = today.toLocaleDateString("en-GB");
+    }
+    // Manufacturer Name
+    let manufacturer_Name = dataOfFooter.Manufacture_Name.value;
+    if (typeof manufacturer_Name === 'string' && manufacturer_Name.trim().length > 0) {
+        let trimmedManu = manufacturer_Name.trim();
+        manufacturer_Name = `M/s. ${trimmedManu[0].toUpperCase()}${trimmedManu.slice(1)}`;
+    }
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString("en-GB");
     const form1ADocument = new Document({
         styles: {
             paragraphStyles: [
@@ -2194,7 +2216,7 @@ const formattedDate = today.toLocaleDateString("en-GB");
                     //     }
                     // ),
 
-                      ...(vehicle_Type === 3
+                    ...(vehicle_Type === 3
                         ? [
                             new Table({
                                 columnWidths: [7000, 3000],
@@ -2203,7 +2225,7 @@ const formattedDate = today.toLocaleDateString("en-GB");
                             }),
                         ]
                         : []),
-                        
+
                     new Paragraph("\n\n"),
                     new Paragraph({
                         children: [
@@ -2342,13 +2364,13 @@ const formattedDate = today.toLocaleDateString("en-GB");
 
 
                     new Paragraph("\n\n"),
-                   
-                  
-                 ],
-               
-               
-                
-    
+
+
+                ],
+
+
+
+
                 footers: {
                     default: new Footer({
                         children: [
@@ -2511,7 +2533,7 @@ const formattedDate = today.toLocaleDateString("en-GB");
                                                         children: [
                                                             new TextRun({
                                                                 // text: "Date : ",
-                                                               text: `Date : ${formattedDate}`,
+                                                                text: `Date : ${formattedDate}`,
                                                                 font: "Times New Roman",
                                                                 color: "#B22222" // Light Red color
                                                             })
