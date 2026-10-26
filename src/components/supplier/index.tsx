@@ -21951,7 +21951,7 @@ const Homologation: FC = () => {
                                                   _active={{ bg: "transparent" }}
                                                   position="absolute"
                                                   right="-45px"
-                                                  top="20px"
+                                                  top="25px"
                                                   minW="auto"
                                                   h="auto"
                                                   p={0}
@@ -22508,7 +22508,7 @@ const Homologation: FC = () => {
                                                         _active={{ bg: "transparent" }}
                                                         position="absolute"
                                                         right="-45px"
-                                                        top="20px"
+                                                        top="25px"
                                                         minW="auto"
                                                         h="auto"
                                                         p={0}
