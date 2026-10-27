@@ -741,8 +741,8 @@ const Newhomologation: FC<ChildProps> = ({ onClose, onSuccess }) => {
                                     _focus={{ bg: "transparent" }}
                                     _active={{ bg: "transparent" }}
                                     position="absolute"
-                                    right="-45px"
-                                    top="35px"
+                                    right="-30px"
+                                    top="37px"
                                     minW="auto"
                                     h="auto"
                                     p={0}
@@ -859,8 +859,8 @@ const Newhomologation: FC<ChildProps> = ({ onClose, onSuccess }) => {
                                     _focus={{ bg: "transparent" }}
                                     _active={{ bg: "transparent" }}
                                     position="absolute"
-                                    right="-45px"
-                                    top="35px"
+                                    right="-30px"
+                                    top="37px"
                                     minW="auto"
                                     h="auto"
                                     p={0}
@@ -920,8 +920,8 @@ const Newhomologation: FC<ChildProps> = ({ onClose, onSuccess }) => {
                                     _focus={{ bg: "transparent" }}
                                     _active={{ bg: "transparent" }}
                                     position="absolute"
-                                    right="-45px"
-                                    top="35px"
+                                    right="-30px"
+                                    top="37px"
                                     minW="auto"
                                     h="auto"
                                     p={0}
