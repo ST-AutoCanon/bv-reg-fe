@@ -555,11 +555,11 @@ import {
 } from "../../constant/homologation";
 /* Form Validation */
 interface ChildProps {
-    onClose: () => void;
-    onSuccess: (requestId: string) => Promise<void>;
+  onClose: () => void;
+  onSuccess: (requestId: string) => Promise<void>;
 }
 
-const Newhomologation: FC<ChildProps> = ({ onClose, onSuccess }) => {
+const Newhomologation: FC<ChildProps> = ({ onClose ,onSuccess}) => {
 
     const [showSuccess, setShowSuccess] = useState(false);
     const [createdRequestId, setCreatedRequestId] = useState("");
@@ -587,51 +587,51 @@ const Newhomologation: FC<ChildProps> = ({ onClose, onSuccess }) => {
     const dispatch = useDispatch()
 
     const storeHomologationData = async (homologationData: any) => {
-        await Post(searchApiURL, homologationData, config)
-            .then(async (resp) => {
-                if (resp.data.status === "success") {
+    await Post(searchApiURL, homologationData, config)
+        .then(async (resp) => {
+            if (resp.data.status === "success") {
 
-                    const newRequestId =
-                        resp.data.body.homologationRequest._id;
+    const newRequestId =
+        resp.data.body.homologationRequest._id;
 
-                    const requestType = {
-                        fuel_type: homologationData.fuel_type,
-                        vehicle_type: homologationData.vehicle_type
-                    };
-
-                    dispatch(setHomologationDatas(requestType));
-                    dispatch(setCategory(homologationData.vehicle_category));
-                    dispatch(setRequestId(newRequestId));
-
-                    // Store the newly created request ID
-                    setCreatedRequestId(newRequestId);
-                    setCreatedVehicleType(homologationData.vehicle_type);
-
-                    // Show success popup
-                    setShowSuccess(true);
-
-                    // For Bus, refresh the Bus request list after success
-                    if (homologationData.vehicle_type === "Bus") {
-
-                    }
-                }
-
-                if (resp.data.status === 'failure') {
-                    // handle failure
-                }
-            })
-            .catch((error) => {
-                console.error("Error storing homologation data:", error);
-            });
+    const requestType = {
+        fuel_type: homologationData.fuel_type,
+        vehicle_type: homologationData.vehicle_type
     };
+
+    dispatch(setHomologationDatas(requestType));
+    dispatch(setCategory(homologationData.vehicle_category));
+    dispatch(setRequestId(newRequestId));
+
+    // Store the newly created request ID
+    setCreatedRequestId(newRequestId);
+    setCreatedVehicleType(homologationData.vehicle_type);
+
+    // Show success popup
+    setShowSuccess(true);
+
+    // For Bus, refresh the Bus request list after success
+    if (homologationData.vehicle_type === "Bus") {
+        
+    }
+}
+
+            if (resp.data.status === 'failure') {
+                // handle failure
+            }
+        })
+        .catch((error) => {
+            console.error("Error storing homologation data:", error);
+        });
+};
 
     const changeHandler = (event: any) => {
         // if (event.target.value === '2-Wheeler' || event.target.value === '3-Wheeler') {
         //     setcheckVehicleType(event.target.value);
         // }
         if (event.target.name === "vehicle_type") {
-            setcheckVehicleType(event.target.value);
-        }
+    setcheckVehicleType(event.target.value);
+}
         if (event.target.name === 'vehicle_max_speed') {
             setspeedValue(event.target.value)
         }
@@ -737,28 +737,14 @@ const Newhomologation: FC<ChildProps> = ({ onClose, onSuccess }) => {
                             <PopoverTrigger>
                                 <Button
                                     bg="transparent"
-                                    _hover={{ bg: "transparent" }}
-                                    _focus={{ bg: "transparent" }}
-                                    _active={{ bg: "transparent" }}
-                                    position="absolute"
-                                    right="-30px"
-                                    top="37px"
-                                    minW="auto"
-                                    h="auto"
-                                    p={0}
-                                    cursor="default"
-                                >
-                                    <InfoIcon
-                                        boxSize={6}
-                                        color="#C4C4C4"
-                                        cursor="pointer"
-                                    />
+                                    _hover={{ bg: 'transparent' }}
+                                    _focus={{ bg: 'transparent' }}
+                                    position={"absolute"}
+                                    right={"-45px"}
+                                    top={"30px"}>
+                                    <InfoIcon boxSize={6} color={"#C4C4C4"} />
                                 </Button>
                             </PopoverTrigger>
-
-                            <PopoverContent>
-                                {/* Keep your existing content here */}
-                            </PopoverContent>
                             <PopoverContent>
                                 <PopoverArrow />
 
@@ -855,28 +841,14 @@ const Newhomologation: FC<ChildProps> = ({ onClose, onSuccess }) => {
                             <PopoverTrigger>
                                 <Button
                                     bg="transparent"
-                                    _hover={{ bg: "transparent" }}
-                                    _focus={{ bg: "transparent" }}
-                                    _active={{ bg: "transparent" }}
-                                    position="absolute"
-                                    right="-30px"
-                                    top="37px"
-                                    minW="auto"
-                                    h="auto"
-                                    p={0}
-                                    cursor="default"
-                                >
-                                    <InfoIcon
-                                        boxSize={6}
-                                        color="#C4C4C4"
-                                        cursor="pointer"
-                                    />
+                                    _hover={{ bg: 'transparent' }}
+                                    _focus={{ bg: 'transparent' }}
+                                    position={"absolute"}
+                                    right={"-45px"}
+                                    top={"30px"}>
+                                    <InfoIcon boxSize={6} color={"#C4C4C4"} />
                                 </Button>
                             </PopoverTrigger>
-
-                            <PopoverContent>
-                                {/* Keep your existing content here */}
-                            </PopoverContent>
                             <PopoverContent>
                                 <PopoverArrow />
 
@@ -916,28 +888,14 @@ const Newhomologation: FC<ChildProps> = ({ onClose, onSuccess }) => {
                             <PopoverTrigger>
                                 <Button
                                     bg="transparent"
-                                    _hover={{ bg: "transparent" }}
-                                    _focus={{ bg: "transparent" }}
-                                    _active={{ bg: "transparent" }}
-                                    position="absolute"
-                                    right="-30px"
-                                    top="37px"
-                                    minW="auto"
-                                    h="auto"
-                                    p={0}
-                                    cursor="default"
-                                >
-                                    <InfoIcon
-                                        boxSize={6}
-                                        color="#C4C4C4"
-                                        cursor="pointer"
-                                    />
+                                    _hover={{ bg: 'transparent' }}
+                                    _focus={{ bg: 'transparent' }}
+                                    position={"absolute"}
+                                    right={"-45px"}
+                                    top={"30px"}>
+                                    <InfoIcon boxSize={6} color={"#C4C4C4"} />
                                 </Button>
                             </PopoverTrigger>
-
-                            <PopoverContent>
-                                {/* Keep your existing content here */}
-                            </PopoverContent>
                             <PopoverContent>
                                 <PopoverArrow />
 
@@ -1081,37 +1039,37 @@ const Newhomologation: FC<ChildProps> = ({ onClose, onSuccess }) => {
                                 Cancel
                             </Button>
                             <Button
-                                height="48px"
-                                bg="#7FBF28"
-                                w="100px"
-                                color="#fff"
-                                _hover={{ bg: "#7FBF28" }}
-                                _focus={{ bg: "#7FBF28" }}
-                                variant="solid"
-                                type="submit"
-                                isLoading={isSubmitting}
-                                isDisabled={isSubmitting}
-                            >
-                                {isSubmitting ? "Saving..." : "Next"}
-                            </Button>
+    height="48px"
+    bg="#7FBF28"
+    w="100px"
+    color="#fff"
+    _hover={{ bg: "#7FBF28" }}
+    _focus={{ bg: "#7FBF28" }}
+    variant="solid"
+    type="submit"
+    isLoading={isSubmitting}
+    isDisabled={isSubmitting}
+>
+    {isSubmitting ? "Saving..." : "Next"}
+</Button>
                         </Stack>
                     </FormControl>
 
                 </Flex>
             </form>
             <ApproveSuccess
-                approved={showSuccess}
-                successMsg="Homologation request created successfully."
-                onClose={async () => {
-                    setShowSuccess(false);
+    approved={showSuccess}
+    successMsg="Homologation request created successfully."
+    onClose={async () => {
+        setShowSuccess(false);
 
-                    if (createdVehicleType === "Bus") {
-                        await onSuccess(createdRequestId);
-                    } else {
-                        navigate("/Homologation");
-                    }
-                }}
-            />
+        if (createdVehicleType === "Bus") {
+            await onSuccess(createdRequestId);
+        } else {
+            navigate("/Homologation");
+        }
+    }}
+/>
 
         </>
     )
